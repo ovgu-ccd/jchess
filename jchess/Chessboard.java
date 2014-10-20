@@ -20,15 +20,14 @@
  */
 package jchess;
 
+import jchess.Moves.castling;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.JPanel;
-import jchess.Moves.castling;
 
 /** Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
@@ -168,8 +167,8 @@ public class Chessboard extends JPanel
             player.goDown = true;
         }
 
-        this.squares[0][i].setPiece(new Rook(this, player));
-        this.squares[7][i].setPiece(new Rook(this, player));
+        this.squares[0][i].setPiece(new SpecialRook(this, player));
+        this.squares[7][i].setPiece(new SpecialRook(this, player));
         this.squares[1][i].setPiece(new Knight(this, player));
         this.squares[6][i].setPiece(new Knight(this, player));
         this.squares[2][i].setPiece(new Bishop(this, player));
@@ -415,7 +414,7 @@ public class Chessboard extends JPanel
             }
             //endOf Castling
         }
-        else if (end.piece.name.equals("Rook"))
+        else if (end.piece.name.equals("Rook") || end.piece.name.equals("SpecialRook"))
         {
             if (!((Rook) end.piece).wasMotion)
             {
@@ -468,6 +467,14 @@ public class Chessboard extends JPanel
                         queen.player = end.piece.player;
                         queen.square = end.piece.square;
                         end.piece = queen;
+                    }
+                    else if (newPiece.equals("SpecialRook"))
+                    {
+                        Rook rook = new SpecialRook(this, end.piece.player);
+                        rook.chessboard = end.piece.chessboard;
+                        rook.player = end.piece.player;
+                        rook.square = end.piece.square;
+                        end.piece = rook;
                     }
                     else if (newPiece.equals("Rook")) // transform pawn to rook
                     {
@@ -600,7 +607,7 @@ public class Chessboard extends JPanel
                     ((Rook) rook).wasMotion = false;
                     this.breakCastling = false;
                 }
-                else if (moved.name.equals("Rook"))
+                else if (moved.name.equals("Rook") || moved.name.equals("SpecialRook"))
                 {
                     ((Rook) moved).wasMotion = false;
                 }
