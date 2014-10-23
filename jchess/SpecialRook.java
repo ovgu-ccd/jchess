@@ -19,13 +19,13 @@ public class SpecialRook extends Rook {
 
         for (Object square : super.allMoves()) {
 
-            if (((Square) square).pozX == this.square.pozX &&
-                    Math.abs(((Square) square).pozY - this.square.pozY) < 5) {
+            if (((Square) square).pozX == this.square.pozX && Math.abs(((Square) square).pozY - this.square.pozY)
+                    <= 5) {
                 moves.add((Square) square);
             }
 
-            if (((Square) square).pozY == this.square.pozY &&
-                    Math.abs(((Square) square).pozX - this.square.pozX) < 5) {
+            if (((Square) square).pozY == this.square.pozY && Math.abs(((Square) square).pozX - this.square.pozX)
+                    <= 5) {
                 moves.add((Square) square);
             }
 
