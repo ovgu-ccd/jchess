@@ -109,7 +109,7 @@ public class King extends Piece
 
 
             if (chessboard.squares[0][this.square.pozY].piece != null
-                    && chessboard.squares[0][this.square.pozY].piece.name.equals("Rook"))
+                    && (chessboard.squares[0][this.square.pozY].piece.name.equals("Rook") || chessboard.squares[0][this.square.pozY].piece.name.equals("SpecialRook")))
             {
                 boolean canCastling = true;
 
@@ -133,7 +133,7 @@ public class King extends Piece
                 }
             }
             if (chessboard.squares[7][this.square.pozY].piece != null
-                    && chessboard.squares[7][this.square.pozY].piece.name.equals("Rook"))
+                    && (chessboard.squares[7][this.square.pozY].piece.name.equals("Rook") || chessboard.squares[7][this.square.pozY].piece.name.equals("SpecialRook")))
             {
                 boolean canCastling = true;
                 Rook rook = (Rook) chessboard.squares[7][this.square.pozY].piece;
@@ -220,7 +220,7 @@ public class King extends Piece
             }
             else if (this.chessboard.squares[s.pozX][i].piece.player != this.player) //if isn't our piece
             {
-                if (this.chessboard.squares[s.pozX][i].piece.name.equals("Rook")
+                if (this.chessboard.squares[s.pozX][i].piece.name.equals("Rook") || this.chessboard.squares[s.pozX][i].piece.name.equals("SpecialRook")
                         || this.chessboard.squares[s.pozX][i].piece.name.equals("Queen"))
                 {
                     return false;
@@ -244,7 +244,7 @@ public class King extends Piece
             }
             else if (this.chessboard.squares[s.pozX][i].piece.player != this.player) //if isn't our piece
             {
-                if (this.chessboard.squares[s.pozX][i].piece.name.equals("Rook")
+                if (this.chessboard.squares[s.pozX][i].piece.name.equals("Rook") || this.chessboard.squares[s.pozX][i].piece.name.equals("SpecialRook")
                         || this.chessboard.squares[s.pozX][i].piece.name.equals("Queen"))
                 {
                     return false;
@@ -268,7 +268,7 @@ public class King extends Piece
             }
             else if (this.chessboard.squares[i][s.pozY].piece.player != this.player) //if isn't our piece
             {
-                if (this.chessboard.squares[i][s.pozY].piece.name.equals("Rook")
+                if (this.chessboard.squares[i][s.pozY].piece.name.equals("Rook") || this.chessboard.squares[i][s.pozY].piece.name.equals("SpecialRook")
                         || this.chessboard.squares[i][s.pozY].piece.name.equals("Queen"))
                 {
                     return false;
@@ -292,7 +292,7 @@ public class King extends Piece
             }
             else if (this.chessboard.squares[i][s.pozY].piece.player != this.player) //if isn't our piece
             {
-                if (this.chessboard.squares[i][s.pozY].piece.name.equals("Rook")
+                if (this.chessboard.squares[i][s.pozY].piece.name.equals("Rook") || this.chessboard.squares[i][s.pozY].piece.name.equals("SpecialRook")
                         || this.chessboard.squares[i][s.pozY].piece.name.equals("Queen"))
                 {
                     return false;
