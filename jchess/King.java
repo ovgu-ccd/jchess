@@ -209,7 +209,7 @@ public class King extends Piece
      * @param s Squere where is a king
      * @return bool true if king is save, else returns false
      */
-    private boolean isSafe(Square s) //A bit confusing code.
+    public boolean isSafe(Square s) //A bit confusing code.
     {
         // Rook & Queen
         for (int i = s.pozY + 1; i <= 7; ++i) //up

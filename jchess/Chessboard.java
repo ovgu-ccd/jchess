@@ -187,11 +187,11 @@ public class Chessboard extends JPanel
             this.squares[4][i].setPiece(new Queen(this, player));
             if (player.color == Player.colors.white)
             {
-                this.squares[3][i].setPiece(kingWhite = new King(this, player));
+                this.squares[3][i].setPiece(kingWhite = new BurgerKing(this, player));
             }
             else
             {
-                this.squares[3][i].setPiece(kingBlack = new King(this, player));
+                this.squares[3][i].setPiece(kingBlack = new BurgerKing(this, player));
             }
         }
         else
@@ -199,11 +199,11 @@ public class Chessboard extends JPanel
             this.squares[3][i].setPiece(new Queen(this, player));
             if (player.color == Player.colors.white)
             {
-                this.squares[4][i].setPiece(kingWhite = new King(this, player));
+                this.squares[4][i].setPiece(kingWhite = new BurgerKing(this, player));
             }
             else
             {
-                this.squares[4][i].setPiece(kingBlack = new King(this, player));
+                this.squares[4][i].setPiece(kingBlack = new BurgerKing(this, player));
             }
         }
     }
@@ -396,7 +396,7 @@ public class Chessboard extends JPanel
         end.piece = begin.piece;//for ending square set piece from beginin square
         begin.piece = null;//make null piece for begining square
 
-        if (end.piece.name.equals("King"))
+        if (end.piece.name.equals("King") || end.piece.name.equals("BurgerKing"))
         {
             if (!((King) end.piece).wasMotion)
             {
