@@ -24,10 +24,19 @@ import jchess.Moves.castling;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JPanel;
+import jchess.Moves.castling;
 
 /** Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
@@ -212,7 +221,7 @@ public class Chessboard extends JPanel
         }
         for (int x = 0; x < 8; x++)
         {
-            this.squares[x][i].setPiece(new Pawn(this, player));
+            this.squares[x][i].setPiece(new HyperPawn(this, player));
         }
     }
 
@@ -422,7 +431,7 @@ public class Chessboard extends JPanel
                 ((Rook) end.piece).wasMotion = true;
             }
         }
-        else if (end.piece.name.equals("Pawn"))
+        else if (end.piece.name.equals("Pawn") || end.piece.name.equals("HyperPawn"))
         {
             if (twoSquareMovedPawn != null && squares[end.pozX][begin.pozY] == twoSquareMovedPawn.square) //en passant
             {
