@@ -29,8 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jchess.server.Server;
 
-class SClient implements Runnable //connecting client
-{
+class SClient implements Runnable { //connecting client
 
     private Socket s;
     public ObjectInputStream input;
@@ -39,8 +38,7 @@ class SClient implements Runnable //connecting client
     private Table table;
     protected boolean wait4undoAnswer = false;
 
-    SClient(Socket s, ObjectInputStream input, ObjectOutputStream output, String nick, Table table)
-    {
+    SClient(Socket s, ObjectInputStream input, ObjectOutputStream output, String nick, Table table) {
         this.s = s;
         this.input = input;
         this.output = output;
@@ -51,56 +49,41 @@ class SClient implements Runnable //connecting client
         thread.start();
     }
 
-    public void run() //listening
-    {
+    public void run() { //listening
 
         Server.print("running function: run()");
         boolean isOK = true;
-        while (isOK)
-        {
-            try
-            {
+        while (isOK) {
+            try {
                 String in = input.readUTF();
 
-                if (in.equals("#move"))//new move
-                {
+                if (in.equals("#move")) { //new move
                     int bX = input.readInt();
                     int bY = input.readInt();
                     int eX = input.readInt();
                     int eY = input.readInt();
 
                     table.sendMoveToOther(this, bX, bY, eX, eY);
-                }
-                else if (in.equals("#message"))//new message
-                {
+                } else if (in.equals("#message")) { //new message
                     String str = input.readUTF();
 
                     table.sendMessageToAll(nick + ": " + str);
-                }
-                else if(in.equals("#undoAsk") || in.equals("#undoAnswerNegative") )
-                {
+                } else if(in.equals("#undoAsk") || in.equals("#undoAnswerNegative") ) {
                     table.sendToAll(this, in);
-                }
-                else if(in.equals("#undoAnswerPositive") )
-                {
+                } else if(in.equals("#undoAnswerPositive") ) {
                     table.sendUndoToAll(this, in);
                 }
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 isOK = false;
-                try
-                {
+                try {
                     table.sendErrorConnectionToOther(this);
-                }
-                catch (IOException ex1)
-                {
+                } catch (IOException ex1) {
                     Logger.getLogger(SClient.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
 
         }
     }
-    
+
 }

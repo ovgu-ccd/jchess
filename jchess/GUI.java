@@ -38,72 +38,72 @@ import java.util.logging.Logger;
  */
 public class GUI {
 
-	public Game game;
-	static final public Properties configFile = GUI.getConfigFile();
+    public Game game;
+    static final public Properties configFile = GUI.getConfigFile();
 
-	public GUI() {
-		this.game = new Game();
+    public GUI() {
+        this.game = new Game();
 
-		// this.drawGUI();
-	}/*--endOf-GUI--*/
+        // this.drawGUI();
+    }/*--endOf-GUI--*/
 
-	/*
-	 * Method load image by a given name with extension
-	 * 
-	 * @name : string of image to load for ex. "chessboard.jpg"
-	 * 
-	 * @returns : image or null if cannot load
-	 */
+    /*
+     * Method load image by a given name with extension
+     *
+     * @name : string of image to load for ex. "chessboard.jpg"
+     *
+     * @returns : image or null if cannot load
+     */
 
-	static Image loadImage(String name) {
-		if (configFile == null) {
-			return null;
-		}
-		Image img = null;
-		URL url = null;
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		try {
-			String imageLink = "theme/"
-					+ configFile.getProperty("THEME", "default") + "/images/"
-					+ name;
-			System.out.println(configFile.getProperty("THEME"));
-			url = JChessApp.class.getResource(imageLink);
-			img = tk.getImage(url);
+    static Image loadImage(String name) {
+        if (configFile == null) {
+            return null;
+        }
+        Image img = null;
+        URL url = null;
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        try {
+            String imageLink = "theme/"
+                               + configFile.getProperty("THEME", "default") + "/images/"
+                               + name;
+            System.out.println(configFile.getProperty("THEME"));
+            url = JChessApp.class.getResource(imageLink);
+            img = tk.getImage(url);
 
-		} catch (Exception e) {
-			System.out.println("some error loading image!");
-			e.printStackTrace();
-		}
-		return img;
-	}/*--endOf-loadImage--*/
+        } catch (Exception e) {
+            System.out.println("some error loading image!");
+            e.printStackTrace();
+        }
+        return img;
+    }/*--endOf-loadImage--*/
 
-	static boolean themeIsValid(String name) {
-		return true;
-	}
+    static boolean themeIsValid(String name) {
+        return true;
+    }
 
-	static String getJarPath() {
-		String path = GUI.class.getProtectionDomain().getCodeSource()
-				.getLocation().getFile();
-		path = path.replaceAll(
-				"[a-zA-Z0-9%!@#$%^&*\\(\\)\\[\\]\\{\\}\\.\\,\\s]+\\.jar", "");
-		int lastSlash = path.lastIndexOf(File.separator);
-		if (path.length() - 1 == lastSlash) {
-			path = path.substring(0, lastSlash);
-		}
-		path = path.replace("%20", " ");
-		return path;
-	}
+    static String getJarPath() {
+        String path = GUI.class.getProtectionDomain().getCodeSource()
+                      .getLocation().getFile();
+        path = path.replaceAll(
+                   "[a-zA-Z0-9%!@#$%^&*\\(\\)\\[\\]\\{\\}\\.\\,\\s]+\\.jar", "");
+        int lastSlash = path.lastIndexOf(File.separator);
+        if (path.length() - 1 == lastSlash) {
+            path = path.substring(0, lastSlash);
+        }
+        path = path.replace("%20", " ");
+        return path;
+    }
 
-	static Properties getConfigFile() {
-		Properties confFile = new Properties();
-		File outFile = new File(GUI.class.getResource("config.txt").getFile());
+    static Properties getConfigFile() {
+        Properties confFile = new Properties();
+        File outFile = new File(GUI.class.getResource("config.txt").getFile());
 
-		try {
-			FileInputStream configurationFile = new FileInputStream(outFile);
-			confFile.load(configurationFile);
-		} catch (java.io.IOException exc) {
-			System.err.print("Error loading configuration file");
-		}
-		return confFile;
-	}
+        try {
+            FileInputStream configurationFile = new FileInputStream(outFile);
+            confFile.load(configurationFile);
+        } catch (java.io.IOException exc) {
+            System.err.print("Error loading configuration file");
+        }
+        return confFile;
+    }
 }

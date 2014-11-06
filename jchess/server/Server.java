@@ -31,8 +31,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Server implements Runnable
-{
+public class Server implements Runnable {
 
     public static boolean isPrintEnable = true; //print all messages (print function)
     public static Map<Integer, Table> tables;
@@ -40,10 +39,8 @@ public class Server implements Runnable
     private static ServerSocket ss;
     private static boolean isRunning = false;
 
-    public Server()
-    {
-        if (!Server.isRunning) //run server if isn't running previous
-        {
+    public Server() {
+        if (!Server.isRunning) { //run server if isn't running previous
             runServer();
 
             Thread thread = new Thread(this);
@@ -53,40 +50,34 @@ public class Server implements Runnable
         }
     }
 
-    public static boolean isRunning()
-    {//is server running?
+    public static boolean isRunning() {
+        //is server running?
 
         return isRunning;
     }
 
-    private static void runServer()
-    {//run server
+    private static void runServer() {
+        //run server
 
-        try
-        {
+        try {
             ss = new ServerSocket(port);
             print("running");
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         tables = new HashMap<Integer, Table>();
     }
 
-    public void run() //listening
-    {
+    public void run() { //listening
 
         print("listening port: " + port);
-        while (true)
-        {
+        while (true) {
             Socket s;
             ObjectInputStream input;
             ObjectOutputStream output;
 
-            try
-            {
+            try {
                 s = ss.accept();
                 input = new ObjectInputStream(s.getInputStream());
                 output = new ObjectOutputStream(s.getOutputStream());
@@ -104,8 +95,7 @@ public class Server implements Runnable
                 print("readed password: " + password);
                 //---------------
 
-                if (!tables.containsKey(tableID))
-                {
+                if (!tables.containsKey(tableID)) {
                     print("bad table ID");
                     output.writeInt(Connection_info.err_bad_table_ID.getValue());
                     output.flush();
@@ -113,26 +103,21 @@ public class Server implements Runnable
                 }
                 Table table = tables.get(tableID);
 
-                if (!jchess.MD5.encrypt(table.password).equals(password))
-                {
+                if (!jchess.MD5.encrypt(table.password).equals(password)) {
                     print("bad password: " + jchess.MD5.encrypt(table.password) + " != " + password);
                     output.writeInt(Connection_info.err_bad_password.getValue());
                     output.flush();
                     continue;
                 }
 
-                if (joinAsPlayer)
-                {
+                if (joinAsPlayer) {
                     print("join as player");
-                    if (table.isAllPlayers())
-                    {
+                    if (table.isAllPlayers()) {
                         print("error: was all players at this table");
                         output.writeInt(Connection_info.err_table_is_full.getValue());
                         output.flush();
                         continue;
-                    }
-                    else
-                    {
+                    } else {
                         print("wasn't all players at this table");
 
                         output.writeInt(Connection_info.all_is_ok.getValue());
@@ -141,66 +126,52 @@ public class Server implements Runnable
                         table.addPlayer(new SClient(s, input, output, nick, table));
                         table.sendMessageToAll("** Gracz " + nick + " dołączył do gry **");
 
-                        if (table.isAllPlayers())
-                        {
+                        if (table.isAllPlayers()) {
                             table.generateSettings();
 
                             print("Send settings to all");
                             table.sendSettingsToAll();
 
                             table.sendMessageToAll("** Nowa gra, zaczna: " + table.clientPlayer1.nick + "**");
-                        }
-                        else
-                        {
+                        } else {
                             table.sendMessageToAll("** Oczekiwanie na drugiego gracza **");
                         }
                     }
-                }
-                else //join as observer
-                {
+                } else { //join as observer
 
                     print("join as observer");
-                    if (!table.canObserversJoin())
-                    {
+                    if (!table.canObserversJoin()) {
                         print("Observers can't join");
                         output.writeInt(Connection_info.err_game_without_observer.getValue());
                         output.flush();
                         continue;
-                    }
-                    else
-                    {
+                    } else {
                         output.writeInt(Connection_info.all_is_ok.getValue());
                         output.flush();
 
                         table.addObserver(new SClient(s, input, output, nick, table));
 
-                        if (table.clientPlayer2 != null) //all players is playing
-                        {
+                        if (table.clientPlayer2 != null) { //all players is playing
                             table.sendSettingsAndMovesToNewObserver();
                         }
 
                         table.sendMessageToAll("** Obserwator " + nick + " dołączył do gry **");
                     }
                 }
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 continue;
             }
         }
     }
 
-    public static void print(String str)
-    {
-        if (isPrintEnable)
-        {
+    public static void print(String str) {
+        if (isPrintEnable) {
             System.out.println("Server: " + str);
         }
     }
 
-    public void newTable(int idTable, String password, boolean withObserver, boolean enableChat) //create new table
-    {
+    public void newTable(int idTable, String password, boolean withObserver, boolean enableChat) { //create new table
 
         print("create new table - id: " + idTable);
         tables.put(idTable, new Table(password, withObserver, enableChat));
