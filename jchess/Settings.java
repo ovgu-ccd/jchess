@@ -28,8 +28,7 @@ import java.util.ResourceBundle;
 
 /** Class representings game settings available for the current player
  */
-public class Settings implements Serializable
-{
+public class Settings implements Serializable {
 
     private static ResourceBundle loc = null;
     public int timeForGame;
@@ -38,8 +37,7 @@ public class Settings implements Serializable
     public boolean timeLimitSet;//tel us if player choose time 4 game or it's infinity
     public boolean upsideDown;
 
-    public enum gameModes
-    {
+    public enum gameModes {
 
         newGame, loadGame
     }
@@ -47,16 +45,14 @@ public class Settings implements Serializable
     public Player playerWhite;
     public Player playerBlack;
 
-    public enum gameTypes
-    {
+    public enum gameTypes {
 
         local, network
     }
     public gameTypes gameType;
     public boolean renderLabels = true;
 
-    public Settings()
-    {
+    public Settings() {
         //temporally
         this.playerWhite = new Player("", "white");
         this.playerBlack = new Player("", "black");
@@ -68,25 +64,19 @@ public class Settings implements Serializable
     /** Method to get game time set by player
      *  @return timeFofGame int with how long the game will leasts
      */
-    public int getTimeForGame()
-    {
+    public int getTimeForGame() {
         return this.timeForGame;
     }
 
-    public static String lang(String key)
-    {
-        if (Settings.loc == null)
-        {
+    public static String lang(String key) {
+        if (Settings.loc == null) {
             Settings.loc = PropertyResourceBundle.getBundle("jchess.resources.i18n.main");
             Locale.setDefault(Locale.ENGLISH);
         }
         String result = "";
-        try
-        {
+        try {
             result = Settings.loc.getString(key);
-        }
-        catch (java.util.MissingResourceException exc)
-        {
+        } catch (java.util.MissingResourceException exc) {
             result = key;
         }
         System.out.println(Settings.loc.getLocale().toString());

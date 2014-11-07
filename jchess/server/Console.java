@@ -26,19 +26,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jchess.MD5;
 
-public class Console
-{
+public class Console {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         System.out.println("JChess Server Start!");
 
         Server server = new Server(); //create server
         server.isPrintEnable = false;
 
         boolean isOK = true;
-        while (isOK)
-        {
+        while (isOK) {
             System.out.println("--------------------");
             System.out.println("[1] Nowy stół");
             System.out.println("[2] Lista aktywnych stołów");
@@ -47,8 +44,7 @@ public class Console
             System.out.print("-> ");
             String str = readString();
 
-            if (str.equals("1")) //new table
-            {
+            if (str.equals("1")) { //new table
                 System.out.print("ID gry: ");
                 int gameID = Integer.parseInt(readString());
 
@@ -56,85 +52,60 @@ public class Console
                 String pass = MD5.encrypt(readString());
 
                 String observer;
-                do
-                {
+                do {
                     System.out.print("Gra z obserwatorami[t/n]: ");
                     observer = readString();
-                }
-                while (!observer.equalsIgnoreCase("t") && !observer.equalsIgnoreCase("n"));
+                } while (!observer.equalsIgnoreCase("t") && !observer.equalsIgnoreCase("n"));
 
                 boolean canObserver = observer.equalsIgnoreCase("t");
 
                 server.newTable(gameID, pass, canObserver, true); //create new table
-            }
-            else if (str.equals("2")) //list of tables
-            {
-                for (Map.Entry<Integer, Table> entry : server.tables.entrySet())
-                {
+            } else if (str.equals("2")) { //list of tables
+                for (Map.Entry<Integer, Table> entry : server.tables.entrySet()) {
                     Integer id = entry.getKey();
                     Table table = entry.getValue();
 
                     String p1, p2;
 
-                    if (table.clientPlayer1 == null || table.clientPlayer1.nick == null)
-                    {
+                    if (table.clientPlayer1 == null || table.clientPlayer1.nick == null) {
                         p1 = "empty";
-                    }
-                    else
-                    {
+                    } else {
                         p1 = table.clientPlayer1.nick;
                     }
 
-                    if (table.clientPlayer2 == null || table.clientPlayer2.nick == null)
-                    {
+                    if (table.clientPlayer2 == null || table.clientPlayer2.nick == null) {
                         p2 = "empty";
-                    }
-                    else
-                    {
+                    } else {
                         p2 = table.clientPlayer2.nick;
                     }
 
                     System.out.println("\t" + id + ": " + p1 + " vs " + p2);
                 }
-            }
-            else if (str.equals("3")) //on/off server's communicats
-            {
-                if (server.isPrintEnable == false)
-                {
+            } else if (str.equals("3")) { //on/off server's communicats
+                if (server.isPrintEnable == false) {
                     server.isPrintEnable = true;
                     System.out.println("Komunikaty serwera zostały włączone");
-                }
-                else
-                {
+                } else {
                     server.isPrintEnable = false;
                     System.out.println("Komunikaty serwera zostały wyłączone");
                 }
-            }
-            else if (str.equals("4")) //exit
-            {
+            } else if (str.equals("4")) { //exit
                 isOK = false;
-            }
-            else //bad commant
-            {
+            } else { //bad commant
                 System.out.println("Nierozpoznane polecenie");
             }
         }
         System.exit(0);
     }
 
-    public static String readString() //read string from console
-    {
+    public static String readString() { //read string from console
         int ch;
         StringBuffer sb = new StringBuffer();
-        try
-        {
-            while ((ch = System.in.read()) != 10)
-            {
+        try {
+            while ((ch = System.in.read()) != 10) {
                 sb.append((char) ch);
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null, ex);
         }
 
