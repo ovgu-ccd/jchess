@@ -20,24 +20,23 @@
  */
 package jchess;
 
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Properties;
 import java.io.FileOutputStream;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import java.util.Properties;
 
 public class ThemeChooseWindow extends JDialog implements ActionListener,
     ListSelectionListener {
 
+    public String result;
     JList themesList;
     ImageIcon themePreview;
     GridBagLayout gbl;
-    public String result;
     GridBagConstraints gbc;
     JButton themePreviewButton;
     JButton okButton;
@@ -123,8 +122,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             if (GUI.themeIsValid(name)) {
                 prp.setProperty("THEME", name);
                 try {
-                    FileOutputStream fOutStr = new FileOutputStream(
-                        ThemeChooseWindow.class.getResource("config.txt").getFile());
+                    FileOutputStream fOutStr = new FileOutputStream("config.txt");
                     prp.store(fOutStr, null);
                     fOutStr.flush();
                     fOutStr.close();

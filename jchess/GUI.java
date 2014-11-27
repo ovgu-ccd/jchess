@@ -21,15 +21,10 @@
 package jchess;
 
 import java.awt.*;
-import java.net.*;
-import java.io.*;
-
-import javax.swing.*;
-
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 import java.util.Properties;
-import java.io.FileOutputStream;
-import java.util.logging.Logger;
 
 /**
  * Class representing the game interface which is seen by a player and where are
@@ -38,8 +33,8 @@ import java.util.logging.Logger;
  */
 public class GUI {
 
-    public Game game;
     static final public Properties configFile = GUI.getConfigFile();
+    public Game game;
 
     public GUI() {
         this.game = new Game();
@@ -96,8 +91,16 @@ public class GUI {
 
     static Properties getConfigFile() {
         Properties confFile = new Properties();
-        File outFile = new File(GUI.class.getResource("config.txt").getFile());
 
+        // Try to locate config.txt
+        File outFile = new File("config.txt");
+        if (!outFile.exists() && GUI.class.getResource("config.txt") != null) {
+            outFile = new File(GUI.class.getResource("config.txt").getFile());
+        } else {
+            return confFile;
+        }
+
+        // Read it
         try {
             FileInputStream configurationFile = new FileInputStream(outFile);
             confFile.load(configurationFile);
