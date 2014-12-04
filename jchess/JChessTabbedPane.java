@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.gui.JChessApp;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -61,10 +63,10 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     }
 
     private void showNewGameWindow() {
-        if (JChessApp.jcv.newGameFrame == null) {
-            JChessApp.jcv.newGameFrame = new NewGameWindow();
+        if (JChessApp.getJcv().newGameFrame == null) {
+            JChessApp.getJcv().newGameFrame = new NewGameWindow();
         }
-        JChessApp.getApplication().show(JChessApp.jcv.newGameFrame);
+        JChessApp.getApplication().show(JChessApp.getJcv().newGameFrame);
     }
 
     @Override

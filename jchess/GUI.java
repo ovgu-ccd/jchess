@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.gui.JChessApp;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,7 +64,7 @@ public class GUI {
                                + configFile.getProperty("THEME", "default") + "/images/"
                                + name;
             System.out.println(configFile.getProperty("THEME"));
-            url = JChessApp.class.getResource(imageLink);
+            url = Application.class.getResource(imageLink);
             img = tk.getImage(url);
 
         } catch (Exception e) {
@@ -94,8 +96,8 @@ public class GUI {
 
         // Try to locate config.txt
         File outFile = new File("config.txt");
-        if (!outFile.exists() && GUI.class.getResource("config.txt") != null) {
-            outFile = new File(GUI.class.getResource("config.txt").getFile());
+        if (!outFile.exists() && Application.class.getResource("config.txt") != null) {
+            outFile = new File(Application.class.getResource("config.txt").getFile());
         } else {
             return confFile;
         }

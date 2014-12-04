@@ -13,22 +13,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jchess;
+package jchess.gui;
 
-import org.jdesktop.application.Application;
-import org.jdesktop.application.SingleFrameApplication;
+import jchess.JChessView;
+import jchess.Application;
+
+import java.util.ResourceBundle;
 
 /**
  * The main class of the application.
  */
-public class JChessApp extends SingleFrameApplication {
-    static JChessView jcv;
+public class JChessApp extends Application {
+    private static JChessView jcv;
+
+    public static JChessView getJcv() {
+        return jcv;
+    }
+
+    public static void setJcv(JChessView jcv) {
+        JChessApp.jcv = jcv;
+    }
+
     /**
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        jcv = new JChessView(this);
-        show(jcv);
+        setJcv(new JChessView(this));
+        show(getJcv());
     }
 
     /**
@@ -37,6 +48,9 @@ public class JChessApp extends SingleFrameApplication {
      * builder, so this additional configuration is not needed.
      */
     @Override protected void configureWindow(java.awt.Window root) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.main");
+        String title = resourceBundle.getString("Application.title");
+        this.getMainFrame().setTitle(title);
     }
 
     /**
@@ -51,6 +65,7 @@ public class JChessApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+
         launch(JChessApp.class, args);
     }
 }

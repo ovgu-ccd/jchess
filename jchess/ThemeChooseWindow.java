@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.gui.JChessApp;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -71,11 +73,11 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             this.gbl = new GridBagLayout();
             this.gbc = new GridBagConstraints();
             try {
-                this.themePreview = new ImageIcon(GUI.loadImage("Preview.png"));// JChessApp.class.getResource("theme/"+GUI.configFile.getProperty("THEME")+"/images/Preview.png"));
+                this.themePreview = new ImageIcon(GUI.loadImage("Preview.png"));
             } catch (java.lang.NullPointerException exc) {
                 System.out.println("Cannot find preview image: " + exc);
                 this.themePreview = new ImageIcon(
-                    JChessApp.class.getResource("theme/noPreview.png"));
+                    Application.class.getResource("theme/noPreview.png"));
                 return;
             }
             this.result = "";

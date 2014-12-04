@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.gui.JChessApp;
+
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -151,7 +153,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             System.out.println("Error reading file: " + err);
             return;
         }
-        Game newGUI = JChessApp.jcv.addNewTab(whiteName + " vs. " + blackName);
+        Game newGUI = JChessApp.getJcv().addNewTab(whiteName + " vs. " + blackName);
         Settings locSetts = newGUI.settings;
         locSetts.playerBlack.name = blackName;
         locSetts.playerWhite.name = whiteName;
@@ -228,8 +230,8 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         //dirty hacks starts over here :)
         //to fix rendering artefacts on first run
-        Game activeGame = JChessApp.jcv.getActiveTabGame();
-        if( activeGame != null && JChessApp.jcv.getNumberOfOpenedTabs() == 0 ) {
+        Game activeGame = JChessApp.getJcv().getActiveTabGame();
+        if( activeGame != null && JChessApp.getJcv().getNumberOfOpenedTabs() == 0 ) {
             activeGame.chessboard.resizeChessboard(activeGame.chessboard.get_height(false));
             activeGame.chessboard.repaint();
             activeGame.repaint();

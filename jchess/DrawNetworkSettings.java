@@ -36,6 +36,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import jchess.gui.JChessApp;
 import jchess.server.Server;
 
 /**
@@ -225,7 +227,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                 if (isJoining) { //Client connection: succesful
                     System.out.println("Client connection: succesful");
                     //create new game and draw chessboard
-                    Game newGUI = JChessApp.jcv.addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
+                    Game newGUI = JChessApp.getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
                     client.game = newGUI;
                     newGUI.add(newGUI.chat);
                     newGUI.chessboard.draw();

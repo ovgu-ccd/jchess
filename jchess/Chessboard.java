@@ -21,9 +21,8 @@
 package jchess;
 
 import jchess.Moves.castling;
+import jchess.gui.JChessApp;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -36,7 +35,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JPanel;
-import jchess.Moves.castling;
 
 /** Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
@@ -396,7 +394,7 @@ public class Chessboard extends JPanel {
                         color = "B";
                     }
 
-                    String newPiece = JChessApp.jcv.showPawnPromotionBox(color); //return name of new piece
+                    String newPiece = JChessApp.getJcv().showPawnPromotionBox(color); //return name of new piece
 
                     if (newPiece.equals("Queen")) { // transform pawn to queen
                         Queen queen = new Queen(this, end.piece.player);
