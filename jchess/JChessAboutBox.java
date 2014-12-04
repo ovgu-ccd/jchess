@@ -16,6 +16,8 @@
 package jchess;
 
 import org.jdesktop.application.Action;
+import javax.swing.ImageIcon;
+import java.util.ResourceBundle;
 
 public class JChessAboutBox extends javax.swing.JDialog {
 
@@ -54,8 +56,8 @@ public class JChessAboutBox extends javax.swing.JDialog {
         javax.swing.JLabel appHomepageLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(jchess.JChessApp.class).getContext().getResourceMap(JChessAboutBox.class);
-        setTitle(resourceMap.getString("title")); // NOI18N
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.main");
+        setTitle(resourceBundle.getString("about") + " " + resourceBundle.getString("Application.title") + " " + resourceBundle.getString("Application.version")); // NOI18N
         setModal(true);
         setName("aboutBox"); // NOI18N
         setResizable(false);
@@ -65,46 +67,46 @@ public class JChessAboutBox extends javax.swing.JDialog {
         closeButton.setName("closeButton"); // NOI18N
 
         appTitleLabel.setFont(appTitleLabel.getFont().deriveFont(appTitleLabel.getFont().getStyle() | java.awt.Font.BOLD, appTitleLabel.getFont().getSize()+4));
-        appTitleLabel.setText(resourceMap.getString("Application.title")); // NOI18N
+        appTitleLabel.setText(resourceBundle.getString("Application.title")); // NOI18N
         appTitleLabel.setName("appTitleLabel"); // NOI18N
 
         versionLabel.setFont(versionLabel.getFont().deriveFont(versionLabel.getFont().getStyle() | java.awt.Font.BOLD));
-        versionLabel.setText(resourceMap.getString("versionLabel.text")); // NOI18N
+        versionLabel.setText(resourceBundle.getString("versionLabel.text")); // NOI18N
         versionLabel.setName("versionLabel"); // NOI18N
 
-        appVersionLabel.setText(resourceMap.getString("Application.version")); // NOI18N
+        appVersionLabel.setText(resourceBundle.getString("Application.version")); // NOI18N
         appVersionLabel.setName("appVersionLabel"); // NOI18N
 
         homepageLabel.setFont(homepageLabel.getFont().deriveFont(homepageLabel.getFont().getStyle() | java.awt.Font.BOLD));
-        homepageLabel.setText(resourceMap.getString("homepageLabel.text")); // NOI18N
+        homepageLabel.setText(resourceBundle.getString("homepageLabel.text")); // NOI18N
         homepageLabel.setName("homepageLabel"); // NOI18N
 
-        appHomepageLabel.setText(resourceMap.getString("Application.homepage")); // NOI18N
+        appHomepageLabel.setText(resourceBundle.getString("Application.homepage")); // NOI18N
         appHomepageLabel.setName("appHomepageLabel"); // NOI18N
 
-        appDescLabel.setText(resourceMap.getString("appDescLabel.text")); // NOI18N
+        appDescLabel.setText(resourceBundle.getString("appDescLabel.text")); // NOI18N
         appDescLabel.setName("appDescLabel"); // NOI18N
 
-        imageLabel.setIcon(resourceMap.getIcon("imageLabel.icon")); // NOI18N
+        imageLabel.setIcon(new ImageIcon("resource/" + resourceBundle.getString("imageLabel.icon"))); // NOI18N
         imageLabel.setName("imageLabel"); // NOI18N
 
         vendorLabel1.setFont(vendorLabel1.getFont().deriveFont(vendorLabel1.getFont().getStyle() | java.awt.Font.BOLD));
-        vendorLabel1.setText(resourceMap.getString("vendorLabel1.text")); // NOI18N
+        vendorLabel1.setText(resourceBundle.getString("vendorLabel1.text")); // NOI18N
         vendorLabel1.setName("vendorLabel1"); // NOI18N
 
         appVendorLabel1.setName("appVendorLabel1"); // NOI18N
 
-        appHomepageLabel1.setText(resourceMap.getString("appHomepageLabel1.text")); // NOI18N
+        appHomepageLabel1.setText(resourceBundle.getString("appHomepageLabel1.text")); // NOI18N
         appHomepageLabel1.setName("appHomepageLabel1"); // NOI18N
 
-        appHomepageLabel2.setText(resourceMap.getString("appHomepageLabel2.text")); // NOI18N
+        appHomepageLabel2.setText(resourceBundle.getString("appHomepageLabel2.text")); // NOI18N
         appHomepageLabel2.setName("appHomepageLabel2"); // NOI18N
 
         vendorLabel2.setFont(vendorLabel2.getFont().deriveFont(vendorLabel2.getFont().getStyle() | java.awt.Font.BOLD));
-        vendorLabel2.setText(resourceMap.getString("vendorLabel2.text")); // NOI18N
+        vendorLabel2.setText(resourceBundle.getString("vendorLabel2.text")); // NOI18N
         vendorLabel2.setName("vendorLabel2"); // NOI18N
 
-        appHomepageLabel3.setText(resourceMap.getString("appHomepageLabel3.text")); // NOI18N
+        appHomepageLabel3.setText(resourceBundle.getString("appHomepageLabel3.text")); // NOI18N
         appHomepageLabel3.setName("appHomepageLabel3"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
