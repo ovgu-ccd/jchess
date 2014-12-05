@@ -20,8 +20,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

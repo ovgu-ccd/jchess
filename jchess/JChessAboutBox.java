@@ -15,10 +15,7 @@
 
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
-import java.util.ResourceBundle;
 
 public class JChessAboutBox extends javax.swing.JDialog {
 

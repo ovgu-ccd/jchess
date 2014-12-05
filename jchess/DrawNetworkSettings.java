@@ -19,7 +19,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
 import jchess.server.Server;
 
 import javax.swing.*;

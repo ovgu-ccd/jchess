@@ -20,8 +20,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;

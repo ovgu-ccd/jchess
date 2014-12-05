@@ -19,8 +19,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;

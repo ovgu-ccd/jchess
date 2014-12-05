@@ -15,8 +15,6 @@
 
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
-import java.util.ResourceBundle;
 
 
 /**
@@ -32,7 +29,99 @@ import java.util.ResourceBundle;
  */
 public class JChessView extends JFrame implements ActionListener, ComponentListener {
     static GUI gui = null;
+    // End of variables declaration//GEN-END:variables
+    //private JTabbedPaneWithIcon gamesPane;
+    private final Timer messageTimer;
+    private final Timer busyIconTimer;
+    private final Icon idleIcon;
+    private final Icon[] busyIcons = new Icon[15];
+    public javax.swing.JPanel mainPanel;
+    public JDialog newGameFrame;
     GUI activeGUI;//in future it will be reference to active tab
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu gameMenu;
+    private javax.swing.JTabbedPane gamesPane;
+    private javax.swing.JMenuItem loadGameItem;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem moveBackItem;
+    private javax.swing.JMenuItem moveForwardItem;
+    private javax.swing.JMenuItem newGameItem;
+    private javax.swing.JMenu optionsMenu;
+    private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem rewindToBegin;
+    private javax.swing.JMenuItem rewindToEnd;
+    private javax.swing.JMenuItem saveGameItem;
+    private javax.swing.JLabel statusAnimationLabel;
+    private javax.swing.JLabel statusMessageLabel;
+    private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenuItem themeSettingsMenu;
+    private int busyIconIndex = 0;
+    private JDialog aboutBox;
+    private PawnPromotionWindow promotionBox;
+    private JMenu fileMenu;
+    private JMenuItem exitMenuItem;
+    private JMenu helpMenu;
+    private JMenuItem aboutMenuItem;
+    private JSeparator statusPanelSeparator;
+
+    public JChessView() {
+        super();
+
+        initComponents();
+        // status bar initialization - message timeout, idle icon and busy animation, etc
+        int messageTimeout = Integer.parseInt(StringResources.GUI.getString("StatusBar.messageTimeout"));
+        messageTimer = new Timer(messageTimeout, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        messageTimer.setRepeats(false);
+        int busyAnimationRate = Integer.parseInt(StringResources.GUI.getString("StatusBar.busyAnimationRate"));
+        for (int i = 0; i < busyIcons.length; i++) {
+            busyIcons[i] = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.busyIcons[" + i + "]"));
+        }
+        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
+                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
+            }
+        });
+        idleIcon = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.idleIcon"));
+        statusAnimationLabel.setIcon(idleIcon);
+        progressBar.setVisible(false);
+
+        // connecting action tasks to status bar via TaskMonitor
+
+        statusPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                String propertyName = evt.getPropertyName();
+                if ("started".equals(propertyName)) {
+                    if (!busyIconTimer.isRunning()) {
+                        statusAnimationLabel.setIcon(busyIcons[0]);
+                        busyIconIndex = 0;
+                        busyIconTimer.start();
+                    }
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(true);
+                } else if ("done".equals(propertyName)) {
+                    busyIconTimer.stop();
+                    statusAnimationLabel.setIcon(idleIcon);
+                    progressBar.setVisible(false);
+                    progressBar.setValue(0);
+                } else if ("message".equals(propertyName)) {
+                    String text = (String) (evt.getNewValue());
+                    statusMessageLabel.setText((text == null) ? "" : text);
+                    messageTimer.restart();
+                } else if ("progress".equals(propertyName)) {
+                    int value = (Integer) (evt.getNewValue());
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(value);
+                }
+            }
+        });
+
+    }
 
     public Game addNewTab(String title) {
         Game newGUI = new Game();
@@ -94,75 +183,14 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
             try {
                 ThemeChooseWindow choose = new ThemeChooseWindow(this);
                 choose.setVisible(true);
-            } catch(Exception exc) {
+            } catch (Exception exc) {
                 JOptionPane.showMessageDialog(
-                    this,
-                    exc.getMessage()
+                        this,
+                        exc.getMessage()
                 );
                 System.out.println("Something wrong creating window - perhaps themeList is null");
             }
         }
-    }
-
-
-
-    public JChessView() {
-        super();
-
-        initComponents();
-        // status bar initialization - message timeout, idle icon and busy animation, etc
-        int messageTimeout = Integer.parseInt(StringResources.GUI.getString("StatusBar.messageTimeout"));
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
-            }
-        });
-        messageTimer.setRepeats(false);
-        int busyAnimationRate = Integer.parseInt(StringResources.GUI.getString("StatusBar.busyAnimationRate"));
-        for (int i = 0; i < busyIcons.length; i++) {
-            busyIcons[i] = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.busyIcons[" + i + "]"));
-        }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
-                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
-            }
-        });
-        idleIcon = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.idleIcon"));
-        statusAnimationLabel.setIcon(idleIcon);
-        progressBar.setVisible(false);
-
-        // connecting action tasks to status bar via TaskMonitor
-
-        statusPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                String propertyName = evt.getPropertyName();
-                if ("started".equals(propertyName)) {
-                    if (!busyIconTimer.isRunning()) {
-                        statusAnimationLabel.setIcon(busyIcons[0]);
-                        busyIconIndex = 0;
-                        busyIconTimer.start();
-                    }
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(true);
-                } else if ("done".equals(propertyName)) {
-                    busyIconTimer.stop();
-                    statusAnimationLabel.setIcon(idleIcon);
-                    progressBar.setVisible(false);
-                    progressBar.setValue(0);
-                } else if ("message".equals(propertyName)) {
-                    String text = (String)(evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
-                    messageTimer.restart();
-                } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(value);
-                }
-            }
-        });
-
     }
 
     public void showAboutBox() {
@@ -192,9 +220,8 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         return "";
     }
 
-
-
-    /** This method is called from within the constructor to
+    /**
+     * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
@@ -205,11 +232,11 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         mainPanel = new javax.swing.JPanel();
         gamesPane = new jchess.JChessTabbedPane();
         menuBar = new javax.swing.JMenuBar();
-        javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        fileMenu = new JMenu();
         newGameItem = new javax.swing.JMenuItem();
         loadGameItem = new javax.swing.JMenuItem();
         saveGameItem = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
+        exitMenuItem = new JMenuItem();
         gameMenu = new javax.swing.JMenu();
         moveBackItem = new javax.swing.JMenuItem();
         moveForwardItem = new javax.swing.JMenuItem();
@@ -217,10 +244,10 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         rewindToEnd = new javax.swing.JMenuItem();
         optionsMenu = new javax.swing.JMenu();
         themeSettingsMenu = new javax.swing.JMenuItem();
-        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new JMenu();
+        aboutMenuItem = new JMenuItem();
         statusPanel = new javax.swing.JPanel();
-        javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
+        statusPanelSeparator = new JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
@@ -235,17 +262,17 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                      .addContainerGap()
-                      .addComponent(gamesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
-                      .addContainerGap())
+                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(gamesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                      .addContainerGap()
-                      .addComponent(gamesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE))
+                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(gamesPane, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -366,27 +393,27 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                      .addContainerGap()
-                      .addComponent(statusMessageLabel)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 616, Short.MAX_VALUE)
-                      .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                      .addComponent(statusAnimationLabel)
-                      .addContainerGap())
+                statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+                        .addGroup(statusPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(statusMessageLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 616, Short.MAX_VALUE)
+                                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(statusAnimationLabel)
+                                .addContainerGap())
         );
         statusPanelLayout.setVerticalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                      .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                              .addComponent(statusMessageLabel)
-                              .addComponent(statusAnimationLabel)
-                              .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                      .addGap(3, 3, 3))
+                statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(statusPanelLayout.createSequentialGroup()
+                                .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(statusMessageLabel)
+                                        .addComponent(statusAnimationLabel)
+                                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(3, 3, 3))
         );
 
         add(mainPanel);
@@ -397,18 +424,18 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
     private void moveBackItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveBackItemActionPerformed
         //GEN-HEADEREND:event_moveBackItemActionPerformed
-        if( gui != null && gui.game != null ) {
+        if (gui != null && gui.game != null) {
             gui.game.undo();
         } else {
             try {
                 Game activeGame = this.getActiveTabGame();
-                if( !activeGame.undo() ) {
+                if (!activeGame.undo()) {
                     JOptionPane.showMessageDialog(null, "Nie da sie cofnac!");
                 }
-            } catch( java.lang.ArrayIndexOutOfBoundsException exc ) {
+            } catch (java.lang.ArrayIndexOutOfBoundsException exc) {
                 JOptionPane.showMessageDialog(null, "Brak aktywnej karty!");
-            } catch( UnsupportedOperationException exc ) {
-                JOptionPane.showMessageDialog(null , exc.getMessage());
+            } catch (UnsupportedOperationException exc) {
+                JOptionPane.showMessageDialog(null, exc.getMessage());
             }
         }
 
@@ -429,18 +456,18 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
     private void moveForwardItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveForwardItemActionPerformed
         //GEN-HEADEREND:event_moveForwardItemActionPerformed
         // TODO add your handling code here:
-        if( gui != null && gui.game != null) {
+        if (gui != null && gui.game != null) {
             gui.game.redo();
         } else {
             try {
                 Game activeGame = this.getActiveTabGame();
-                if( !activeGame.redo() ) {
+                if (!activeGame.redo()) {
                     JOptionPane.showMessageDialog(null, "W pamieci brak ruchow do przodu!");
                 }
-            } catch( java.lang.ArrayIndexOutOfBoundsException exc ) {
+            } catch (java.lang.ArrayIndexOutOfBoundsException exc) {
                 JOptionPane.showMessageDialog(null, "Brak aktywnej karty!");
-            } catch( UnsupportedOperationException exc ) {
-                JOptionPane.showMessageDialog(null , exc.getMessage());
+            } catch (UnsupportedOperationException exc) {
+                JOptionPane.showMessageDialog(null, exc.getMessage());
             }
         }
     }//GEN-LAST:event_moveForwardItemActionPerformed
@@ -449,13 +476,13 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         //GEN-HEADEREND:event_rewindToBeginActionPerformed
         try {
             Game activeGame = this.getActiveTabGame();
-            if( !activeGame.rewindToBegin() ) {
+            if (!activeGame.rewindToBegin()) {
                 JOptionPane.showMessageDialog(null, "W pamieci brak ruchow do przodu!");
             }
-        } catch(ArrayIndexOutOfBoundsException exc) {
+        } catch (ArrayIndexOutOfBoundsException exc) {
             JOptionPane.showMessageDialog(null, "Brak aktywnej karty!");
-        } catch( UnsupportedOperationException exc ) {
-            JOptionPane.showMessageDialog(null , exc.getMessage());
+        } catch (UnsupportedOperationException exc) {
+            JOptionPane.showMessageDialog(null, exc.getMessage());
         }
     }//GEN-LAST:event_rewindToBeginActionPerformed
 
@@ -463,45 +490,15 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         //GEN-HEADEREND:event_rewindToEndActionPerformed
         try {
             Game activeGame = this.getActiveTabGame();
-            if( !activeGame.rewindToEnd() ) {
+            if (!activeGame.rewindToEnd()) {
                 JOptionPane.showMessageDialog(null, "W pamieci brak ruchow wstecz!");
             }
-        } catch( ArrayIndexOutOfBoundsException exc ) {
+        } catch (ArrayIndexOutOfBoundsException exc) {
             JOptionPane.showMessageDialog(null, "Brak aktywnej karty!");
-        } catch( UnsupportedOperationException exc ) {
-            JOptionPane.showMessageDialog(null , exc.getMessage());
+        } catch (UnsupportedOperationException exc) {
+            JOptionPane.showMessageDialog(null, exc.getMessage());
         }
     }//GEN-LAST:event_rewindToEndActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu gameMenu;
-    private javax.swing.JTabbedPane gamesPane;
-    private javax.swing.JMenuItem loadGameItem;
-    public javax.swing.JPanel mainPanel;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem moveBackItem;
-    private javax.swing.JMenuItem moveForwardItem;
-    private javax.swing.JMenuItem newGameItem;
-    private javax.swing.JMenu optionsMenu;
-    private javax.swing.JProgressBar progressBar;
-    private javax.swing.JMenuItem rewindToBegin;
-    private javax.swing.JMenuItem rewindToEnd;
-    private javax.swing.JMenuItem saveGameItem;
-    private javax.swing.JLabel statusAnimationLabel;
-    private javax.swing.JLabel statusMessageLabel;
-    private javax.swing.JPanel statusPanel;
-    private javax.swing.JMenuItem themeSettingsMenu;
-    // End of variables declaration//GEN-END:variables
-    //private JTabbedPaneWithIcon gamesPane;
-    private final Timer messageTimer;
-    private final Timer busyIconTimer;
-    private final Icon idleIcon;
-    private final Icon[] busyIcons = new Icon[15];
-    private int busyIconIndex = 0;
-
-    private JDialog aboutBox;
-    private PawnPromotionWindow promotionBox;
-    public  JDialog  newGameFrame;
 
     public void componentResized(ComponentEvent e) {
         System.out.println("jchessView resized!!;");
@@ -509,7 +506,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
     }
 
     protected Game getActiveTabGame() throws ArrayIndexOutOfBoundsException {
-        Game activeGame = (Game)this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
+        Game activeGame = (Game) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
         return activeGame;
     }
 

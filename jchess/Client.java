@@ -20,7 +20,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
 import jchess.server.Connection_info;
 
 import javax.swing.*;

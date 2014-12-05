@@ -20,8 +20,6 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;

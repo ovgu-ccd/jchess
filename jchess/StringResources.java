@@ -1,4 +1,4 @@
-package jchess.resources.strings;
+package jchess;
 
 import java.util.Enumeration;
 import java.util.ResourceBundle;

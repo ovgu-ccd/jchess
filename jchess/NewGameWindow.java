@@ -20,11 +20,7 @@
  */
 package jchess;
 
-import jchess.resources.strings.StringResources;
-
-import javax.naming.spi.ResolveResult;
 import javax.swing.*;
-import java.util.ResourceBundle;
 
 /**
  *
