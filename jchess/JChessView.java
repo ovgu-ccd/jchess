@@ -111,17 +111,16 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
         initComponents();
         // status bar initialization - message timeout, idle icon and busy animation, etc
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.strings.gui");
-        int messageTimeout = Integer.parseInt(resourceBundle.getString("StatusBar.messageTimeout"));
+        int messageTimeout = Integer.parseInt(StringResources.GUI.getString("StatusBar.messageTimeout"));
         messageTimer = new Timer(messageTimeout, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 statusMessageLabel.setText("");
             }
         });
         messageTimer.setRepeats(false);
-        int busyAnimationRate = Integer.parseInt(resourceBundle.getString("StatusBar.busyAnimationRate"));
+        int busyAnimationRate = Integer.parseInt(StringResources.GUI.getString("StatusBar.busyAnimationRate"));
         for (int i = 0; i < busyIcons.length; i++) {
-            busyIcons[i] = new ImageIcon("resource/" + resourceBundle.getString("StatusBar.busyIcons[" + i + "]"));
+            busyIcons[i] = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.busyIcons[" + i + "]"));
         }
         busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -129,7 +128,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
             }
         });
-        idleIcon = new ImageIcon("resource/" + resourceBundle.getString("StatusBar.idleIcon"));
+        idleIcon = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.idleIcon"));
         statusAnimationLabel.setIcon(idleIcon);
         progressBar.setVisible(false);
 

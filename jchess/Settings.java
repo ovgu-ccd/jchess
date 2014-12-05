@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
  */
 public class Settings implements Serializable {
 
-    private static ResourceBundle loc = null;
     public int timeForGame;
     public boolean runningChat;
     public boolean runningGameClock;
@@ -64,20 +63,5 @@ public class Settings implements Serializable {
      */
     public int getTimeForGame() {
         return this.timeForGame;
-    }
-
-    public static String lang(String key) {
-        if (Settings.loc == null) {
-            Settings.loc = ResourceBundle.getBundle("jchess.resources.main");
-            Locale.setDefault(Locale.ENGLISH);
-        }
-        String result = "";
-        try {
-            result = Settings.loc.getString(key);
-        } catch (java.util.MissingResourceException exc) {
-            result = key;
-        }
-        System.out.println(Settings.loc.getLocale().toString());
-        return result;
     }
 }

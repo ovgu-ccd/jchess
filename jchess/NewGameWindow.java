@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.resources.strings.StringResources;
+
 import javax.naming.spi.ResolveResult;
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -36,8 +38,8 @@ public class NewGameWindow extends JDialog {
         initComponents();
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.jTabbedPane1.addTab(Settings.lang("local_game"), new DrawLocalSettings(this));
-        this.jTabbedPane1.addTab(Settings.lang("network_game"), new DrawNetworkSettings(this));
+        this.jTabbedPane1.addTab(StringResources.MAIN.getString("local_game"), new DrawLocalSettings(this));
+        this.jTabbedPane1.addTab(StringResources.MAIN.getString("network_game"), new DrawNetworkSettings(this));
     }
 
     /** This method is called from within the constructor to
@@ -52,7 +54,7 @@ public class NewGameWindow extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setName("Form"); // NOI18N
-        setTitle(ResourceBundle.getBundle("jchess.resources.strings.gui").getString("newGameWindow.title"));
+        setTitle(StringResources.MAIN.getString("newGameWindow.title"));
 
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
