@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.resources.strings.StringResources;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -48,7 +50,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
 
         if (dir.exists()) {
             File[] files = dir.listFiles();
-            this.setTitle(Settings.lang("choose_theme_window_title"));
+            this.setTitle(StringResources.MAIN.getString("choose_theme_window_title"));
             Dimension winDim = new Dimension(550, 230);
             this.setMinimumSize(winDim);
             this.setMaximumSize(winDim);
@@ -91,7 +93,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             this.setModal(true);
         } else {
             throw new Exception(
-                Settings.lang("error_when_creating_theme_config_window"));
+                    StringResources.MAIN.getString("error_when_creating_theme_config_window"));
         }
 
     }
@@ -128,7 +130,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
                 } catch (java.io.IOException exc) {
                 }
                 JOptionPane.showMessageDialog(this,
-                                              Settings.lang("changes_visible_after_restart"));
+                        StringResources.MAIN.getString("changes_visible_after_restart"));
                 this.setVisible(false);
 
             }

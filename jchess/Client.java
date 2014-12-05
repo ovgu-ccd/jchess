@@ -20,6 +20,7 @@
  */
 package jchess;
 
+import jchess.resources.strings.StringResources;
 import jchess.server.Connection_info;
 
 import javax.swing.*;
@@ -140,12 +141,12 @@ public class Client implements Runnable {
                     game.newGame();//start new Game
                     game.chessboard.draw();
                 } else if (in.equals("#errorConnection")) {
-                    game.chat.addMessage("** "+Settings.lang("error_connecting_one_of_player")+" **");
+                    game.chat.addMessage("** "+ StringResources.MAIN.getString("error_connecting_one_of_player")+" **");
                 } else if(in.equals("#undoAsk") && !this.isObserver) {
                     int result = JOptionPane.showConfirmDialog(
                                      null,
-                                     Settings.lang("your_oponent_plase_to_undo_move_do_you_agree"),
-                                     Settings.lang("confirm_undo_move"),
+                            StringResources.MAIN.getString("your_oponent_plase_to_undo_move_do_you_agree"),
+                            StringResources.MAIN.getString("confirm_undo_move"),
                                      JOptionPane.YES_NO_OPTION
                                  );
 
@@ -159,14 +160,14 @@ public class Client implements Runnable {
                 } else if(in.equals("#undoAnswerPositive") && ( this.wait4undoAnswer || this.isObserver ) ) {
                     this.wait4undoAnswer = false;
                     String lastMove = game.moves.getMoves().get( game.moves.getMoves().size() -1 );
-                    game.chat.addMessage("** "+Settings.lang("permision_ok_4_undo_move")+": "+lastMove+"**");
+                    game.chat.addMessage("** "+StringResources.MAIN.getString("permision_ok_4_undo_move")+": "+lastMove+"**");
                     game.chessboard.undo();
                 } else if(in.equals("#undoAnswerNegative") && this.wait4undoAnswer) {
-                    game.chat.addMessage( Settings.lang("no_permision_4_undo_move") );
+                    game.chat.addMessage( StringResources.MAIN.getString("no_permision_4_undo_move") );
                 }
             } catch (IOException ex) {
                 isOK = false;
-                game.chat.addMessage("** "+Settings.lang("error_connecting_to_server")+" **");
+                game.chat.addMessage("** "+StringResources.MAIN.getString("error_connecting_to_server")+" **");
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.resources.strings.StringResources;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
@@ -92,7 +94,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             fileW = new FileWriter(file);
         } catch (java.io.IOException exc) {
             System.err.println("error creating fileWriter: " + exc);
-            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file")+": " + exc);
+            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file")+": " + exc);
             return;
         }
         Calendar cal = Calendar.getInstance();
@@ -107,10 +109,10 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             fileW.close();
         } catch (java.io.IOException exc) {
             System.out.println("error writing to file: " + exc);
-            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file")+": " + exc);
+            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file")+": " + exc);
             return;
         }
-        JOptionPane.showMessageDialog(this, Settings.lang("game_saved_properly"));
+        JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("game_saved_properly"));
     }
 
     /** Loading game method(loading game state from the earlier saved file)
@@ -340,7 +342,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                 result = true;
             }
         } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
+            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
         }
 
         return result;
@@ -354,7 +356,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                 result = true;
             }
         } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
+            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
         }
 
         return result;
@@ -369,7 +371,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                 chessboard.repaint();//repaint for sure
             }
         } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
+            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
         }
         return status;
     }

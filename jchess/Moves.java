@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.resources.strings.StringResources;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +33,6 @@ import java.util.Stack;
  * that the moves taken by player are correct.
  * All moves which was taken by current player are saving as List of Strings
  * The history of moves is printing in a table
- * @param game The current game
  */
 public class Moves extends AbstractTableModel {
 
@@ -39,7 +40,7 @@ public class Moves extends AbstractTableModel {
     private int columnsNum = 3;
     private int rowsNum = 0;
     private String[] names = new String[] {
-        Settings.lang("white"), Settings.lang("black")
+            StringResources.MAIN.getString("white"), StringResources.MAIN.getString("black")
     };
     private MyDefaultTableModel tableModel;
     private JScrollPane scrollPane;
@@ -386,7 +387,7 @@ public class Moves extends AbstractTableModel {
         }
         for (String locMove : tempArray) { //test if moves are written correctly
             if (!Moves.isMoveCorrect(locMove.trim())) { //if not
-                JOptionPane.showMessageDialog(this.game, Settings.lang("invalid_file_to_load") + move);
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("invalid_file_to_load") + move);
                 return;//show message and finish reading game
             }
         }
@@ -418,7 +419,7 @@ public class Moves extends AbstractTableModel {
                 canMove = this.game.simulateMove(values[0], values[1], values[2], values[3]);
 
                 if (!canMove) { //if move is illegal
-                    JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
+                    JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
                     return;//finish reading game and show message
                 }
                 continue;
@@ -461,7 +462,7 @@ public class Moves extends AbstractTableModel {
             }
             canMove = this.game.simulateMove(xFrom, yFrom, xTo, yTo);
             if (!canMove) { //if move is illegal
-                JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
                 this.game.chessboard.activeSquare = null;
                 return;//finish reading game and show message
             }

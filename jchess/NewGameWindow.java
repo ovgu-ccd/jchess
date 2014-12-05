@@ -54,7 +54,7 @@ public class NewGameWindow extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setName("Form"); // NOI18N
-        setTitle(StringResources.MAIN.getString("newGameWindow.title"));
+        setTitle(StringResources.GUI.getString("newGameWindow.title"));
 
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
