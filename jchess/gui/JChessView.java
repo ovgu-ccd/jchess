@@ -13,7 +13,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jchess;
+package jchess.gui;
+
+import jchess.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -232,7 +234,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         setTitle(StringResources.MAIN.getString("Application.title"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new javax.swing.JPanel();
-        gamesPane = new jchess.JChessTabbedPane();
+        gamesPane = new JChessTabbedPane();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new JMenu();
         newGameItem = new javax.swing.JMenuItem();

@@ -18,7 +18,9 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +52,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     public Moves moves;
     public Chat chat;
 
-    Game() {
+    public Game() {
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
@@ -98,7 +100,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         Calendar cal = Calendar.getInstance();
         String str = new String("");
         String info = new String("[Event \"Game\"]\n[Date \"" + cal.get(cal.YEAR) + "." + (cal.get(cal.MONTH) + 1) + "." + cal.get(cal.DAY_OF_MONTH) + "\"]\n"
-                                 + "[White \"" + this.settings.playerWhite.name + "\"]\n[Black \"" + this.settings.playerBlack.name + "\"]\n\n");
+                                 + "[White \"" + this.settings.playerWhite.getName() + "\"]\n[Black \"" + this.settings.playerBlack.getName() + "\"]\n\n");
         str += info;
         str += this.moves.getMovesInString();
         try {
@@ -153,8 +155,8 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         Game newGUI = Application.getInstance().getJcv().addNewTab(whiteName + " vs. " + blackName);
         Settings locSetts = newGUI.settings;
-        locSetts.playerBlack.name = blackName;
-        locSetts.playerWhite.name = whiteName;
+        locSetts.playerBlack.setName(blackName);
+        locSetts.playerWhite.setName(whiteName);
         locSetts.playerBlack.setType(Player.playerTypes.localUser);
         locSetts.playerWhite.setType(Player.playerTypes.localUser);
         locSetts.gameMode = Settings.gameModes.loadGame;
@@ -271,7 +273,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     public void nextMove() {
         switchActive();
 
-        System.out.println("next move, active player: " + activePlayer.name + ", color: " + activePlayer.color.name() + ", type: " + activePlayer.playerType.name());
+        System.out.println("next move, active player: " + activePlayer.getName() + ", color: " + activePlayer.getColor().name() + ", type: " + activePlayer.playerType.name());
         if (activePlayer.playerType == Player.playerTypes.localUser) {
             this.blockedChessboard = false;
         } else if (activePlayer.playerType == Player.playerTypes.networkUser) {
@@ -404,7 +406,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                         if (settings.gameType == Settings.gameTypes.local) {
                             chessboard.move(chessboard.activeSquare, sq);
                         } else if (settings.gameType == Settings.gameTypes.network) {
-                            client.sendMove(chessboard.activeSquare.pozX, chessboard.activeSquare.pozY, sq.pozX, sq.pozY);
+                            client.sendMove(chessboard.activeSquare.getPozX(), chessboard.activeSquare.getPozY(), sq.getPozX(), sq.getPozY());
                             chessboard.move(chessboard.activeSquare, sq);
                         }
 
@@ -423,7 +425,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
 
                         switch (king.isCheckmatedOrStalemated()) {
                         case 1:
-                            this.endGame("Checkmate! " + king.player.color.toString() + " player lose!");
+                            this.endGame("Checkmate! " + king.player.getColor().toString() + " player lose!");
                             break;
                         case 2:
                             this.endGame("Stalemate! Draw!");

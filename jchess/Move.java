@@ -19,8 +19,9 @@
 package jchess;
 
 import jchess.Moves.castling;
+import jchess.gui.Chessboard;
 
-class Move {
+public class Move {
 
     protected Square from = null;
     protected Square to = null;
@@ -41,9 +42,9 @@ class Move {
         this.castlingMove = castlingMove;
         this.wasEnPassant = wasEnPassant;
 
-        if (movedPiece.name.equals("Pawn") && Math.abs(to.pozY - from.pozY) == 2) {
+        if (movedPiece.getName().equals("Pawn") && Math.abs(to.getPozY() - from.getPozY()) == 2) {
             this.wasPawnTwoFieldsMove = true;
-        } else if (movedPiece.name.equals("Pawn") && to.pozY == Chessboard.bottom || to.pozY == Chessboard.top && promotedPiece != null) {
+        } else if (movedPiece.getName().equals("Pawn") && to.getPozY() == Chessboard.bottom || to.getPozY() == Chessboard.top && promotedPiece != null) {
             this.promotedTo = promotedPiece;
         }
     }

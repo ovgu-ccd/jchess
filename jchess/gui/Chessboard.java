@@ -18,8 +18,9 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
 
+import jchess.*;
 import jchess.Moves.castling;
 
 import javax.swing.*;
@@ -148,7 +149,7 @@ public class Chessboard extends JPanel {
             System.out.println("error setting figures like rook etc.");
             return;
         } else if (i == 0) {
-            player.goDown = true;
+            player.setGoDown(true);
         }
 
         this.squares[0][i].setPiece(new SpecialRook(this, player));
@@ -159,14 +160,14 @@ public class Chessboard extends JPanel {
         this.squares[5][i].setPiece(new Bishop(this, player));
         if (upsideDown) {
             this.squares[4][i].setPiece(new Queen(this, player));
-            if (player.color == Player.colors.white) {
+            if (player.getColor() == Player.colors.white) {
                 this.squares[3][i].setPiece(kingWhite = new BurgerKing(this, player));
             } else {
                 this.squares[3][i].setPiece(kingBlack = new BurgerKing(this, player));
             }
         } else {
             this.squares[3][i].setPiece(new Queen(this, player));
-            if (player.color == Player.colors.white) {
+            if (player.getColor() == Player.colors.white) {
                 this.squares[4][i].setPiece(kingWhite = new BurgerKing(this, player));
             } else {
                 this.squares[4][i].setPiece(kingBlack = new BurgerKing(this, player));
@@ -228,8 +229,8 @@ public class Chessboard extends JPanel {
      */
     public void select(Square sq) {
         this.activeSquare = sq;
-        this.active_x_square = sq.pozX + 1;
-        this.active_y_square = sq.pozY + 1;
+        this.active_x_square = sq.getPozX() + 1;
+        this.active_y_square = sq.getPozY() + 1;
 
         //this.draw();//redraw
         System.out.println("active_x: " + this.active_x_square + " active_y: " + this.active_y_square);//4tests
@@ -271,7 +272,7 @@ public class Chessboard extends JPanel {
     }/*--endOf-get_height--*/
 
 
-    int get_square_height() {
+    public int get_square_height() {
         int result = (int) this.square_height;
         return result;
     }
@@ -335,53 +336,53 @@ public class Chessboard extends JPanel {
         end.piece = begin.piece;//for ending square set piece from beginin square
         begin.piece = null;//make null piece for begining square
 
-        if (end.piece.name.equals("King") || end.piece.name.equals("BurgerKing")) {
+        if (end.piece.getName().equals("King") || end.piece.getName().equals("BurgerKing")) {
             if (!((King) end.piece).wasMotion) {
                 breakCastling = true;
                 ((King) end.piece).wasMotion = true;
             }
 
             //Castling
-            if (begin.pozX + 2 == end.pozX) {
-                move(squares[7][begin.pozY], squares[end.pozX - 1][begin.pozY], false, false);
+            if (begin.getPozX() + 2 == end.getPozX()) {
+                move(squares[7][begin.getPozY()], squares[end.getPozX() - 1][begin.getPozY()], false, false);
                 ifWasCastling = end.piece;  //for undo
                 wasCastling = Moves.castling.shortCastling;
                 //this.moves_history.addMove(tempBegin, tempEnd, clearForwardHistory, wasCastling, wasEnPassant);
                 //return;
-            } else if (begin.pozX - 2 == end.pozX) {
-                move(squares[0][begin.pozY], squares[end.pozX + 1][begin.pozY], false, false);
+            } else if (begin.getPozX() - 2 == end.getPozX()) {
+                move(squares[0][begin.getPozY()], squares[end.getPozX() + 1][begin.getPozY()], false, false);
                 ifWasCastling = end.piece;  // for undo
                 wasCastling = Moves.castling.longCastling;
                 //this.moves_history.addMove(tempBegin, tempEnd, clearForwardHistory, wasCastling, wasEnPassant);
                 //return;
             }
             //endOf Castling
-        } else if (end.piece.name.equals("Rook") || end.piece.name.equals("SpecialRook")) {
-            if (!((Rook) end.piece).wasMotion) {
+        } else if (end.piece.getName().equals("Rook") || end.piece.getName().equals("SpecialRook")) {
+            if (!((Rook) end.piece).isWasMotion()) {
                 breakCastling = true;
-                ((Rook) end.piece).wasMotion = true;
+                ((Rook) end.piece).setWasMotion(true);
             }
-        } else if (end.piece.name.equals("Pawn") || end.piece.name.equals("HyperPawn")) {
-            if (twoSquareMovedPawn != null && squares[end.pozX][begin.pozY] == twoSquareMovedPawn.square) { //en passant
-                ifWasEnPassant = squares[end.pozX][begin.pozY].piece; //for undo
+        } else if (end.piece.getName().equals("Pawn") || end.piece.getName().equals("HyperPawn")) {
+            if (twoSquareMovedPawn != null && squares[end.getPozX()][begin.getPozY()] == twoSquareMovedPawn.square) { //en passant
+                ifWasEnPassant = squares[end.getPozX()][begin.getPozY()].piece; //for undo
 
-                tempEnd.piece = squares[end.pozX][begin.pozY].piece; //ugly hack - put taken pawn in en passant plasty do end square
+                tempEnd.piece = squares[end.getPozX()][begin.getPozY()].piece; //ugly hack - put taken pawn in en passant plasty do end square
 
-                squares[end.pozX][begin.pozY].piece = null;
+                squares[end.getPozX()][begin.getPozY()].piece = null;
                 wasEnPassant = true;
             }
 
-            if (begin.pozY - end.pozY == 2 || end.pozY - begin.pozY == 2) { //moved two square
+            if (begin.getPozY() - end.getPozY() == 2 || end.getPozY() - begin.getPozY() == 2) { //moved two square
                 breakCastling = true;
                 twoSquareMovedPawn = (Pawn) end.piece;
             } else {
                 twoSquareMovedPawn = null; //erase last saved move (for En passant)
             }
 
-            if (end.piece.square.pozY == 0 || end.piece.square.pozY == 7) { //promote Pawn
+            if (end.piece.square.getPozY() == 0 || end.piece.square.getPozY() == 7) { //promote Pawn
                 if (clearForwardHistory) {
                     String color;
-                    if (end.piece.player.color == Player.colors.white) {
+                    if (end.piece.player.getColor() == Player.colors.white) {
                         color = "W"; // promotionWindow was show with pieces in this color
                     } else {
                         color = "B";
@@ -391,31 +392,31 @@ public class Chessboard extends JPanel {
 
                     if (newPiece.equals("Queen")) { // transform pawn to queen
                         Queen queen = new Queen(this, end.piece.player);
-                        queen.chessboard = end.piece.chessboard;
+                        queen.setChessboard(end.piece.getChessboard());
                         queen.player = end.piece.player;
                         queen.square = end.piece.square;
                         end.piece = queen;
                     } else if (newPiece.equals("SpecialRook")) {
                         Rook rook = new SpecialRook(this, end.piece.player);
-                        rook.chessboard = end.piece.chessboard;
+                        rook.setChessboard(end.piece.getChessboard());
                         rook.player = end.piece.player;
                         rook.square = end.piece.square;
                         end.piece = rook;
                     } else if (newPiece.equals("Rook")) { // transform pawn to rook
                         Rook rook = new Rook(this, end.piece.player);
-                        rook.chessboard = end.piece.chessboard;
+                        rook.setChessboard(end.piece.getChessboard());
                         rook.player = end.piece.player;
                         rook.square = end.piece.square;
                         end.piece = rook;
                     } else if (newPiece.equals("Bishop")) { // transform pawn to bishop
                         Bishop bishop = new Bishop(this, end.piece.player);
-                        bishop.chessboard = end.piece.chessboard;
+                        bishop.setChessboard(end.piece.getChessboard());
                         bishop.player = end.piece.player;
                         bishop.square = end.piece.square;
                         end.piece = bishop;
                     } else { // transform pawn to knight
                         Knight knight = new Knight(this, end.piece.player);
-                        knight.chessboard = end.piece.chessboard;
+                        knight.setChessboard(end.piece.getChessboard());
                         knight.player = end.piece.player;
                         knight.square = end.piece.square;
                         end.piece = knight;
@@ -423,7 +424,7 @@ public class Chessboard extends JPanel {
                     promotedPiece = end.piece;
                 }
             }
-        } else if (!end.piece.name.equals("Pawn")) {
+        } else if (!end.piece.getName().equals("Pawn")) {
             twoSquareMovedPawn = null; //erase last saved move (for En passant)
         }
         //}
@@ -457,14 +458,14 @@ public class Chessboard extends JPanel {
                 from = first.getFrom();
                 to = first.getTo();
 
-                this.move(this.squares[from.pozX][from.pozY], this.squares[to.pozX][to.pozY], true, false);
+                this.move(this.squares[from.getPozX()][from.getPozY()], this.squares[to.getPozX()][to.getPozY()], true, false);
                 if (first.getPromotedPiece() != null) {
-                    Pawn pawn = (Pawn) this.squares[to.pozX][to.pozY].piece;
+                    Pawn pawn = (Pawn) this.squares[to.getPozX()][to.getPozY()].piece;
                     pawn.square = null;
 
-                    this.squares[to.pozX][to.pozY].piece = first.getPromotedPiece();
-                    Piece promoted = this.squares[to.pozX][to.pozY].piece;
-                    promoted.square = this.squares[to.pozX][to.pozY];
+                    this.squares[to.getPozX()][to.getPozY()].piece = first.getPromotedPiece();
+                    Piece promoted = this.squares[to.getPozX()][to.getPozY()].piece;
+                    promoted.square = this.squares[to.getPozX()][to.getPozY()];
                 }
                 return true;
             }
@@ -486,54 +487,54 @@ public class Chessboard extends JPanel {
             Square end = last.getTo();
             try {
                 Piece moved = last.getMovedPiece();
-                this.squares[begin.pozX][begin.pozY].piece = moved;
+                this.squares[begin.getPozX()][begin.getPozY()].piece = moved;
 
-                moved.square = this.squares[begin.pozX][begin.pozY];
+                moved.square = this.squares[begin.getPozX()][begin.getPozY()];
 
                 Piece taken = last.getTakenPiece();
                 if (last.getCastlingMove() != castling.none) {
                     Piece rook = null;
                     if (last.getCastlingMove() == castling.shortCastling) {
-                        rook = this.squares[end.pozX - 1][end.pozY].piece;
-                        this.squares[7][begin.pozY].piece = rook;
-                        rook.square = this.squares[7][begin.pozY];
-                        this.squares[end.pozX - 1][end.pozY].piece = null;
+                        rook = this.squares[end.getPozX() - 1][end.getPozY()].piece;
+                        this.squares[7][begin.getPozY()].piece = rook;
+                        rook.square = this.squares[7][begin.getPozY()];
+                        this.squares[end.getPozX() - 1][end.getPozY()].piece = null;
                     } else {
-                        rook = this.squares[end.pozX + 1][end.pozY].piece;
-                        this.squares[0][begin.pozY].piece = rook;
-                        rook.square = this.squares[0][begin.pozY];
-                        this.squares[end.pozX + 1][end.pozY].piece = null;
+                        rook = this.squares[end.getPozX() + 1][end.getPozY()].piece;
+                        this.squares[0][begin.getPozY()].piece = rook;
+                        rook.square = this.squares[0][begin.getPozY()];
+                        this.squares[end.getPozX() + 1][end.getPozY()].piece = null;
                     }
                     ((King) moved).wasMotion = false;
-                    ((Rook) rook).wasMotion = false;
+                    ((Rook) rook).setWasMotion(false);
                     this.breakCastling = false;
-                } else if (moved.name.equals("Rook") || moved.name.equals("SpecialRook")) {
-                    ((Rook) moved).wasMotion = false;
-                } else if (moved.name.equals("Pawn") && last.wasEnPassant()) {
+                } else if (moved.getName().equals("Rook") || moved.getName().equals("SpecialRook")) {
+                    ((Rook) moved).setWasMotion(false);
+                } else if (moved.getName().equals("Pawn") && last.wasEnPassant()) {
                     Pawn pawn = (Pawn) last.getTakenPiece();
-                    this.squares[end.pozX][begin.pozY].piece = pawn;
-                    pawn.square = this.squares[end.pozX][begin.pozY];
+                    this.squares[end.getPozX()][begin.getPozY()].piece = pawn;
+                    pawn.square = this.squares[end.getPozX()][begin.getPozY()];
 
-                } else if (moved.name.equals("Pawn") && last.getPromotedPiece() != null) {
-                    Piece promoted = this.squares[end.pozX][end.pozY].piece;
+                } else if (moved.getName().equals("Pawn") && last.getPromotedPiece() != null) {
+                    Piece promoted = this.squares[end.getPozX()][end.getPozY()].piece;
                     promoted.square = null;
-                    this.squares[end.pozX][end.pozY].piece = null;
+                    this.squares[end.getPozX()][end.getPozY()].piece = null;
                 }
 
                 //check one more move back for en passant
                 Move oneMoveEarlier = this.moves_history.getLastMoveFromHistory();
                 if (oneMoveEarlier != null && oneMoveEarlier.wasPawnTwoFieldsMove()) {
-                    Piece canBeTakenEnPassant = this.squares[oneMoveEarlier.getTo().pozX][oneMoveEarlier.getTo().pozY].piece;
-                    if (canBeTakenEnPassant.name.equals("Pawn")) {
+                    Piece canBeTakenEnPassant = this.squares[oneMoveEarlier.getTo().getPozX()][oneMoveEarlier.getTo().getPozY()].piece;
+                    if (canBeTakenEnPassant.getName().equals("Pawn")) {
                         this.twoSquareMovedPawn = (Pawn) canBeTakenEnPassant;
                     }
                 }
 
                 if (taken != null && !last.wasEnPassant()) {
-                    this.squares[end.pozX][end.pozY].piece = taken;
-                    taken.square = this.squares[end.pozX][end.pozY];
+                    this.squares[end.getPozX()][end.getPozY()].piece = taken;
+                    taken.square = this.squares[end.getPozX()][end.getPozY()];
                 } else {
-                    this.squares[end.pozX][end.pozY].piece = null;
+                    this.squares[end.getPozX()][end.getPozY()].piece = null;
                 }
 
                 if (refresh) {
@@ -557,7 +558,7 @@ public class Chessboard extends JPanel {
      * Method to draw Chessboard and their elements (pieces etc.)
      * @deprecated
      */
-    void draw() {
+    public void draw() {
         this.getGraphics().drawImage(image, this.getTopLeftPoint().x, this.getTopLeftPoint().y, null);//draw an Image of chessboard
         this.drawLabels();
         this.repaint();
@@ -613,8 +614,8 @@ public class Chessboard extends JPanel {
             for (Iterator it = moves.iterator(); moves != null && it.hasNext();) {
                 Square sq = (Square) it.next();
                 g2d.drawImage(able_square,
-                              (sq.pozX * (int) square_height) + topLeftPoint.x,
-                              (sq.pozY * (int) square_height) + topLeftPoint.y, null);
+                              (sq.getPozX() * (int) square_height) + topLeftPoint.x,
+                              (sq.getPozY() * (int) square_height) + topLeftPoint.y, null);
             }
         }
     }/*--endOf-paint--*/

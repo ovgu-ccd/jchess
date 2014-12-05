@@ -18,15 +18,18 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.Clock;
+import jchess.Player;
+import jchess.Settings;
+import jchess.gui.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/** Class to representing the full game time
- * @param game The current game
- */
+/** Class to representing the full game time */
 public class GameClock extends JPanel implements Runnable {
 
     public Clock clock1;
@@ -185,7 +188,7 @@ public class GameClock extends JPanel implements Runnable {
         /*in documentation it's called 'setPlayer' but when we've 'setTimes' better to use
          * one convention of naming methods - this've to be repaired in documentation by Wąsu:P
         dojdziemy do tego:D:D:D*/
-        if (p1.color == p1.color.white) {
+        if (p1.getColor() == p1.getColor().white) {
             this.clock1.setPlayer(p1);
             this.clock2.setPlayer(p2);
         } else {
@@ -222,9 +225,9 @@ public class GameClock extends JPanel implements Runnable {
         String color = new String();
         if (this.clock1.get_left_time() == 0) {
             //Check which player win
-            color = this.clock2.getPlayer().color.toString();
+            color = this.clock2.getPlayer().getColor().toString();
         } else if (this.clock2.get_left_time() == 0) {
-            color = this.clock1.getPlayer().color.toString();
+            color = this.clock1.getPlayer().getColor().toString();
         } else {
             //if called in wrong moment
             System.out.println("Time over called when player got time 2 play");

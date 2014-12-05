@@ -18,7 +18,11 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.Application;
+import jchess.GUI;
+import jchess.StringResources;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

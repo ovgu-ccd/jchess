@@ -28,11 +28,11 @@ public class Clock {
     private int time_left;
     private Player player;
 
-    Clock() {
+    public Clock() {
         this.init(time_left);
     }
 
-    Clock(int time) {
+    public Clock(int time) {
         this.init(time);
     }
 

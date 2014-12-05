@@ -28,28 +28,44 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
-    String name;
+    private String name;
 
-    enum colors {
-
-        white, black
+    public colors getColor() {
+        return color;
     }
-    colors color;
+
+    public void setColor(colors color) {
+        this.color = color;
+    }
+
+    public boolean isGoDown() {
+        return goDown;
+    }
+
+    public void setGoDown(boolean goDown) {
+        this.goDown = goDown;
+    }
+
+    public enum colors {
+        white,
+        black
+    }
+    private colors color;
 
     public enum playerTypes {
 
         localUser, networkUser, computer
     }
     public playerTypes playerType;
-    boolean goDown;
+    private boolean goDown;
 
     public Player() {
     }
 
     public Player(String name, String color) {
-        this.name = name;
-        this.color = colors.valueOf(color);
-        this.goDown = false;
+        this.setName(name);
+        this.setColor(colors.valueOf(color));
+        this.setGoDown(false);
     }
 
     /** Method setting the players name
@@ -62,7 +78,7 @@ public class Player implements Serializable {
     /** Method getting the players name
      *  @return name of player
      */
-    String getName() {
+    public String getName() {
         return this.name;
     }
 

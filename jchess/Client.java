@@ -20,6 +20,7 @@
  */
 package jchess;
 
+import jchess.gui.Game;
 import jchess.server.Connection_info;
 
 import javax.swing.*;

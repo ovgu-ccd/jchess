@@ -1,5 +1,7 @@
 package jchess;
 
+import jchess.gui.JChessView;
+
 /**
  * Created by robert on 04.12.14.
  */

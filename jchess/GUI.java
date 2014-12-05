@@ -20,6 +20,8 @@
  */
 package jchess;
 
+import jchess.gui.Game;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +52,7 @@ public class GUI {
      * @returns : image or null if cannot load
      */
 
-    static Image loadImage(String name) {
+    public static Image loadImage(String name) {
         if (configFile == null) {
             return null;
         }
@@ -72,11 +74,11 @@ public class GUI {
         return img;
     }/*--endOf-loadImage--*/
 
-    static boolean themeIsValid(String name) {
+    public static boolean themeIsValid(String name) {
         return true;
     }
 
-    static String getJarPath() {
+    public static String getJarPath() {
         String path = GUI.class.getProtectionDomain().getCodeSource()
                       .getLocation().getFile();
         path = path.replaceAll(
@@ -89,7 +91,7 @@ public class GUI {
         return path;
     }
 
-    static Properties getConfigFile() {
+    public static Properties getConfigFile() {
         Properties confFile = new Properties();
 
         // Try to locate config.txt

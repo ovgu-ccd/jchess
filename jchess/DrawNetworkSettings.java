@@ -19,6 +19,7 @@
  */
 package jchess;
 
+import jchess.gui.Game;
 import jchess.server.Server;
 
 import javax.swing.*;

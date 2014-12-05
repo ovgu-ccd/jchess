@@ -20,6 +20,9 @@
  */
 package jchess;
 
+import jchess.gui.Chessboard;
+import jchess.gui.Game;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -48,11 +51,11 @@ public class Moves extends AbstractTableModel {
     protected Stack<Move> moveBackStack = new Stack<Move>();
     protected Stack<Move> moveForwardStack = new Stack<Move>();
 
-    enum castling {
+    public enum castling {
         none, shortCastling, longCastling
     }
 
-    Moves(Game game) {
+    public Moves(Game game) {
         super();
         this.tableModel = new MyDefaultTableModel();
         this.table = new JTable(this.tableModel);
@@ -146,11 +149,11 @@ public class Moves extends AbstractTableModel {
         String locMove = new String(begin.piece.symbol);
 
         if( game.settings.upsideDown ) {
-            locMove += Character.toString((char) ( ( Chessboard.bottom - begin.pozX) + 97));//add letter of Square from which move was made
-            locMove += Integer.toString( begin.pozY + 1 );//add number of Square from which move was made
+            locMove += Character.toString((char) ( ( Chessboard.bottom - begin.getPozX()) + 97));//add letter of Square from which move was made
+            locMove += Integer.toString( begin.getPozY() + 1 );//add number of Square from which move was made
         } else {
-            locMove += Character.toString((char) (begin.pozX + 97));//add letter of Square from which move was made
-            locMove += Integer.toString(8 - begin.pozY);//add number of Square from which move was made
+            locMove += Character.toString((char) (begin.getPozX() + 97));//add letter of Square from which move was made
+            locMove += Integer.toString(8 - begin.getPozY());//add number of Square from which move was made
         }
 
         if (end.piece != null) {
@@ -160,14 +163,14 @@ public class Moves extends AbstractTableModel {
         }
 
         if ( game.settings.upsideDown ) {
-            locMove += Character.toString((char) (( Chessboard.bottom - end.pozX) +  97));//add letter of Square to which move was made
-            locMove += Integer.toString( end.pozY + 1 );//add number of Square to which move was made
+            locMove += Character.toString((char) (( Chessboard.bottom - end.getPozX()) +  97));//add letter of Square to which move was made
+            locMove += Integer.toString( end.getPozY() + 1 );//add number of Square to which move was made
         } else {
-            locMove += Character.toString((char) (end.pozX + 97));//add letter of Square to which move was made
-            locMove += Integer.toString(8 - end.pozY);//add number of Square to which move was made
+            locMove += Character.toString((char) (end.getPozX() + 97));//add letter of Square to which move was made
+            locMove += Integer.toString(8 - end.getPozY());//add number of Square to which move was made
         }
 
-        if (begin.piece.symbol.equals("") && begin.pozX - end.pozX != 0 && end.piece == null) {
+        if (begin.piece.symbol.equals("") && begin.getPozX() - end.getPozX() != 0 && end.piece == null) {
             locMove += "(e.p)";//pawn take down opponent en passant
             wasEnPassant = true;
         }
@@ -394,7 +397,7 @@ public class Moves extends AbstractTableModel {
             if (locMove.equals("O-O-O") || locMove.equals("O-O")) { //if castling
                 int[] values = new int[4];
                 if (locMove.equals("O-O-O")) {
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
                         values = new int[] {
                             4, 0, 2, 0
                         };//move value for castling (King move)
@@ -404,7 +407,7 @@ public class Moves extends AbstractTableModel {
                         };//move value for castling (King move)
                     }
                 } else if (locMove.equals("O-O")) { //if short castling
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
                         values = new int[] {
                             4, 0, 6, 0
                         };//move value for castling (King move)
@@ -438,15 +441,15 @@ public class Moves extends AbstractTableModel {
                 yTo = Chessboard.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
                 for(int i=0; i<squares.length && !pieceFound; i++) {
                     for(int j=0; j<squares[i].length && !pieceFound; j++) {
-                        if(squares[i][j].piece == null || this.game.getActivePlayer().color != squares[i][j].piece.player.color) {
+                        if(squares[i][j].piece == null || this.game.getActivePlayer().getColor() != squares[i][j].piece.player.getColor()) {
                             continue;
                         }
                         ArrayList pieceMoves = squares[i][j].piece.allMoves();
                         for(Object square : pieceMoves) {
                             Square currSquare = (Square)square;
-                            if(currSquare.pozX == xTo && currSquare.pozY == yTo) {
-                                xFrom = squares[i][j].piece.square.pozX;
-                                yFrom = squares[i][j].piece.square.pozY;
+                            if(currSquare.getPozX() == xTo && currSquare.getPozY() == yTo) {
+                                xFrom = squares[i][j].piece.square.getPozX();
+                                yFrom = squares[i][j].piece.square.getPozY();
                                 pieceFound = true;
                             }
                         }

@@ -25,20 +25,20 @@ package jchess;
  */
 public class Square {
 
-    int pozX; // 0-7, becouse 8 squares for row/column
-    int pozY; // 0-7, becouse 8 squares for row/column
+    private int pozX; // 0-7, becouse 8 squares for row/column
+    private int pozY; // 0-7, becouse 8 squares for row/column
     public Piece piece = null;//object Piece on square (and extending Piecie)
 
-    Square(int pozX, int pozY, Piece piece) {
-        this.pozX = pozX;
-        this.pozY = pozY;
+    public Square(int pozX, int pozY, Piece piece) {
+        this.setPozX(pozX);
+        this.setPozY(pozY);
         this.piece = piece;
     }/*--endOf-Square--*/
 
 
-    Square(Square square) {
-        this.pozX = square.pozX;
-        this.pozY = square.pozY;
+    public Square(Square square) {
+        this.setPozX(square.getPozX());
+        this.setPozY(square.getPozY());
         this.piece = square.piece;
     }
 
@@ -46,8 +46,24 @@ public class Square {
         return new Square(square);
     }
 
-    void setPiece(Piece piece) {
+    public void setPiece(Piece piece) {
         this.piece = piece;
         this.piece.square = this;
+    }
+
+    public int getPozX() {
+        return pozX;
+    }
+
+    public void setPozX(int pozX) {
+        this.pozX = pozX;
+    }
+
+    public int getPozY() {
+        return pozY;
+    }
+
+    public void setPozY(int pozY) {
+        this.pozY = pozY;
     }
 }

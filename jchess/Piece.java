@@ -21,6 +21,8 @@
 package jchess;
 
 
+import jchess.gui.Chessboard;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ Class to represent a piece (any kind) - this class should be extended to represe
  */
 public abstract class Piece {
 
-    Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
+    private Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
     public Square square;
     public Player player;
-    String name;
+    private String name;
     protected String symbol;
     protected static Image imageBlack;// = null;
     protected static Image imageWhite;// = null;
@@ -43,28 +45,28 @@ public abstract class Piece {
     public static short value = 0;
 
     Piece(Chessboard chessboard, Player player) {
-        this.chessboard = chessboard;
+        this.setChessboard(chessboard);
         this.player = player;
-        if (player.color == player.color.black) {
+        if (player.getColor() == player.getColor().black) {
             image = imageBlack;
         } else {
             image = imageWhite;
         }
-        this.name = this.getClass().getSimpleName();
+        this.setName(this.getClass().getSimpleName());
 
     }
     /* Method to draw piece on chessboard
      * @graph : where to draw
      */
 
-    final void draw(Graphics g) {
+    public final void draw(Graphics g) {
         try {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Point topLeft = this.chessboard.getTopLeftPoint();
-            int height = this.chessboard.get_square_height();
-            int x = (this.square.pozX * height) + topLeft.x;
-            int y = (this.square.pozY * height) + topLeft.y;
+            Point topLeft = this.getChessboard().getTopLeftPoint();
+            int height = this.getChessboard().get_square_height();
+            int x = (this.square.getPozX() * height) + topLeft.x;
+            int y = (this.square.getPozY() * height) + topLeft.y;
             float addX = (height - image.getWidth(null)) / 2;
             float addY = (height - image.getHeight(null)) / 2;
             if (image != null && g != null) {
@@ -106,7 +108,7 @@ public abstract class Piece {
     }
 
     void setImage() {
-        if (this.player.color == this.player.color.black) {
+        if (this.player.getColor() == this.player.getColor().black) {
             image = imageBlack;
         } else {
             image = imageWhite;
@@ -146,11 +148,11 @@ public abstract class Piece {
      * @return true if can move, false otherwise
      * */
     protected boolean checkPiece(int x, int y) {
-        if (chessboard.squares[x][y].piece != null
-                && chessboard.squares[x][y].piece.name.equals("King")) {
+        if (getChessboard().squares[x][y].piece != null
+                && getChessboard().squares[x][y].piece.getName().equals("King")) {
             return false;
         }
-        Piece piece = chessboard.squares[x][y].piece;
+        Piece piece = getChessboard().squares[x][y].piece;
         if (piece == null || //if this sqhuare is empty
                 piece.player != this.player) { //or piece is another player
             return true;
@@ -164,7 +166,7 @@ public abstract class Piece {
      * @return true if owner(player) is different
      * */
     protected boolean otherOwner(int x, int y) {
-        Square sq = chessboard.squares[x][y];
+        Square sq = getChessboard().squares[x][y];
         if (sq.piece == null) {
             return false;
         }
@@ -176,5 +178,21 @@ public abstract class Piece {
 
     public String getSymbol() {
         return this.symbol;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Chessboard getChessboard() {
+        return chessboard;
+    }
+
+    public void setChessboard(Chessboard chessboard) {
+        this.chessboard = chessboard;
     }
 }
