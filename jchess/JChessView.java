@@ -15,6 +15,8 @@
 
 package jchess;
 
+import jchess.resources.strings.StringResources;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -248,24 +250,23 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
         menuBar.setName("menuBar"); // NOI18N
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.strings.gui");
-        fileMenu.setText(resourceBundle.getString("fileMenu.text")); // NOI18N
+        fileMenu.setText(StringResources.GUI.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
         newGameItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        newGameItem.setText(resourceBundle.getString("newGameItem.text")); // NOI18N
+        newGameItem.setText(StringResources.GUI.getString("newGameItem.text")); // NOI18N
         newGameItem.setName("newGameItem"); // NOI18N
         fileMenu.add(newGameItem);
         newGameItem.addActionListener(this);
 
         loadGameItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        loadGameItem.setText(resourceBundle.getString("loadGameItem.text")); // NOI18N
+        loadGameItem.setText(StringResources.GUI.getString("loadGameItem.text")); // NOI18N
         loadGameItem.setName("loadGameItem"); // NOI18N
         fileMenu.add(loadGameItem);
         loadGameItem.addActionListener(this);
 
         saveGameItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveGameItem.setText(resourceBundle.getString("saveGameItem.text")); // NOI18N
+        saveGameItem.setText(StringResources.GUI.getString("saveGameItem.text")); // NOI18N
         saveGameItem.setName("saveGameItem"); // NOI18N
         fileMenu.add(saveGameItem);
         saveGameItem.addActionListener(this);
@@ -277,11 +278,11 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
         menuBar.add(fileMenu);
 
-        gameMenu.setText(resourceBundle.getString("gameMenu.text")); // NOI18N
+        gameMenu.setText(StringResources.GUI.getString("gameMenu.text")); // NOI18N
         gameMenu.setName("gameMenu"); // NOI18N
 
         moveBackItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        moveBackItem.setText(resourceBundle.getString("moveBackItem.text")); // NOI18N
+        moveBackItem.setText(StringResources.GUI.getString("moveBackItem.text")); // NOI18N
         moveBackItem.setName("moveBackItem"); // NOI18N
         moveBackItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -296,7 +297,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         gameMenu.add(moveBackItem);
 
         moveForwardItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        moveForwardItem.setText(resourceBundle.getString("moveForwardItem.text")); // NOI18N
+        moveForwardItem.setText(StringResources.GUI.getString("moveForwardItem.text")); // NOI18N
         moveForwardItem.setName("moveForwardItem"); // NOI18N
         moveForwardItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -311,7 +312,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         gameMenu.add(moveForwardItem);
 
         rewindToBegin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        rewindToBegin.setText(resourceBundle.getString("rewindToBegin.text")); // NOI18N
+        rewindToBegin.setText(StringResources.GUI.getString("rewindToBegin.text")); // NOI18N
         rewindToBegin.setName("rewindToBegin"); // NOI18N
         rewindToBegin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,7 +322,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         gameMenu.add(rewindToBegin);
 
         rewindToEnd.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        rewindToEnd.setText(resourceBundle.getString("rewindToEnd.text")); // NOI18N
+        rewindToEnd.setText(StringResources.GUI.getString("rewindToEnd.text")); // NOI18N
         rewindToEnd.setName("rewindToEnd"); // NOI18N
         rewindToEnd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,17 +333,17 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
         menuBar.add(gameMenu);
 
-        optionsMenu.setText(resourceBundle.getString("optionsMenu.text")); // NOI18N
+        optionsMenu.setText(StringResources.GUI.getString("optionsMenu.text")); // NOI18N
         optionsMenu.setName("optionsMenu"); // NOI18N
 
-        themeSettingsMenu.setText(resourceBundle.getString("themeSettingsMenu.text")); // NOI18N
+        themeSettingsMenu.setText(StringResources.GUI.getString("themeSettingsMenu.text")); // NOI18N
         themeSettingsMenu.setName("themeSettingsMenu"); // NOI18N
         optionsMenu.add(themeSettingsMenu);
         themeSettingsMenu.addActionListener(this);
 
         menuBar.add(optionsMenu);
 
-        helpMenu.setText(resourceBundle.getString("helpMenu.text")); // NOI18N
+        helpMenu.setText(StringResources.GUI.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
         aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
