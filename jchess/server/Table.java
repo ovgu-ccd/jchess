@@ -20,10 +20,11 @@
  */
 package jchess.server;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import jchess.Player;
 import jchess.Settings;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Table {
     //Table: {two player, one chessboard and x observers}
@@ -45,10 +46,10 @@ public class Table {
         this.canObserversJoin = canObserversJoin;
 
         if (canObserversJoin) {
-            clientObservers = new ArrayList<SClient>();
+            clientObservers = new ArrayList<>();
         }
 
-        movesList = new ArrayList<Move>();
+        movesList = new ArrayList<>();
     }
 
     public void generateSettings() { //generate settings for both players and observers
@@ -241,10 +242,7 @@ public class Table {
     public boolean isAllPlayers() {
         //is it all playing players?
 
-        if (clientPlayer1 == null || clientPlayer2 == null) {
-            return false;
-        }
-        return true;
+        return !(clientPlayer1 == null || clientPlayer2 == null);
     }
 
     public boolean isObservers() {

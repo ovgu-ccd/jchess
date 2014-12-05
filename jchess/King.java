@@ -37,16 +37,17 @@ package jchess;
         |_|_|_|_|_|_|_|_|0
         0 1 2 3 4 5 6 7
  */
+
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Image;
 
 public class King extends Piece {
 
-    public boolean wasMotion = false;//maybe change to: 'wasMotioned'
-    //public boolean checked     = false;
-    public static short value = 99;
     private static final Image imageWhite = GUI.loadImage("King-W.png");
     private static final Image imageBlack = GUI.loadImage("King-B.png");
+    //public boolean checked     = false;
+    public static short   value     = 99;
+    public        boolean wasMotion = false;//maybe change to: 'wasMotioned'
 
     King(Chessboard chessboard, Player player) {
         super(chessboard, player);
@@ -58,7 +59,7 @@ public class King extends Piece {
 
     @Override
     void setImage() {
-        if (this.player.color == this.player.color.black) {
+        if (this.player.color == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;

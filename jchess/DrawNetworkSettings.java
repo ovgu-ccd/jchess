@@ -19,24 +19,15 @@
  */
 package jchess;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import jchess.server.Server;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import jchess.server.Server;
 
 /**
  * Class responible for drawing Network Settings, when player want to start
@@ -204,7 +195,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, error);
                 return;
             }
-            String pass = this.textPassword.getText().toString();
+            String pass = this.textPassword.getText();
             if (this.radioServer.isSelected()) {
                 Server server = new Server(); //create server
                 server.newTable(Integer.parseInt(textGameID.getText()), pass, !servOptions.checkWitchoutObserver.isSelected(), !servOptions.checkDisableChat.isSelected()); //create new table
@@ -249,12 +240,12 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
      */
     private class ServOptionsPanel extends JPanel { //options for server
 
-        private GridBagLayout gbl;
-        private GridBagConstraints gbc;
-        private JLabel labelGameTime;
         public JTextField textGameTime;
         public JCheckBox checkWitchoutObserver;
         public JCheckBox checkDisableChat;
+        private GridBagLayout gbl;
+        private GridBagConstraints gbc;
+        private JLabel labelGameTime;
 
         ServOptionsPanel() {
             super();
@@ -305,11 +296,11 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
      */
     private class ClientOptionsPanel extends JPanel { //options for client
 
+        public JTextField textServIP;
+        public JCheckBox checkOnlyWatch;
         private GridBagLayout gbl;
         private GridBagConstraints gbc;
         private JLabel labelServIP;
-        public JTextField textServIP;
-        public JCheckBox checkOnlyWatch;
 
         ClientOptionsPanel() {
             super();

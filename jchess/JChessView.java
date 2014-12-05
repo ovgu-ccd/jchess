@@ -16,36 +16,120 @@
 package jchess;
 
 import org.jdesktop.application.Action;
-import org.jdesktop.application.ResourceMap;
-import org.jdesktop.application.SingleFrameApplication;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.TaskMonitor;
+import org.jdesktop.application.*;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import javax.swing.Icon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
-import java.applet.*;
-import java.io.IOException;
-
-
 
 /**
  * The application's main frame.
  */
 public class JChessView extends FrameView implements ActionListener, ComponentListener {
     static GUI gui = null;
+    // End of variables declaration//GEN-END:variables
+    //private JTabbedPaneWithIcon gamesPane;
+    private final Timer messageTimer;
+    private final Timer busyIconTimer;
+    private final Icon  idleIcon;
+
+    ///--endOf- don't delete, becouse they're interfaces for MouseEvent
+    private final Icon[] busyIcons = new Icon[15];
+    public javax.swing.JPanel mainPanel;
+    public JDialog            newGameFrame;
     GUI activeGUI;//in future it will be reference to active tab
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu        gameMenu;
+    private javax.swing.JTabbedPane  gamesPane;
+    private javax.swing.JMenuItem    loadGameItem;
+    private javax.swing.JMenuBar     menuBar;
+    private javax.swing.JMenuItem    moveBackItem;
+    private javax.swing.JMenuItem    moveForwardItem;
+    private javax.swing.JMenuItem    newGameItem;
+    private javax.swing.JMenu        optionsMenu;
+    private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem    rewindToBegin;
+    private javax.swing.JMenuItem    rewindToEnd;
+    private javax.swing.JMenuItem    saveGameItem;
+    private javax.swing.JLabel       statusAnimationLabel;
+    private javax.swing.JLabel       statusMessageLabel;
+    private javax.swing.JPanel       statusPanel;
+    private javax.swing.JMenuItem    themeSettingsMenu;
+    private int busyIconIndex = 0;
+    private JDialog             aboutBox;
+    private PawnPromotionWindow promotionBox;
+
+
+    public JChessView(SingleFrameApplication app) {
+        super(app);
+
+        initComponents();
+        // status bar initialization - message timeout, idle icon and busy animation, etc
+        ResourceMap resourceMap = getResourceMap();
+        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
+        messageTimer = new Timer(messageTimeout, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusMessageLabel.setText("");
+            }
+        });
+        messageTimer.setRepeats(false);
+        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
+        for (int i = 0; i < busyIcons.length; i++) {
+            busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
+        }
+        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
+                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
+            }
+        });
+        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
+        statusAnimationLabel.setIcon(idleIcon);
+        progressBar.setVisible(false);
+
+        // connecting action tasks to status bar via TaskMonitor
+        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
+        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                String propertyName = evt.getPropertyName();
+                if ("started".equals(propertyName)) {
+                    if (!busyIconTimer.isRunning()) {
+                        statusAnimationLabel.setIcon(busyIcons[0]);
+                        busyIconIndex = 0;
+                        busyIconTimer.start();
+                    }
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(true);
+                } else if ("done".equals(propertyName)) {
+                    busyIconTimer.stop();
+                    statusAnimationLabel.setIcon(idleIcon);
+                    progressBar.setVisible(false);
+                    progressBar.setValue(0);
+                } else if ("message".equals(propertyName)) {
+                    String text = (String) (evt.getNewValue());
+                    statusMessageLabel.setText((text == null) ? "" : text);
+                    messageTimer.restart();
+                } else if ("progress".equals(propertyName)) {
+                    int value = (Integer) (evt.getNewValue());
+                    progressBar.setVisible(true);
+                    progressBar.setIndeterminate(false);
+                    progressBar.setValue(value);
+                }
+            }
+        });
+
+    }
+
 
     public Game addNewTab(String title) {
         Game newGUI = new Game();
         this.gamesPane.addTab(title, newGUI);
         return newGUI;
     }
+
 
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
@@ -112,69 +196,6 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
     }
 
 
-    ///--endOf- don't delete, becouse they're interfaces for MouseEvent
-
-
-    public JChessView(SingleFrameApplication app) {
-        super(app);
-
-        initComponents();
-        // status bar initialization - message timeout, idle icon and busy animation, etc
-        ResourceMap resourceMap = getResourceMap();
-        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
-            }
-        });
-        messageTimer.setRepeats(false);
-        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
-        for (int i = 0; i < busyIcons.length; i++) {
-            busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
-        }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
-                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
-            }
-        });
-        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
-        statusAnimationLabel.setIcon(idleIcon);
-        progressBar.setVisible(false);
-
-        // connecting action tasks to status bar via TaskMonitor
-        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
-        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                String propertyName = evt.getPropertyName();
-                if ("started".equals(propertyName)) {
-                    if (!busyIconTimer.isRunning()) {
-                        statusAnimationLabel.setIcon(busyIcons[0]);
-                        busyIconIndex = 0;
-                        busyIconTimer.start();
-                    }
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(true);
-                } else if ("done".equals(propertyName)) {
-                    busyIconTimer.stop();
-                    statusAnimationLabel.setIcon(idleIcon);
-                    progressBar.setVisible(false);
-                    progressBar.setValue(0);
-                } else if ("message".equals(propertyName)) {
-                    String text = (String)(evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
-                    messageTimer.restart();
-                } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(value);
-                }
-            }
-        });
-
-    }
-
     @Action
     public void showAboutBox() {
         if (aboutBox == null) {
@@ -184,6 +205,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         }
         JChessApp.getApplication().show(aboutBox);
     }
+
 
     public String showPawnPromotionBox(String color) {
         if (promotionBox == null) {
@@ -199,11 +221,11 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         return promotionBox.result;
     }
 
+
     public String showSaveWindow() {
 
         return "";
     }
-
 
 
     /** This method is called from within the constructor to
@@ -408,6 +430,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void moveBackItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveBackItemActionPerformed
         //GEN-HEADEREND:event_moveBackItemActionPerformed
         if( gui != null && gui.game != null ) {
@@ -427,17 +450,20 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 
     }//GEN-LAST:event_moveBackItemActionPerformed
 
+
     private void moveBackItemMouseClicked(java.awt.event.MouseEvent evt) { //GEN-FIRST:event_moveBackItemMouseClicked
         //GEN-HEADEREND:event_moveBackItemMouseClicked
         // TODO add your handling code here:
 
     }//GEN-LAST:event_moveBackItemMouseClicked
 
+
     private void moveForwardItemMouseClicked(java.awt.event.MouseEvent evt) { //GEN-FIRST:event_moveForwardItemMouseClicked
         //GEN-HEADEREND:event_moveForwardItemMouseClicked
         // TODO add your handling code here:
 
     }//GEN-LAST:event_moveForwardItemMouseClicked
+
 
     private void moveForwardItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveForwardItemActionPerformed
         //GEN-HEADEREND:event_moveForwardItemActionPerformed
@@ -458,6 +484,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         }
     }//GEN-LAST:event_moveForwardItemActionPerformed
 
+
     private void rewindToBeginActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_rewindToBeginActionPerformed
         //GEN-HEADEREND:event_rewindToBeginActionPerformed
         try {
@@ -471,6 +498,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
             JOptionPane.showMessageDialog(null , exc.getMessage());
         }
     }//GEN-LAST:event_rewindToBeginActionPerformed
+
 
     private void rewindToEndActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_rewindToEndActionPerformed
         //GEN-HEADEREND:event_rewindToEndActionPerformed
@@ -486,60 +514,35 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         }
     }//GEN-LAST:event_rewindToEndActionPerformed
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu gameMenu;
-    private javax.swing.JTabbedPane gamesPane;
-    private javax.swing.JMenuItem loadGameItem;
-    public javax.swing.JPanel mainPanel;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem moveBackItem;
-    private javax.swing.JMenuItem moveForwardItem;
-    private javax.swing.JMenuItem newGameItem;
-    private javax.swing.JMenu optionsMenu;
-    private javax.swing.JProgressBar progressBar;
-    private javax.swing.JMenuItem rewindToBegin;
-    private javax.swing.JMenuItem rewindToEnd;
-    private javax.swing.JMenuItem saveGameItem;
-    private javax.swing.JLabel statusAnimationLabel;
-    private javax.swing.JLabel statusMessageLabel;
-    private javax.swing.JPanel statusPanel;
-    private javax.swing.JMenuItem themeSettingsMenu;
-    // End of variables declaration//GEN-END:variables
-    //private JTabbedPaneWithIcon gamesPane;
-    private final Timer messageTimer;
-    private final Timer busyIconTimer;
-    private final Icon idleIcon;
-    private final Icon[] busyIcons = new Icon[15];
-    private int busyIconIndex = 0;
-
-    private JDialog aboutBox;
-    private PawnPromotionWindow promotionBox;
-    public  JDialog  newGameFrame;
 
     public void componentResized(ComponentEvent e) {
         System.out.println("jchessView resized!!;");
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    protected Game getActiveTabGame() throws ArrayIndexOutOfBoundsException {
-        Game activeGame = (Game)this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
-        return activeGame;
-    }
-
-    public int getNumberOfOpenedTabs() {
-        return this.gamesPane.getTabCount();
-    }
 
     public void componentMoved(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
     public void componentShown(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
     public void componentHidden(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    protected Game getActiveTabGame() throws ArrayIndexOutOfBoundsException {
+        return (Game) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
+    }
+
+
+    public int getNumberOfOpenedTabs() {
+        return this.gamesPane.getTabCount();
     }
 
 }

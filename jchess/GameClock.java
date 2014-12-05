@@ -20,10 +20,9 @@
  */
 package jchess;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
 
 /** Class to representing the full game time
  * @param game The current game
@@ -77,10 +76,8 @@ public class GameClock extends JPanel implements Runnable {
         try {
             //block this thread
             this.thread.wait();
-        } catch (java.lang.InterruptedException exc) {
+        } catch (InterruptedException | IllegalMonitorStateException exc) {
             System.out.println("Error blocking thread: " + exc);
-        } catch (java.lang.IllegalMonitorStateException exc1) {
-            System.out.println("Error blocking thread: " + exc1);
         }
     }
 
@@ -108,6 +105,16 @@ public class GameClock extends JPanel implements Runnable {
         g2d.drawString(settings.playerBlack.getName(), 100, 50);
         this.bufferedGraphics = this.background.getGraphics();
     }
+
+
+    /**
+     Annotation to superclass Graphics updateing clock graphisc
+     * @param g Graphics2D Capt object to paint
+     */
+    @Override public void update(Graphics g) {
+        paint(g);
+    }
+
 
     /**
     Annotation to superclass Graphics drawing the clock graphics
@@ -146,14 +153,6 @@ public class GameClock extends JPanel implements Runnable {
         g2d.drawString(black_clock, 90, 80);
     }
 
-    /**
-    Annotation to superclass Graphics updateing clock graphisc
-     * @param g Graphics2D Capt object to paint
-     */
-    @Override
-    public void update(Graphics g) {
-        paint(g);
-    }
 
     /** Method of swiching the players clocks
      */
@@ -186,7 +185,7 @@ public class GameClock extends JPanel implements Runnable {
         /*in documentation it's called 'setPlayer' but when we've 'setTimes' better to use
          * one convention of naming methods - this've to be repaired in documentation by Wąsu:P
         dojdziemy do tego:D:D:D*/
-        if (p1.color == p1.color.white) {
+        if (p1.color == Player.colors.white) {
             this.clock1.setPlayer(p1);
             this.clock2.setPlayer(p2);
         } else {
@@ -203,7 +202,7 @@ public class GameClock extends JPanel implements Runnable {
                 if (this.runningClock.decrement()) {
                     repaint();
                     try {
-                        thread.sleep(1000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         System.out.println("Some error in gameClock thread: " + e);
                     }
@@ -220,7 +219,7 @@ public class GameClock extends JPanel implements Runnable {
     /** Method of checking is the time of the game is not over
      */
     private void timeOver() {
-        String color = new String();
+        String color = "";
         if (this.clock1.get_left_time() == 0) {
             //Check which player win
             color = this.clock2.getPlayer().color.toString();

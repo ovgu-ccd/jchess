@@ -20,17 +20,17 @@
  */
 package jchess;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.util.Calendar;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,11 +44,11 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     public Settings settings;
     public boolean blockedChessboard;
     public Chessboard chessboard;
-    private Player activePlayer;
     public GameClock gameClock;
     public Client client;
     public Moves moves;
     public Chat chat;
+    private Player activePlayer;
 
     Game() {
         this.setLayout(null);
@@ -82,39 +82,11 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         this.setDoubleBuffered(true);
     }
 
-    /** Method to save actual state of game
-     * @param path address of place where game will be saved
-     */
-    public void saveGame(File path) {
-        File file = path;
-        FileWriter fileW = null;
-        try {
-            fileW = new FileWriter(file);
-        } catch (java.io.IOException exc) {
-            System.err.println("error creating fileWriter: " + exc);
-            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file")+": " + exc);
-            return;
-        }
-        Calendar cal = Calendar.getInstance();
-        String str = new String("");
-        String info = new String("[Event \"Game\"]\n[Date \"" + cal.get(cal.YEAR) + "." + (cal.get(cal.MONTH) + 1) + "." + cal.get(cal.DAY_OF_MONTH) + "\"]\n"
-                                 + "[White \"" + this.settings.playerWhite.name + "\"]\n[Black \"" + this.settings.playerBlack.name + "\"]\n\n");
-        str += info;
-        str += this.moves.getMovesInString();
-        try {
-            fileW.write(str);
-            fileW.flush();
-            fileW.close();
-        } catch (java.io.IOException exc) {
-            System.out.println("error writing to file: " + exc);
-            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file")+": " + exc);
-            return;
-        }
-        JOptionPane.showMessageDialog(this, Settings.lang("game_saved_properly"));
-    }
 
-    /** Loading game method(loading game state from the earlier saved file)
-     *  @param file File where is saved game
+    /**
+     * Loading game method(loading game state from the earlier saved file)
+     *
+     * @param file File where is saved game
      */
 
     /*@Override
@@ -139,14 +111,14 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             return;
         }
         BufferedReader br = new BufferedReader(fileR);
-        String tempStr = new String();
+        String tempStr = "";
         String blackName, whiteName;
         try {
-            tempStr = getLineWithVar(br, new String("[White"));
+            tempStr = getLineWithVar(br, "[White");
             whiteName = getValue(tempStr);
-            tempStr = getLineWithVar(br, new String("[Black"));
+            tempStr = getLineWithVar(br, "[Black");
             blackName = getValue(tempStr);
-            tempStr = getLineWithVar(br, new String("1."));
+            tempStr = getLineWithVar(br, "1.");
         } catch (ReadGameError err) {
             System.out.println("Error reading file: " + err);
             return;
@@ -168,6 +140,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         //newGUI.chessboard.draw();
     }
 
+
     /** Method checking in with of line there is an error
      *  @param  br BufferedReader class object to operate on
      *  @param  srcStr String class object with text which variable you want to get in file
@@ -175,7 +148,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
      *  @throws ReadGameError class object when something goes wrong when reading file
      */
     static public String getLineWithVar(BufferedReader br, String srcStr) throws ReadGameError {
-        String str = new String();
+        String str = "";
         while (true) {
             try {
                 str = br.readLine();
@@ -191,6 +164,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
     }
 
+
     /** Method to get value from loaded txt line
      *  @param line Line which is readed
      *  @return result String with loaded value
@@ -201,7 +175,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         int from = line.indexOf("\"");
         int to = line.lastIndexOf("\"");
         int size = line.length() - 1;
-        String result = new String();
+        String result = "";
         if (to < from || from > size || to > size || to < 0 || from < 0) {
             throw new ReadGameError();
         }
@@ -213,6 +187,40 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         return result;
     }
+
+
+    /** Method to save actual state of game
+     * @param path address of place where game will be saved
+     */
+    public void saveGame(File path) {
+        FileWriter fileW = null;
+        try {
+            fileW = new FileWriter(path);
+        } catch (java.io.IOException exc) {
+            System.err.println("error creating fileWriter: " + exc);
+            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file") + ": " + exc);
+            return;
+        }
+        Calendar cal = Calendar.getInstance();
+        String str = "";
+        String info =
+                "[Event \"Game\"]\n[Date \"" + cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal
+                        .get(Calendar.DAY_OF_MONTH) + "\"]\n" + "[White \"" + this.settings.playerWhite.name
+                        + "\"]\n[Black \"" + this.settings.playerBlack.name + "\"]\n\n";
+        str += info;
+        str += this.moves.getMovesInString();
+        try {
+            fileW.write(str);
+            fileW.flush();
+            fileW.close();
+        } catch (java.io.IOException exc) {
+            System.out.println("error writing to file: " + exc);
+            JOptionPane.showMessageDialog(this, Settings.lang("error_writing_to_file") + ": " + exc);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, Settings.lang("game_saved_properly"));
+    }
+
 
     /** Method to Start new game
      *
@@ -316,66 +324,6 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     public void mouseClicked(MouseEvent arg0) {
     }
 
-    public boolean undo() {
-        boolean status = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            status = chessboard.undo();
-            if( status ) {
-                this.switchActive();
-            } else {
-                chessboard.repaint();//repaint for sure
-            }
-        } else if( this.settings.gameType == Settings.gameTypes.network ) {
-            this.client.sendUndoAsk();
-            status = true;
-        }
-        return status;
-    }
-
-    public boolean rewindToBegin() {
-        boolean result = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            while( chessboard.undo() ) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
-        }
-
-        return result;
-    }
-
-    public boolean rewindToEnd() throws UnsupportedOperationException {
-        boolean result = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            while( chessboard.redo() ) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
-        }
-
-        return result;
-    }
-
-    public boolean redo() {
-        boolean status = chessboard.redo();
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            if ( status ) {
-                this.nextMove();
-            } else {
-                chessboard.repaint();//repaint for sure
-            }
-        } else {
-            throw new UnsupportedOperationException( Settings.lang("operation_supported_only_in_local_game") );
-        }
-        return status;
-    }
-
-
 
     public void mousePressed(MouseEvent event) {
         if (event.getButton() == MouseEvent.BUTTON3) { //right button
@@ -390,8 +338,9 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                     int y = event.getY();//get Y position of mouse
 
                     Square sq = chessboard.getSquare(x, y);
-                    if ((sq == null && sq.piece == null && chessboard.activeSquare == null)
-                            || (this.chessboard.activeSquare == null && sq.piece != null && sq.piece.player != this.activePlayer)) {
+                    if ((sq == null && sq.piece == null && chessboard.activeSquare == null) || (
+                            this.chessboard.activeSquare == null && sq.piece != null
+                                    && sq.piece.player != this.activePlayer)) {
                         return;
                     }
 
@@ -401,11 +350,12 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                     } else if (chessboard.activeSquare == sq) { //unselect
                         chessboard.unselect();
                     } else if (chessboard.activeSquare != null && chessboard.activeSquare.piece != null
-                               && chessboard.activeSquare.piece.allMoves().indexOf(sq) != -1) { //move
+                            && chessboard.activeSquare.piece.allMoves().indexOf(sq) != -1) { //move
                         if (settings.gameType == Settings.gameTypes.local) {
                             chessboard.move(chessboard.activeSquare, sq);
                         } else if (settings.gameType == Settings.gameTypes.network) {
-                            client.sendMove(chessboard.activeSquare.pozX, chessboard.activeSquare.pozY, sq.pozX, sq.pozY);
+                            client.sendMove(chessboard.activeSquare.pozX, chessboard.activeSquare.pozY, sq.pozX,
+                                    sq.pozY);
                             chessboard.move(chessboard.activeSquare, sq);
                         }
 
@@ -432,7 +382,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
                         }
                     }
 
-                } catch(NullPointerException exc) {
+                } catch (NullPointerException exc) {
                     System.err.println(exc.getMessage());
                     chessboard.repaint();
                     return;
@@ -444,18 +394,86 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         //chessboard.repaint();
     }
 
+
     public void mouseReleased(MouseEvent arg0) {
     }
+
 
     public void mouseEntered(MouseEvent arg0) {
     }
 
+
     public void mouseExited(MouseEvent arg0) {
     }
 
+
+    public boolean undo() {
+        boolean status = false;
+
+        if( this.settings.gameType == Settings.gameTypes.local) {
+            status = chessboard.undo();
+            if (status) {
+                this.switchActive();
+            } else {
+                chessboard.repaint();//repaint for sure
+            }
+        } else if (this.settings.gameType == Settings.gameTypes.network) {
+            this.client.sendUndoAsk();
+            status = true;
+        }
+        return status;
+    }
+
+
+    public boolean rewindToBegin() {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (chessboard.undo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game") );
+        }
+
+        return result;
+    }
+
+
+    public boolean rewindToEnd() throws UnsupportedOperationException {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (chessboard.redo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
+        }
+
+        return result;
+    }
+
+
+    public boolean redo() {
+        boolean status = chessboard.redo();
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            if (status) {
+                this.nextMove();
+            } else {
+                chessboard.repaint();//repaint for sure
+            }
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
+        }
+        return status;
+    }
+
+
     public void componentResized(ComponentEvent e) {
         int height = this.getHeight() >= this.getWidth() ? this.getWidth() : this.getHeight();
-        int chess_height = (int)Math.round( (height * 0.8)/8 )*8;
+        int chess_height = (int)Math.round( (height * 0.8) / 8) * 8;
+        //noinspection RedundantCast
         this.chessboard.resizeChessboard((int)chess_height);
         chess_height = this.chessboard.getHeight();
         this.moves.getScrollPane().setLocation(new Point(chess_height + 5, 100));
