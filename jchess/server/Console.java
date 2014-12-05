@@ -20,11 +20,12 @@
  */
 package jchess.server;
 
+import jchess.MD5;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jchess.MD5;
 
 public class Console {
 
@@ -98,7 +99,7 @@ public class Console {
         System.exit(0);
     }
 
-    public static String readString() { //read string from console
+    public static String readString() { //read strings from console
         int ch;
         StringBuffer sb = new StringBuffer();
         try {

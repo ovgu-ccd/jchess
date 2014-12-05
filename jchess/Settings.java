@@ -22,8 +22,6 @@ package jchess;
 
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.Locale;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /** Class representings game settings available for the current player

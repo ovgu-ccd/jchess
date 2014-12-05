@@ -21,14 +21,10 @@
 package jchess;
 
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 
 /**
 Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.

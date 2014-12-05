@@ -37,8 +37,9 @@ package jchess;
         |_|_|_|_|_|_|_|_|0
         0 1 2 3 4 5 6 7
  */
+
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Image;
 
 public class King extends Piece {
 

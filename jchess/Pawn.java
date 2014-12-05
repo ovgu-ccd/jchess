@@ -20,9 +20,8 @@
  */
 package jchess;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Image;
 
 /**
  * Class to represent a pawn piece Pawn can move only forvard and can beat only

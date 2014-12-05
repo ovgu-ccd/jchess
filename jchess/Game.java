@@ -20,19 +20,17 @@
  */
 package jchess;
 
-import jchess.gui.JChessApp;
-
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.util.Calendar;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -153,7 +151,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             System.out.println("Error reading file: " + err);
             return;
         }
-        Game newGUI = JChessApp.getJcv().addNewTab(whiteName + " vs. " + blackName);
+        Game newGUI = Application.getInstance().getJcv().addNewTab(whiteName + " vs. " + blackName);
         Settings locSetts = newGUI.settings;
         locSetts.playerBlack.name = blackName;
         locSetts.playerWhite.name = whiteName;
@@ -230,8 +228,8 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         //dirty hacks starts over here :)
         //to fix rendering artefacts on first run
-        Game activeGame = JChessApp.getJcv().getActiveTabGame();
-        if( activeGame != null && JChessApp.getJcv().getNumberOfOpenedTabs() == 0 ) {
+        Game activeGame = Application.getInstance().getJcv().getActiveTabGame();
+        if( activeGame != null && Application.getInstance().getJcv().getNumberOfOpenedTabs() == 0 ) {
             activeGame.chessboard.resizeChessboard(activeGame.chessboard.get_height(false));
             activeGame.chessboard.repaint();
             activeGame.repaint();
@@ -242,7 +240,6 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     }
 
     /** Method to end game
-     *  @param message what to show player(s) at end of the game (for example "draw", "black wins" etc.)
      */
     public void endGame(String massage) {
         this.blockedChessboard = true;

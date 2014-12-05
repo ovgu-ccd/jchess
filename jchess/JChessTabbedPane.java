@@ -20,11 +20,10 @@
  */
 package jchess;
 
-import jchess.gui.JChessApp;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 
 public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
@@ -63,10 +62,11 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     }
 
     private void showNewGameWindow() {
-        if (JChessApp.getJcv().newGameFrame == null) {
-            JChessApp.getJcv().newGameFrame = new NewGameWindow();
+        JDialog newGameFrame = Application.getInstance().getJcv().newGameFrame;
+        if (newGameFrame == null) {
+            newGameFrame = new NewGameWindow(Application.getInstance().getJcv());
         }
-        JChessApp.getApplication().show(JChessApp.getJcv().newGameFrame);
+        newGameFrame.setVisible(true);
     }
 
     @Override

@@ -20,8 +20,6 @@
  */
 package jchess;
 
-import jchess.gui.JChessApp;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -112,7 +110,6 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
     /**
      * Method wich is changing a pawn into queen, rook, bishop or knight
      *
-     * @param arg0
      *            Capt information about performed action
      */
     public void actionPerformed(ActionEvent evt) {

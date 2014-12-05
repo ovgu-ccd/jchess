@@ -20,10 +20,9 @@
  */
 package jchess;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
 
 /** Class to representing the full game time
  * @param game The current game

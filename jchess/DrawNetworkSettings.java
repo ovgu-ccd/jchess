@@ -19,31 +19,19 @@
  */
 package jchess;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import jchess.server.Server;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import jchess.gui.JChessApp;
-import jchess.server.Server;
 
 /**
  * Class responible for drawing Network Settings, when player want to start
  * a game on a network
- * @param parent Where are saved default settings
  */
 public class DrawNetworkSettings extends JPanel implements ActionListener {
 
@@ -227,7 +215,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                 if (isJoining) { //Client connection: succesful
                     System.out.println("Client connection: succesful");
                     //create new game and draw chessboard
-                    Game newGUI = JChessApp.getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
+                    Game newGUI = Application.getInstance().getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
                     client.game = newGUI;
                     newGUI.add(newGUI.chat);
                     newGUI.chessboard.draw();

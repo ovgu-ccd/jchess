@@ -20,15 +20,12 @@
  */
 package jchess;
 
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.awt.Point;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.*;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import javax.swing.JOptionPane;
 
 /** Class representing the players moves, it's also checking
  * that the moves taken by player are correct.
@@ -337,7 +334,7 @@ public class Moves extends AbstractTableModel {
         }
     }
 
-    /** Method of getting the moves in string
+    /** Method of getting the moves in strings
      *  @return str String which in is capt player move
      */
     public String getMovesInString() {

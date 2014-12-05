@@ -19,15 +19,13 @@
  */
 package jchess;
 
-import jchess.gui.JChessApp;
-
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.TextListener;
-import java.awt.event.TextEvent;
-import java.awt.*;
 import javax.swing.text.BadLocationException;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
 
 /**
  * Class responsible for drawing the fold with local game settings
@@ -118,7 +116,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
                 return;
             }
-            Game newGUI = JChessApp.getJcv().addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
+            Game newGUI = Application.getInstance().getJcv().addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
             Settings sett = newGUI.settings;//sett local settings variable
             Player pl1 = sett.playerWhite;//set local player variable
             Player pl2 = sett.playerBlack;//set local player variable
@@ -260,7 +258,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
     /**
      * Method responsible for triming white symbols from strings
      * @param txt Where is capt value to equal
-     * @param length How long is the string
+     * @param length How long is the strings
      * @return result trimmed String
      */
     public String trimString(JTextField txt, int length) {

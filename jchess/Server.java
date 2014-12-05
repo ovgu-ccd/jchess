@@ -15,6 +15,8 @@
 
 package jchess;
 
+import jchess.Player.playerTypes;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jchess.Player.playerTypes;
 
 /**
  * Class responsible for server references: For running the server,

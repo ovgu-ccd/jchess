@@ -15,19 +15,12 @@
 
 package jchess;
 
-import jchess.gui.JChessApp;
-import org.jdesktop.application.Action;
-import org.jdesktop.application.SingleFrameApplication;
-import org.jdesktop.application.FrameView;
-import org.jdesktop.application.TaskMonitor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import javax.swing.Icon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
@@ -35,7 +28,7 @@ import java.util.ResourceBundle;
 /**
  * The application's main frame.
  */
-public class JChessView extends FrameView implements ActionListener, ComponentListener {
+public class JChessView extends JFrame implements ActionListener, ComponentListener {
     static GUI gui = null;
     GUI activeGUI;//in future it will be reference to active tab
 
@@ -48,8 +41,8 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
         if (target == newGameItem) {
-            this.newGameFrame = new NewGameWindow();
-            JChessApp.getApplication().show(this.newGameFrame);
+            newGameFrame = new NewGameWindow(this);
+            newGameFrame.setVisible(true);
         } else if (target == saveGameItem) {
             //saveGame
             if (this.gamesPane.getTabCount() == 0) {
@@ -97,11 +90,11 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
             }
         } else if (target == this.themeSettingsMenu) {
             try {
-                ThemeChooseWindow choose = new ThemeChooseWindow(this.getFrame());
-                JChessApp.getApplication().show(choose);
+                ThemeChooseWindow choose = new ThemeChooseWindow(this);
+                choose.setVisible(true);
             } catch(Exception exc) {
                 JOptionPane.showMessageDialog(
-                    JChessApp.getApplication().getMainFrame(),
+                    this,
                     exc.getMessage()
                 );
                 System.out.println("Something wrong creating window - perhaps themeList is null");
@@ -110,15 +103,13 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
     }
 
 
-    ///--endOf- don't delete, becouse they're interfaces for MouseEvent
 
-
-    public JChessView(SingleFrameApplication app) {
-        super(app);
+    public JChessView() {
+        super();
 
         initComponents();
         // status bar initialization - message timeout, idle icon and busy animation, etc
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.JChessView");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.strings.gui");
         int messageTimeout = Integer.parseInt(resourceBundle.getString("StatusBar.messageTimeout"));
         messageTimer = new Timer(messageTimeout, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -141,8 +132,8 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         progressBar.setVisible(false);
 
         // connecting action tasks to status bar via TaskMonitor
-        TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
-        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+
+        statusPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 String propertyName = evt.getPropertyName();
                 if ("started".equals(propertyName)) {
@@ -173,26 +164,24 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 
     }
 
-    @Action
     public void showAboutBox() {
         if (aboutBox == null) {
-            JFrame mainFrame = JChessApp.getApplication().getMainFrame();
-            aboutBox = new JChessAboutBox(mainFrame);
-            aboutBox.setLocationRelativeTo(mainFrame);
+            aboutBox = new JChessAboutBox(this);
+            aboutBox.setLocationRelativeTo(this);
         }
-        JChessApp.getApplication().show(aboutBox);
+        aboutBox.setVisible(true);
     }
 
     public String showPawnPromotionBox(String color) {
         if (promotionBox == null) {
-            JFrame mainFrame = JChessApp.getApplication().getMainFrame();
+            JFrame mainFrame = this;
             promotionBox = new PawnPromotionWindow(mainFrame, color);
             promotionBox.setLocationRelativeTo(mainFrame);
             promotionBox.setModal(true);
 
         }
         promotionBox.setColor(color);
-        JChessApp.getApplication().show(promotionBox);
+        promotionBox.setVisible(true);
 
         return promotionBox.result;
     }
@@ -209,10 +198,8 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new javax.swing.JPanel();
         gamesPane = new jchess.JChessTabbedPane();
         menuBar = new javax.swing.JMenuBar();
@@ -261,7 +248,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
 
         menuBar.setName("menuBar"); // NOI18N
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.JChessView");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jchess.resources.strings.gui");
         fileMenu.setText(resourceBundle.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
@@ -283,7 +270,7 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
         fileMenu.add(saveGameItem);
         saveGameItem.addActionListener(this);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(JChessApp.class).getContext().getActionMap(JChessView.class, this);
+        ActionMap actionMap = getRootPane().getActionMap();
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
@@ -401,10 +388,11 @@ public class JChessView extends FrameView implements ActionListener, ComponentLi
                       .addGap(3, 3, 3))
         );
 
-        setComponent(mainPanel);
-        setMenuBar(menuBar);
-        setStatusBar(statusPanel);
-    }// </editor-fold>//GEN-END:initComponents
+        add(mainPanel);
+        setJMenuBar(menuBar);
+        add(statusPanel, BorderLayout.SOUTH);
+        pack();
+    }
 
     private void moveBackItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveBackItemActionPerformed
         //GEN-HEADEREND:event_moveBackItemActionPerformed

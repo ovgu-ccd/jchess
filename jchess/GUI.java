@@ -20,8 +20,6 @@
  */
 package jchess;
 
-import jchess.gui.JChessApp;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +45,7 @@ public class GUI {
     /*
      * Method load image by a given name with extension
      *
-     * @name : string of image to load for ex. "chessboard.jpg"
+     * @name : strings of image to load for ex. "chessboard.jpg"
      *
      * @returns : image or null if cannot load
      */
