@@ -16,6 +16,8 @@
 package jchess;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class JChessAboutBox extends javax.swing.JDialog {
 
@@ -65,7 +67,12 @@ public class JChessAboutBox extends javax.swing.JDialog {
         setResizable(false);
 
         ActionMap actionMap = getRootPane().getActionMap();
-        closeButton.setAction(actionMap.get("closeAboutBox")); // NOI18N
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        }); // NOI18N
         closeButton.setName("closeButton"); // NOI18N
         closeButton.setText(StringResources.MAIN.getString("closeAboutBox.text"));
 

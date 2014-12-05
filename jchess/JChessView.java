@@ -16,6 +16,7 @@
 package jchess;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -133,6 +134,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         Object target = event.getSource();
         if (target == newGameItem) {
             newGameFrame = new NewGameWindow(this);
+            newGameFrame.setLocationRelativeTo(this);
             newGameFrame.setVisible(true);
         } else if (target == saveGameItem) {
             //saveGame
@@ -298,8 +300,14 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         fileMenu.add(saveGameItem);
         saveGameItem.addActionListener(this);
 
-        ActionMap actionMap = getRootPane().getActionMap();
-        exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
+
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        }); // NOI18N
+        exitMenuItem.setText(StringResources.GUI.getString("file.quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
 
@@ -373,13 +381,19 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         helpMenu.setText(StringResources.GUI.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
-        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAboutBox();
+            }
+        }); // NOI18N
+        aboutMenuItem.setText(StringResources.GUI.getString("help.about"));
         aboutMenuItem.setName("aboutMenuItem"); // NOI18N
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
 
         statusPanel.setName("statusPanel"); // NOI18N
+        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
 
@@ -447,14 +461,12 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
 
     }//GEN-LAST:event_moveBackItemMouseClicked
 
-    private void moveForwardItemMouseClicked(java.awt.event.MouseEvent evt) { //GEN-FIRST:event_moveForwardItemMouseClicked
-        //GEN-HEADEREND:event_moveForwardItemMouseClicked
+    private void moveForwardItemMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_moveForwardItemMouseClicked
+    }
 
-    private void moveForwardItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveForwardItemActionPerformed
-        //GEN-HEADEREND:event_moveForwardItemActionPerformed
+    private void moveForwardItemActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         if (gui != null && gui.game != null) {
             gui.game.redo();
@@ -470,10 +482,9 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
                 JOptionPane.showMessageDialog(null, exc.getMessage());
             }
         }
-    }//GEN-LAST:event_moveForwardItemActionPerformed
+    }
 
-    private void rewindToBeginActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_rewindToBeginActionPerformed
-        //GEN-HEADEREND:event_rewindToBeginActionPerformed
+    private void rewindToBeginActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Game activeGame = this.getActiveTabGame();
             if (!activeGame.rewindToBegin()) {
@@ -484,10 +495,9 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         } catch (UnsupportedOperationException exc) {
             JOptionPane.showMessageDialog(null, exc.getMessage());
         }
-    }//GEN-LAST:event_rewindToBeginActionPerformed
+    }
 
-    private void rewindToEndActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_rewindToEndActionPerformed
-        //GEN-HEADEREND:event_rewindToEndActionPerformed
+    private void rewindToEndActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Game activeGame = this.getActiveTabGame();
             if (!activeGame.rewindToEnd()) {
@@ -498,7 +508,7 @@ public class JChessView extends JFrame implements ActionListener, ComponentListe
         } catch (UnsupportedOperationException exc) {
             JOptionPane.showMessageDialog(null, exc.getMessage());
         }
-    }//GEN-LAST:event_rewindToEndActionPerformed
+    }
 
     public void componentResized(ComponentEvent e) {
         System.out.println("jchessView resized!!;");
