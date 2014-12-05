@@ -20,9 +20,8 @@
  */
 package jchess;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Image;
 
 /**
  * Class to represent a chess pawn bishop
@@ -40,9 +39,9 @@ import java.awt.Image;
  */
 public class Bishop extends Piece {
 
-    public static short value = 3;
     protected static final Image imageWhite = GUI.loadImage("Bishop-W.png");
     protected static final Image imageBlack = GUI.loadImage("Bishop-B.png");
+    public static short value = 3;
 
     Bishop(Chessboard chessboard, Player player) {
         super(chessboard, player);      //call initializer of super type: Piece
@@ -53,7 +52,7 @@ public class Bishop extends Piece {
 
     @Override
     void setImage() {
-        if (this.player.color == this.player.color.black) {
+        if (this.player.color == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;

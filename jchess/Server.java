@@ -15,6 +15,8 @@
 
 package jchess;
 
+import jchess.Player.playerTypes;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jchess.Player.playerTypes;
 
 /**
  * Class responsible for server references: For running the server,
@@ -35,46 +36,10 @@ import jchess.Player.playerTypes;
 
 public class Server implements Runnable {
     public static boolean isPrintEnable = true; //print all messages (print function)
-
-    private static Map<Integer, Table> tables;
     public static int port=4449;
+    private static Map<Integer, Table> tables;
     private static ServerSocket ss;
     private static boolean isRunning=false;
-
-    public static enum connection_info {
-        all_is_ok(0),
-        err_bad_table_ID(1),
-        err_table_is_full(2),
-        err_game_without_observer(3),
-        err_bad_password(4);
-
-        private int value;
-
-        connection_info(int value) {
-            this.value = value;
-        }
-
-        public static connection_info get(int id) {
-            switch(id) {
-            case 0:
-                return connection_info.all_is_ok;
-            case 1:
-                return connection_info.err_bad_table_ID;
-            case 2:
-                return connection_info.err_table_is_full;
-            case 3:
-                return connection_info.err_game_without_observer;
-            case 4:
-                return connection_info.err_bad_password;
-            default:
-                return null;
-            }
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
 
     public Server() {
         if(!Server.isRunning) { //run server if isn't running previous
@@ -87,6 +52,7 @@ public class Server implements Runnable {
         }
     }
 
+
     /*
      * Method with is checking is the server is running
      * @return bool true if server is running, else false
@@ -95,10 +61,6 @@ public class Server implements Runnable {
         return isRunning;
     }
 
-    /*
-     * Method to starting a new server
-     * It's running a new game server
-     */
 
     private static void runServer() { //run server
         try {
@@ -108,8 +70,25 @@ public class Server implements Runnable {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        tables = new HashMap<Integer, Table>();
+        tables = new HashMap<>();
     }
+
+    /*
+     * Method to starting a new server
+     * It's running a new game server
+     */
+
+
+    /*
+     * Method with is printing the servers message
+     *
+     */
+    private static void print(String str) {
+        if (isPrintEnable) {
+            System.out.println("Server: " + str);
+        }
+    }
+
 
     public void run() { //listening
         print("listening port: "+port);
@@ -205,14 +184,6 @@ public class Server implements Runnable {
         }
     }
 
-    /*
-     * Method with is printing the servers message
-     *
-     */
-    private static void print(String str) {
-        if(isPrintEnable)
-            System.out.println("Server: "+str);
-    }
 
     /*
      * Method with is creating a new table
@@ -224,6 +195,45 @@ public class Server implements Runnable {
     public void newTable(int idTable, String password, boolean withObserver, boolean enableChat) { //create new table
         print("create new table - id: "+idTable);
         tables.put(idTable, new Table(password, withObserver, enableChat));
+    }
+
+
+    public static enum connection_info {
+        all_is_ok(0),
+        err_bad_table_ID(1),
+        err_table_is_full(2),
+        err_game_without_observer(3),
+        err_bad_password(4);
+
+        private int value;
+
+
+        connection_info(int value) {
+            this.value = value;
+        }
+
+
+        public static connection_info get(int id) {
+            switch (id) {
+            case 0:
+                return connection_info.all_is_ok;
+            case 1:
+                return connection_info.err_bad_table_ID;
+            case 2:
+                return connection_info.err_table_is_full;
+            case 3:
+                return connection_info.err_game_without_observer;
+            case 4:
+                return connection_info.err_bad_password;
+            default:
+                return null;
+            }
+        }
+
+
+        public int getValue() {
+            return value;
+        }
     }
 
     /*
@@ -248,10 +258,10 @@ public class Server implements Runnable {
             this.canObserversJoin = canObserversJoin;
 
             if(canObserversJoin) {
-                clientObservers = new ArrayList<Client>();
+                clientObservers = new ArrayList<>();
             }
 
-            movesList = new ArrayList<Move>();
+            movesList = new ArrayList<>();
         }
 
         public void generateSettings() { //generate settings for both players and observers
@@ -389,9 +399,7 @@ public class Server implements Runnable {
         }
 
         public boolean isAllPlayers() { //is it all playing players?
-            if(clientPlayer1==null || clientPlayer2==null)
-                return false;
-            return true;
+            return !(clientPlayer1 == null || clientPlayer2 == null);
         }
 
         public boolean isObservers() { //is it any observer?
@@ -432,10 +440,10 @@ public class Server implements Runnable {
     }
 
     private class Client implements Runnable { //connecting client
-        private Socket s;
         public ObjectInputStream input;
         public ObjectOutputStream output;
         public String nick;
+        private Socket s;
         private Table table;
 
         Client(Socket s, ObjectInputStream input, ObjectOutputStream output, String nick, Table table) {

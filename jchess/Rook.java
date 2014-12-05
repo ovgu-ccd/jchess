@@ -21,9 +21,8 @@
 
 package jchess;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Image;
 
 
 /**
@@ -42,10 +41,10 @@ import java.awt.Image;
  */
 public class Rook extends Piece {
 
-    boolean wasMotion = false;
     protected static final Image imageWhite = GUI.loadImage("Rook-W.png");
     protected static final Image imageBlack = GUI.loadImage("Rook-B.png");
     public static short value = 5;
+    boolean wasMotion = false;
 
     Rook(Chessboard chessboard, Player player) {
         super(chessboard, player);//call initializer of super type: Piece
@@ -56,7 +55,7 @@ public class Rook extends Piece {
 
     @Override
     void setImage() {
-        if (this.player.color == this.player.color.black) {
+        if (this.player.color == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;

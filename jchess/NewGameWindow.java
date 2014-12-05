@@ -21,18 +21,15 @@
 package jchess;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.*;
-import java.util.ResourceBundle;
-import java.util.PropertyResourceBundle;
-import java.util.Locale;
 
 /**
  *
  * @author donmateo
  */
 public class NewGameWindow extends JDialog {
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane jTabbedPane1;
 
     /** Creates new form NewGameWindow */
     public NewGameWindow() {
@@ -43,6 +40,20 @@ public class NewGameWindow extends JDialog {
         this.jTabbedPane1.addTab(Settings.lang("local_game"), new DrawLocalSettings(this));
         this.jTabbedPane1.addTab(Settings.lang("network_game"), new DrawNetworkSettings(this));
     }
+
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                new NewGameWindow().setVisible(true);
+            }
+        });
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -80,19 +91,5 @@ public class NewGameWindow extends JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new NewGameWindow().setVisible(true);
-            }
-        });
-    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
