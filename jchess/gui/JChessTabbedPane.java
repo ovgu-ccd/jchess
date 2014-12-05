@@ -22,7 +22,6 @@ package jchess.gui;
 
 import jchess.Application;
 import jchess.GUI;
-import jchess.NewGameWindow;
 
 import javax.swing.*;
 import java.awt.*;

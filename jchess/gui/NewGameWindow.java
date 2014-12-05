@@ -18,7 +18,9 @@
  *
  * Created on 2009-10-20, 15:11:49
  */
-package jchess;
+package jchess.gui;
+
+import jchess.StringResources;
 
 import javax.swing.*;
 

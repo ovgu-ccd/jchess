@@ -13,7 +13,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package jchess;
+package jchess.gui;
+
+import jchess.StringResources;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

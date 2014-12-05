@@ -17,9 +17,12 @@
  * Authors:
  * Mateusz Sławomir Lach ( matlak, msl )
  */
-package jchess;
+package jchess.gui;
 
-import jchess.gui.Game;
+import jchess.Application;
+import jchess.Client;
+import jchess.MD5;
+import jchess.StringResources;
 import jchess.server.Server;
 
 import javax.swing.*;
@@ -217,7 +220,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                     System.out.println("Client connection: succesful");
                     //create new game and draw chessboard
                     Game newGUI = Application.getInstance().getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
-                    client.game = newGUI;
+                    client.setGame(newGUI);
                     newGUI.add(newGUI.chat);
                     newGUI.chessboard.draw();
 

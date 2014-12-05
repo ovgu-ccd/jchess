@@ -17,8 +17,12 @@
  * Authors:
  * Mateusz Sławomir Lach ( matlak, msl )
  */
-package jchess;
+package jchess.gui;
 
+import jchess.Application;
+import jchess.Player;
+import jchess.Settings;
+import jchess.StringResources;
 import jchess.gui.Game;
 
 import javax.swing.*;
