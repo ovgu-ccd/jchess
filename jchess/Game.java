@@ -20,6 +20,9 @@
  */
 package jchess;
 
+/*
+import jchess.pieces.King;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
@@ -30,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+*/
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,49 +43,159 @@ import java.util.logging.Logger;
  * This class is also responsible for appoing player with have
  * a move at the moment
  */
-public class Game extends JPanel implements MouseListener, ComponentListener {
+//public class Game extends JPanel implements MouseListener, ComponentListener {
+public class Game {
 
-    public Settings settings;
-    public boolean blockedChessboard;
-    public Chessboard chessboard;
-    public GameClock gameClock;
-    public Client client;
-    public Moves moves;
-    public Chat chat;
+    private Settings settings;
+    //public boolean blockedChessboard;
+    private Board board;
+    private GameClock gameClock;
+    private Client client;
+    //private Moves moves;
+    //public Chat chat;
     private Player activePlayer;
 
     Game() {
-        this.setLayout(null);
-        this.moves = new Moves(this);
+        //this.setLayout(null);
+        //this.moves = new Moves(this);
         settings = new Settings();
-        chessboard = new Chessboard(this.settings, this.moves);
-        chessboard.setVisible(true);
-        chessboard.setSize(Chessboard.img_height, Chessboard.img_widht);
-        chessboard.addMouseListener(this);
-        chessboard.setLocation(new Point(0, 0));
-        this.add(chessboard);
+        //chessboard = new Chessboard(this.settings, this.moves);
+        board = new Board();
+        //chessboard.setVisible(true);
+        //chessboard.setSize(Chessboard.img_height, Chessboard.img_widht);
+        //chessboard.addMouseListener(this);
+        //chessboard.setLocation(new Point(0, 0));
+        //this.add(chessboard);
         //this.chessboard.
         gameClock = new GameClock(this);
-        gameClock.setSize(new Dimension(200, 100));
-        gameClock.setLocation(new Point(500, 0));
-        this.add(gameClock);
+        //gameClock.setSize(new Dimension(200, 100));
+        //gameClock.setLocation(new Point(500, 0));
+        //this.add(gameClock);
 
-        JScrollPane movesHistory = this.moves.getScrollPane();
-        movesHistory.setSize(new Dimension(180, 350));
-        movesHistory.setLocation(new Point(500, 121));
-        this.add(movesHistory);
+        //JScrollPane movesHistory = this.moves.getScrollPane();
+        //movesHistory.setSize(new Dimension(180, 350));
+        //movesHistory.setLocation(new Point(500, 121));
+        //this.add(movesHistory);
 
-        this.chat = new Chat();
-        this.chat.setSize(new Dimension(380, 100));
-        this.chat.setLocation(new Point(0, 500));
-        this.chat.setMinimumSize(new Dimension(400, 100));
+        //this.chat = new Chat();
+        //this.chat.setSize(new Dimension(380, 100));
+        //this.chat.setLocation(new Point(0, 500));
+        //this.chat.setMinimumSize(new Dimension(400, 100));
 
-        this.blockedChessboard = false;
-        this.setLayout(null);
-        this.addComponentListener(this);
-        this.setDoubleBuffered(true);
+        //this.blockedChessboard = false;
+        //this.setLayout(null);
+        //this.addComponentListener(this);
+        //this.setDoubleBuffered(true);
     }
 
+    /** Method to end game
+     *  @param message what to show player(s) at end of the game (for example "draw", "black wins" etc.)
+     */
+    public void endGame(String message) {
+        //this.blockedChessboard = true;
+        System.out.println(message);
+        //JOptionPane.showMessageDialog(null, massage);
+    }
+
+    public void switchActive() {
+        if (activePlayer == settings.playerWhite) {
+            activePlayer = settings.playerBlack;
+        } else {
+            activePlayer = settings.playerWhite;
+        }
+
+        this.gameClock.switch_clocks();
+    }
+
+    /** Method of getting accualy active player
+     *  @return  player The player which have a move
+     */
+    public Player getActivePlayer() {
+        return this.activePlayer;
+    }
+
+    /** Method to go to next move (checks if game is local/network etc.)
+     */
+    public void nextMove() {
+        switchActive();
+
+        System.out.println("next move, active player: " + activePlayer.name + ", color: " + activePlayer.color.name() + ", type: " + activePlayer.playerType.name());
+        /* GUI related
+        if (activePlayer.playerType == Player.playerTypes.localUser) {
+            this.blockedChessboard = false;
+        } else if (activePlayer.playerType == Player.playerTypes.networkUser) {
+            this.blockedChessboard = true;
+        } else if (activePlayer.playerType == Player.playerTypes.computer) {
+        }
+        */
+    }
+
+    public boolean undo() {
+        boolean status = false;
+
+        if( this.settings.gameType == Settings.gameTypes.local) {
+            status = board.undo();
+
+            if (status) {
+                this.switchActive();
+            }
+            /* GUI related
+            else {
+                board.repaint();//repaint for sure
+            }*/
+        } else if (this.settings.gameType == Settings.gameTypes.network) {
+            this.client.sendUndoAsk();
+            status = true;
+        }
+        return status;
+    }
+
+
+    public boolean rewindToBegin() {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (board.undo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game") );
+        }
+
+        return result;
+    }
+
+
+    public boolean rewindToEnd() throws UnsupportedOperationException {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (board.redo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
+        }
+
+        return result;
+    }
+
+
+    public boolean redo() {
+        boolean status = board.redo();
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            if (status) {
+                this.nextMove();
+            }
+
+            /*else { GUI related
+                chessboard.repaint();//repaint for sure
+            }*/
+        } else {
+            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
+        }
+        return status;
+    }
 
     /**
      * Loading game method(loading game state from the earlier saved file)
@@ -102,7 +216,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     super.setSize(width, height);
     }
     }*/
-    static public void loadGame(File file) {
+/*    static public void loadGame(File file) {
         FileReader fileR = null;
         try {
             fileR = new FileReader(file);
@@ -137,9 +251,9 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         newGUI.moves.setMoves(tempStr);
         newGUI.blockedChessboard = false;
         newGUI.chessboard.repaint();
-        //newGUI.chessboard.draw();
+        newGUI.chessboard.draw();
     }
-
+*/
 
     /** Method checking in with of line there is an error
      *  @param  br BufferedReader class object to operate on
@@ -147,7 +261,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
      *  @return String with searched variable in file (whole line)
      *  @throws ReadGameError class object when something goes wrong when reading file
      */
-    static public String getLineWithVar(BufferedReader br, String srcStr) throws ReadGameError {
+/*    static public String getLineWithVar(BufferedReader br, String srcStr) throws ReadGameError {
         String str = "";
         while (true) {
             try {
@@ -163,14 +277,14 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             }
         }
     }
-
+*/
 
     /** Method to get value from loaded txt line
      *  @param line Line which is readed
      *  @return result String with loaded value
      *  @throws ReadGameError object class when something goes wrong
      */
-    static public String getValue(String line) throws ReadGameError {
+/*    static public String getValue(String line) throws ReadGameError {
         //System.out.println("getValue called with: "+line);
         int from = line.indexOf("\"");
         int to = line.lastIndexOf("\"");
@@ -187,12 +301,12 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         return result;
     }
-
+*/
 
     /** Method to save actual state of game
      * @param path address of place where game will be saved
      */
-    public void saveGame(File path) {
+ /*   public void saveGame(File path) {
         FileWriter fileW = null;
         try {
             fileW = new FileWriter(path);
@@ -220,12 +334,12 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         JOptionPane.showMessageDialog(this, Settings.lang("game_saved_properly"));
     }
-
+*/
 
     /** Method to Start new game
      *
      */
-    public void newGame() {
+/*    public void newGame() {
         chessboard.setPieces("", settings.playerWhite, settings.playerBlack);
 
         //System.out.println("new game, game type: "+settings.gameType.name());
@@ -247,47 +361,8 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         //dirty hacks ends over here :)
     }
 
-    /** Method to end game
-     *  @param message what to show player(s) at end of the game (for example "draw", "black wins" etc.)
-     */
-    public void endGame(String massage) {
-        this.blockedChessboard = true;
-        System.out.println(massage);
-        JOptionPane.showMessageDialog(null, massage);
-    }
-
     /** Method to swich active players after move
      */
-    public void switchActive() {
-        if (activePlayer == settings.playerWhite) {
-            activePlayer = settings.playerBlack;
-        } else {
-            activePlayer = settings.playerWhite;
-        }
-
-        this.gameClock.switch_clocks();
-    }
-
-    /** Method of getting accualy active player
-     *  @return  player The player which have a move
-     */
-    public Player getActivePlayer() {
-        return this.activePlayer;
-    }
-
-    /** Method to go to next move (checks if game is local/network etc.)
-     */
-    public void nextMove() {
-        switchActive();
-
-        System.out.println("next move, active player: " + activePlayer.name + ", color: " + activePlayer.color.name() + ", type: " + activePlayer.playerType.name());
-        if (activePlayer.playerType == Player.playerTypes.localUser) {
-            this.blockedChessboard = false;
-        } else if (activePlayer.playerType == Player.playerTypes.networkUser) {
-            this.blockedChessboard = true;
-        } else if (activePlayer.playerType == Player.playerTypes.computer) {
-        }
-    }
 
     /** Method to simulate Move to check if it's correct etc. (usable for network game).
      * @param beginX from which X (on chessboard) move starts
@@ -295,7 +370,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
      * @param endX   to   which X (on chessboard) move go
      * @param endY   to   which Y (on chessboard) move go
      * */
-    public boolean simulateMove(int beginX, int beginY, int endX, int endY) {
+/*    public boolean simulateMove(int beginX, int beginY, int endX, int endY) {
         try {
             chessboard.select(chessboard.squares[beginX][beginY]);
             if (chessboard.activeSquare.piece.allMoves().indexOf(chessboard.squares[endX][endY]) != -1) { //move
@@ -405,72 +480,10 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
 
     public void mouseExited(MouseEvent arg0) {
     }
+*/
 
 
-    public boolean undo() {
-        boolean status = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local) {
-            status = chessboard.undo();
-            if (status) {
-                this.switchActive();
-            } else {
-                chessboard.repaint();//repaint for sure
-            }
-        } else if (this.settings.gameType == Settings.gameTypes.network) {
-            this.client.sendUndoAsk();
-            status = true;
-        }
-        return status;
-    }
-
-
-    public boolean rewindToBegin() {
-        boolean result = false;
-
-        if (this.settings.gameType == Settings.gameTypes.local) {
-            while (chessboard.undo()) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game") );
-        }
-
-        return result;
-    }
-
-
-    public boolean rewindToEnd() throws UnsupportedOperationException {
-        boolean result = false;
-
-        if (this.settings.gameType == Settings.gameTypes.local) {
-            while (chessboard.redo()) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
-        }
-
-        return result;
-    }
-
-
-    public boolean redo() {
-        boolean status = chessboard.redo();
-        if (this.settings.gameType == Settings.gameTypes.local) {
-            if (status) {
-                this.nextMove();
-            } else {
-                chessboard.repaint();//repaint for sure
-            }
-        } else {
-            throw new UnsupportedOperationException(Settings.lang("operation_supported_only_in_local_game"));
-        }
-        return status;
-    }
-
-
-    public void componentResized(ComponentEvent e) {
+/*    public void componentResized(ComponentEvent e) {
         int height = this.getHeight() >= this.getWidth() ? this.getWidth() : this.getHeight();
         int chess_height = (int)Math.round( (height * 0.8) / 8) * 8;
         //noinspection RedundantCast
@@ -493,6 +506,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
 
     public void componentHidden(ComponentEvent e) {
     }
+*/
 }
 
 class ReadGameError extends Exception {

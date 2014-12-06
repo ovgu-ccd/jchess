@@ -73,6 +73,14 @@ public class Board {
         return tiles[0];
     }
 
+    boolean undo() {
+        return true;
+    }
+
+    boolean redo() {
+        return false;
+    }
+
 
 }
 
