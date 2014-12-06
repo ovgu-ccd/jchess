@@ -18,26 +18,28 @@
  */
 package jchess;
 
-import jchess.Moves.castling;
+//import jchess.Moves.castling;
+import jchess.pieces.Piece;
 
 class Move {
 
-    protected Square from = null;
-    protected Square to = null;
+    protected Tile from = null;
+    protected Tile to = null;
     protected Piece movedPiece = null;
     protected Piece takenPiece = null;
-    protected Piece promotedTo = null;
-    protected boolean wasEnPassant = false;
-    protected castling castlingMove = castling.none;
-    protected boolean wasPawnTwoFieldsMove = false;
+    //protected Piece promotedTo = null;
+    //protected boolean wasEnPassant = false;
+    //protected castling castlingMove = castling.none;
+    //protected boolean wasPawnTwoFieldsMove = false;
 
-    Move(Square from, Square to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant, Piece promotedPiece) {
+    //Move(Tile from, Tile to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant, Piece promotedPiece) {
+    Move(Tile from, Tile to, Piece movedPiece, Piece takenPiece) {
         this.from = from;
         this.to = to;
 
         this.movedPiece = movedPiece;
         this.takenPiece = takenPiece;
-
+/*
         this.castlingMove = castlingMove;
         this.wasEnPassant = wasEnPassant;
 
@@ -46,13 +48,14 @@ class Move {
         } else if (movedPiece.name.equals("Pawn") && to.pozY == Chessboard.bottom || to.pozY == Chessboard.top && promotedPiece != null) {
             this.promotedTo = promotedPiece;
         }
+*/
     }
 
-    public Square getFrom() {
+    public Tile getFrom() {
         return this.from;
     }
 
-    public Square getTo() {
+    public Tile getTo() {
         return this.to;
     }
 
@@ -64,7 +67,7 @@ class Move {
         return this.takenPiece;
     }
 
-    public boolean wasEnPassant() {
+/*    public boolean wasEnPassant() {
         return this.wasEnPassant;
     }
 
@@ -79,4 +82,5 @@ class Move {
     public Piece getPromotedPiece() {
         return this.promotedTo;
     }
+*/
 }
