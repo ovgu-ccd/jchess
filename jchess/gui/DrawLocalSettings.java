@@ -23,7 +23,6 @@ import jchess.Application;
 import jchess.Player;
 import jchess.Settings;
 import jchess.StringResources;
-import jchess.gui.Game;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -259,8 +258,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                     + "\nwhite on top?: " + sett.upsideDown + "\n****************");//4test
             newGUI.newGame();//start new Game
             this.parent.setVisible(false);//hide parent
-            newGUI.chessboard.repaint();
-            newGUI.chessboard.draw();
+            newGUI.boardView.repaint();
+            //newGUI.chessboard.draw();
         }
 
     }

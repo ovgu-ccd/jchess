@@ -222,7 +222,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                     Game newGUI = Application.getInstance().getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
                     client.setGame(newGUI);
                     newGUI.add(newGUI.chat);
-                    newGUI.chessboard.draw();
+                    //newGUI.chessboard.draw();
 
                     Thread thread = new Thread(client);
                     thread.start(); //client listening

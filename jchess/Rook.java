@@ -21,7 +21,7 @@
 
 package jchess;
 
-import jchess.gui.Chessboard;
+import jchess.gui.BoardView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class Rook extends Piece {
     protected static final Image imageBlack = GUI.loadImage("Rook-B.png");
     public static short value = 5;
 
-    public Rook(Chessboard chessboard, Player player) {
-        super(chessboard, player);//call initializer of super type: Piece
+    public Rook(BoardView boardView, Player player) {
+        super(boardView, player);//call initializer of super type: Piece
         //this.setImages("Rook-W.png", "Rook-B.png");
         this.symbol = "R";
         this.setImage();
@@ -82,14 +82,14 @@ public class Rook extends Piece {
                 if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[this.square.getPozX()][i])) {
-                        list.add(getChessboard().squares[this.square.getPozX()][i]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 } else {
                     //or black
 
-                    if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[this.square.getPozX()][i])) {
-                        list.add(getChessboard().squares[this.square.getPozX()][i]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 }
 
@@ -111,14 +111,14 @@ public class Rook extends Piece {
                 if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[this.square.getPozX()][i])) {
-                        list.add(getChessboard().squares[this.square.getPozX()][i]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 } else {
                     //or black
 
-                    if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[this.square.getPozX()][i])) {
-                        list.add(getChessboard().squares[this.square.getPozX()][i]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 }
 
@@ -139,14 +139,14 @@ public class Rook extends Piece {
                 if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[i][this.square.getPozY()])) {
-                        list.add(getChessboard().squares[i][this.square.getPozY()]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 } else {
                     //or black
 
-                    if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[i][this.square.getPozY()])) {
-                        list.add(getChessboard().squares[i][this.square.getPozY()]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 }
 
@@ -167,14 +167,14 @@ public class Rook extends Piece {
                 if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[i][this.square.getPozY()])) {
-                        list.add(getChessboard().squares[i][this.square.getPozY()]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 } else {
                     //or black
 
-                    if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[i][this.square.getPozY()])) {
-                        list.add(getChessboard().squares[i][this.square.getPozY()]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 }
 

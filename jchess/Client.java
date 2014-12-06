@@ -139,7 +139,7 @@ public class Client implements Runnable {
                     getGame().client = this;
                     getGame().chat.client = this;
                     getGame().newGame();//start new Game
-                    getGame().chessboard.draw();
+                    //getGame().chessboard.draw();
                 } else if (in.equals("#errorConnection")) {
                     getGame().chat.addMessage("** "+ StringResources.MAIN.getString("error_connecting_one_of_player")+" **");
                 } else if(in.equals("#undoAsk") && !this.isObserver) {
@@ -151,7 +151,7 @@ public class Client implements Runnable {
                                  );
 
                     if( result == JOptionPane.YES_OPTION ) {
-                        getGame().chessboard.undo();
+                        getGame().boardView.undo();
                         getGame().switchActive();
                         this.sendUndoAnswerPositive();
                     } else {
@@ -161,7 +161,7 @@ public class Client implements Runnable {
                     this.wait4undoAnswer = false;
                     String lastMove = getGame().moves.getMoves().get( getGame().moves.getMoves().size() -1 );
                     getGame().chat.addMessage("** "+StringResources.MAIN.getString("permision_ok_4_undo_move")+": "+lastMove+"**");
-                    getGame().chessboard.undo();
+                    getGame().boardView.undo();
                 } else if(in.equals("#undoAnswerNegative") && this.wait4undoAnswer) {
                     getGame().chat.addMessage( StringResources.MAIN.getString("no_permision_4_undo_move") );
                 }

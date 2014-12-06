@@ -19,7 +19,7 @@
 package jchess;
 
 import jchess.Moves.castling;
-import jchess.gui.Chessboard;
+import jchess.gui.BoardView;
 
 public class Move {
 
@@ -44,7 +44,7 @@ public class Move {
 
         if (movedPiece.getName().equals("Pawn") && Math.abs(to.getPozY() - from.getPozY()) == 2) {
             this.wasPawnTwoFieldsMove = true;
-        } else if (movedPiece.getName().equals("Pawn") && to.getPozY() == Chessboard.bottom || to.getPozY() == Chessboard.top && promotedPiece != null) {
+        } else if (movedPiece.getName().equals("Pawn") && to.getPozY() == BoardView.bottom || to.getPozY() == BoardView.top && promotedPiece != null) {
             this.promotedTo = promotedPiece;
         }
     }

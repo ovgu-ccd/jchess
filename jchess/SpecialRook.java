@@ -1,6 +1,6 @@
 package jchess;
 
-import jchess.gui.Chessboard;
+import jchess.gui.BoardView;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class SpecialRook extends Rook {
 
-    public SpecialRook(Chessboard chessboard, Player player) {
-        super(chessboard, player);
+    public SpecialRook(BoardView boardView, Player player) {
+        super(boardView, player);
     }
 
 

@@ -20,7 +20,7 @@
  */
 package jchess;
 
-import jchess.gui.Chessboard;
+import jchess.gui.BoardView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class Knight extends Piece {
     protected static final Image imageWhite = GUI.loadImage("Knight-W.png");
     protected static final Image imageBlack = GUI.loadImage("Knight-B.png");
 
-    public Knight(Chessboard chessboard, Player player) {
-        super(chessboard, player);//call initializer of super type: Piece
+    public Knight(BoardView boardView, Player player) {
+        super(boardView, player);//call initializer of super type: Piece
         //this.setImages("Knight-W.png", "Knight-B.png");
         this.symbol = "N";
         this.setImage();
@@ -80,12 +80,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -96,12 +96,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -112,12 +112,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -128,12 +128,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -144,12 +144,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -160,12 +160,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -176,12 +176,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }
@@ -192,12 +192,12 @@ public class Knight extends Piece {
 
         if (!isout(newX, newY) && checkPiece(newX, newY)) {
             if (this.player.getColor() == Player.colors.white) { //white
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             } else { //or black
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getChessboard().squares[newX][newY])) {
-                    list.add(getChessboard().squares[newX][newY]);
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[newX][newY])) {
+                    list.add(getBoardView().squares[newX][newY]);
                 }
             }
         }

@@ -1,16 +1,16 @@
 package jchess;
 
-import jchess.gui.JChessView;
+import jchess.gui.GUI;
 
 /**
  * Created by robert on 04.12.14.
  */
 public class Application {
     private static Application app;
-    private JChessView jcv;
+    private GUI jcv;
 
     private Application() {
-        jcv = new JChessView();
+        jcv = new GUI();
     }
 
     public static Application getInstance() {
@@ -24,7 +24,7 @@ public class Application {
         jcv.setVisible(true);
     }
 
-    public JChessView getJcv() {
+    public GUI getJcv() {
         return jcv;
     }
 

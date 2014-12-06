@@ -20,7 +20,7 @@
  */
 package jchess;
 
-import jchess.gui.Chessboard;
+import jchess.gui.BoardView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,8 +47,8 @@ public class Pawn extends Piece {
     protected static final Image imageBlack = GUI.loadImage("Pawn-B.png");
     public static short value = 1;
 
-    Pawn(Chessboard chessboard, Player player) {
-        super(chessboard, player);
+    Pawn(BoardView boardView, Player player) {
+        super(boardView, player);
         // this.setImages("Pawn-W.png", "Pawn-B.png");
         this.symbol = "";
         this.setImage();
@@ -85,45 +85,45 @@ public class Pawn extends Piece {
         if (this.isout(first, first)) {// out of bounds protection
             return list;// return empty list
         }
-        sq = getChessboard().squares[this.square.getPozX()][first];
+        sq = getBoardView().squares[this.square.getPozX()][first];
         if (sq.piece == null) {// if next is free
             // list.add(sq);//add
             if (this.player.getColor() == Player.colors.white) {// white
 
-                if (this.getChessboard().kingWhite.willBeSafeWhenMoveOtherPiece(
+                if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(
                             this.square,
-                            getChessboard().squares[this.square.getPozX()][first])) {
-                    list.add(getChessboard().squares[this.square.getPozX()][first]);
+                            getBoardView().squares[this.square.getPozX()][first])) {
+                    list.add(getBoardView().squares[this.square.getPozX()][first]);
                 }
             } else {// or black
 
-                if (this.getChessboard().kingBlack.willBeSafeWhenMoveOtherPiece(
+                if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(
                             this.square,
-                            getChessboard().squares[this.square.getPozX()][first])) {
-                    list.add(getChessboard().squares[this.square.getPozX()][first]);
+                            getBoardView().squares[this.square.getPozX()][first])) {
+                    list.add(getBoardView().squares[this.square.getPozX()][first]);
                 }
             }
 
             if ((player.isGoDown() && this.square.getPozY() == 1)
                     || (!player.isGoDown() && this.square.getPozY() == 6)) {
-                sq1 = getChessboard().squares[this.square.getPozX()][second];
+                sq1 = getBoardView().squares[this.square.getPozX()][second];
                 if (sq1.piece == null) {
                     // list.add(sq1);//only in first move
                     if (this.player.getColor() == Player.colors.white) {// white
 
-                        if (this.getChessboard().kingWhite
+                        if (this.getBoardView().kingWhite
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX()][second])) {
-                            list.add(getChessboard().squares[this.square.getPozX()][second]);
+                                    getBoardView().squares[this.square.getPozX()][second])) {
+                            list.add(getBoardView().squares[this.square.getPozX()][second]);
                         }
                     } else {// or black
 
-                        if (this.getChessboard().kingBlack
+                        if (this.getBoardView().kingBlack
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX()][second])) {
-                            list.add(getChessboard().squares[this.square.getPozX()][second]);
+                                    getBoardView().squares[this.square.getPozX()][second])) {
+                            list.add(getBoardView().squares[this.square.getPozX()][second]);
                         }
                     }
                 }
@@ -134,35 +134,35 @@ public class Pawn extends Piece {
             // protection
         {
             // capture
-            sq = getChessboard().squares[this.square.getPozX() - 1][first];
+            sq = getBoardView().squares[this.square.getPozX() - 1][first];
             if (sq.piece != null) {// check if can hit left
                 if (this.player != sq.piece.player
                         && !sq.piece.getName().equals("King")) {
                     // list.add(sq);
                     if (this.player.getColor() == Player.colors.white) {// white
 
-                        if (this.getChessboard().kingWhite
+                        if (this.getBoardView().kingWhite
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() - 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() - 1][first]);
+                                    getBoardView().squares[this.square.getPozX() - 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() - 1][first]);
                         }
                     } else {// or black
 
-                        if (this.getChessboard().kingBlack
+                        if (this.getBoardView().kingBlack
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() - 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() - 1][first]);
+                                    getBoardView().squares[this.square.getPozX() - 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() - 1][first]);
                         }
                     }
                 }
             }
 
             // En passant
-            sq = getChessboard().squares[this.square.getPozX() - 1][this.square.getPozY()];
-            if (sq.piece != null && this.getChessboard().twoSquareMovedPawn != null
-                    && sq == this.getChessboard().twoSquareMovedPawn.square) {// check
+            sq = getBoardView().squares[this.square.getPozX() - 1][this.square.getPozY()];
+            if (sq.piece != null && this.getBoardView().twoSquareMovedPawn != null
+                    && sq == this.getBoardView().twoSquareMovedPawn.square) {// check
                 // if
                 // can
                 // hit
@@ -173,19 +173,19 @@ public class Pawn extends Piece {
                     // list.add(sq);
                     if (this.player.getColor() == Player.colors.white) {// white
 
-                        if (this.getChessboard().kingWhite
+                        if (this.getBoardView().kingWhite
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() - 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() - 1][first]);
+                                    getBoardView().squares[this.square.getPozX() - 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() - 1][first]);
                         }
                     } else {// or black
 
-                        if (this.getChessboard().kingBlack
+                        if (this.getBoardView().kingBlack
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() - 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() - 1][first]);
+                                    getBoardView().squares[this.square.getPozX() - 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() - 1][first]);
                         }
                     }
                 }
@@ -196,35 +196,35 @@ public class Pawn extends Piece {
             // protection
 
             // capture
-            sq = getChessboard().squares[this.square.getPozX() + 1][first];
+            sq = getBoardView().squares[this.square.getPozX() + 1][first];
             if (sq.piece != null) {// check if can hit right
                 if (this.player != sq.piece.player
                         && !sq.piece.getName().equals("King")) {
                     // list.add(sq);
                     if (this.player.getColor() == Player.colors.white) { // white
 
-                        if (this.getChessboard().kingWhite
+                        if (this.getBoardView().kingWhite
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() + 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() + 1][first]);
+                                    getBoardView().squares[this.square.getPozX() + 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() + 1][first]);
                         }
                     } else {// or black
 
-                        if (this.getChessboard().kingBlack
+                        if (this.getBoardView().kingBlack
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() + 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() + 1][first]);
+                                    getBoardView().squares[this.square.getPozX() + 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() + 1][first]);
                         }
                     }
                 }
             }
 
             // En passant
-            sq = getChessboard().squares[this.square.getPozX() + 1][this.square.getPozY()];
-            if (sq.piece != null && this.getChessboard().twoSquareMovedPawn != null
-                    && sq == this.getChessboard().twoSquareMovedPawn.square) {// check
+            sq = getBoardView().squares[this.square.getPozX() + 1][this.square.getPozY()];
+            if (sq.piece != null && this.getBoardView().twoSquareMovedPawn != null
+                    && sq == this.getBoardView().twoSquareMovedPawn.square) {// check
                 // if
                 // can
                 // hit
@@ -235,19 +235,19 @@ public class Pawn extends Piece {
                     // list.add(sq);
                     if (this.player.getColor() == Player.colors.white) {// white
 
-                        if (this.getChessboard().kingWhite
+                        if (this.getBoardView().kingWhite
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() + 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() + 1][first]);
+                                    getBoardView().squares[this.square.getPozX() + 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() + 1][first]);
                         }
                     } else {// or black
 
-                        if (this.getChessboard().kingBlack
+                        if (this.getBoardView().kingBlack
                                 .willBeSafeWhenMoveOtherPiece(
                                     this.square,
-                                    getChessboard().squares[this.square.getPozX() + 1][first])) {
-                            list.add(getChessboard().squares[this.square.getPozX() + 1][first]);
+                                    getBoardView().squares[this.square.getPozX() + 1][first])) {
+                            list.add(getBoardView().squares[this.square.getPozX() + 1][first]);
                         }
                     }
                 }
