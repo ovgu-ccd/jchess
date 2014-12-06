@@ -44,6 +44,16 @@ public class GUI {
         // this.drawGUI();
     }/*--endOf-GUI--*/
 
+    private static GUI instance;
+
+    public static GUI getInstance() {
+        if (GUI.instance == null) {
+            GUI.instance = new GUI();
+        }
+
+        return GUI.instance;
+    }
+
     /*
      * Method load image by a given name with extension
      *
