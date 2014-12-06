@@ -24,7 +24,7 @@
 package jchess;
 
 //import jchess.Moves.castling;
-
+//import java.lang.IllegalArgumentException;
 
 
 
@@ -36,18 +36,10 @@ public class Board {
 
     private Tile tiles[];
 
-    /** Chessboard class constructor
-     * @param settings reference to Settings class object for this chessboard
-     * @param moves_history reference to Moves class object for this chessboard
-     */
-    //public Chessboard(Settings settings, Moves moves_history) {
-    //this.settings = settings;
-    //this.moves_history = moves_history;
-
     public Board() {
 
         // generate Fields
-        tiles = new Tile[ 1 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
+        tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
 
     }/*--endOf-Chessboard--*/
 
@@ -56,9 +48,17 @@ public class Board {
         return tiles;
     }
 
-    /// handle the move from one fi
+    /// handle the move from one field to another
     void handleMove( Move move ) {
 
+        if ( move.getMovedPiece() != move.getFrom().getPiece() )
+            throw new IllegalArgumentException("The moved piece is not on the move from field !");
+
+        if ( move.getTakenPiece() != move.getTo().getPiece() )
+            throw new IllegalArgumentException("The taken piece is not on the move to field !");
+
+        move.getFrom().removePiece();
+        move.getTo().placePiece(move.getMovedPiece());
     }
 
     /** Access a Tile of a board
@@ -70,7 +70,24 @@ public class Board {
      * @param tileOnRingIndex Index for a tile on the ring, starting with zero for the central northern tile, cw order
      */
     Tile getTile( int ringIndex, int tileOnRingIndex ) {
-        return tiles[0];
+
+        if ( ringIndex < 0 || ringIndex > 7 )
+            throw new IllegalArgumentException("Parameter ringIndex must be in the interval [0..7] !");
+
+        if ( tileOnRingIndex < 0 || tileOnRingIndex > ringIndex * 6 - 1 )
+            throw new IllegalArgumentException("Parameter tileOnRingIndex must be in the interval [0..ringIndex * 6 - 1] !");
+
+        // Compute board tile index from ringIndex and tileOnRingIndex
+        int tileIndex = 0;
+
+        // Sum up all tiles from Ring Index 0 to Ring Index ringIndex-1 and add tileOnRingIndex
+        // Using Gauss' Sum Formula
+        if (ringIndex > 0) {
+            ringIndex -= 1;
+            tileIndex = (ringIndex * ringIndex + ringIndex) / 2 + tileOnRingIndex;
+        }
+
+        return tiles[tileIndex];
     }
 
     boolean undo() {
@@ -80,7 +97,6 @@ public class Board {
     boolean redo() {
         return false;
     }
-
 
 }
 
