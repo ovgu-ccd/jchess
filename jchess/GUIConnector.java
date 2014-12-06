@@ -5,7 +5,7 @@ package jchess;
  */
 public class GUIConnector implements IOSystem {
 
-    GUI gui = GUI.getInstance();
+    GUIUtils gui = GUIUtils.getInstance();
 
     @Override
     public void handleUpdate(Board board) {

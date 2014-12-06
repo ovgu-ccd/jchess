@@ -21,7 +21,7 @@
 package jchess.gui;
 
 import jchess.Application;
-import jchess.GUI;
+import jchess.GUIUtils;
 import jchess.StringResources;
 
 import javax.swing.*;
@@ -44,7 +44,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
     GridBagConstraints gbc;
     JButton themePreviewButton;
     JButton okButton;
-    String basedir = GUI.getJarPath() + File.separator + "jchess";
+    String basedir = GUIUtils.getJarPath() + File.separator + "jchess";
 
     ThemeChooseWindow(Frame parent) throws Exception {
         super(parent);
@@ -70,12 +70,12 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             this.add(this.themesList);
             this.themesList.setSelectionMode(0);
             this.themesList.addListSelectionListener(this);
-            Properties prp = GUI.getConfigFile();
+            Properties prp = GUIUtils.getConfigFile();
 
             this.gbl = new GridBagLayout();
             this.gbc = new GridBagConstraints();
             try {
-                this.themePreview = new ImageIcon(GUI.loadImage("Preview.png"));
+                this.themePreview = new ImageIcon(GUIUtils.loadImage("Preview.png"));
             } catch (java.lang.NullPointerException exc) {
                 System.out.println("Cannot find preview image: " + exc);
                 this.themePreview = new ImageIcon(
@@ -118,11 +118,11 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
      */
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == this.okButton) {
-            Properties prp = GUI.getConfigFile();
+            Properties prp = GUIUtils.getConfigFile();
             int element = this.themesList.getSelectedIndex();
             String name = this.themesList.getModel().getElementAt(element)
                           .toString();
-            if (GUI.themeIsValid(name)) {
+            if (GUIUtils.themeIsValid(name)) {
                 prp.setProperty("THEME", name);
                 try {
                     FileOutputStream fOutStr = new FileOutputStream("config.txt");

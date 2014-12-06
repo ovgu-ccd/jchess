@@ -41,8 +41,8 @@ import java.util.ArrayList;
 public class Queen extends Piece {
 
     public static short value = 9;
-    protected static final Image imageWhite = GUI.loadImage("Queen-W.png");
-    protected static final Image imageBlack = GUI.loadImage("Queen-B.png");
+    protected static final Image imageWhite = GUIUtils.loadImage("Queen-W.png");
+    protected static final Image imageBlack = GUIUtils.loadImage("Queen-B.png");
 
     public Queen(BoardView boardView, Player player) {
         super(boardView, player);//call initializer of super type: Piece

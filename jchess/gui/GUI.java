@@ -31,7 +31,7 @@ import java.io.File;
  * The application's main frame.
  */
 public class GUI extends JFrame implements ActionListener, ComponentListener {
-    static jchess.GUI gui = null;
+    static GUIUtils gui = null;
     // End of variables declaration//GEN-END:variables
     //private JTabbedPaneWithIcon gamesPane;
     private final Timer messageTimer;
@@ -40,7 +40,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
     private final Icon[] busyIcons = new Icon[15];
     public javax.swing.JPanel mainPanel;
     public JDialog newGameFrame;
-    jchess.GUI activeGUI;//in future it will be reference to active tab
+    GUIUtils activeGUI;//in future it will be reference to active tab
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu gameMenu;
     private javax.swing.JTabbedPane gamesPane;

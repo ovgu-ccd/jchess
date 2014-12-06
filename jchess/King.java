@@ -48,8 +48,8 @@ public class King extends Piece {
     public boolean wasMotion = false;//maybe change to: 'wasMotioned'
     //public boolean checked     = false;
     public static short value = 99;
-    private static final Image imageWhite = GUI.loadImage("King-W.png");
-    private static final Image imageBlack = GUI.loadImage("King-B.png");
+    private static final Image imageWhite = GUIUtils.loadImage("King-W.png");
+    private static final Image imageBlack = GUIUtils.loadImage("King-B.png");
 
     King(BoardView boardView, Player player) {
         super(boardView, player);

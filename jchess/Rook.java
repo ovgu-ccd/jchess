@@ -44,8 +44,8 @@ import java.util.ArrayList;
 public class Rook extends Piece {
 
     private boolean wasMotion = false;
-    protected static final Image imageWhite = GUI.loadImage("Rook-W.png");
-    protected static final Image imageBlack = GUI.loadImage("Rook-B.png");
+    protected static final Image imageWhite = GUIUtils.loadImage("Rook-W.png");
+    protected static final Image imageBlack = GUIUtils.loadImage("Rook-B.png");
     public static short value = 5;
 
     public Rook(BoardView boardView, Player player) {

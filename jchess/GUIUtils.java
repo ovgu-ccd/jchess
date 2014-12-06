@@ -33,25 +33,25 @@ import java.util.Properties;
  * lockated available for player opptions, current games and where can he start
  * a new game (load it or save it)
  */
-public class GUI {
+public class GUIUtils {
 
-    static final public Properties configFile = GUI.getConfigFile();
+    static final public Properties configFile = GUIUtils.getConfigFile();
     public Game game;
 
-    public GUI() {
+    public GUIUtils() {
         this.game = new Game();
 
         // this.drawGUI();
     }/*--endOf-GUI--*/
 
-    private static GUI instance;
+    private static GUIUtils instance;
 
-    public static GUI getInstance() {
-        if (GUI.instance == null) {
-            GUI.instance = new GUI();
+    public static GUIUtils getInstance() {
+        if (GUIUtils.instance == null) {
+            GUIUtils.instance = new GUIUtils();
         }
 
-        return GUI.instance;
+        return GUIUtils.instance;
     }
 
     /*
@@ -89,7 +89,7 @@ public class GUI {
     }
 
     public static String getJarPath() {
-        String path = GUI.class.getProtectionDomain().getCodeSource()
+        String path = GUIUtils.class.getProtectionDomain().getCodeSource()
                       .getLocation().getFile();
         path = path.replaceAll(
                    "[a-zA-Z0-9%!@#$%^&*\\(\\)\\[\\]\\{\\}\\.\\,\\s]+\\.jar", "");

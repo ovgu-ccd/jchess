@@ -43,8 +43,8 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 
     boolean down;
-    protected static final Image imageWhite = GUI.loadImage("Pawn-W.png");
-    protected static final Image imageBlack = GUI.loadImage("Pawn-B.png");
+    protected static final Image imageWhite = GUIUtils.loadImage("Pawn-W.png");
+    protected static final Image imageBlack = GUIUtils.loadImage("Pawn-B.png");
     public static short value = 1;
 
     Pawn(BoardView boardView, Player player) {
