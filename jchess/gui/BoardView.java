@@ -43,7 +43,7 @@ public class BoardView extends JPanel {
     public static final int img_y = img_x;//image y position (used in JChessView class!)
     public static final int img_widht = 480;//image width
     public static final int img_height = img_widht;//image height
-    private static final Image orgImage = GUIUtils.loadImage("chessboard.png");//image of chessboard
+    private static final BufferedImage orgImage = GUIUtils.loadImage("chessboard.png");//image of chessboard
     private static final Image org_sel_square = GUIUtils.loadImage("sel_square.png");//image of highlited square
     private static final Image org_able_square = GUIUtils.loadImage("able_square.png");//image of square where piece can go
     private static Image image = BoardView.orgImage;//image of chessboard
@@ -98,6 +98,7 @@ public class BoardView extends JPanel {
         this.moves_history = moves_history;
         this.setDoubleBuffered(true);
         this.drawLabels((int) this.square_height);
+        setPreferredSize(new Dimension(orgImage.getWidth(), orgImage.getHeight()));
     }/*--endOf-Chessboard--*/
 
 
@@ -610,11 +611,6 @@ public class BoardView extends JPanel {
         return null;
     }
 
-    public void drawCenteredCircle(Graphics2D g, int x, int y, int r) {
-        x = x-(r/2);
-        y = y-(r/2);
-        g.fillOval(x,y,r,r);
-    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -623,11 +619,6 @@ public class BoardView extends JPanel {
         Point topLeftPoint = this.getTopLeftPoint();
 
         g2d.drawImage(image, topLeftPoint.x, topLeftPoint.y, null);//draw an Image of chessboard
-        g2d.setColor(Color.red);
-
-        for (int i = 0; i < 8; i++) {
-            drawCenteredCircle(g2d, img_widht / 2, img_height / 2, i * img_height/8);
-        }
     }
 
 

@@ -22,7 +22,9 @@ package jchess;
 
 import jchess.gui.GameTab;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -62,20 +64,19 @@ public class GUIUtils {
      * @returns : image or null if cannot load
      */
 
-    public static Image loadImage(String name) {
+    public static BufferedImage loadImage(String name) {
         if (configFile == null) {
             return null;
         }
-        Image img = null;
+        BufferedImage img = null;
         URL url = null;
-        Toolkit tk = Toolkit.getDefaultToolkit();
         try {
             String imageLink = "theme/"
                                + configFile.getProperty("THEME", "default") + "/images/"
                                + name;
             System.out.println(configFile.getProperty("THEME"));
             url = Application.class.getResource(imageLink);
-            img = tk.getImage(url);
+            img = ImageIO.read(url);
 
         } catch (Exception e) {
             System.out.println("some error loading image!");
