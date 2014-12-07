@@ -64,11 +64,12 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
     };
 
-    ;
+    private NewGameWindow parPtr;
 
 
-    DrawLocalSettings(JDialog parent) {
+    DrawLocalSettings(NewGameWindow parent) {
         super();
+        parPtr = parent;
         //this.setA//choose oponent
         this.parent = parent;
         this.color = new JComboBox(colors);
@@ -219,47 +220,15 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("fill_name"));
                 return;
             }
-            Game newGUI = Application.getInstance().getJcv().addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
-            Settings sett = newGUI.settings;//sett local settings variable
-            Player pl1 = sett.playerWhite;//set local player variable
-            Player pl2 = sett.playerBlack;//set local player variable
-            sett.gameMode = Settings.gameModes.newGame;
-            //if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText(0,8));
-            if (this.color.getActionCommand().equals("biały")) { //if first player is white
-                pl1.setName(this.firstName.getText());//set name of player
-                pl2.setName(this.secondName.getText());//set name of player
-            } else { //else change names
-                pl2.setName(this.firstName.getText());//set name of player
-                pl1.setName(this.secondName.getText());//set name of player
-            }
-            pl1.setType(Player.playerTypes.localUser);//set type of player
-            pl2.setType(Player.playerTypes.localUser);//set type of player
-            sett.gameType = Settings.gameTypes.local;
-            if (this.oponentComp.isSelected()) { //if computer oponent is checked
-                pl2.setType(Player.playerTypes.computer);
-            }
-            if (this.upsideDown.isSelected()) { //if upsideDown is checked
-                sett.upsideDown = true;
-            } else {
-                sett.upsideDown = false;
-            }
-            if (this.timeGame.isSelected()) { //if timeGame is checked
-                String value = this.times[this.time4Game.getSelectedIndex()];//set time for game
-                Integer val = new Integer(value);
-                sett.timeLimitSet = true;
-                sett.timeForGame = (int) val * 60;//set time for game and mult it to seconds
-                newGUI.gameClock.setTimes(sett.timeForGame, sett.timeForGame);
-                newGUI.gameClock.start();
-            }
-            System.out.println(this.time4Game.getActionCommand());
-            //this.time4Game.getComponent(this.time4Game.getSelectedIndex());
-            System.out.println("****************\nStarting new game: " + pl1.getName() + " vs. " + pl2.getName()
-                    + "\ntime 4 game: " + sett.timeForGame + "\ntime limit set: " + sett.timeLimitSet
-                    + "\nwhite on top?: " + sett.upsideDown + "\n****************");//4test
-            newGUI.newGame();//start new Game
-            this.parent.setVisible(false);//hide parent
-            newGUI.boardView.repaint();
-            //newGUI.chessboard.draw();
+
+            /* new method call from apfohl */
+            parPtr.createNewGame(this.firstName.getText(),
+                    this.secondName.getText(),
+                    this.color.getActionCommand().equals("biały"),
+                    this.oponentComp.isSelected(),
+                    this.upsideDown.isSelected(),
+                    this.timeGame.isSelected(),
+                    this.times[this.time4Game.getSelectedIndex()]);
         }
 
     }

@@ -30,9 +30,12 @@ import javax.swing.*;
  */
 public class NewGameWindow extends JDialog {
 
+    private GUI parPtr;
+
     /** Creates new form NewGameWindow */
-    public NewGameWindow(JFrame parent) {
+    public NewGameWindow(GUI parent) {
         super(parent);
+        parPtr = parent;
         initComponents();
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -75,6 +78,23 @@ public class NewGameWindow extends JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /* relay method from apfohl */
+    public void createNewGame(String firstName,
+                              String secondName,
+                              Boolean isPlayerOneWhite,
+                              Boolean isOpponentComputer,
+                              Boolean isUpsideDown,
+                              Boolean isTimeGame,
+                              String time) {
+        parPtr.createNewGame(firstName,
+                secondName,
+                isPlayerOneWhite,
+                isOpponentComputer,
+                isUpsideDown,
+                isTimeGame,
+                time);
+    }
 
     /**
      * @param args the command line arguments

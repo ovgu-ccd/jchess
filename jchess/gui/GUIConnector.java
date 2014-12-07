@@ -1,4 +1,9 @@
-package jchess;
+package jchess.gui;
+
+import jchess.Board;
+import jchess.ChatMessage;
+import jchess.GUIUtils;
+import jchess.IOSystem;
 
 /**
  * Created by andreas on 06.12.14.
@@ -6,6 +11,11 @@ package jchess;
 public class GUIConnector implements IOSystem {
 
     GUIUtils gui = GUIUtils.getInstance();
+    GameTab gameTab;
+
+    public GUIConnector(GameTab gameTab) {
+        this.gameTab = gameTab;
+    }
 
     @Override
     public void handleUpdate(Board board) {

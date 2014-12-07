@@ -6,26 +6,31 @@ import jchess.gui.GUI;
  * Created by robert on 04.12.14.
  */
 public class Application {
-    private static Application app;
-    private GUI jcv;
+    private static Application instance;
+    private GUI gui;
 
     private Application() {
-        jcv = new GUI();
+        gui = new GUI(this);
     }
 
     public static Application getInstance() {
-        if (app == null) {
-            app = new Application();
+        if (Application.instance == null) {
+            Application.instance = new Application();
         }
-        return app;
+
+        return Application.instance;
     }
 
     public void run() {
-        jcv.setVisible(true);
+        gui.setVisible(true);
     }
 
     public GUI getJcv() {
-        return jcv;
+        return gui;
+    }
+
+    public void createGame(IOSystem ioSystem) {
+        // send new game message to Game class
     }
 
     public static void main(String args[]) {

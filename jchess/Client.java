@@ -20,7 +20,7 @@
  */
 package jchess;
 
-import jchess.gui.Game;
+import jchess.gui.GameTab;
 import jchess.server.Connection_info;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ public class Client implements Runnable {
     ObjectInputStream input;
     String ip;
     int port;
-    private Game game;
+    private GameTab game;
     Settings sett;
     boolean wait4undoAnswer = false;
     boolean isObserver = false;
@@ -240,11 +240,11 @@ public class Client implements Runnable {
         }
     }
 
-    public Game getGame() {
+    public GameTab getGame() {
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(GameTab game) {
         this.game = game;
     }
 }

@@ -20,7 +20,7 @@
  */
 package jchess;
 
-import jchess.gui.Game;
+import jchess.gui.GameTab;
 
 import java.awt.*;
 import java.io.File;
@@ -36,10 +36,10 @@ import java.util.Properties;
 public class GUIUtils {
 
     static final public Properties configFile = GUIUtils.getConfigFile();
-    public Game game;
+    public GameTab game;
 
     public GUIUtils() {
-        this.game = new Game();
+        this.game = new GameTab();
 
         // this.drawGUI();
     }/*--endOf-GUI--*/

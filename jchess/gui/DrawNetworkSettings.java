@@ -219,7 +219,7 @@ public class DrawNetworkSettings extends JPanel implements ActionListener {
                 if (isJoining) { //Client connection: succesful
                     System.out.println("Client connection: succesful");
                     //create new game and draw chessboard
-                    Game newGUI = Application.getInstance().getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
+                    GameTab newGUI = Application.getInstance().getJcv().addNewTab("Network game, table: " + textGameID.getText()/*client.sett.playerWhite.getName()+" vs "+client.sett.playerBlack.getName()*/);
                     client.setGame(newGUI);
                     newGUI.add(newGUI.chat);
                     //newGUI.chessboard.draw();

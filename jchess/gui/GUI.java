@@ -26,7 +26,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 
-
 /**
  * The application's main frame.
  */
@@ -66,9 +65,12 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
     private JMenu helpMenu;
     private JMenuItem aboutMenuItem;
     private JSeparator statusPanelSeparator;
+    private Application appPtr;
 
-    public GUI() {
+    public GUI(Application application) {
         super();
+
+        appPtr = application;
 
         initComponents();
         // status bar initialization - message timeout, idle icon and busy animation, etc
@@ -126,8 +128,62 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
 
     }
 
-    public Game addNewTab(String title) {
-        Game newGUI = new Game();
+    public void createNewGame(String firstName,
+                              String secondName,
+                              Boolean isPlayerOneWhite,
+                              Boolean isOpponentComputer,
+                              Boolean isUpsideDown,
+                              Boolean isTimeGame,
+                              String time) {
+        GameTab newTab = new GameTab();
+        this.gamesPane.addTab(firstName + " vs " + secondName, newTab);
+
+        Settings sett = newTab.settings; //sett local settings variable
+        Player pl1 = sett.playerWhite;   //set local player variable
+        Player pl2 = sett.playerBlack;   //set local player variable
+        sett.gameMode = Settings.gameModes.newGame;
+
+        if (isPlayerOneWhite) {      //if first player is white
+            pl1.setName(firstName);  //set name of player
+            pl2.setName(secondName); //set name of player
+        } else {                     //else change names
+            pl2.setName(firstName);  //set name of player
+            pl1.setName(secondName); //set name of player
+        }
+
+        pl1.setType(Player.playerTypes.localUser); //set type of player
+        pl2.setType(Player.playerTypes.localUser); //set type of player
+        sett.gameType = Settings.gameTypes.local;
+
+        if (isOpponentComputer) { //if computer oponent is checked
+            pl2.setType(Player.playerTypes.computer);
+        }
+
+        if (isUpsideDown) { //if upsideDown is checked
+            sett.upsideDown = true;
+        } else {
+            sett.upsideDown = false;
+        }
+
+        if (isTimeGame) { //if timeGame is checked
+            String value = time; //set time for game
+            Integer val = new Integer(value);
+            sett.timeLimitSet = true;
+            sett.timeForGame = (int) val * 60; //set time for game and multiply it to seconds
+            newTab.gameClock.setTimes(sett.timeForGame, sett.timeForGame);
+            newTab.gameClock.start();
+        }
+
+        newTab.newGame(); //start new Game
+        newGameFrame.setVisible(false);
+        newTab.boardView.repaint();
+        //newGUI.chessboard.draw();
+
+        GUIConnector newGUIConnector = new GUIConnector(newTab);
+    }
+
+    public GameTab addNewTab(String title) {
+        GameTab newGUI = new GameTab();
         this.gamesPane.addTab(title, newGUI);
         return newGUI;
     }
@@ -150,7 +206,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
                 int retVal = fc.showSaveDialog(this.gamesPane);
                 if (retVal == JFileChooser.APPROVE_OPTION) {
                     File selFile = fc.getSelectedFile();
-                    Game tempGUI = (Game) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
+                    GameTab tempGUI = (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
                     if (!selFile.exists()) {
                         try {
                             selFile.createNewFile();
@@ -180,7 +236,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
                 if (file.exists() && file.canRead()) {
-                    Game.loadGame(file);
+                    GameTab.loadGame(file);
                 }
             }
         } else if (target == this.themeSettingsMenu) {
@@ -444,7 +500,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
             gui.game.undo();
         } else {
             try {
-                Game activeGame = this.getActiveTabGame();
+                GameTab activeGame = this.getActiveTabGame();
                 if (!activeGame.undo()) {
                     JOptionPane.showMessageDialog(null, "Nie da sie cofnac!");
                 }
@@ -474,7 +530,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
             gui.game.redo();
         } else {
             try {
-                Game activeGame = this.getActiveTabGame();
+                GameTab activeGame = this.getActiveTabGame();
                 if (!activeGame.redo()) {
                     JOptionPane.showMessageDialog(null, "W pamieci brak ruchow do przodu!");
                 }
@@ -488,7 +544,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
 
     private void rewindToBeginActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            Game activeGame = this.getActiveTabGame();
+            GameTab activeGame = this.getActiveTabGame();
             if (!activeGame.rewindToBegin()) {
                 JOptionPane.showMessageDialog(null, "W pamieci brak ruchow do przodu!");
             }
@@ -501,7 +557,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
 
     private void rewindToEndActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            Game activeGame = this.getActiveTabGame();
+            GameTab activeGame = this.getActiveTabGame();
             if (!activeGame.rewindToEnd()) {
                 JOptionPane.showMessageDialog(null, "W pamieci brak ruchow wstecz!");
             }
@@ -517,8 +573,8 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    protected Game getActiveTabGame() throws ArrayIndexOutOfBoundsException {
-        Game activeGame = (Game) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
+    protected GameTab getActiveTabGame() throws ArrayIndexOutOfBoundsException {
+        GameTab activeGame = (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
         return activeGame;
     }
 

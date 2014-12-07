@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  * This class is also responsible for appoing player with have
  * a move at the moment
  */
-public class Game extends JPanel implements MouseListener, ComponentListener {
+public class GameTab extends JPanel implements MouseListener, ComponentListener {
 
     public Settings settings;
     public boolean blockedChessboard;
@@ -52,7 +52,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
     public Moves moves;
     public Chat chat;
 
-    public Game() {
+    public GameTab() {
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
@@ -153,7 +153,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
             System.out.println("Error reading file: " + err);
             return;
         }
-        Game newGUI = Application.getInstance().getJcv().addNewTab(whiteName + " vs. " + blackName);
+        GameTab newGUI = Application.getInstance().getJcv().addNewTab(whiteName + " vs. " + blackName);
         Settings locSetts = newGUI.settings;
         locSetts.playerBlack.setName(blackName);
         locSetts.playerWhite.setName(whiteName);
@@ -230,7 +230,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         }
         //dirty hacks starts over here :)
         //to fix rendering artefacts on first run
-        Game activeGame = Application.getInstance().getJcv().getActiveTabGame();
+        GameTab activeGame = Application.getInstance().getJcv().getActiveTabGame();
         if( activeGame != null && Application.getInstance().getJcv().getNumberOfOpenedTabs() == 0 ) {
             activeGame.boardView.resizeChessboard(activeGame.boardView.get_height(false));
             activeGame.boardView.repaint();
@@ -309,7 +309,7 @@ public class Game extends JPanel implements MouseListener, ComponentListener {
         } catch(NullPointerException exc) {
             return false;
         } finally {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, "ERROR");
+            Logger.getLogger(GameTab.class.getName()).log(Level.SEVERE, null, "ERROR");
         }
     }
 

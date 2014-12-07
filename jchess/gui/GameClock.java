@@ -23,7 +23,7 @@ package jchess.gui;
 import jchess.Clock;
 import jchess.Player;
 import jchess.Settings;
-import jchess.gui.Game;
+import jchess.gui.GameTab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,13 +37,13 @@ public class GameClock extends JPanel implements Runnable {
     private Clock runningClock;
     private Settings settings;
     private Thread thread;
-    private Game game;
+    private GameTab game;
     private Graphics g;
     private String white_clock, black_clock;
     private BufferedImage background;
     private Graphics bufferedGraphics;
 
-    GameClock(Game game) {
+    GameClock(GameTab game) {
         super();
         this.clock1 = new Clock();//white player clock
         this.clock2 = new Clock();//black player clock

@@ -21,7 +21,7 @@
 package jchess;
 
 import jchess.gui.BoardView;
-import jchess.gui.Game;
+import jchess.gui.GameTab;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -47,7 +47,7 @@ public class Moves extends AbstractTableModel {
     private JScrollPane scrollPane;
     private JTable table;
     private boolean enterBlack = false;
-    private Game game;
+    private GameTab game;
     protected Stack<Move> moveBackStack = new Stack<Move>();
     protected Stack<Move> moveForwardStack = new Stack<Move>();
 
@@ -55,7 +55,7 @@ public class Moves extends AbstractTableModel {
         none, shortCastling, longCastling
     }
 
-    public Moves(Game game) {
+    public Moves(GameTab game) {
         super();
         this.tableModel = new MyDefaultTableModel();
         this.table = new JTable(this.tableModel);
