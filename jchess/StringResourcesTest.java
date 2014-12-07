@@ -9,7 +9,7 @@ import java.util.Locale;
 
 import static org.junit.Assert.*;
 
-public class TestStringResources {
+public class StringResourcesTest {
     private static final String GREETING_EN = "Hello World!";
     private static final String GREETING_DE = "Hallo Welt!";
 
