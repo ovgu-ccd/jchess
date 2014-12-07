@@ -3,6 +3,7 @@ package jchess;
 import jchess.Logging;
 import jchess.StringResources;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Locale;
@@ -14,8 +15,8 @@ public class StringResourcesTest {
     private static final String GREETING_DE = "Hallo Welt!";
 
 
-    @Before
-    public void setup(){
+    @BeforeClass
+    public static void setup(){
         Logging.setup();
     }
 
