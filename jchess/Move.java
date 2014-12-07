@@ -19,19 +19,22 @@
 package jchess;
 
 import jchess.Moves.castling;
+import jchess.gui.BoardView;
 
-class Move {
+public class Move {
 
-    protected Square from = null;
-    protected Square to = null;
-    protected Piece movedPiece = null;
-    protected Piece takenPiece = null;
-    protected Piece promotedTo = null;
-    protected boolean wasEnPassant = false;
-    protected castling castlingMove = castling.none;
-    protected boolean wasPawnTwoFieldsMove = false;
+    private Square   from                 = null;
+    private Square   to                   = null;
+    private Piece    movedPiece           = null;
+    private Piece    takenPiece           = null;
+    private Piece    promotedTo           = null;
+    private boolean  wasEnPassant         = false;
+    private castling castlingMove         = castling.none;
+    private boolean  wasPawnTwoFieldsMove = false;
 
-    Move(Square from, Square to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant, Piece promotedPiece) {
+
+    Move(Square from, Square to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant,
+            Piece promotedPiece) {
         this.from = from;
         this.to = to;
 
@@ -41,16 +44,19 @@ class Move {
         this.castlingMove = castlingMove;
         this.wasEnPassant = wasEnPassant;
 
-        if (movedPiece.name.equals("Pawn") && Math.abs(to.pozY - from.pozY) == 2) {
+        if (movedPiece.getName().equals("Pawn") && Math.abs(to.getPozY() - from.getPozY()) == 2) {
             this.wasPawnTwoFieldsMove = true;
-        } else if (movedPiece.name.equals("Pawn") && to.pozY == Chessboard.bottom || to.pozY == Chessboard.top && promotedPiece != null) {
+        } else if (movedPiece.getName().equals("Pawn") && to.getPozY() == BoardView.bottom
+                || to.getPozY() == BoardView.top && promotedPiece != null) {
             this.promotedTo = promotedPiece;
         }
     }
 
+
     public Square getFrom() {
         return this.from;
     }
+
 
     public Square getTo() {
         return this.to;

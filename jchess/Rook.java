@@ -21,6 +21,8 @@
 
 package jchess;
 
+import jchess.gui.BoardView;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -41,21 +43,22 @@ import java.util.ArrayList;
  */
 public class Rook extends Piece {
 
-    protected static final Image imageWhite = GUI.loadImage("Rook-W.png");
-    protected static final Image imageBlack = GUI.loadImage("Rook-B.png");
-    public static short value = 5;
-    boolean wasMotion = false;
+    private              boolean wasMotion  = false;
+    private static final Image   imageWhite = GUIUtils.loadImage("Rook-W.png");
+    private static final Image   imageBlack = GUIUtils.loadImage("Rook-B.png");
+    public static        short   value      = 5;
 
-    Rook(Chessboard chessboard, Player player) {
-        super(chessboard, player);//call initializer of super type: Piece
+
+    public Rook(BoardView boardView, Player player) {
+        super(boardView, player);//call initializer of super type: Piece
         //this.setImages("Rook-W.png", "Rook-B.png");
         this.symbol = "R";
         this.setImage();
     }
 
-    @Override
-    void setImage() {
-        if (this.player.color == Player.colors.black) {
+
+    @Override void setImage() {
+        if (this.player.getColor() == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;
@@ -63,35 +66,36 @@ public class Rook extends Piece {
         orgImage = image;
     }
 
+
     /**
      *  Annotation to superclass Piece changing pawns location
-     * @return  ArrayList with new possition of piece
+     * @return ArrayList with new possition of piece
      */
-    @Override
-    public ArrayList allMoves() {
+    @Override public ArrayList allMoves() {
         ArrayList list = new ArrayList();
 
-        for (int i = this.square.pozY + 1; i <= 7; ++i) {
+        for (int i = this.square.getPozY() + 1; i <= 7; ++i) {
             //up
 
-            if (this.checkPiece(this.square.pozX, i)) {
+            if (this.checkPiece(this.square.getPozX(), i)) {
                 //if on this sqhuare isn't piece
 
-                if (this.player.color == Player.colors.white) {
+                if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.chessboard.kingWhite.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[this.square.pozX][i])) {
-                        list.add(chessboard.squares[this.square.pozX][i]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square,
+                            getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 } else {
                     //or black
 
-                    if (this.chessboard.kingBlack.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[this.square.pozX][i])) {
-                        list.add(chessboard.squares[this.square.pozX][i]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 }
 
-                if (this.otherOwner(this.square.pozX, i)) {
+                if (this.otherOwner(this.square.getPozX(), i)) {
                     break;
                 }
             } else {
@@ -100,27 +104,27 @@ public class Rook extends Piece {
 
         }
 
-        for (int i = this.square.pozY - 1; i >= 0; --i) {
+        for (int i = this.square.getPozY() - 1; i >= 0; --i) {
             //down
 
-            if (this.checkPiece(this.square.pozX, i)) {
+            if (this.checkPiece(this.square.getPozX(), i)) {
                 //if on this sqhuare isn't piece
 
-                if (this.player.color == Player.colors.white) {
+                if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.chessboard.kingWhite.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[this.square.pozX][i])) {
-                        list.add(chessboard.squares[this.square.pozX][i]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 } else {
                     //or black
 
-                    if (this.chessboard.kingBlack.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[this.square.pozX][i])) {
-                        list.add(chessboard.squares[this.square.pozX][i]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[this.square.getPozX()][i])) {
+                        list.add(getBoardView().squares[this.square.getPozX()][i]);
                     }
                 }
 
-                if (this.otherOwner(this.square.pozX, i)) {
+                if (this.otherOwner(this.square.getPozX(), i)) {
                     break;
                 }
             } else {
@@ -128,27 +132,27 @@ public class Rook extends Piece {
             }
         }
 
-        for (int i = this.square.pozX - 1; i >= 0; --i) {
+        for (int i = this.square.getPozX() - 1; i >= 0; --i) {
             //left
 
-            if (this.checkPiece(i, this.square.pozY)) {
+            if (this.checkPiece(i, this.square.getPozY())) {
                 //if on this sqhuare isn't piece
 
-                if (this.player.color == Player.colors.white) {
+                if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.chessboard.kingWhite.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[i][this.square.pozY])) {
-                        list.add(chessboard.squares[i][this.square.pozY]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 } else {
                     //or black
 
-                    if (this.chessboard.kingBlack.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[i][this.square.pozY])) {
-                        list.add(chessboard.squares[i][this.square.pozY]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 }
 
-                if (this.otherOwner(i, this.square.pozY)) {
+                if (this.otherOwner(i, this.square.getPozY())) {
                     break;
                 }
             } else {
@@ -156,27 +160,27 @@ public class Rook extends Piece {
             }
         }
 
-        for (int i = this.square.pozX + 1; i <= 7; ++i) {
+        for (int i = this.square.getPozX() + 1; i <= 7; ++i) {
             //right
 
-            if (this.checkPiece(i, this.square.pozY)) {
+            if (this.checkPiece(i, this.square.getPozY())) {
                 //if on this sqhuare isn't piece
 
-                if (this.player.color == Player.colors.white) {
+                if (this.player.getColor() == Player.colors.white) {
                     //white
 
-                    if (this.chessboard.kingWhite.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[i][this.square.pozY])) {
-                        list.add(chessboard.squares[i][this.square.pozY]);
+                    if (this.getBoardView().kingWhite.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 } else {
                     //or black
 
-                    if (this.chessboard.kingBlack.willBeSafeWhenMoveOtherPiece(this.square, chessboard.squares[i][this.square.pozY])) {
-                        list.add(chessboard.squares[i][this.square.pozY]);
+                    if (this.getBoardView().kingBlack.willBeSafeWhenMoveOtherPiece(this.square, getBoardView().squares[i][this.square.getPozY()])) {
+                        list.add(getBoardView().squares[i][this.square.getPozY()]);
                     }
                 }
 
-                if (this.otherOwner(i, this.square.pozY)) {
+                if (this.otherOwner(i, this.square.getPozY())) {
                     break;
                 }
             } else {
@@ -185,5 +189,13 @@ public class Rook extends Piece {
         }
 
         return list;
+    }
+
+    public boolean isWasMotion() {
+        return wasMotion;
+    }
+
+    public void setWasMotion(boolean wasMotion) {
+        this.wasMotion = wasMotion;
     }
 }

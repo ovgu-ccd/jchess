@@ -20,6 +20,9 @@
  */
 package jchess;
 
+import jchess.gui.BoardView;
+import jchess.gui.GameTab;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -31,24 +34,28 @@ import java.util.Stack;
  * that the moves taken by player are correct.
  * All moves which was taken by current player are saving as List of Strings
  * The history of moves is printing in a table
- * @param game The current game
  */
 public class Moves extends AbstractTableModel {
 
-    protected Stack<Move>       moveBackStack    = new Stack<>();
-    protected Stack<Move>       moveForwardStack = new Stack<>();
-    private   ArrayList<String> move             = new ArrayList<>();
-    private   int               columnsNum       = 3;
-    private   int               rowsNum          = 0;
-    private   String[]          names            = new String[] { Settings.lang("white"), Settings.lang("black") };
+    private ArrayList<String> move       = new ArrayList<>();
+    private int               columnsNum = 3;
+    private int               rowsNum    = 0;
+    private String[]          names      = new String[] { StringResources.MAIN.getString("white"),
+            StringResources.MAIN.getString("black") };
     private MyDefaultTableModel tableModel;
-    private JScrollPane scrollPane;
-    private JTable      table;
+    private JScrollPane         scrollPane;
+    private JTable              table;
     private boolean enterBlack = false;
-    private Game game;
+    private GameTab game;
+    private Stack<Move> moveBackStack    = new Stack<>();
+    private Stack<Move> moveForwardStack = new Stack<>();
+
+    public enum castling {
+        none, shortCastling, longCastling
+    }
 
 
-    Moves(Game game) {
+    public Moves(GameTab game) {
         super();
         this.tableModel = new MyDefaultTableModel();
         this.table = new JTable(this.tableModel);
@@ -65,60 +72,12 @@ public class Moves extends AbstractTableModel {
     }
 
 
-    /**
-     * Method with is checking is the move is correct
-     *
-     * @param move String which in is capt player move
-     * @return boolean 1 if the move is correct, else 0
-     */
-    static public boolean isMoveCorrect(String move) {
-        if (move.equals("O-O") || move.equals("O-O-O")) {
-            return true;
-        }
-        try {
-            int from = 0;
-            int sign = move.charAt(from);//get First
-            switch (sign) { //if sign of piece, get next
-            case 66: // B like Bishop
-            case 75: // K like King
-            case 78: // N like Knight
-            case 81: // Q like Queen
-            case 82:
-                from = 1;
-                break; // R like Rook
-            }
-            sign = move.charAt(from);
-            System.out.println(sign);
-            if (sign < 97 || sign > 104) { //if lower than 'a' or higher than 'h'
-                return false;
-            }
-            sign = move.charAt(from + 1);
-            if (sign < 49 || sign > 56) { //if lower than '1' or higher than '8'
-                return false;
-            }
-            if (move.length() > 3) { //if is equal to 3 or lower, than it's in short notation, no more checking needed
-                sign = move.charAt(from + 2);
-                if (sign != 45 && sign != 120) { //if isn't '-' and 'x'
-                    return false;
-                }
-                sign = move.charAt(from + 3);
-                if (sign < 97 || sign > 104) { //if lower than 'a' or higher than 'h'
-                    return false;
-                }
-                sign = move.charAt(from + 4);
-                if (sign < 49 || sign > 56) { //if lower than '1' or higher than '8'
-                    return false;
-                }
-            }
-        } catch (java.lang.StringIndexOutOfBoundsException exc) {
-            return false;
-        }
-
-        return true;
+    public void draw() {
     }
 
 
-    public void draw() {
+    @Override public String getValueAt(int x, int y) {
+        return this.move.get((y * 2) - 1 + (x - 1));
     }
 
 
@@ -132,17 +91,12 @@ public class Moves extends AbstractTableModel {
     }
 
 
-    @Override public String getValueAt(int x, int y) {
-        return this.move.get((y * 2) - 1 + (x - 1));
-    }
-
-
-    protected void addRow() {
+    void addRow() {
         this.tableModel.addRow(new String[2]);
     }
 
 
-    protected void addCastling(String move) {
+    void addCastling(String move) {
         this.move.remove(this.move.size() - 1);//remove last element (move of Rook)
         if (!this.enterBlack) {
             this.tableModel.setValueAt(move, this.tableModel.getRowCount() - 1, 1);//replace last value
@@ -160,7 +114,7 @@ public class Moves extends AbstractTableModel {
     /** Method of adding new moves to the table
      * @param str String which in is saved player move
      */
-    protected void addMove2Table(String str) {
+    void addMove2Table(String str) {
         try {
             if (!this.enterBlack) {
                 this.addRow();
@@ -184,7 +138,7 @@ public class Moves extends AbstractTableModel {
     /** Method of adding new move
      * @param move String which in is capt player move
      */
-    public void addMove(String move) {
+    void addMove(String move) {
         if (isMoveCorrect(move)) {
             this.move.add(move);
             this.addMove2Table(move);
@@ -198,11 +152,11 @@ public class Moves extends AbstractTableModel {
         String locMove = begin.piece.symbol;
 
         if( game.settings.upsideDown ) {
-            locMove += Character.toString((char) ( ( Chessboard.bottom - begin.pozX) + 97));//add letter of Square from which move was made
-            locMove += Integer.toString( begin.pozY + 1 );//add number of Square from which move was made
+            locMove += Character.toString((char) ( ( BoardView.bottom - begin.getPozX()) + 97));//add letter of Square from which move was made
+            locMove += Integer.toString( begin.getPozY() + 1 );//add number of Square from which move was made
         } else {
-            locMove += Character.toString((char) (begin.pozX + 97));//add letter of Square from which move was made
-            locMove += Integer.toString(8 - begin.pozY);//add number of Square from which move was made
+            locMove += Character.toString((char) (begin.getPozX() + 97));//add letter of Square from which move was made
+            locMove += Integer.toString(8 - begin.getPozY());//add number of Square from which move was made
         }
 
         if (end.piece != null) {
@@ -212,23 +166,23 @@ public class Moves extends AbstractTableModel {
         }
 
         if ( game.settings.upsideDown ) {
-            locMove += Character.toString((char) (( Chessboard.bottom - end.pozX) +  97));//add letter of Square to which move was made
-            locMove += Integer.toString( end.pozY + 1 );//add number of Square to which move was made
+            locMove += Character.toString((char) (( BoardView.bottom - end.getPozX()) +  97));//add letter of Square to which move was made
+            locMove += Integer.toString( end.getPozY() + 1 );//add number of Square to which move was made
         } else {
-            locMove += Character.toString((char) (end.pozX + 97));//add letter of Square to which move was made
-            locMove += Integer.toString(8 - end.pozY);//add number of Square to which move was made
+            locMove += Character.toString((char) (end.getPozX() + 97));//add letter of Square to which move was made
+            locMove += Integer.toString(8 - end.getPozY());//add number of Square to which move was made
         }
 
-        if (begin.piece.symbol.equals("") && begin.pozX - end.pozX != 0 && end.piece == null) {
+        if (begin.piece.symbol.equals("") && begin.getPozX() - end.getPozX() != 0 && end.piece == null) {
             locMove += "(e.p)";//pawn take down opponent en passant
             wasEnPassant = true;
         }
-        if ((!this.enterBlack && this.game.chessboard.kingBlack.isChecked())
-                || (this.enterBlack && this.game.chessboard.kingWhite.isChecked())) {
+        if ((!this.enterBlack && this.game.boardView.kingBlack.isChecked())
+                || (this.enterBlack && this.game.boardView.kingWhite.isChecked())) {
             //if checked
 
-            if ((!this.enterBlack && this.game.chessboard.kingBlack.isCheckmatedOrStalemated() == 1)
-                    || (this.enterBlack && this.game.chessboard.kingWhite.isCheckmatedOrStalemated() == 1)) {
+            if ((!this.enterBlack && this.game.boardView.kingBlack.isCheckmatedOrStalemated() == 1)
+                    || (this.enterBlack && this.game.boardView.kingWhite.isCheckmatedOrStalemated() == 1)) {
                 //check if checkmated
                 locMove += "#";//check mate
             } else {
@@ -262,119 +216,6 @@ public class Moves extends AbstractTableModel {
         return this.move;
     }
 
-
-    /**
-     * Method to set all moves from String with validation test (usefoul for network game)
-     *
-     * @param moves String to set in String like PGN with full-notation format
-     */
-    public void setMoves(String moves) {
-        int from = 0;
-        int to = 0;
-        int n = 1;
-        ArrayList<String> tempArray = new ArrayList();
-        int tempStrSize = moves.length() - 1;
-        while (true) {
-            from = moves.indexOf(" ", from);
-            to = moves.indexOf(" ", from + 1);
-            //System.out.println(from+">"+to);
-            try {
-                tempArray.add(moves.substring(from + 1, to).trim());
-            } catch (java.lang.StringIndexOutOfBoundsException exc) {
-                System.out.println("error parsing file to load: " + exc);
-                break;
-            }
-            if (n % 2 == 0) {
-                from = moves.indexOf(".", to);
-                if (from < to) {
-                    break;
-                }
-            } else {
-                from = to;
-            }
-            n += 1;
-            if (from > tempStrSize || to > tempStrSize) {
-                break;
-            }
-        }
-        for (String locMove : tempArray) { //test if moves are written correctly
-            if (!Moves.isMoveCorrect(locMove.trim())) { //if not
-                JOptionPane.showMessageDialog(this.game, Settings.lang("invalid_file_to_load") + move);
-                return;//show message and finish reading game
-            }
-        }
-        boolean canMove = false;
-        for (String locMove : tempArray) {
-            if (locMove.equals("O-O-O") || locMove.equals("O-O")) { //if castling
-                int[] values = new int[4];
-                if (locMove.equals("O-O-O")) {
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
-                        values = new int[] { 4, 0, 2, 0 };//move value for castling (King move)
-                    } else {
-                        values = new int[] { 4, 7, 2, 7 };//move value for castling (King move)
-                    }
-                } else if (locMove.equals("O-O")) { //if short castling
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
-                        values = new int[] { 4, 0, 6, 0 };//move value for castling (King move)
-                    } else {
-                        values = new int[] { 4, 7, 6, 7 };//move value for castling (King move)
-                    }
-                }
-                canMove = this.game.simulateMove(values[0], values[1], values[2], values[3]);
-
-                if (!canMove) { //if move is illegal
-                    JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
-                    return;//finish reading game and show message
-                }
-                continue;
-            }
-            from = 0;
-            int num = locMove.charAt(from);
-            if (num <= 90 && num >= 65) {
-                from = 1;
-            }
-            int xFrom = 9; //set to higher value than chessboard has fields, to cause error if piece won't be found
-            int yFrom = 9;
-            int xTo = 9;
-            int yTo = 9;
-            boolean pieceFound = false;
-            if (locMove.length() <= 3) {
-                Square[][] squares = this.game.chessboard.squares;
-                xTo = locMove.charAt(from) - 97;//from ASCII
-                yTo = Chessboard.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
-                for (int i = 0; i < squares.length && !pieceFound; i++) {
-                    for (int j = 0; j < squares[i].length && !pieceFound; j++) {
-                        if (squares[i][j].piece == null
-                                || this.game.getActivePlayer().color != squares[i][j].piece.player.color) {
-                            continue;
-                        }
-                        ArrayList pieceMoves = squares[i][j].piece.allMoves();
-                        for (Object square : pieceMoves) {
-                            Square currSquare = (Square) square;
-                            if (currSquare.pozX == xTo && currSquare.pozY == yTo) {
-                                xFrom = squares[i][j].piece.square.pozX;
-                                yFrom = squares[i][j].piece.square.pozY;
-                                pieceFound = true;
-                            }
-                        }
-                    }
-                }
-            } else {
-                xFrom = locMove.charAt(from) - 97;//from ASCII
-                yFrom = Chessboard.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
-                xTo = locMove.charAt(from + 3) - 97;//from ASCII
-                yTo = Chessboard.bottom - (locMove.charAt(from + 4) - 49);//from ASCII
-            }
-            canMove = this.game.simulateMove(xFrom, yFrom, xTo, yTo);
-            if (!canMove) { //if move is illegal
-                JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
-                this.game.chessboard.activeSquare = null;
-                return;//finish reading game and show message
-            }
-        }
-    }
-
-
     public synchronized Move getLastMoveFromHistory() {
         try {
             return this.moveBackStack.get(this.moveBackStack.size() - 1);
@@ -382,7 +223,6 @@ public class Moves extends AbstractTableModel {
             return null;
         }
     }
-
 
     public synchronized Move getNextMoveFromHistory() {
         try {
@@ -392,7 +232,6 @@ public class Moves extends AbstractTableModel {
         }
 
     }
-
 
     public synchronized Move undo() {
         try {
@@ -425,7 +264,6 @@ public class Moves extends AbstractTableModel {
         }
     }
 
-
     public synchronized Move redo() {
         try {
             if( this.game.settings.gameType == Settings.gameTypes.local) {
@@ -441,6 +279,55 @@ public class Moves extends AbstractTableModel {
 
     }
 
+    /** Method with is checking is the move is correct
+     * @param move String which in is capt player move
+     * @return boolean 1 if the move is correct, else 0
+     */
+    private static boolean isMoveCorrect(String move) {
+        if (move.equals("O-O") || move.equals("O-O-O")) {
+            return true;
+        }
+        try {
+            int from = 0;
+            int sign = move.charAt(from);//get First
+            switch (sign) { //if sign of piece, get next
+            case 66: // B like Bishop
+            case 75: // K like King
+            case 78: // N like Knight
+            case 81: // Q like Queen
+            case 82:
+                from = 1;
+                break; // R like Rook
+            }
+            sign = move.charAt(from);
+            System.out.println(sign);
+            if (sign < 97 || sign > 104) { //if lower than 'a' or higher than 'h'
+                return false;
+            }
+            sign = move.charAt(from + 1);
+            if (sign < 49 || sign > 56) { //if lower than '1' or higher than '8'
+                return false;
+            }
+            if(move.length() > 3) { //if is equal to 3 or lower, than it's in short notation, no more checking needed
+                sign = move.charAt(from + 2);
+                if (sign != 45 && sign != 120) { //if isn't '-' and 'x'
+                    return false;
+                }
+                sign = move.charAt(from + 3);
+                if (sign < 97 || sign > 104) { //if lower than 'a' or higher than 'h'
+                    return false;
+                }
+                sign = move.charAt(from + 4);
+                if (sign < 49 || sign > 56) { //if lower than '1' or higher than '8'
+                    return false;
+                }
+            }
+        } catch (java.lang.StringIndexOutOfBoundsException exc) {
+            return false;
+        }
+
+        return true;
+    }
 
     public void addMoves(ArrayList<String> list) {
         for (String singleMove : list) {
@@ -450,7 +337,7 @@ public class Moves extends AbstractTableModel {
         }
     }
 
-    /** Method of getting the moves in string
+    /** Method of getting the moves in strings
      *  @return str String which in is capt player move
      */
     public String getMovesInString() {
@@ -468,9 +355,120 @@ public class Moves extends AbstractTableModel {
         return str;
     }
 
+    /** Method to set all moves from String with validation test (usefoul for network game)
+     *  @param  moves String to set in String like PGN with full-notation format
+     */
+    public void setMoves(String moves) {
+        int from = 0;
+        int to = 0;
+        int n = 1;
+        ArrayList<String> tempArray = new ArrayList();
+        int tempStrSize = moves.length() - 1;
+        while (true) {
+            from = moves.indexOf(" ", from);
+            to = moves.indexOf(" ", from + 1);
+            //System.out.println(from+">"+to);
+            try {
+                tempArray.add(moves.substring(from + 1, to).trim());
+            } catch (java.lang.StringIndexOutOfBoundsException exc) {
+                System.out.println("error parsing file to load: " + exc);
+                break;
+            }
+            if (n % 2 == 0) {
+                from = moves.indexOf(".", to);
+                if (from < to) {
+                    break;
+                }
+            } else {
+                from = to;
+            }
+            n += 1;
+            if (from > tempStrSize || to > tempStrSize) {
+                break;
+            }
+        }
+        for (String locMove : tempArray) { //test if moves are written correctly
+            if (!Moves.isMoveCorrect(locMove.trim())) { //if not
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("invalid_file_to_load") + move);
+                return;//show message and finish reading game
+            }
+        }
+        boolean canMove = false;
+        for (String locMove : tempArray) {
+            if (locMove.equals("O-O-O") || locMove.equals("O-O")) { //if castling
+                int[] values = new int[4];
+                if (locMove.equals("O-O-O")) {
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
+                        values = new int[] {
+                            4, 0, 2, 0
+                        };//move value for castling (King move)
+                    } else {
+                        values = new int[] {
+                            4, 7, 2, 7
+                        };//move value for castling (King move)
+                    }
+                } else if (locMove.equals("O-O")) { //if short castling
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
+                        values = new int[] {
+                            4, 0, 6, 0
+                        };//move value for castling (King move)
+                    } else {
+                        values = new int[] {
+                            4, 7, 6, 7
+                        };//move value for castling (King move)
+                    }
+                }
+                canMove = this.game.simulateMove(values[0], values[1], values[2], values[3]);
 
-    enum castling {
-        none, shortCastling, longCastling
+                if (!canMove) { //if move is illegal
+                    JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
+                    return;//finish reading game and show message
+                }
+                continue;
+            }
+            from = 0;
+            int num = locMove.charAt(from);
+            if (num <= 90 && num >= 65) {
+                from = 1;
+            }
+            int xFrom = 9; //set to higher value than chessboard has fields, to cause error if piece won't be found
+            int yFrom = 9;
+            int xTo = 9;
+            int yTo = 9;
+            boolean pieceFound = false;
+            if(locMove.length() <= 3) {
+                Square[][] squares = this.game.boardView.squares;
+                xTo = locMove.charAt(from) - 97;//from ASCII
+                yTo = BoardView.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
+                for(int i=0; i<squares.length && !pieceFound; i++) {
+                    for(int j=0; j<squares[i].length && !pieceFound; j++) {
+                        if(squares[i][j].piece == null || this.game.getActivePlayer().getColor() != squares[i][j].piece.player.getColor()) {
+                            continue;
+                        }
+                        ArrayList pieceMoves = squares[i][j].piece.allMoves();
+                        for(Object square : pieceMoves) {
+                            Square currSquare = (Square)square;
+                            if(currSquare.getPozX() == xTo && currSquare.getPozY() == yTo) {
+                                xFrom = squares[i][j].piece.square.getPozX();
+                                yFrom = squares[i][j].piece.square.getPozY();
+                                pieceFound = true;
+                            }
+                        }
+                    }
+                }
+            } else {
+                xFrom = locMove.charAt(from) - 97;//from ASCII
+                yFrom = BoardView.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
+                xTo = locMove.charAt(from + 3) - 97;//from ASCII
+                yTo = BoardView.bottom - (locMove.charAt(from + 4) - 49);//from ASCII
+            }
+            canMove = this.game.simulateMove(xFrom, yFrom, xTo, yTo);
+            if (!canMove) { //if move is illegal
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
+                this.game.boardView.activeSquare = null;
+                return;//finish reading game and show message
+            }
+        }
     }
 }
 /*

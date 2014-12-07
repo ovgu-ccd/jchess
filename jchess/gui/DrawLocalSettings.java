@@ -17,7 +17,9 @@
  * Authors:
  * Mateusz Sławomir Lach ( matlak, msl )
  */
-package jchess;
+package jchess.gui;
+
+import jchess.StringResources;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -30,61 +32,60 @@ import java.awt.event.TextListener;
 /**
  * Class responsible for drawing the fold with local game settings
  */
-public class DrawLocalSettings extends JPanel implements ActionListener, TextListener {
+class DrawLocalSettings extends JPanel implements ActionListener, TextListener {
 
-    JDialog parent;//needet to close newGame window
-    JComboBox color;//to choose color of player
-    JRadioButton oponentComp;//choose oponent
-    JRadioButton oponentHuman;//choose oponent (human)
-    ButtonGroup oponentChoos;//group 4 radio buttons
+    private JDialog      parent;//needet to close newGame window
+    private JComboBox    color;//to choose color of player
+    private JRadioButton oponentComp;//choose oponent
+    private JRadioButton oponentHuman;//choose oponent (human)
+    private ButtonGroup  oponentChoos;//group 4 radio buttons
     JFrame localPanel;
-    JLabel compLevLab;
-    JSlider computerLevel;//slider to choose jChess Engine level
-    JTextField firstName;//editable field 4 nickname
-    JTextField secondName;//editable field 4 nickname
-    JLabel firstNameLab;
-    JLabel secondNameLab;
-    JCheckBox upsideDown;//if true draw chessboard upsideDown(white on top)
-    GridBagLayout gbl;
-    GridBagConstraints gbc;
+    private JLabel             compLevLab;
+    private JSlider            computerLevel;//slider to choose jChess Engine level
+    private JTextField         firstName;//editable field 4 nickname
+    private JTextField         secondName;//editable field 4 nickname
+    private JLabel             firstNameLab;
+    private JLabel             secondNameLab;
+    private JCheckBox          upsideDown;//if true draw chessboard upsideDown(white on top)
+    private GridBagLayout      gbl;
+    private GridBagConstraints gbc;
     Container cont;
-    JSeparator sep;
-    JButton okButton;
-    JCheckBox timeGame;
-    JComboBox time4Game;
-    String colors[] = {
-        Settings.lang("white"), Settings.lang("black")
-    };
-    String times[] = {
-        "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"
-    };
+    private JSeparator sep;
+    private JButton    okButton;
+    private JCheckBox  timeGame;
+    private JComboBox  time4Game;
+    private String[] colors = { StringResources.MAIN.getString("white"), StringResources.MAIN.getString("black") };
+    private String[] times  = { "1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120" };
+
+    private NewGameWindow parPtr;
 
 
-    DrawLocalSettings(JDialog parent) {
+    DrawLocalSettings(NewGameWindow parent) {
         super();
+        parPtr = parent;
         //this.setA//choose oponent
         this.parent = parent;
         this.color = new JComboBox(colors);
         this.gbl = new GridBagLayout();
         this.gbc = new GridBagConstraints();
         this.sep = new JSeparator();
-        this.okButton = new JButton(Settings.lang("ok"));
-        this.compLevLab = new JLabel(Settings.lang("computer_level"));
+        this.okButton = new JButton(StringResources.MAIN.getString("ok"));
+        this.compLevLab = new JLabel(StringResources.MAIN.getString("computer_level"));
 
         this.firstName = new JTextField("", 10);
         this.firstName.setSize(new Dimension(200, 50));
         this.secondName = new JTextField("", 10);
         this.secondName.setSize(new Dimension(200, 50));
-        this.firstNameLab = new JLabel(Settings.lang("first_player_name") + ": ");
-        this.secondNameLab = new JLabel(Settings.lang("second_player_name") + ": ");
+        this.firstNameLab = new JLabel(StringResources.MAIN.getString("first_player_name") + ": ");
+        this.secondNameLab = new JLabel(StringResources.MAIN.getString("second_player_name") + ": ");
         this.oponentChoos = new ButtonGroup();
         this.computerLevel = new JSlider();
-        this.upsideDown = new JCheckBox(Settings.lang("upside_down"));
-        this.timeGame = new JCheckBox(Settings.lang("time_game_min"));
+        this.upsideDown = new JCheckBox(StringResources.MAIN.getString("upside_down"));
+        this.timeGame = new JCheckBox(StringResources.MAIN.getString("time_game_min"));
         this.time4Game = new JComboBox(times);
 
-        this.oponentComp = new JRadioButton(Settings.lang("against_computer"), false);
-        this.oponentHuman = new JRadioButton(Settings.lang("against_other_human"), true);
+        this.oponentComp = new JRadioButton(StringResources.MAIN.getString("against_computer"), false);
+        this.oponentHuman = new JRadioButton(StringResources.MAIN.getString("against_other_human"), true);
 
         this.setLayout(gbl);
         this.oponentComp.addActionListener(this);
@@ -154,10 +155,11 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
 
     }
 
-
-    /** Method witch is checking correction of edit tables
+    /**
+     * Method witch is checking correction of edit tables
+     *
      * @param e Object where is saving this what contents edit tables
-    */
+     */
     public void textValueChanged(TextEvent e) {
         Object target = e.getSource();
         if (target == this.firstName || target == this.secondName) {
@@ -179,9 +181,10 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
         }
     }
 
-
-    /** Method responsible for changing the options which can make a player
+    /**
+     * Method responsible for changing the options which can make a player
      * when he want to start new local game
+     *
      * @param e where is saving data of performed action
      */
     public void actionPerformed(ActionEvent e) {
@@ -203,64 +206,34 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             }
             if (!this.oponentComp.isSelected()
                     && (this.firstName.getText().length() == 0 || this.secondName.getText().length() == 0)) {
-                JOptionPane.showMessageDialog(this, Settings.lang("fill_names"));
+                JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("fill_names"));
                 return;
             }
             if ((this.oponentComp.isSelected() && this.firstName.getText().length() == 0)) {
-                JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
+                JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("fill_name"));
                 return;
             }
-            Game newGUI = JChessApp.jcv.addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
-            Settings sett = newGUI.settings;//sett local settings variable
-            Player pl1 = sett.playerWhite;//set local player variable
-            Player pl2 = sett.playerBlack;//set local player variable
-            sett.gameMode = Settings.gameModes.newGame;
-            //if(this.firstName.getText().length() >9 ) this.firstName.setText(this.firstName.getText(0,8));
-            if (this.color.getActionCommand().equals("biały")) { //if first player is white
-                pl1.setName(this.firstName.getText());//set name of player
-                pl2.setName(this.secondName.getText());//set name of player
-            } else { //else change names
-                pl2.setName(this.firstName.getText());//set name of player
-                pl1.setName(this.secondName.getText());//set name of player
-            }
-            pl1.setType(Player.playerTypes.localUser);//set type of player
-            pl2.setType(Player.playerTypes.localUser);//set type of player
-            sett.gameType = Settings.gameTypes.local;
-            if (this.oponentComp.isSelected()) { //if computer oponent is checked
-                pl2.setType(Player.playerTypes.computer);
-            }
-            //if upsideDown is checked
-            sett.upsideDown = this.upsideDown.isSelected();
-            if (this.timeGame.isSelected()) { //if timeGame is checked
-                String value = this.times[this.time4Game.getSelectedIndex()];//set time for game
-                Integer val = new Integer(value);
-                sett.timeLimitSet = true;
-                //noinspection RedundantCast
-                sett.timeForGame = (int) val * 60;//set time for game and mult it to seconds
-                newGUI.gameClock.setTimes(sett.timeForGame, sett.timeForGame);
-                newGUI.gameClock.start();
-            }
-            System.out.println(this.time4Game.getActionCommand());
-            //this.time4Game.getComponent(this.time4Game.getSelectedIndex());
-            System.out.println("****************\nStarting new game: " + pl1.name + " vs. " + pl2.name
-                               + "\ntime 4 game: " + sett.timeForGame + "\ntime limit set: " + sett.timeLimitSet
-                               + "\nwhite on top?: " + sett.upsideDown + "\n****************");//4test
-            newGUI.newGame();//start new Game
-            this.parent.setVisible(false);//hide parent
-            newGUI.chessboard.repaint();
-            newGUI.chessboard.draw();
+
+            /* new method call from apfohl */
+            parPtr.createNewGame(this.firstName.getText(),
+                    this.secondName.getText(),
+                    this.color.getActionCommand().equals("biały"),
+                    this.oponentComp.isSelected(),
+                    this.upsideDown.isSelected(),
+                    this.timeGame.isSelected(),
+                    this.times[this.time4Game.getSelectedIndex()]);
         }
 
     }
 
-
     /**
      * Method responsible for triming white symbols from strings
-     * @param txt Where is capt value to equal
-     * @param length How long is the string
+     *
+     * @param txt    Where is capt value to equal
+     * @param length How long is the strings
      * @return result trimmed String
      */
-    public String trimString(JTextField txt, int length) {
+    String trimString(JTextField txt, int length) {
         String result = "";
         try {
             result = txt.getText(0, length);

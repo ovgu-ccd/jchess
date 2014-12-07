@@ -35,14 +35,15 @@ import java.util.logging.Logger;
  */
 
 public class Server implements Runnable {
-    public static boolean isPrintEnable = true; //print all messages (print function)
-    public static int port=4449;
+    private static boolean isPrintEnable = true; //print all messages (print function)
+    private static int     port          = 4449;
     private static Map<Integer, Table> tables;
-    private static ServerSocket ss;
-    private static boolean isRunning=false;
+    private static ServerSocket        ss;
+    private static boolean isRunning = false;
 
-    public Server() {
-        if(!Server.isRunning) { //run server if isn't running previous
+
+    private Server() {
+        if (!Server.isRunning) { //run server if isn't running previous
             runServer();
 
             Thread thread = new Thread(this);
@@ -91,8 +92,8 @@ public class Server implements Runnable {
 
 
     public void run() { //listening
-        print("listening port: "+port);
-        while(true) {
+        print("listening port: " + port);
+        while (true) {
             Socket s;
             ObjectInputStream input;
             ObjectOutputStream output;
@@ -136,7 +137,6 @@ public class Server implements Runnable {
                         print("error: was all players at this table");
                         output.writeInt(connection_info.err_table_is_full.getValue());
                         output.flush();
-                        continue;
                     } else {
                         print("wasn't all players at this table");
 
@@ -163,7 +163,6 @@ public class Server implements Runnable {
                         print("Observers can't join");
                         output.writeInt(connection_info.err_game_without_observer.getValue());
                         output.flush();
-                        continue;
                     } else {
                         output.writeInt(connection_info.all_is_ok.getValue());
                         output.flush();
@@ -179,7 +178,6 @@ public class Server implements Runnable {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                continue;
             }
         }
     }

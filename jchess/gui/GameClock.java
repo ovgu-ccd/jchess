@@ -18,29 +18,33 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.Clock;
+import jchess.Player;
+import jchess.Settings;
+import jchess.gui.GameTab;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/** Class to representing the full game time
- * @param game The current game
- */
+/** Class to representing the full game time */
 public class GameClock extends JPanel implements Runnable {
 
-    public Clock clock1;
-    public Clock clock2;
-    private Clock runningClock;
+    private Clock    clock1;
+    private Clock    clock2;
+    private Clock    runningClock;
     private Settings settings;
-    private Thread thread;
-    private Game game;
+    private Thread   thread;
+    private GameTab  game;
     private Graphics g;
-    private String white_clock, black_clock;
+    private String   white_clock, black_clock;
     private BufferedImage background;
-    private Graphics bufferedGraphics;
+    private Graphics      bufferedGraphics;
 
-    GameClock(Game game) {
+
+    GameClock(GameTab game) {
         super();
         this.clock1 = new Clock();//white player clock
         this.clock2 = new Clock();//black player clock
@@ -62,15 +66,17 @@ public class GameClock extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
     }
 
+
     /** Method to init game clock
      */
     public void start() {
         this.thread.start();
     }
 
+
     /** Method to stop game clock
      */
-    public void stop() {
+    void stop() {
         this.runningClock = null;
 
         try {
@@ -152,8 +158,6 @@ public class GameClock extends JPanel implements Runnable {
         g2d.drawString(white_clock, 10, 80);
         g2d.drawString(black_clock, 90, 80);
     }
-
-
     /** Method of swiching the players clocks
      */
     public void switch_clocks() {
@@ -185,7 +189,7 @@ public class GameClock extends JPanel implements Runnable {
         /*in documentation it's called 'setPlayer' but when we've 'setTimes' better to use
          * one convention of naming methods - this've to be repaired in documentation by Wąsu:P
         dojdziemy do tego:D:D:D*/
-        if (p1.color == Player.colors.white) {
+        if (p1.getColor() == Player.colors.white) {
             this.clock1.setPlayer(p1);
             this.clock2.setPlayer(p2);
         } else {
@@ -222,9 +226,9 @@ public class GameClock extends JPanel implements Runnable {
         String color = "";
         if (this.clock1.get_left_time() == 0) {
             //Check which player win
-            color = this.clock2.getPlayer().color.toString();
+            color = this.clock2.getPlayer().getColor().toString();
         } else if (this.clock2.get_left_time() == 0) {
-            color = this.clock1.getPlayer().color.toString();
+            color = this.clock1.getPlayer().getColor().toString();
         } else {
             //if called in wrong moment
             System.out.println("Time over called when player got time 2 play");
