@@ -10,6 +10,7 @@ public class Application {
     private GUI gui;
 
     private Application() {
+        Logging.setup();
         gui = new GUI(this);
     }
 

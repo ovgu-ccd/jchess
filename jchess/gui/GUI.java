@@ -126,6 +126,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
             }
         });
 
+        Logging.GUI.debug("Gui created.");
     }
 
     public void createNewGame(String firstName,

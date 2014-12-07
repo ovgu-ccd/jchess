@@ -12,7 +12,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -49,7 +53,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>jchess.gui.JChessApp</mainClass>
+                                    <mainClass>jchess.JChessApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
