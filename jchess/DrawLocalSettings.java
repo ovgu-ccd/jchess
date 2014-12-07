@@ -19,6 +19,8 @@
  */
 package jchess;
 
+import jchess.mvc.events.NewGame;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
@@ -210,6 +212,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
                 JOptionPane.showMessageDialog(this, Settings.lang("fill_name"));
                 return;
             }
+
             Game newGUI = JChessApp.jcv.addNewTab(this.firstName.getText() + " vs " + this.secondName.getText());
             Settings sett = newGUI.settings;//sett local settings variable
             Player pl1 = sett.playerWhite;//set local player variable
@@ -249,6 +252,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener, TextLis
             this.parent.setVisible(false);//hide parent
             newGUI.chessboard.repaint();
             newGUI.chessboard.draw();
+
+            (new NewGame(newGUI, sett)).emit();
         }
 
     }
