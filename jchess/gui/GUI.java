@@ -37,9 +37,9 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
     private final Timer busyIconTimer;
     private final Icon  idleIcon;
     private final Icon[] busyIcons = new Icon[15];
-    private javax.swing.JPanel mainPanel;
-    public  JDialog            newGameFrame;
+    public JDialog newGameFrame;
     GUIUtils activeGUI;//in future it will be reference to active tab
+    private javax.swing.JPanel mainPanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu        gameMenu;
     private javax.swing.JTabbedPane  gamesPane;
@@ -167,7 +167,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         if (isTimeGame) { //if timeGame is checked
             Integer val = new Integer(time);
             sett.timeLimitSet = true;
-            sett.timeForGame = (int) val * 60; //set time for game and multiply it to seconds
+            sett.timeForGame = val * 60; //set time for game and multiply it to seconds
             newTab.gameClock.setTimes(sett.timeForGame, sett.timeForGame);
             newTab.gameClock.start();
         }
@@ -188,6 +188,16 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         this.gamesPane.addTab(title, newGUI);
         return newGUI;
     }
+
+
+    void showAboutBox() {
+        if (aboutBox == null) {
+            aboutBox = new JChessAboutBox(this);
+            aboutBox.setLocationRelativeTo(this);
+        }
+        aboutBox.setVisible(true);
+    }
+
 
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
@@ -254,13 +264,6 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         }
     }
 
-    void showAboutBox() {
-        if (aboutBox == null) {
-            aboutBox = new JChessAboutBox(this);
-            aboutBox.setLocationRelativeTo(this);
-        }
-        aboutBox.setVisible(true);
-    }
 
     public String showPawnPromotionBox(String color) {
         if (promotionBox == null) {
@@ -276,10 +279,12 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         return promotionBox.result;
     }
 
+
     public String showSaveWindow() {
 
         return "";
     }
+
 
     /**
      * This method is called from within the constructor to
@@ -495,6 +500,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         pack();
     }
 
+
     private void moveBackItemActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveBackItemActionPerformed
         //GEN-HEADEREND:event_moveBackItemActionPerformed
         if (gui != null && gui.game != null) {
@@ -514,16 +520,19 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
 
     }//GEN-LAST:event_moveBackItemActionPerformed
 
+
     private void moveBackItemMouseClicked(java.awt.event.MouseEvent evt) { //GEN-FIRST:event_moveBackItemMouseClicked
         //GEN-HEADEREND:event_moveBackItemMouseClicked
         // TODO add your handling code here:
 
     }//GEN-LAST:event_moveBackItemMouseClicked
 
+
     private void moveForwardItemMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
 
     }
+
 
     private void moveForwardItemActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -543,6 +552,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         }
     }
 
+
     private void rewindToBeginActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             GameTab activeGame = this.getActiveTabGame();
@@ -555,6 +565,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
             JOptionPane.showMessageDialog(null, exc.getMessage());
         }
     }
+
 
     private void rewindToEndActionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -569,29 +580,35 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         }
     }
 
+
     public void componentResized(ComponentEvent e) {
         System.out.println("jchessView resized!!;");
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    GameTab getActiveTabGame() throws ArrayIndexOutOfBoundsException {
-        return (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
-    }
-
-    public int getNumberOfOpenedTabs() {
-        return this.gamesPane.getTabCount();
-    }
 
     public void componentMoved(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
     public void componentShown(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
     public void componentHidden(ComponentEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+    GameTab getActiveTabGame() throws ArrayIndexOutOfBoundsException {
+        return (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
+    }
+
+
+    public int getNumberOfOpenedTabs() {
+        return this.gamesPane.getTabCount();
     }
 
 }

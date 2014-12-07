@@ -38,11 +38,11 @@ public class BoardView extends JPanel {
 
     public static final  int           top             = 0;
     public static final  int           bottom          = 7;
+    public static final int img_widht  = 480;//image width
+    public static final int img_height = img_widht;//image height
     //public Graphics graph;
     private static final int           img_x           = 5;//image x position (used in JChessView class!)
     public static final  int           img_y           = img_x;//image y position (used in JChessView class!)
-    public static final  int           img_widht       = 480;//image width
-    public static final  int           img_height      = img_widht;//image height
     private static final BufferedImage orgImage        = GUIUtils.loadImage("chessboard.png");//image of chessboard
     private static final Image         org_sel_square  = GUIUtils
             .loadImage("sel_square.png");//image of highlited square
@@ -582,17 +582,10 @@ public class BoardView extends JPanel {
     }
 
 
-    /**
-     * Annotations to superclass Game updateing and painting the crossboard
-     */
-    @Override
-    public void update(Graphics g) {
-        repaint();
-    }
-
     public Point getTopLeftPoint() {
         if (this.settings.renderLabels) {
-            return new Point(this.topLeft.x + this.upDownLabel.getHeight(null), this.topLeft.y + this.upDownLabel.getHeight(null));
+            return new Point(this.topLeft.x + this.upDownLabel.getHeight(null),
+                    this.topLeft.y + this.upDownLabel.getHeight(null));
         }
         return this.topLeft;
     }
@@ -621,13 +614,20 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override
-    public void paintComponent(Graphics g) {
+    @Override public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Point topLeftPoint = this.getTopLeftPoint();
 
         g2d.drawImage(image, topLeftPoint.x, topLeftPoint.y, null);//draw an Image of chessboard
+    }
+
+
+    /**
+     * Annotations to superclass Game updateing and painting the crossboard
+     */
+    @Override public void update(Graphics g) {
+        repaint();
     }
 
 
@@ -668,7 +668,7 @@ public class BoardView extends JPanel {
         labelHeight = (labelHeight < min_label_height) ? min_label_height : labelHeight;
         int labelWidth = (int) Math.ceil(square_height * 8 + (2 * labelHeight));
         BufferedImage uDL = new BufferedImage(labelWidth + min_label_height, labelHeight, BufferedImage.TYPE_3BYTE_BGR);
-        Graphics2D uDL2D = (Graphics2D) uDL.createGraphics();
+        Graphics2D uDL2D = uDL.createGraphics();
         uDL2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         uDL2D.setColor(Color.white);
 
@@ -697,7 +697,7 @@ public class BoardView extends JPanel {
         this.upDownLabel = uDL;
 
         uDL = new BufferedImage(labelHeight, labelWidth + min_label_height, BufferedImage.TYPE_3BYTE_BGR);
-        uDL2D = (Graphics2D) uDL.createGraphics();
+        uDL2D = uDL.createGraphics();
         uDL2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         uDL2D.setColor(Color.white);
         //uDL2D.fillRect(0, 0, 800, 800);

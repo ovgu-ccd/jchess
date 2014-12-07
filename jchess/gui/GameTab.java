@@ -44,13 +44,13 @@ import java.util.logging.Logger;
 public class GameTab extends JPanel implements MouseListener, ComponentListener {
 
     public  Settings  settings;
+    public BoardView boardView;
+    public GameClock gameClock;
+    public Client    client;
+    public Moves     moves;
+    public Chat      chat;
     private boolean   blockedChessboard;
-    public  BoardView boardView;
     private Player    activePlayer;
-    public  GameClock gameClock;
-    public  Client    client;
-    public  Moves     moves;
-    public  Chat      chat;
 
 
     public GameTab() {
@@ -86,40 +86,10 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
     }
 
 
-    /** Method to save actual state of game
-     * @param path address of place where game will be saved
-     */
-    public void saveGame(File path) {
-        FileWriter fileW = null;
-        try {
-            fileW = new FileWriter(path);
-        } catch (java.io.IOException exc) {
-            System.err.println("error creating fileWriter: " + exc);
-            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file")+": " + exc);
-            return;
-        }
-        Calendar cal = Calendar.getInstance();
-        String str = "";
-        String info =
-                "[Event \"Game\"]\n[Date \"" + cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal
-                        .get(Calendar.DAY_OF_MONTH) + "\"]\n" + "[White \"" + this.settings.playerWhite.getName()
-                        + "\"]\n[Black \"" + this.settings.playerBlack.getName() + "\"]\n\n";
-        str += info;
-        str += this.moves.getMovesInString();
-        try {
-            fileW.write(str);
-            fileW.flush();
-            fileW.close();
-        } catch (java.io.IOException exc) {
-            System.out.println("error writing to file: " + exc);
-            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file")+": " + exc);
-            return;
-        }
-        JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("game_saved_properly"));
-    }
-
-    /** Loading game method(loading game state from the earlier saved file)
-     *  @param file File where is saved game
+    /**
+     * Loading game method(loading game state from the earlier saved file)
+     *
+     * @param file File where is saved game
      */
 
     /*@Override
@@ -173,6 +143,7 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
         //newGUI.chessboard.draw();
     }
 
+
     /** Method checking in with of line there is an error
      *  @param  br BufferedReader class object to operate on
      *  @param  srcStr String class object with text which variable you want to get in file
@@ -196,6 +167,7 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
         }
     }
 
+
     /** Method to get value from loaded txt line
      *  @param line Line which is readed
      *  @return result String with loaded value
@@ -218,6 +190,40 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
         }
         return result;
     }
+
+
+    /** Method to save actual state of game
+     * @param path address of place where game will be saved
+     */
+    public void saveGame(File path) {
+        FileWriter fileW = null;
+        try {
+            fileW = new FileWriter(path);
+        } catch (java.io.IOException exc) {
+            System.err.println("error creating fileWriter: " + exc);
+            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file") + ": " + exc);
+            return;
+        }
+        Calendar cal = Calendar.getInstance();
+        String str = "";
+        String info =
+                "[Event \"Game\"]\n[Date \"" + cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal
+                        .get(Calendar.DAY_OF_MONTH) + "\"]\n" + "[White \"" + this.settings.playerWhite.getName()
+                        + "\"]\n[Black \"" + this.settings.playerBlack.getName() + "\"]\n\n";
+        str += info;
+        str += this.moves.getMovesInString();
+        try {
+            fileW.write(str);
+            fileW.flush();
+            fileW.close();
+        } catch (java.io.IOException exc) {
+            System.out.println("error writing to file: " + exc);
+            JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("error_writing_to_file") + ": " + exc);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, StringResources.MAIN.getString("game_saved_properly"));
+    }
+
 
     /** Method to Start new game
      *
@@ -320,66 +326,6 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
     public void mouseClicked(MouseEvent arg0) {
     }
 
-    public boolean undo() {
-        boolean status = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            status = boardView.undo();
-            if( status ) {
-                this.switchActive();
-            } else {
-                boardView.repaint();//repaint for sure
-            }
-        } else if( this.settings.gameType == Settings.gameTypes.network ) {
-            this.client.sendUndoAsk();
-            status = true;
-        }
-        return status;
-    }
-
-    public boolean rewindToBegin() {
-        boolean result = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            while( boardView.undo() ) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
-        }
-
-        return result;
-    }
-
-    public boolean rewindToEnd() throws UnsupportedOperationException {
-        boolean result = false;
-
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            while( boardView.redo() ) {
-                result = true;
-            }
-        } else {
-            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
-        }
-
-        return result;
-    }
-
-    public boolean redo() {
-        boolean status = boardView.redo();
-        if( this.settings.gameType == Settings.gameTypes.local ) {
-            if ( status ) {
-                this.nextMove();
-            } else {
-                boardView.repaint();//repaint for sure
-            }
-        } else {
-            throw new UnsupportedOperationException( StringResources.MAIN.getString("operation_supported_only_in_local_game") );
-        }
-        return status;
-    }
-
-
 
     public void mousePressed(MouseEvent event) {
         if (event.getButton() == MouseEvent.BUTTON3) { //right button
@@ -394,8 +340,9 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
                     int y = event.getY();//get Y position of mouse
 
                     Square sq = boardView.getSquare(x, y);
-                    if ((sq == null && sq.piece == null && boardView.activeSquare == null)
-                            || (this.boardView.activeSquare == null && sq.piece != null && sq.piece.player != this.activePlayer)) {
+                    if ((sq == null && sq.piece == null && boardView.activeSquare == null) || (
+                            this.boardView.activeSquare == null && sq.piece != null
+                                    && sq.piece.player != this.activePlayer)) {
                         return;
                     }
 
@@ -405,11 +352,12 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
                     } else if (boardView.activeSquare == sq) { //unselect
                         boardView.unselect();
                     } else if (boardView.activeSquare != null && boardView.activeSquare.piece != null
-                               && boardView.activeSquare.piece.allMoves().indexOf(sq) != -1) { //move
+                            && boardView.activeSquare.piece.allMoves().indexOf(sq) != -1) { //move
                         if (settings.gameType == Settings.gameTypes.local) {
                             boardView.move(boardView.activeSquare, sq);
                         } else if (settings.gameType == Settings.gameTypes.network) {
-                            client.sendMove(boardView.activeSquare.getPozX(), boardView.activeSquare.getPozY(), sq.getPozX(), sq.getPozY());
+                            client.sendMove(boardView.activeSquare.getPozX(), boardView.activeSquare.getPozY(),
+                                    sq.getPozX(), sq.getPozY());
                             boardView.move(boardView.activeSquare, sq);
                         }
 
@@ -436,7 +384,7 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
                         }
                     }
 
-                } catch(NullPointerException exc) {
+                } catch (NullPointerException exc) {
                     System.err.println(exc.getMessage());
                     boardView.repaint();
                 }
@@ -447,19 +395,89 @@ public class GameTab extends JPanel implements MouseListener, ComponentListener 
         //chessboard.repaint();
     }
 
+
     public void mouseReleased(MouseEvent arg0) {
     }
+
 
     public void mouseEntered(MouseEvent arg0) {
     }
 
+
     public void mouseExited(MouseEvent arg0) {
     }
 
+
+    public boolean undo() {
+        boolean status = false;
+
+        if( this.settings.gameType == Settings.gameTypes.local) {
+            status = boardView.undo();
+            if (status) {
+                this.switchActive();
+            } else {
+                boardView.repaint();//repaint for sure
+            }
+        } else if (this.settings.gameType == Settings.gameTypes.network) {
+            this.client.sendUndoAsk();
+            status = true;
+        }
+        return status;
+    }
+
+
+    public boolean rewindToBegin() {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (boardView.undo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(
+                    StringResources.MAIN.getString("operation_supported_only_in_local_game") );
+        }
+
+        return result;
+    }
+
+
+    public boolean rewindToEnd() throws UnsupportedOperationException {
+        boolean result = false;
+
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            while (boardView.redo()) {
+                result = true;
+            }
+        } else {
+            throw new UnsupportedOperationException(
+                    StringResources.MAIN.getString("operation_supported_only_in_local_game"));
+        }
+
+        return result;
+    }
+
+
+    public boolean redo() {
+        boolean status = boardView.redo();
+        if (this.settings.gameType == Settings.gameTypes.local) {
+            if (status) {
+                this.nextMove();
+            } else {
+                boardView.repaint();//repaint for sure
+            }
+        } else {
+            throw new UnsupportedOperationException(
+                    StringResources.MAIN.getString("operation_supported_only_in_local_game"));
+        }
+        return status;
+    }
+
+
     public void componentResized(ComponentEvent e) {
         int height = this.getHeight() >= this.getWidth() ? this.getWidth() : this.getHeight();
-        int chess_height = (int)Math.round( (height * 0.8)/8 )*8;
-        this.boardView.resizeChessboard((int)chess_height);
+        int chess_height = (int)Math.round( (height * 0.8) / 8) * 8;
+        this.boardView.resizeChessboard(chess_height);
         chess_height = this.boardView.getHeight();
         this.moves.getScrollPane().setLocation(new Point(chess_height + 5, 100));
         this.moves.getScrollPane().setSize(this.moves.getScrollPane().getWidth(), chess_height - 100);
