@@ -69,7 +69,7 @@ public class Board {
      * @param ringIndex Index for the ring, starting at 0 with the center tile/ring
      * @param tileOnRingIndex Index for a tile on the ring, starting with zero for the central northern tile, cw order
      */
-    Tile getTile( int ringIndex, int tileOnRingIndex ) {
+    public Tile getTile( int ringIndex, int tileOnRingIndex ) {
 
         if ( ringIndex < 0 || ringIndex > 7 )
             throw new IllegalArgumentException("Parameter ringIndex must be in the interval [0..7] !");
@@ -90,11 +90,11 @@ public class Board {
         return tiles[tileIndex];
     }
 
-    boolean undo() {
+    public boolean undo() {
         return true;
     }
 
-    boolean redo() {
+    public boolean redo() {
         return false;
     }
 
