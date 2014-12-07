@@ -11,10 +11,10 @@ import jchess.IOSystem;
 public class GUIConnector implements IOSystem {
 
     GUIUtils gui = GUIUtils.getInstance();
-    GameTab gameTab;
+    BoardView boardView;
 
-    public GUIConnector(GameTab gameTab) {
-        this.gameTab = gameTab;
+    public GUIConnector(BoardView boardView) {
+        this.boardView = boardView;
     }
 
     @Override

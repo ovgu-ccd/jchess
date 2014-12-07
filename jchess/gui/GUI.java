@@ -182,7 +182,7 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
 
         GUIConnector newGUIConnector = new GUIConnector(newTab);
 
-        appPtr.createGame(newGUIConnector);
+        appPtr.createGame(new IOSystem[] {newGUIConnector});
     }
 
     public GameTab addNewTab(String title) {

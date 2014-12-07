@@ -30,7 +30,7 @@ public class Application {
         return gui;
     }
 
-    public void createGame(IOSystem ioSystem) {
+    public void createGame(IOSystem[] ioSystem) {
         Game.newGame(ioSystem);
     }
 
