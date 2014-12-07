@@ -180,6 +180,8 @@ public class GUI extends JFrame implements ActionListener, ComponentListener {
         //newGUI.chessboard.draw();
 
         GUIConnector newGUIConnector = new GUIConnector(newTab);
+
+        appPtr.createGame(newGUIConnector);
     }
 
     public GameTab addNewTab(String title) {
