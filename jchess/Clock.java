@@ -64,6 +64,15 @@ public class Clock {
         return this.time_left;
     }
 
+
+    /** Method to get player (owner of this clock)
+     *  @return Reference to player class object
+     */
+    public Player getPlayer() {
+        return this.player;
+    }
+
+
     /** Method to get player (owner of this clock)
      *  @param player  player to set as owner of clock
      */
@@ -71,27 +80,21 @@ public class Clock {
         this.player = player;
     }
 
-    /** Method to get player (owner of this clock)
-     *  @return  Reference to player class object
-     */
-    public Player getPlayer() {
-        return this.player;
-    }
 
     /** Method to prepare time in nice looking String
      *  @return  String of actual left game time with ':' digits in mm:ss format
      */
     public String prepareString() {
-        String strMin = new String();
-        Integer time_min = new Integer(this.get_left_time() / 60);
-        Integer time_sec = new Integer(this.get_left_time() % 60);
+        String strMin = "";
+        Integer time_min = this.get_left_time() / 60;
+        Integer time_sec = this.get_left_time() % 60;
         if (time_min < 10) {
             //prepare MINUTES
             strMin = "0" + time_min.toString();
         } else {
             strMin = time_min.toString();
         }
-        String result = new String(strMin + ":");
+        String result = strMin + ":";
         if (time_sec < 10) {
             //prepare SECONDS
             result = result + "0" + time_sec.toString();

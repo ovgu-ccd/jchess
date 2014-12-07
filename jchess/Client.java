@@ -20,6 +20,9 @@
  */
 package jchess;
 
+import jchess.server.Connection_info;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,8 +31,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import jchess.server.Connection_info;
 
 /**
  * Class responsible for clients references:
@@ -54,6 +55,16 @@ public class Client implements Runnable {
         this.ip = ip;
         this.port = port;
     }
+
+
+    /* Method responsible for printing on screen client informations
+     */
+    public static void print(String str) {
+        if (isPrintEnable) {
+            System.out.println("Client: " + str);
+        }
+    }
+
 
     /* Method responsible for joining to the server on
      * witch the game was created
@@ -83,11 +94,8 @@ public class Client implements Runnable {
                 if (Connection_info.get(servCode).name().startsWith("err_")) {
                     throw new Error(Connection_info.get(servCode).name());
                 }
-                if (servCode == Connection_info.all_is_ok.getValue()) {
-                    return true;
-                } else { //is any bug
-                    return false;
-                }
+                //is any bug
+                return servCode == Connection_info.all_is_ok.getValue();
             } catch (Error err) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, err);
                 return false;
@@ -104,6 +112,7 @@ public class Client implements Runnable {
             return false;
         }
     }
+
 
     /* Method responsible for running of the game
      */
@@ -171,13 +180,6 @@ public class Client implements Runnable {
         }
     }
 
-    /* Method responsible for printing on screen client informations
-     */
-    public static void print(String str) {
-        if (isPrintEnable) {
-            System.out.println("Client: " + str);
-        }
-    }
 
     /* Method responsible for sending the move witch was taken by a player
      */

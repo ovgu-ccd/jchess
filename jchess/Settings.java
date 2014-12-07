@@ -22,7 +22,6 @@ package jchess;
 
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
@@ -36,22 +35,11 @@ public class Settings implements Serializable {
     public boolean runningGameClock;
     public boolean timeLimitSet;//tel us if player choose time 4 game or it's infinity
     public boolean upsideDown;
-
-    public enum gameModes {
-
-        newGame, loadGame
-    }
     public gameModes gameMode;
     public Player playerWhite;
     public Player playerBlack;
-
-    public enum gameTypes {
-
-        local, network
-    }
     public gameTypes gameType;
     public boolean renderLabels = true;
-
     public Settings() {
         //temporally
         this.playerWhite = new Player("", "white");
@@ -61,12 +49,6 @@ public class Settings implements Serializable {
         gameMode = gameModes.newGame;
     }
 
-    /** Method to get game time set by player
-     *  @return timeFofGame int with how long the game will leasts
-     */
-    public int getTimeForGame() {
-        return this.timeForGame;
-    }
 
     public static String lang(String key) {
         if (Settings.loc == null) {
@@ -81,5 +63,26 @@ public class Settings implements Serializable {
         }
         System.out.println(Settings.loc.getLocale().toString());
         return result;
+    }
+
+
+    /**
+     * Method to get game time set by player
+     *
+     * @return timeFofGame int with how long the game will leasts
+     */
+    public int getTimeForGame() {
+        return this.timeForGame;
+    }
+
+
+    public enum gameModes {
+
+        newGame, loadGame
+    }
+
+    public enum gameTypes {
+
+        local, network
     }
 }

@@ -20,9 +20,8 @@
  */
 package jchess;
 
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Image;
 
 /**
  * Class to represent a queen piece
@@ -39,9 +38,9 @@ import java.awt.Image;
  */
 public class Queen extends Piece {
 
-    public static short value = 9;
     protected static final Image imageWhite = GUI.loadImage("Queen-W.png");
     protected static final Image imageBlack = GUI.loadImage("Queen-B.png");
+    public static short value = 9;
 
     Queen(Chessboard chessboard, Player player) {
         super(chessboard, player);//call initializer of super type: Piece
@@ -52,7 +51,7 @@ public class Queen extends Piece {
 
     @Override
     void setImage() {
-        if (this.player.color == this.player.color.black) {
+        if (this.player.color == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;

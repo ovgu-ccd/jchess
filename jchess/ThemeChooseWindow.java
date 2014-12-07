@@ -126,7 +126,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
                     prp.store(fOutStr, null);
                     fOutStr.flush();
                     fOutStr.close();
-                } catch (java.io.IOException exc) {
+                } catch (java.io.IOException ignored) {
                 }
                 JOptionPane.showMessageDialog(this,
                                               Settings.lang("changes_visible_after_restart"));
