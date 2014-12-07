@@ -30,7 +30,7 @@ public class Application {
     }
 
     public void createGame(IOSystem ioSystem) {
-        // send new game message to Game class
+        Game.newGame(ioSystem);
     }
 
     public static void main(String args[]) {
