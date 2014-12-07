@@ -20,6 +20,10 @@
  */
 package jchess;
 
+import jchess.gui.GameTab;
+import jchess.server.Connection_info;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,8 +32,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import jchess.server.Connection_info;
 
 /**
  * Class responsible for clients references:
@@ -37,28 +39,30 @@ import jchess.server.Connection_info;
  */
 public class Client implements Runnable {
 
-    public static boolean isPrintEnable = true; //print all messages (print function)
-    Socket s;
-    ObjectOutputStream output;
-    ObjectInputStream input;
-    String ip;
-    int port;
-    Game game;
-    Settings sett;
-    boolean wait4undoAnswer = false;
-    boolean isObserver = false;
+    private static boolean isPrintEnable = true; //print all messages (print function)
+    private Socket             s;
+    private ObjectOutputStream output;
+    private ObjectInputStream  input;
+    private String             ip;
+    private int                port;
+    private GameTab            game;
+    private Settings           sett;
+    private boolean wait4undoAnswer = false;
+    private boolean isObserver      = false;
 
-    Client(String ip, int port) {
+
+    public Client(String ip, int port) {
         print("running");
 
         this.ip = ip;
         this.port = port;
     }
 
+
     /* Method responsible for joining to the server on
      * witch the game was created
      */
-    boolean join(int tableID, boolean asPlayer, String nick, String password) throws Error { //join to server
+    public boolean join(int tableID, boolean asPlayer, String nick, String password) throws Error { //join to server
         print("running function: join(" + tableID + ", " + asPlayer + ", " + nick + ")");
         try {
             print("join to server: ip:" + ip + " port:" + port);
@@ -83,11 +87,8 @@ public class Client implements Runnable {
                 if (Connection_info.get(servCode).name().startsWith("err_")) {
                     throw new Error(Connection_info.get(servCode).name());
                 }
-                if (servCode == Connection_info.all_is_ok.getValue()) {
-                    return true;
-                } else { //is any bug
-                    return false;
-                }
+                //is any bug
+                return servCode == Connection_info.all_is_ok.getValue();
             } catch (Error err) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, err);
                 return false;
@@ -121,11 +122,11 @@ public class Client implements Runnable {
                     int endX = input.readInt();
                     int endY = input.readInt();
 
-                    game.simulateMove(beginX, beginY, endX, endY);
+                    getGame().simulateMove(beginX, beginY, endX, endY);
                 } else if (in.equals("#message")) { //getting message from server
                     String str = input.readUTF();
 
-                    game.chat.addMessage(str);
+                    getGame().chat.addMessage(str);
                 } else if (in.equals("#settings")) { //getting settings from server
                     try {
                         this.sett = (Settings) input.readObject();
@@ -133,39 +134,39 @@ public class Client implements Runnable {
                         Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    game.settings = this.sett;
-                    game.client = this;
-                    game.chat.client = this;
-                    game.newGame();//start new Game
-                    game.chessboard.draw();
+                    getGame().settings = this.sett;
+                    getGame().client = this;
+                    getGame().chat.client = this;
+                    getGame().newGame();//start new Game
+                    //getGame().chessboard.draw();
                 } else if (in.equals("#errorConnection")) {
-                    game.chat.addMessage("** "+Settings.lang("error_connecting_one_of_player")+" **");
+                    getGame().chat.addMessage("** "+ StringResources.MAIN.getString("error_connecting_one_of_player")+" **");
                 } else if(in.equals("#undoAsk") && !this.isObserver) {
                     int result = JOptionPane.showConfirmDialog(
                                      null,
-                                     Settings.lang("your_oponent_plase_to_undo_move_do_you_agree"),
-                                     Settings.lang("confirm_undo_move"),
+                            StringResources.MAIN.getString("your_oponent_plase_to_undo_move_do_you_agree"),
+                            StringResources.MAIN.getString("confirm_undo_move"),
                                      JOptionPane.YES_NO_OPTION
                                  );
 
                     if( result == JOptionPane.YES_OPTION ) {
-                        game.chessboard.undo();
-                        game.switchActive();
+                        getGame().boardView.undo();
+                        getGame().switchActive();
                         this.sendUndoAnswerPositive();
                     } else {
                         this.sendUndoAnswerNegative();
                     }
                 } else if(in.equals("#undoAnswerPositive") && ( this.wait4undoAnswer || this.isObserver ) ) {
                     this.wait4undoAnswer = false;
-                    String lastMove = game.moves.getMoves().get( game.moves.getMoves().size() -1 );
-                    game.chat.addMessage("** "+Settings.lang("permision_ok_4_undo_move")+": "+lastMove+"**");
-                    game.chessboard.undo();
+                    String lastMove = getGame().moves.getMoves().get( getGame().moves.getMoves().size() -1 );
+                    getGame().chat.addMessage("** "+StringResources.MAIN.getString("permision_ok_4_undo_move")+": "+lastMove+"**");
+                    getGame().boardView.undo();
                 } else if(in.equals("#undoAnswerNegative") && this.wait4undoAnswer) {
-                    game.chat.addMessage( Settings.lang("no_permision_4_undo_move") );
+                    getGame().chat.addMessage( StringResources.MAIN.getString("no_permision_4_undo_move") );
                 }
             } catch (IOException ex) {
                 isOK = false;
-                game.chat.addMessage("** "+Settings.lang("error_connecting_to_server")+" **");
+                getGame().chat.addMessage("** "+StringResources.MAIN.getString("error_connecting_to_server")+" **");
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -173,7 +174,7 @@ public class Client implements Runnable {
 
     /* Method responsible for printing on screen client informations
      */
-    public static void print(String str) {
+    private static void print(String str) {
         if (isPrintEnable) {
             System.out.println("Client: " + str);
         }
@@ -206,7 +207,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendUndoAnswerPositive() {
+    void sendUndoAnswerPositive() {
         try {
             output.writeUTF("#undoAnswerPositive");
             output.flush();
@@ -215,7 +216,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendUndoAnswerNegative() {
+    void sendUndoAnswerNegative() {
         try {
             output.writeUTF("#undoAnswerNegative");
             output.flush();
@@ -236,5 +237,13 @@ public class Client implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    GameTab getGame() {
+        return game;
+    }
+
+    public void setGame(GameTab game) {
+        this.game = game;
     }
 }

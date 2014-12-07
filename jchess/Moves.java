@@ -20,43 +20,42 @@
  */
 package jchess;
 
+import jchess.gui.BoardView;
+import jchess.gui.GameTab;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.awt.Point;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.*;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import javax.swing.JOptionPane;
 
 /** Class representing the players moves, it's also checking
  * that the moves taken by player are correct.
  * All moves which was taken by current player are saving as List of Strings
  * The history of moves is printing in a table
- * @param game The current game
  */
 public class Moves extends AbstractTableModel {
 
-    private ArrayList<String> move = new ArrayList<String>();
-    private int columnsNum = 3;
-    private int rowsNum = 0;
-    private String[] names = new String[] {
-        Settings.lang("white"), Settings.lang("black")
-    };
+    private ArrayList<String> move       = new ArrayList<>();
+    private int               columnsNum = 3;
+    private int               rowsNum    = 0;
+    private String[]          names      = new String[] { StringResources.MAIN.getString("white"),
+            StringResources.MAIN.getString("black") };
     private MyDefaultTableModel tableModel;
-    private JScrollPane scrollPane;
-    private JTable table;
+    private JScrollPane         scrollPane;
+    private JTable              table;
     private boolean enterBlack = false;
-    private Game game;
-    protected Stack<Move> moveBackStack = new Stack<Move>();
-    protected Stack<Move> moveForwardStack = new Stack<Move>();
+    private GameTab game;
+    private Stack<Move> moveBackStack    = new Stack<>();
+    private Stack<Move> moveForwardStack = new Stack<>();
 
-    enum castling {
+    public enum castling {
         none, shortCastling, longCastling
     }
 
-    Moves(Game game) {
+
+    public Moves(GameTab game) {
         super();
         this.tableModel = new MyDefaultTableModel();
         this.table = new JTable(this.tableModel);
@@ -72,29 +71,32 @@ public class Moves extends AbstractTableModel {
         this.scrollPane.setAutoscrolls(true);
     }
 
+
     public void draw() {
     }
 
-    @Override
-    public String getValueAt(int x, int y) {
+
+    @Override public String getValueAt(int x, int y) {
         return this.move.get((y * 2) - 1 + (x - 1));
     }
 
-    @Override
-    public int getRowCount() {
+
+    @Override public int getRowCount() {
         return this.rowsNum;
     }
 
-    @Override
-    public int getColumnCount() {
+
+    @Override public int getColumnCount() {
         return this.columnsNum;
     }
 
-    protected void addRow() {
+
+    void addRow() {
         this.tableModel.addRow(new String[2]);
     }
 
-    protected void addCastling(String move) {
+
+    void addCastling(String move) {
         this.move.remove(this.move.size() - 1);//remove last element (move of Rook)
         if (!this.enterBlack) {
             this.tableModel.setValueAt(move, this.tableModel.getRowCount() - 1, 1);//replace last value
@@ -112,7 +114,7 @@ public class Moves extends AbstractTableModel {
     /** Method of adding new moves to the table
      * @param str String which in is saved player move
      */
-    protected void addMove2Table(String str) {
+    void addMove2Table(String str) {
         try {
             if (!this.enterBlack) {
                 this.addRow();
@@ -136,7 +138,7 @@ public class Moves extends AbstractTableModel {
     /** Method of adding new move
      * @param move String which in is capt player move
      */
-    public void addMove(String move) {
+    void addMove(String move) {
         if (isMoveCorrect(move)) {
             this.move.add(move);
             this.addMove2Table(move);
@@ -147,14 +149,14 @@ public class Moves extends AbstractTableModel {
 
     public void addMove(Square begin, Square end, boolean registerInHistory, castling castlingMove, boolean wasEnPassant, Piece promotedPiece) {
         boolean wasCastling = castlingMove != castling.none;
-        String locMove = new String(begin.piece.symbol);
+        String locMove = begin.piece.symbol;
 
         if( game.settings.upsideDown ) {
-            locMove += Character.toString((char) ( ( Chessboard.bottom - begin.pozX) + 97));//add letter of Square from which move was made
-            locMove += Integer.toString( begin.pozY + 1 );//add number of Square from which move was made
+            locMove += Character.toString((char) ( ( BoardView.bottom - begin.getPozX()) + 97));//add letter of Square from which move was made
+            locMove += Integer.toString( begin.getPozY() + 1 );//add number of Square from which move was made
         } else {
-            locMove += Character.toString((char) (begin.pozX + 97));//add letter of Square from which move was made
-            locMove += Integer.toString(8 - begin.pozY);//add number of Square from which move was made
+            locMove += Character.toString((char) (begin.getPozX() + 97));//add letter of Square from which move was made
+            locMove += Integer.toString(8 - begin.getPozY());//add number of Square from which move was made
         }
 
         if (end.piece != null) {
@@ -164,23 +166,23 @@ public class Moves extends AbstractTableModel {
         }
 
         if ( game.settings.upsideDown ) {
-            locMove += Character.toString((char) (( Chessboard.bottom - end.pozX) +  97));//add letter of Square to which move was made
-            locMove += Integer.toString( end.pozY + 1 );//add number of Square to which move was made
+            locMove += Character.toString((char) (( BoardView.bottom - end.getPozX()) +  97));//add letter of Square to which move was made
+            locMove += Integer.toString( end.getPozY() + 1 );//add number of Square to which move was made
         } else {
-            locMove += Character.toString((char) (end.pozX + 97));//add letter of Square to which move was made
-            locMove += Integer.toString(8 - end.pozY);//add number of Square to which move was made
+            locMove += Character.toString((char) (end.getPozX() + 97));//add letter of Square to which move was made
+            locMove += Integer.toString(8 - end.getPozY());//add number of Square to which move was made
         }
 
-        if (begin.piece.symbol.equals("") && begin.pozX - end.pozX != 0 && end.piece == null) {
+        if (begin.piece.symbol.equals("") && begin.getPozX() - end.getPozX() != 0 && end.piece == null) {
             locMove += "(e.p)";//pawn take down opponent en passant
             wasEnPassant = true;
         }
-        if ((!this.enterBlack && this.game.chessboard.kingBlack.isChecked())
-                || (this.enterBlack && this.game.chessboard.kingWhite.isChecked())) {
+        if ((!this.enterBlack && this.game.boardView.kingBlack.isChecked())
+                || (this.enterBlack && this.game.boardView.kingWhite.isChecked())) {
             //if checked
 
-            if ((!this.enterBlack && this.game.chessboard.kingBlack.isCheckmatedOrStalemated() == 1)
-                    || (this.enterBlack && this.game.chessboard.kingWhite.isCheckmatedOrStalemated() == 1)) {
+            if ((!this.enterBlack && this.game.boardView.kingBlack.isCheckmatedOrStalemated() == 1)
+                    || (this.enterBlack && this.game.boardView.kingWhite.isCheckmatedOrStalemated() == 1)) {
                 //check if checkmated
                 locMove += "#";//check mate
             } else {
@@ -216,8 +218,7 @@ public class Moves extends AbstractTableModel {
 
     public synchronized Move getLastMoveFromHistory() {
         try {
-            Move last = this.moveBackStack.get(this.moveBackStack.size() - 1);
-            return last;
+            return this.moveBackStack.get(this.moveBackStack.size() - 1);
         } catch (java.lang.ArrayIndexOutOfBoundsException exc) {
             return null;
         }
@@ -225,8 +226,7 @@ public class Moves extends AbstractTableModel {
 
     public synchronized Move getNextMoveFromHistory() {
         try {
-            Move next = this.moveForwardStack.get(this.moveForwardStack.size() - 1);
-            return next;
+            return this.moveForwardStack.get(this.moveForwardStack.size() - 1);
         } catch (java.lang.ArrayIndexOutOfBoundsException exc) {
             return null;
         }
@@ -283,7 +283,7 @@ public class Moves extends AbstractTableModel {
      * @param move String which in is capt player move
      * @return boolean 1 if the move is correct, else 0
      */
-    static public boolean isMoveCorrect(String move) {
+    private static boolean isMoveCorrect(String move) {
         if (move.equals("O-O") || move.equals("O-O-O")) {
             return true;
         }
@@ -337,13 +337,13 @@ public class Moves extends AbstractTableModel {
         }
     }
 
-    /** Method of getting the moves in string
+    /** Method of getting the moves in strings
      *  @return str String which in is capt player move
      */
     public String getMovesInString() {
         int n = 1;
         int i = 0;
-        String str = new String();
+        String str = "";
         for (String locMove : this.getMoves()) {
             if (i % 2 == 0) {
                 str += n + ". ";
@@ -389,7 +389,7 @@ public class Moves extends AbstractTableModel {
         }
         for (String locMove : tempArray) { //test if moves are written correctly
             if (!Moves.isMoveCorrect(locMove.trim())) { //if not
-                JOptionPane.showMessageDialog(this.game, Settings.lang("invalid_file_to_load") + move);
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("invalid_file_to_load") + move);
                 return;//show message and finish reading game
             }
         }
@@ -398,7 +398,7 @@ public class Moves extends AbstractTableModel {
             if (locMove.equals("O-O-O") || locMove.equals("O-O")) { //if castling
                 int[] values = new int[4];
                 if (locMove.equals("O-O-O")) {
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
                         values = new int[] {
                             4, 0, 2, 0
                         };//move value for castling (King move)
@@ -408,7 +408,7 @@ public class Moves extends AbstractTableModel {
                         };//move value for castling (King move)
                     }
                 } else if (locMove.equals("O-O")) { //if short castling
-                    if (this.game.getActivePlayer().color == Player.colors.black) { //if black turn
+                    if (this.game.getActivePlayer().getColor() == Player.colors.black) { //if black turn
                         values = new int[] {
                             4, 0, 6, 0
                         };//move value for castling (King move)
@@ -421,7 +421,7 @@ public class Moves extends AbstractTableModel {
                 canMove = this.game.simulateMove(values[0], values[1], values[2], values[3]);
 
                 if (!canMove) { //if move is illegal
-                    JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
+                    JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
                     return;//finish reading game and show message
                 }
                 continue;
@@ -437,20 +437,20 @@ public class Moves extends AbstractTableModel {
             int yTo = 9;
             boolean pieceFound = false;
             if(locMove.length() <= 3) {
-                Square[][] squares = this.game.chessboard.squares;
+                Square[][] squares = this.game.boardView.squares;
                 xTo = locMove.charAt(from) - 97;//from ASCII
-                yTo = Chessboard.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
+                yTo = BoardView.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
                 for(int i=0; i<squares.length && !pieceFound; i++) {
                     for(int j=0; j<squares[i].length && !pieceFound; j++) {
-                        if(squares[i][j].piece == null || this.game.getActivePlayer().color != squares[i][j].piece.player.color) {
+                        if(squares[i][j].piece == null || this.game.getActivePlayer().getColor() != squares[i][j].piece.player.getColor()) {
                             continue;
                         }
                         ArrayList pieceMoves = squares[i][j].piece.allMoves();
                         for(Object square : pieceMoves) {
                             Square currSquare = (Square)square;
-                            if(currSquare.pozX == xTo && currSquare.pozY == yTo) {
-                                xFrom = squares[i][j].piece.square.pozX;
-                                yFrom = squares[i][j].piece.square.pozY;
+                            if(currSquare.getPozX() == xTo && currSquare.getPozY() == yTo) {
+                                xFrom = squares[i][j].piece.square.getPozX();
+                                yFrom = squares[i][j].piece.square.getPozY();
                                 pieceFound = true;
                             }
                         }
@@ -458,14 +458,14 @@ public class Moves extends AbstractTableModel {
                 }
             } else {
                 xFrom = locMove.charAt(from) - 97;//from ASCII
-                yFrom = Chessboard.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
+                yFrom = BoardView.bottom - (locMove.charAt(from + 1) - 49);//from ASCII
                 xTo = locMove.charAt(from + 3) - 97;//from ASCII
-                yTo = Chessboard.bottom - (locMove.charAt(from + 4) - 49);//from ASCII
+                yTo = BoardView.bottom - (locMove.charAt(from + 4) - 49);//from ASCII
             }
             canMove = this.game.simulateMove(xFrom, yFrom, xTo, yTo);
             if (!canMove) { //if move is illegal
-                JOptionPane.showMessageDialog(this.game, Settings.lang("illegal_move_on") + locMove);
-                this.game.chessboard.activeSquare = null;
+                JOptionPane.showMessageDialog(this.game, StringResources.MAIN.getString("illegal_move_on") + locMove);
+                this.game.boardView.activeSquare = null;
                 return;//finish reading game and show message
             }
         }

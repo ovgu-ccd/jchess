@@ -20,7 +20,10 @@
  */
 package jchess;
 
-import java.awt.*;
+import jchess.gui.GameTab;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -31,39 +34,50 @@ import java.util.Properties;
  * lockated available for player opptions, current games and where can he start
  * a new game (load it or save it)
  */
-public class GUI {
+public class GUIUtils {
 
-    static final public Properties configFile = GUI.getConfigFile();
-    public Game game;
+    private static final Properties configFile = GUIUtils.getConfigFile();
+    public GameTab game;
 
-    public GUI() {
-        this.game = new Game();
+
+    private GUIUtils() {
+        this.game = new GameTab();
 
         // this.drawGUI();
     }/*--endOf-GUI--*/
 
+
+    private static GUIUtils instance;
+
+
+    public static GUIUtils getInstance() {
+        if (GUIUtils.instance == null) {
+            GUIUtils.instance = new GUIUtils();
+        }
+
+        return GUIUtils.instance;
+    }
+
     /*
      * Method load image by a given name with extension
      *
-     * @name : string of image to load for ex. "chessboard.jpg"
+     * @name : strings of image to load for ex. "chessboard.jpg"
      *
      * @returns : image or null if cannot load
      */
 
-    static Image loadImage(String name) {
+
+    public static BufferedImage loadImage(String name) {
         if (configFile == null) {
             return null;
         }
-        Image img = null;
+        BufferedImage img = null;
         URL url = null;
-        Toolkit tk = Toolkit.getDefaultToolkit();
         try {
-            String imageLink = "theme/"
-                               + configFile.getProperty("THEME", "default") + "/images/"
-                               + name;
+            String imageLink = "theme/" + configFile.getProperty("THEME", "default") + "/images/" + name;
             System.out.println(configFile.getProperty("THEME"));
-            url = JChessApp.class.getResource(imageLink);
-            img = tk.getImage(url);
+            url = Application.class.getResource(imageLink);
+            img = ImageIO.read(url);
 
         } catch (Exception e) {
             System.out.println("some error loading image!");
@@ -72,12 +86,12 @@ public class GUI {
         return img;
     }/*--endOf-loadImage--*/
 
-    static boolean themeIsValid(String name) {
+    public static boolean themeIsValid(String name) {
         return true;
     }
 
-    static String getJarPath() {
-        String path = GUI.class.getProtectionDomain().getCodeSource()
+    public static String getJarPath() {
+        String path = GUIUtils.class.getProtectionDomain().getCodeSource()
                       .getLocation().getFile();
         path = path.replaceAll(
                    "[a-zA-Z0-9%!@#$%^&*\\(\\)\\[\\]\\{\\}\\.\\,\\s]+\\.jar", "");
@@ -89,13 +103,13 @@ public class GUI {
         return path;
     }
 
-    static Properties getConfigFile() {
+    public static Properties getConfigFile() {
         Properties confFile = new Properties();
 
         // Try to locate config.txt
         File outFile = new File("config.txt");
-        if (!outFile.exists() && GUI.class.getResource("config.txt") != null) {
-            outFile = new File(GUI.class.getResource("config.txt").getFile());
+        if (!outFile.exists() && Application.class.getResource("config.txt") != null) {
+            outFile = new File(Application.class.getResource("config.txt").getFile());
         } else {
             return confFile;
         }

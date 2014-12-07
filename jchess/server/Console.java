@@ -20,19 +20,20 @@
  */
 package jchess.server;
 
+import jchess.MD5;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jchess.MD5;
 
-public class Console {
+class Console {
 
     public static void main(String[] args) {
         System.out.println("JChess Server Start!");
 
         Server server = new Server(); //create server
-        server.isPrintEnable = false;
+        Server.isPrintEnable = false;
 
         boolean isOK = true;
         while (isOK) {
@@ -44,7 +45,8 @@ public class Console {
             System.out.print("-> ");
             String str = readString();
 
-            if (str.equals("1")) { //new table
+            switch (str) {
+            case "1":  //new table
                 System.out.print("ID gry: ");
                 int gameID = Integer.parseInt(readString());
 
@@ -60,8 +62,10 @@ public class Console {
                 boolean canObserver = observer.equalsIgnoreCase("t");
 
                 server.newTable(gameID, pass, canObserver, true); //create new table
-            } else if (str.equals("2")) { //list of tables
-                for (Map.Entry<Integer, Table> entry : server.tables.entrySet()) {
+
+                break;
+            case "2":  //list of tables
+                for (Map.Entry<Integer, Table> entry : Server.tables.entrySet()) {
                     Integer id = entry.getKey();
                     Table table = entry.getValue();
 
@@ -81,26 +85,30 @@ public class Console {
 
                     System.out.println("\t" + id + ": " + p1 + " vs " + p2);
                 }
-            } else if (str.equals("3")) { //on/off server's communicats
-                if (server.isPrintEnable == false) {
-                    server.isPrintEnable = true;
+                break;
+            case "3":  //on/off server's communicats
+                if (!Server.isPrintEnable) {
+                    Server.isPrintEnable = true;
                     System.out.println("Komunikaty serwera zostały włączone");
                 } else {
-                    server.isPrintEnable = false;
+                    Server.isPrintEnable = false;
                     System.out.println("Komunikaty serwera zostały wyłączone");
                 }
-            } else if (str.equals("4")) { //exit
+                break;
+            case "4":  //exit
                 isOK = false;
-            } else { //bad commant
+                break;
+            default:  //bad commant
                 System.out.println("Nierozpoznane polecenie");
+                break;
             }
         }
         System.exit(0);
     }
 
-    public static String readString() { //read string from console
+    private static String readString() { //read strings from console
         int ch;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         try {
             while ((ch = System.in.read()) != 10) {
                 sb.append((char) ch);

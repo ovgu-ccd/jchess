@@ -23,7 +23,6 @@ package jchess.server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -66,8 +65,16 @@ public class Server implements Runnable {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        tables = new HashMap<Integer, Table>();
+        tables = new HashMap<>();
     }
+
+
+    public static void print(String str) {
+        if (isPrintEnable) {
+            System.out.println("Server: " + str);
+        }
+    }
+
 
     public void run() { //listening
 
@@ -116,7 +123,6 @@ public class Server implements Runnable {
                         print("error: was all players at this table");
                         output.writeInt(Connection_info.err_table_is_full.getValue());
                         output.flush();
-                        continue;
                     } else {
                         print("wasn't all players at this table");
 
@@ -144,7 +150,6 @@ public class Server implements Runnable {
                         print("Observers can't join");
                         output.writeInt(Connection_info.err_game_without_observer.getValue());
                         output.flush();
-                        continue;
                     } else {
                         output.writeInt(Connection_info.all_is_ok.getValue());
                         output.flush();
@@ -160,16 +165,10 @@ public class Server implements Runnable {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                continue;
             }
         }
     }
 
-    public static void print(String str) {
-        if (isPrintEnable) {
-            System.out.println("Server: " + str);
-        }
-    }
 
     public void newTable(int idTable, String password, boolean withObserver, boolean enableChat) { //create new table
 

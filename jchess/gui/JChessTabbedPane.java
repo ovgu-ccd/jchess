@@ -18,14 +18,18 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.Application;
+import jchess.GUIUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 
-public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
+class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
 
     private TabbedPaneIcon closeIcon;
     private Image addIcon = null;
@@ -36,8 +40,8 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     JChessTabbedPane() {
         super();
         this.closeIcon = new TabbedPaneIcon(this.closeIcon);
-        this.unclickedAddIcon = GUI.loadImage("add-tab-icon.png");
-        this.clickedAddIcon = GUI.loadImage("clicked-add-tab-icon.png");
+        this.unclickedAddIcon = GUIUtils.loadImage("add-tab-icon.png");
+        this.clickedAddIcon = GUIUtils.loadImage("clicked-add-tab-icon.png");
         this.addIcon = this.unclickedAddIcon;
         this.setDoubleBuffered(true);
         super.addMouseListener(this);
@@ -48,7 +52,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
         this.addTab(title, component, null);
     }
 
-    public void addTab(String title, Component component, Icon closeIcon) {
+    void addTab(String title, Component component, Icon closeIcon) {
         super.addTab(title, new TabbedPaneIcon(closeIcon), component);
         System.out.println("Present number of tabs: " + this.getTabCount());
         this.updateAddIconRect();
@@ -61,10 +65,11 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     }
 
     private void showNewGameWindow() {
-        if (JChessApp.jcv.newGameFrame == null) {
-            JChessApp.jcv.newGameFrame = new NewGameWindow();
+        JDialog newGameFrame = Application.getInstance().getJcv().newGameFrame;
+        if (newGameFrame == null) {
+            newGameFrame = new NewGameWindow(Application.getInstance().getJcv());
         }
-        JChessApp.getApplication().show(JChessApp.jcv.newGameFrame);
+        newGameFrame.setVisible(true);
     }
 
     @Override

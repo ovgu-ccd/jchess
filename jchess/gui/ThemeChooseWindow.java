@@ -18,7 +18,11 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess;
+package jchess.gui;
+
+import jchess.Application;
+import jchess.GUIUtils;
+import jchess.StringResources;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -30,17 +34,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
-public class ThemeChooseWindow extends JDialog implements ActionListener,
+class ThemeChooseWindow extends JDialog implements ActionListener,
     ListSelectionListener {
 
-    public String result;
-    JList themesList;
-    ImageIcon themePreview;
-    GridBagLayout gbl;
-    GridBagConstraints gbc;
-    JButton themePreviewButton;
-    JButton okButton;
-    String basedir = GUI.getJarPath() + File.separator + "jchess";
+    private String             result;
+    private JList              themesList;
+    private ImageIcon          themePreview;
+    private GridBagLayout      gbl;
+    private GridBagConstraints gbc;
+    private JButton            themePreviewButton;
+    private JButton            okButton;
+    private String basedir = GUIUtils.getJarPath() + File.separator + "jchess";
+
 
     ThemeChooseWindow(Frame parent) throws Exception {
         super(parent);
@@ -48,7 +53,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
 
         if (dir.exists()) {
             File[] files = dir.listFiles();
-            this.setTitle(Settings.lang("choose_theme_window_title"));
+            this.setTitle(StringResources.MAIN.getString("choose_theme_window_title"));
             Dimension winDim = new Dimension(550, 230);
             this.setMinimumSize(winDim);
             this.setMaximumSize(winDim);
@@ -66,16 +71,16 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             this.add(this.themesList);
             this.themesList.setSelectionMode(0);
             this.themesList.addListSelectionListener(this);
-            Properties prp = GUI.getConfigFile();
+            Properties prp = GUIUtils.getConfigFile();
 
             this.gbl = new GridBagLayout();
             this.gbc = new GridBagConstraints();
             try {
-                this.themePreview = new ImageIcon(GUI.loadImage("Preview.png"));// JChessApp.class.getResource("theme/"+GUI.configFile.getProperty("THEME")+"/images/Preview.png"));
+                this.themePreview = new ImageIcon(GUIUtils.loadImage("Preview.png"));
             } catch (java.lang.NullPointerException exc) {
                 System.out.println("Cannot find preview image: " + exc);
                 this.themePreview = new ImageIcon(
-                    JChessApp.class.getResource("theme/noPreview.png"));
+                    Application.class.getResource("theme/noPreview.png"));
                 return;
             }
             this.result = "";
@@ -91,7 +96,7 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
             this.setModal(true);
         } else {
             throw new Exception(
-                Settings.lang("error_when_creating_theme_config_window"));
+                    StringResources.MAIN.getString("error_when_creating_theme_config_window"));
         }
 
     }
@@ -110,26 +115,25 @@ public class ThemeChooseWindow extends JDialog implements ActionListener,
     /**
      * Method wich is changing a pawn into queen, rook, bishop or knight
      *
-     * @param arg0
      *            Capt information about performed action
      */
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == this.okButton) {
-            Properties prp = GUI.getConfigFile();
+            Properties prp = GUIUtils.getConfigFile();
             int element = this.themesList.getSelectedIndex();
             String name = this.themesList.getModel().getElementAt(element)
                           .toString();
-            if (GUI.themeIsValid(name)) {
+            if (GUIUtils.themeIsValid(name)) {
                 prp.setProperty("THEME", name);
                 try {
                     FileOutputStream fOutStr = new FileOutputStream("config.txt");
                     prp.store(fOutStr, null);
                     fOutStr.flush();
                     fOutStr.close();
-                } catch (java.io.IOException exc) {
+                } catch (java.io.IOException ignored) {
                 }
                 JOptionPane.showMessageDialog(this,
-                                              Settings.lang("changes_visible_after_restart"));
+                        StringResources.MAIN.getString("changes_visible_after_restart"));
                 this.setVisible(false);
 
             }

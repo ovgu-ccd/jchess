@@ -20,24 +20,26 @@
  */
 package jchess.server;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import jchess.Player;
 import jchess.Settings;
 
-public class Table {
+import java.io.IOException;
+import java.util.ArrayList;
+
+class Table {
     //Table: {two player, one chessboard and x observers}
 
-    public SClient clientPlayer1;
-    public SClient clientPlayer2;
-    public ArrayList<SClient> clientObservers;
-    public Settings player1Set;
-    public Settings player2Set;
-    public Settings observerSettings;
-    public String password;
-    private boolean canObserversJoin;
-    private boolean enableChat;
-    private ArrayList<Move> movesList;
+    public  SClient            clientPlayer1;
+    public  SClient            clientPlayer2;
+    private ArrayList<SClient> clientObservers;
+    private Settings           player1Set;
+    private Settings           player2Set;
+    private Settings           observerSettings;
+    public  String             password;
+    private boolean            canObserversJoin;
+    private boolean            enableChat;
+    private ArrayList<Move>    movesList;
+
 
     Table(String password, boolean canObserversJoin, boolean enableChat) {
         this.password = password;
@@ -45,11 +47,12 @@ public class Table {
         this.canObserversJoin = canObserversJoin;
 
         if (canObserversJoin) {
-            clientObservers = new ArrayList<SClient>();
+            clientObservers = new ArrayList<>();
         }
 
-        movesList = new ArrayList<Move>();
+        movesList = new ArrayList<>();
     }
+
 
     public void generateSettings() { //generate settings for both players and observers
 
@@ -160,7 +163,6 @@ public class Table {
             try {
                 this.movesList.remove( this.movesList.size()-1 );
             } catch(ArrayIndexOutOfBoundsException exc) {
-                return;
             }
         }
     }
@@ -241,10 +243,7 @@ public class Table {
     public boolean isAllPlayers() {
         //is it all playing players?
 
-        if (clientPlayer1 == null || clientPlayer2 == null) {
-            return false;
-        }
-        return true;
+        return !(clientPlayer1 == null || clientPlayer2 == null);
     }
 
     public boolean isObservers() {
