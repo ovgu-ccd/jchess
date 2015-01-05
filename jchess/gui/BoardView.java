@@ -26,6 +26,8 @@ import jchess.Moves.castling;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -36,46 +38,46 @@ import java.util.ArrayList;
  */
 public class BoardView extends JPanel {
 
-    public static final  int           top             = 0;
-    public static final  int           bottom          = 7;
-    public static final int img_widht  = 480;//image width
-    public static final int img_height = img_widht;//image height
+    public static final int top = 0;
+    public static final int bottom = 7;
+    public static final int img_widht = 454;//image width
+    public static final int img_height = 512;//image height
     //public Graphics graph;
-    private static final int           img_x           = 5;//image x position (used in JChessView class!)
-    public static final  int           img_y           = img_x;//image y position (used in JChessView class!)
-    private static final BufferedImage orgImage        = GUIUtils.loadImage("chessboard.png");//image of chessboard
-    private static final Image         org_sel_square  = GUIUtils
+    private static final int img_x = 5;//image x position (used in JChessView class!)
+    public static final int img_y = img_x;//image y position (used in JChessView class!)
+    private static final BufferedImage orgImage = GUIUtils.loadImage("chessboard2.png");//image of chessboard
+    private static final Image org_sel_square = GUIUtils
             .loadImage("sel_square.png");//image of highlited square
-    private static final Image         org_able_square = GUIUtils
+    private static final Image org_able_square = GUIUtils
             .loadImage("able_square.png");//image of square where piece can go
-    private static       Image         image           = BoardView.orgImage;//image of chessboard
-    private static       Image         sel_square      = org_sel_square;//image of highlited square
-    private static       Image         able_square     = org_able_square;//image of square where piece can go
+    private static Image image = BoardView.orgImage;//image of chessboard
+    private static Image sel_square = org_sel_square;//image of highlited square
+    private static Image able_square = org_able_square;//image of square where piece can go
     public Square squares[][];//squares of chessboard
     public Square activeSquare;
-    public King   kingWhite;
-    public King   kingBlack;
+    public King kingWhite;
+    public King kingBlack;
     //----------------------------
     //For En passant:
     //|-> Pawn whose in last turn moved two square
-    public  Pawn  twoSquareMovedPawn  = null;
-    private Pawn  twoSquareMovedPawn2 = null;
-    private Image upDownLabel         = null;
-    private Image LeftRightLabel      = null;
-    private Point topLeft             = new Point(0, 0);
-    private int       active_x_square;
-    private int       active_y_square;
-    private float     square_height;//height of square
+    public Pawn twoSquareMovedPawn = null;
+    private Pawn twoSquareMovedPawn2 = null;
+    private Image upDownLabel = null;
+    private Image LeftRightLabel = null;
+    private Point topLeft = new Point(0, 0);
+    private int active_x_square;
+    private int active_y_square;
+    private float square_height;//height of square
     private ArrayList moves;
-    private Settings  settings;
+    private Settings settings;
     //-------- for undo ----------
-    private Square  undo1_sq_begin    = null;
-    private Square  undo1_sq_end      = null;
-    private Piece   undo1_piece_begin = null;
-    private Piece   undo1_piece_end   = null;
-    private Piece   ifWasEnPassant    = null;
-    private Piece   ifWasCastling     = null;
-    private boolean breakCastling     = false; //if last move break castling
+    private Square undo1_sq_begin = null;
+    private Square undo1_sq_end = null;
+    private Piece undo1_piece_begin = null;
+    private Piece undo1_piece_end = null;
+    private Piece ifWasEnPassant = null;
+    private Piece ifWasCastling = null;
+    private boolean breakCastling = false; //if last move break castling
     private Moves moves_history;
 
 
@@ -102,6 +104,13 @@ public class BoardView extends JPanel {
         this.setDoubleBuffered(true);
         this.drawLabels((int) this.square_height);
         setPreferredSize(new Dimension(orgImage.getWidth(), orgImage.getHeight()));
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                javax.swing.JOptionPane.showMessageDialog(null, CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY()).toString());
+            }
+        });
     }/*--endOf-Chessboard--*/
 
 
@@ -410,43 +419,43 @@ public class BoardView extends JPanel {
                     String newPiece = Application.getInstance().getJcv().showPawnPromotionBox(color); //return name of new piece
 
                     switch (newPiece) {
-                    case "Queen":  // transform pawn to queen
-                        Queen queen = new Queen(this, end.piece.player);
-                        queen.setBoardView(end.piece.getBoardView());
-                        queen.player = end.piece.player;
-                        queen.square = end.piece.square;
-                        end.piece = queen;
-                        break;
-                    case "SpecialRook": {
-                        Rook rook = new SpecialRook(this, end.piece.player);
-                        rook.setBoardView(end.piece.getBoardView());
-                        rook.player = end.piece.player;
-                        rook.square = end.piece.square;
-                        end.piece = rook;
-                        break;
-                    }
-                    case "Rook": { // transform pawn to rook
-                        Rook rook = new Rook(this, end.piece.player);
-                        rook.setBoardView(end.piece.getBoardView());
-                        rook.player = end.piece.player;
-                        rook.square = end.piece.square;
-                        end.piece = rook;
-                        break;
-                    }
-                    case "Bishop":  // transform pawn to bishop
-                        Bishop bishop = new Bishop(this, end.piece.player);
-                        bishop.setBoardView(end.piece.getBoardView());
-                        bishop.player = end.piece.player;
-                        bishop.square = end.piece.square;
-                        end.piece = bishop;
-                        break;
-                    default:  // transform pawn to knight
-                        Knight knight = new Knight(this, end.piece.player);
-                        knight.setBoardView(end.piece.getBoardView());
-                        knight.player = end.piece.player;
-                        knight.square = end.piece.square;
-                        end.piece = knight;
-                        break;
+                        case "Queen":  // transform pawn to queen
+                            Queen queen = new Queen(this, end.piece.player);
+                            queen.setBoardView(end.piece.getBoardView());
+                            queen.player = end.piece.player;
+                            queen.square = end.piece.square;
+                            end.piece = queen;
+                            break;
+                        case "SpecialRook": {
+                            Rook rook = new SpecialRook(this, end.piece.player);
+                            rook.setBoardView(end.piece.getBoardView());
+                            rook.player = end.piece.player;
+                            rook.square = end.piece.square;
+                            end.piece = rook;
+                            break;
+                        }
+                        case "Rook": { // transform pawn to rook
+                            Rook rook = new Rook(this, end.piece.player);
+                            rook.setBoardView(end.piece.getBoardView());
+                            rook.player = end.piece.player;
+                            rook.square = end.piece.square;
+                            end.piece = rook;
+                            break;
+                        }
+                        case "Bishop":  // transform pawn to bishop
+                            Bishop bishop = new Bishop(this, end.piece.player);
+                            bishop.setBoardView(end.piece.getBoardView());
+                            bishop.player = end.piece.player;
+                            bishop.square = end.piece.square;
+                            end.piece = bishop;
+                            break;
+                        default:  // transform pawn to knight
+                            Knight knight = new Knight(this, end.piece.player);
+                            knight.setBoardView(end.piece.getBoardView());
+                            knight.player = end.piece.player;
+                            knight.square = end.piece.square;
+                            end.piece = knight;
+                            break;
                     }
                     promotedPiece = end.piece;
                 }
@@ -614,19 +623,21 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override public void paintComponent(Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Point topLeftPoint = this.getTopLeftPoint();
 
-        g2d.drawImage(image, topLeftPoint.x, topLeftPoint.y, null);//draw an Image of chessboard
+        g2d.drawImage(image, 0, 0, img_widht, img_height, null);//draw an Image of chessboard
     }
 
 
     /**
      * Annotations to superclass Game updateing and painting the crossboard
      */
-    @Override public void update(Graphics g) {
+    @Override
+    public void update(Graphics g) {
         repaint();
     }
 
