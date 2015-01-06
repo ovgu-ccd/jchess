@@ -1,4 +1,4 @@
-package jchess.gui;
+package jchess.util;
 
 /**
  * Created by robert on 05/01/15.

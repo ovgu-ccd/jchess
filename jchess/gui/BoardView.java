@@ -22,6 +22,9 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.Moves.castling;
+import jchess.util.AbsoluteCoordinate;
+import jchess.util.BoardCoordinate;
+import jchess.util.CoordinateConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -108,7 +111,12 @@ public class BoardView extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                javax.swing.JOptionPane.showMessageDialog(null, CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY()).toString());
+                BoardCoordinate bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
+                AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(bc);
+                x = ac.x;
+                y = ac.y;
+
+                repaint();
             }
         });
     }/*--endOf-Chessboard--*/
@@ -623,13 +631,17 @@ public class BoardView extends JPanel {
     }
 
 
+    int x, y;
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Point topLeftPoint = this.getTopLeftPoint();
 
         g2d.drawImage(image, 0, 0, img_widht, img_height, null);//draw an Image of chessboard
+
+        g2d.setColor(Color.red);
+        g2d.fillRect(x - 2, y - 2, 4, 4);
     }
 
 

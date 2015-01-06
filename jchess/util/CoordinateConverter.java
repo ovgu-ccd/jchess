@@ -1,4 +1,4 @@
-package jchess.gui;
+package jchess.util;
 
 import jchess.Application;
 
@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * Created by robert on 05/01/15.
+ * Static methods allowing easy conversion between (pseudo-polar) BoardCoordinates and (carthesian) AbsoluteCoordinates.
  */
 public class CoordinateConverter {
     private static BufferedImage image;
@@ -20,7 +20,7 @@ public class CoordinateConverter {
         M = Math.tan(Math.toRadians(150));
         directions = new double[][]{{1, M}, {0, -1}, {-1, M}, {-1, -M}, {0, 1}, {1, -M}};
         startDirections = new double[][]{{0, 1}, {1, -M}, {1, M}, {0, -1}, {-1, M}, {-1, -M}};
-        for (int i = 0; i<directions.length; i++){
+        for (int i = 0; i < directions.length; i++) {
             normalize(directions[i]);
             normalize(startDirections[i]);
         }
@@ -38,18 +38,27 @@ public class CoordinateConverter {
     }
 
     public static BoardCoordinate absoluteCoordinateToBoardCoordinate(int x, int y) {
-        return absoluteCoordinateToBoardCoordinate(new AbsoluteCoordinate(x, y));
+        AbsoluteCoordinate ac = new AbsoluteCoordinate(x, y);
+        return absoluteCoordinateToBoardCoordinate(ac);
     }
 
     public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(BoardCoordinate bc) {
-        double startX = startDirections[bc.pos / bc.ring][0] * bc.ring * du;
-        double startY = startDirections[bc.pos / bc.ring][1] * bc.ring * du;
+        int x = 0, y = 0;
 
-        double[] edgeDir = directions[bc.pos / bc.ring];
-        int inEdgeIndex = bc.pos % bc.ring;
+        if (bc.ring > 0) {
 
-        int x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
-        int y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
+            double startX = startDirections[bc.pos / bc.ring][0] * bc.ring * du;
+            double startY = startDirections[bc.pos / bc.ring][1] * bc.ring * du;
+
+            double[] edgeDir = directions[bc.pos / bc.ring];
+            int inEdgeIndex = bc.pos % bc.ring;
+
+            x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
+            y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
+        }
+
+        x += image.getWidth() / 2;
+        y = image.getHeight() / 2 - y;
 
         return new AbsoluteCoordinate(x, y);
     }
@@ -58,9 +67,9 @@ public class CoordinateConverter {
         return boardCoordinateToAbsoluteCoordinate(new BoardCoordinate(ring, pos));
     }
 
-    private static void normalize(double[] vec){
-        double len = Math.sqrt(vec[0]*vec[0] + vec[1] * vec[1]);
+    private static void normalize(double[] vec) {
+        double len = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
         vec[0] /= len;
         vec[1] /= len;
-     }
+    }
 }
