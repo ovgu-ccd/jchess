@@ -20,8 +20,6 @@
  */
 package jchess.server;
 
-import jchess.MD5;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -51,7 +49,7 @@ class Console {
                 int gameID = Integer.parseInt(readString());
 
                 System.out.print("Hasło: ");
-                String pass = MD5.encrypt(readString());
+                String pass = readString();
 
                 String observer;
                 do {

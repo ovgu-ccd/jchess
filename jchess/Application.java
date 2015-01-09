@@ -2,6 +2,12 @@ package jchess;
 
 
 import jchess.gui.GUI;
+import jchess.mvc.Controller;
+import jchess.mvc.events.NewGame;
+import net.engio.mbassy.listener.Handler;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by robert on 04.12.14.
@@ -10,10 +16,11 @@ public class Application {
     private static Application instance;
     private GUI gui;
     private final Controller controller = Controller.INSTANCE;
+    private List<Game> games;
 
     private Application() {
+        games = new LinkedList<>();
         controller.subscribe(this);
-        controller.subscribe(chat);
 
         Logging.setup();
         gui = new GUI(this);
@@ -44,7 +51,8 @@ public class Application {
         app.run();
     }
 
-    @Handler public void handleCreateGame(NewGame newGameEvent) {
+    @Handler
+    public void handleCreateGame(NewGame newGameEvent) {
         this.games.add(newGameEvent.getGame());
         controller.subscribe(newGameEvent.getGame());
     }
