@@ -128,11 +128,7 @@ public class GUI extends JFrame implements ActionListener {
 
     public void createNewGame(String firstName,
                               String secondName,
-                              Boolean isPlayerOneWhite,
-                              Boolean isOpponentComputer,
-                              Boolean isUpsideDown,
-                              Boolean isTimeGame,
-                              String time) {
+                              String thirdName) {
         GameTab newTab = new GameTab();
         this.gamesPane.addTab(firstName + " vs " + secondName, newTab);
 
@@ -141,30 +137,13 @@ public class GUI extends JFrame implements ActionListener {
         Player pl2 = sett.playerBlack;   //set local player variable
         sett.gameMode = Settings.gameModes.newGame;
 
-        if (isPlayerOneWhite) {      //if first player is white
-            pl1.setName(firstName);  //set name of player
-            pl2.setName(secondName); //set name of player
-        } else {                     //else change names
-            pl2.setName(firstName);  //set name of player
-            pl1.setName(secondName); //set name of player
-        }
+                             //else change names
+        pl2.setName(firstName);  //set name of player
+        pl1.setName(secondName); //set name of player
 
         pl1.setType(Player.playerTypes.localUser); //set type of player
         pl2.setType(Player.playerTypes.localUser); //set type of player
         sett.gameType = Settings.gameTypes.local;
-
-        if (isOpponentComputer) { //if computer oponent is checked
-            pl2.setType(Player.playerTypes.computer);
-        }
-
-        //if upsideDown is checked
-        sett.upsideDown = isUpsideDown;
-
-        if (isTimeGame) { //if timeGame is checked
-            Integer val = new Integer(time);
-            sett.timeLimitSet = true;
-            sett.timeForGame = val * 60; //set time for game and multiply it to seconds
-        }
 
         newGameFrame.setVisible(false);
         newTab.boardView.repaint();

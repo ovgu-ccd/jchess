@@ -82,18 +82,10 @@ class NewGameWindow extends JDialog {
     /* relay method from apfohl */
     public void createNewGame(String firstName,
                               String secondName,
-                              Boolean isPlayerOneWhite,
-                              Boolean isOpponentComputer,
-                              Boolean isUpsideDown,
-                              Boolean isTimeGame,
-                              String time) {
+                              String thirdName) {
         parPtr.createNewGame(firstName,
                 secondName,
-                isPlayerOneWhite,
-                isOpponentComputer,
-                isUpsideDown,
-                isTimeGame,
-                time);
+                thirdName);
     }
 
     /**
