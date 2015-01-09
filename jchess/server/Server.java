@@ -110,8 +110,8 @@ public class Server implements Runnable {
                 }
                 Table table = tables.get(tableID);
 
-                if (!jchess.MD5.encrypt(table.password).equals(password)) {
-                    print("bad password: " + jchess.MD5.encrypt(table.password) + " != " + password);
+                if (!table.password.equals(password)) {
+                    print("bad password: " + table.password + " != " + password);
                     output.writeInt(Connection_info.err_bad_password.getValue());
                     output.flush();
                     continue;
