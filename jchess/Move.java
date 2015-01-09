@@ -18,47 +18,44 @@
  */
 package jchess;
 
-import jchess.Moves.castling;
-import jchess.gui.BoardView;
+//import jchess.Moves.castling;
+import jchess.pieces.Piece;
 
-public class Move {
+class Move {
 
-    private Square   from                 = null;
-    private Square   to                   = null;
-    private Piece    movedPiece           = null;
-    private Piece    takenPiece           = null;
-    private Piece    promotedTo           = null;
-    private boolean  wasEnPassant         = false;
-    private castling castlingMove         = castling.none;
-    private boolean  wasPawnTwoFieldsMove = false;
+    protected Tile from = null;
+    protected Tile to = null;
+    protected Piece movedPiece = null;
+    protected Piece takenPiece = null;
+    //protected Piece promotedTo = null;
+    //protected boolean wasEnPassant = false;
+    //protected castling castlingMove = castling.none;
+    //protected boolean wasPawnTwoFieldsMove = false;
 
-
-    Move(Square from, Square to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant,
-            Piece promotedPiece) {
+    //Move(Tile from, Tile to, Piece movedPiece, Piece takenPiece, castling castlingMove, boolean wasEnPassant, Piece promotedPiece) {
+    Move(Tile from, Tile to, Piece movedPiece, Piece takenPiece) {
         this.from = from;
         this.to = to;
 
         this.movedPiece = movedPiece;
         this.takenPiece = takenPiece;
-
+/*
         this.castlingMove = castlingMove;
         this.wasEnPassant = wasEnPassant;
 
-        if (movedPiece.getName().equals("Pawn") && Math.abs(to.getPozY() - from.getPozY()) == 2) {
+        if (movedPiece.name.equals("Pawn") && Math.abs(to.pozY - from.pozY) == 2) {
             this.wasPawnTwoFieldsMove = true;
-        } else if (movedPiece.getName().equals("Pawn") && to.getPozY() == BoardView.bottom
-                || to.getPozY() == BoardView.top && promotedPiece != null) {
+        } else if (movedPiece.name.equals("Pawn") && to.pozY == Chessboard.bottom || to.pozY == Chessboard.top && promotedPiece != null) {
             this.promotedTo = promotedPiece;
         }
+*/
     }
 
-
-    public Square getFrom() {
+    public Tile getFrom() {
         return this.from;
     }
 
-
-    public Square getTo() {
+    public Tile getTo() {
         return this.to;
     }
 
@@ -70,7 +67,7 @@ public class Move {
         return this.takenPiece;
     }
 
-    public boolean wasEnPassant() {
+/*    public boolean wasEnPassant() {
         return this.wasEnPassant;
     }
 
@@ -85,4 +82,5 @@ public class Move {
     public Piece getPromotedPiece() {
         return this.promotedTo;
     }
+*/
 }
