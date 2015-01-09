@@ -23,6 +23,7 @@ package jchess.gui;
 import jchess.*;
 import jchess.Moves.castling;
 import jchess.util.AbsoluteCoordinate;
+import jchess.util.AbsoluteCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 
@@ -111,12 +112,16 @@ public class BoardView extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                BoardCoordinate bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
-                AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(bc);
-                x = ac.x;
-                y = ac.y;
-
-                repaint();
+                BoardCoordinate bc = null;
+                try {
+                    bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
+                    AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(bc);
+                    x = ac.x;
+                    y = ac.y;
+                    repaint();
+                } catch (AbsoluteCoordinateNotOnBoardException e1) {
+                    // Send no event
+                }
             }
         });
     }/*--endOf-Chessboard--*/

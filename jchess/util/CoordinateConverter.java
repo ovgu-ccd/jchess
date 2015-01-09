@@ -32,12 +32,15 @@ public class CoordinateConverter {
         }
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(AbsoluteCoordinate ac) {
+    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(AbsoluteCoordinate ac) throws AbsoluteCoordinateNotOnBoardException {
         int[] pixel = image.getData().getPixel(ac.x, ac.y, (int[]) null);
-        return new BoardCoordinate(pixel[0], pixel[1]);
+        if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
+            throw new AbsoluteCoordinateNotOnBoardException();
+        }
+        return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(int x, int y) {
+    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(int x, int y) throws AbsoluteCoordinateNotOnBoardException {
         AbsoluteCoordinate ac = new AbsoluteCoordinate(x, y);
         return absoluteCoordinateToBoardCoordinate(ac);
     }
@@ -63,8 +66,8 @@ public class CoordinateConverter {
         return new AbsoluteCoordinate(x, y);
     }
 
-    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(int ring, int pos) {
-        return boardCoordinateToAbsoluteCoordinate(new BoardCoordinate(ring, pos));
+    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(int ring, int pos, int abs) {
+        return boardCoordinateToAbsoluteCoordinate(new BoardCoordinate(ring, pos, abs));
     }
 
     private static void normalize(double[] vec) {
