@@ -29,12 +29,13 @@ import java.util.logging.Logger;
 
 class SClient implements Runnable { //connecting client
 
-    public ObjectInputStream input;
-    public ObjectOutputStream output;
-    public String nick;
+    private ObjectInputStream  input;
+    public  ObjectOutputStream output;
+    public  String             nick;
     protected boolean wait4undoAnswer = false;
     private Socket s;
     private Table  table;
+
 
     SClient(Socket s, ObjectInputStream input, ObjectOutputStream output, String nick, Table table) {
         this.s = s;
@@ -46,6 +47,7 @@ class SClient implements Runnable { //connecting client
         Thread thread = new Thread(this);
         thread.start();
     }
+
 
     public void run() { //listening
 

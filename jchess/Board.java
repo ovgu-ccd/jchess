@@ -97,7 +97,7 @@ public class Board {
     public boolean redo() {
         return false;
     }
-
+    
     // get event methods
     //@Handler public void handleSelectEvent( Coordinates coordinates ) {
 
@@ -106,8 +106,6 @@ public class Board {
 
     // set event methods
     //void emitt
-
-
 
 }
 
