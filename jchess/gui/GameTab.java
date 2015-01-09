@@ -21,6 +21,9 @@
 package jchess.gui;
 
 import jchess.*;
+import jchess.mvc.Controller;
+import jchess.mvc.events.UpdateBoardEvent;
+import net.engio.mbassy.listener.Handler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,8 +69,13 @@ public class GameTab extends JPanel {
 
         this.setLayout(null);
         this.setDoubleBuffered(true);
+        Controller.INSTANCE.subscribe(this);
 
     }
 
+    @Handler
+    public void handleUpdateBoardEvent( UpdateBoardEvent updateBoardEvent ) {
+        JOptionPane.showMessageDialog( null, "Event Recieved" );
+    }
 
 }

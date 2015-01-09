@@ -22,6 +22,7 @@ public class Application {
         games = new LinkedList<>();
         controller.subscribe(this);
 
+
         Logging.setup();
         gui = new GUI(this);
     }
@@ -43,7 +44,9 @@ public class Application {
     }
 
     public void createGame(IOSystem[] ioSystem) {
-        Game.newGame(ioSystem);
+        Game game = Game.newGame(ioSystem);
+        controller.subscribe( game );
+        game.emitUpdateBoardEvent();
     }
 
     public static void main(String args[]) {
