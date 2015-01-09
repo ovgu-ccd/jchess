@@ -54,9 +54,10 @@ public class GameTab extends JPanel {
         settings = new Settings();
         boardView = new BoardView(this.settings);
         boardView.setVisible(true);
-        boardView.setSize(boardView.getWidth(), boardView.getHeight());
         boardView.setLocation(new Point(0, 0));
+        this.setSize(boardView.getSize());
         this.add(boardView);
+
 
         this.chat = new Chat();
         this.chat.setSize(new Dimension(380, 100));
@@ -65,6 +66,7 @@ public class GameTab extends JPanel {
 
         this.setLayout(null);
         this.setDoubleBuffered(true);
+
     }
 
 

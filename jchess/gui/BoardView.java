@@ -26,11 +26,13 @@ import jchess.util.AbsoluteCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -39,12 +41,11 @@ import java.util.ArrayList;
  * witch the owner is current player on it.
  */
 public class BoardView extends JPanel {
-    private static final BufferedImage boardImage = GUIUtils.loadImage("chessboard2.png");//image of chessboard
+    private static BufferedImage boardImage;
     private static final Image org_sel_square = GUIUtils
             .loadImage("sel_square.png");//image of highlited square
     private static final Image org_able_square = GUIUtils
             .loadImage("able_square.png");//image of square where piece can go
-    private static Image image = BoardView.boardImage;//image of chessboard
 
     private ArrayList moves;
 
@@ -57,8 +58,15 @@ public class BoardView extends JPanel {
      * @param settings      reference to Settings class object for this chessboard
      */
     public BoardView(Settings settings) {
+        try {
+            boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
+        setSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -85,7 +93,9 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.drawImage(image, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
+        g2d.setColor(Color.GRAY);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
 
         g2d.setColor(Color.red);
         g2d.fillRect(x - 2, y - 2, 4, 4);
