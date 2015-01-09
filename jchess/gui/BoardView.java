@@ -49,17 +49,14 @@ public class BoardView extends JPanel {
     private ArrayList moves;
 
 
-    private Moves moves_history;
 
 
     /**
      * Chessboard class constructor
      *
      * @param settings      reference to Settings class object for this chessboard
-     * @param moves_history reference to Moves class object for this chessboard
      */
-    public BoardView(Settings settings, Moves moves_history) {
-        this.moves_history = moves_history;
+    public BoardView(Settings settings) {
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
 
@@ -94,6 +91,13 @@ public class BoardView extends JPanel {
         g2d.fillRect(x - 2, y - 2, 4, 4);
     }
 
+    public int getWidth(){
+        return boardImage.getWidth();
+    }
+
+    public int getHeight(){
+        return boardImage.getHeight();
+    }
 
     /**
      * Annotations to superclass Game updateing and painting the crossboard
