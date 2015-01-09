@@ -98,5 +98,16 @@ public class Board {
         return false;
     }
 
+    // get event methods
+    @Handler public void handleSelectEvent( Coordinates coordinates ) {
+
+    }
+
+
+    // set event methods
+    //void emitt
+
+
+
 }
 
