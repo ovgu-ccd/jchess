@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class Application {
     private static Application instance;
-    private GUI gui;
     private final Controller controller = Controller.INSTANCE;
+    private GUI gui;
     private List<Game> games;
 
     private Application() {

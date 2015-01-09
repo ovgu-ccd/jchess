@@ -25,7 +25,7 @@ public class CoordinateConverter {
             normalize(startDirections[i]);
         }
         try {
-            image = ImageIO.read(Application.class.getResource("resources/offscreen-map.png"));
+            image = ImageIO.read(Application.class.getResource("images.org/TilePicker.png"));
             du = image.getHeight() / 15;
         } catch (IOException e) {
             image = null;
