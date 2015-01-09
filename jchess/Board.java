@@ -99,9 +99,9 @@ public class Board {
     }
 
     // get event methods
-    @Handler public void handleSelectEvent( Coordinates coordinates ) {
+    //@Handler public void handleSelectEvent( Coordinates coordinates ) {
 
-    }
+   // }
 
 
     // set event methods
