@@ -4,18 +4,17 @@ package jchess;
  * Created by andreas on 07.12.14.
  */
 public class Game {
-    private IOSystem[] ioSystems;
+    private Player[] players;
 
-    private Game(IOSystem[] ioSystems){
-        this.ioSystems = ioSystems;
+    private Game(Player[] players) {
+        this.players = players;
     }
 
-
-    public static Game newGame(IOSystem[] ioSystems) throws  IllegalArgumentException{
-        if (ioSystems.length != 3){
+    public static Game newGame(Player[] players) throws IllegalArgumentException {
+        if (players.length != 3) {
             throw new IllegalArgumentException();
         }
 
-        return new Game(ioSystems);
+        return new Game(players);
     }
 }

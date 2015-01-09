@@ -21,122 +21,69 @@ package jchess.gui;
 
 import jchess.StringResources;
 
-import jchess.mvc.events.NewGame;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
+
 
 /**
  * Class responsible for drawing the fold with local game settings
  */
-class DrawLocalSettings extends JPanel implements ActionListener, TextListener {
+public class DrawLocalSettings extends JPanel implements ActionListener {
+    private final NewGameWindow parent;
+    private JTextField firstName;
+    private JTextField secondName;
+    private JTextField thirdName;
 
-    private JDialog parent;//needet to close newGame window
-    private JComboBox color;//to choose color of player
-    private JRadioButton oponentComp;//choose oponent
-    private JRadioButton oponentHuman;//choose oponent (human)
-    private ButtonGroup oponentChoos;//group 4 radio buttons
-    JFrame localPanel;
-    private JLabel compLevLab;
-    private JSlider computerLevel;//slider to choose jChess Engine level
-    private JTextField firstName;//editable field 4 nickname
-    private JTextField secondName;//editable field 4 nickname
     private JLabel firstNameLab;
     private JLabel secondNameLab;
-    private JCheckBox upsideDown;//if true draw chessboard upsideDown(white on top)
-    private GridBagLayout gbl;
-    private GridBagConstraints gbc;
-    Container cont;
-    private JSeparator sep;
+    private JLabel thirdNameLab;
+
     private JButton okButton;
-    private JCheckBox timeGame;
-    private JComboBox time4Game;
-    private String[] colors = {StringResources.MAIN.getString("white"), StringResources.MAIN.getString("black")};
-    private String[] times = {"1", "3", "5", "8", "10", "15", "20", "25", "30", "60", "120"};
-
-    private JTextField         thirdName;
-    private JLabel             thirdNameLab;
 
 
-    private NewGameWindow parPtr;
-
-
-    DrawLocalSettings(NewGameWindow parent) {
+    public DrawLocalSettings(NewGameWindow parent) {
         super();
-        parPtr = parent;
         this.parent = parent;
-        this.gbl = new GridBagLayout();
-        this.gbc = new GridBagConstraints();
-        this.sep = new JSeparator();
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        JPanel firstPanel = new JPanel();
+        firstPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 1"));
+        this.firstNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        this.firstName = new JTextField("Player 1", 10);
+        firstPanel.add(firstNameLab);
+        firstPanel.add(firstName);
+
+
+        JPanel secondPanel = new JPanel();
+        secondPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 2"));
+        this.secondNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        this.secondName = new JTextField("Player 2", 10);
+        secondPanel.add(secondNameLab);
+        secondPanel.add(secondName);
+
+        JPanel thirdPanel = new JPanel();
+        thirdPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 3"));
+        this.thirdNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        this.thirdName = new JTextField("Player 3", 10);
+        thirdPanel.add(thirdNameLab);
+        thirdPanel.add(thirdName);
+
         this.okButton = new JButton(StringResources.MAIN.getString("ok"));
-
-        this.firstName = new JTextField("", 10);
-        this.firstName.setSize(new Dimension(200, 50));
-        this.secondName = new JTextField("", 10);
-        this.secondName.setSize(new Dimension(200, 50));
-        this.thirdName = new JTextField("", 10);
-        this.thirdName.setSize(new Dimension(200, 50));
-        this.firstNameLab = new JLabel(StringResources.MAIN.getString("first_player_name") + ": ");
-        this.secondNameLab = new JLabel(StringResources.MAIN.getString("second_player_name") + ": ");
-        this.thirdNameLab = new JLabel(StringResources.MAIN.getString("third_player_name") + ": ");
-
-        this.setLayout(gbl);
         this.okButton.addActionListener(this);
 
-        this.gbc.gridx = 0;
-        this.gbc.gridy = 0;
-        this.gbl.setConstraints(firstNameLab, gbc);
-        this.add(firstNameLab);
-        this.gbc.gridy = 1;
-        this.gbl.setConstraints(firstName, gbc);
-        this.add(firstName);
-        this.gbc.gridy = 2;
-        this.gbl.setConstraints(secondNameLab, gbc);
-        this.add(secondNameLab);
-        this.gbc.gridy = 3;
-        this.gbl.setConstraints(secondName, gbc);
-        this.add(secondName);
-        this.gbc.gridy = 4;
-        this.gbl.setConstraints(thirdNameLab, gbc);
-        this.add(thirdNameLab);
-        this.gbc.gridy = 5;
-        this.gbl.setConstraints(thirdName, gbc);
-        this.add(thirdName);
-        this.gbc.gridy = 6;
-        this.gbl.setConstraints(okButton, gbc);
+
+        this.add(firstPanel);
+        this.add(secondPanel);
+        this.add(thirdPanel);
+
         this.add(okButton);
     }
 
-    /**
-     * Method witch is checking correction of edit tables
-     *
-     * @param e Object where is saving this what contents edit tables
-     */
-    public void textValueChanged(TextEvent e) {
-        Object target = e.getSource();
-        if (target == this.firstName || target == this.secondName) {
-            JTextField temp = new JTextField();
-            if (target == this.firstName) {
-                temp = this.firstName;
-            } else if (target == this.secondName) {
-                temp = this.secondName;
-            }
 
-            int len = temp.getText().length();
-            if (len > 8) {
-                try {
-                    temp.setText(temp.getText(0, 7));
-                } catch (BadLocationException exc) {
-                    System.out.println("Something wrong in editables: \n" + exc);
-                }
-            }
-        }
-    }
 
     /**
      * Method responsible for changing the options which can make a player
@@ -162,7 +109,7 @@ class DrawLocalSettings extends JPanel implements ActionListener, TextListener {
 
 
             /* new method call from apfohl */
-            parPtr.createNewGame(this.firstName.getText(),
+            parent.createNewGame(this.firstName.getText(),
                     this.secondName.getText(),
                     this.thirdName.getText());
         }

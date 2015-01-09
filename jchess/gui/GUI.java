@@ -16,6 +16,8 @@
 package jchess.gui;
 
 import jchess.*;
+import jchess.mvc.events.NewGameEvent;
+import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -35,39 +37,33 @@ public class GUI extends JFrame implements ActionListener {
     //private JTabbedPaneWithIcon gamesPane;
     private final Timer messageTimer;
     private final Timer busyIconTimer;
-    private final Icon  idleIcon;
+    private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     public JDialog newGameFrame;
-    GUIUtils activeGUI;//in future it will be reference to active tab
     private javax.swing.JPanel mainPanel;
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu        gameMenu;
-    private javax.swing.JTabbedPane  gamesPane;
-    private javax.swing.JMenuBar     menuBar;
-    private javax.swing.JMenuItem    newGameItem;
-    private javax.swing.JMenu        optionsMenu;
+    private javax.swing.JMenu gameMenu;
+    private javax.swing.JTabbedPane gamesPane;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem newGameItem;
+    private javax.swing.JMenu optionsMenu;
     private javax.swing.JProgressBar progressBar;
 
-    private javax.swing.JMenuItem    saveGameItem;
-    private javax.swing.JLabel       statusAnimationLabel;
-    private javax.swing.JLabel       statusMessageLabel;
-    private javax.swing.JPanel       statusPanel;
-    private javax.swing.JMenuItem    themeSettingsMenu;
+    private javax.swing.JMenuItem saveGameItem;
+    private javax.swing.JLabel statusAnimationLabel;
+    private javax.swing.JLabel statusMessageLabel;
+    private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenuItem themeSettingsMenu;
     private int busyIconIndex = 0;
-    private JDialog             aboutBox;
-    private PawnPromotionWindow promotionBox;
-    private JMenu               fileMenu;
-    private JMenuItem           exitMenuItem;
-    private JMenu               helpMenu;
-    private JMenuItem           aboutMenuItem;
-    private JSeparator          statusPanelSeparator;
-    private Application         appPtr;
+    private JDialog aboutBox;
+    private JMenu fileMenu;
+    private JMenuItem exitMenuItem;
+    private JMenu helpMenu;
+    private JMenuItem aboutMenuItem;
+    private JSeparator statusPanelSeparator;
 
 
     public GUI(Application application) {
         super();
-
-        appPtr = application;
 
         initComponents();
         // status bar initialization - message timeout, idle icon and busy animation, etc
@@ -130,29 +126,21 @@ public class GUI extends JFrame implements ActionListener {
                               String secondName,
                               String thirdName) {
         GameTab newTab = new GameTab();
-        this.gamesPane.addTab(firstName + " vs " + secondName, newTab);
-
-        Settings sett = newTab.settings; //sett local settings variable
-        Player pl1 = sett.playerWhite;   //set local player variable
-        Player pl2 = sett.playerBlack;   //set local player variable
-        sett.gameMode = Settings.gameModes.newGame;
-
-                             //else change names
-        pl2.setName(firstName);  //set name of player
-        pl1.setName(secondName); //set name of player
-
-        pl1.setType(Player.playerTypes.localUser); //set type of player
-        pl2.setType(Player.playerTypes.localUser); //set type of player
-        sett.gameType = Settings.gameTypes.local;
+        this.gamesPane.addTab(firstName + " vs " + secondName + " vs " + thirdName, newTab);
 
         newGameFrame.setVisible(false);
         newTab.boardView.repaint();
-        //newGUI.chessboard.draw();
 
-        GUIConnector newGUIConnector1 = new GUIConnector(newTab);
-        GUIConnector newGUIConnector2 = new GUIConnector(newTab);
-        GUIConnector newGUIConnector3 = new GUIConnector(newTab);
-        appPtr.createGame(new IOSystem[] {newGUIConnector1, newGUIConnector2, newGUIConnector3});
+        NewGameEvent event = new NewGameEvent(
+                new String[]{firstName, secondName, thirdName},
+                new IOSystem[]{
+                        new GUIConnector(newTab),
+                        new GUIConnector(newTab),
+                        new GUIConnector(newTab)
+                });
+
+        Logging.GUI.debug("Event emitted");
+        event.emit();
     }
 
     public GameTab addNewTab(String title) {
@@ -224,7 +212,6 @@ public class GUI extends JFrame implements ActionListener {
     }
 
 
-
     /**
      * This method is called from within the constructor to
      * initialize the form.
@@ -253,7 +240,6 @@ public class GUI extends JFrame implements ActionListener {
         progressBar = new javax.swing.JProgressBar();
 
         mainPanel.setName("mainPanel"); // NOI18N
-        mainPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
         gamesPane.setName("gamesPane"); // NOI18N
 

@@ -3,9 +3,10 @@ package jchess;
 
 import jchess.gui.GUI;
 import jchess.mvc.Controller;
-import jchess.mvc.events.NewGame;
+import jchess.mvc.events.NewGameEvent;
 import net.engio.mbassy.listener.Handler;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class Application {
     private List<Game> games;
 
     private Application() {
-        games = new LinkedList<>();
+        Logging.setup();
         controller.subscribe(this);
 
-        Logging.setup();
+        games = new LinkedList<>();
         gui = new GUI(this);
     }
 
@@ -38,13 +39,10 @@ public class Application {
         gui.setVisible(true);
     }
 
-    public GUI getJcv() {
+    public GUI getGUI() {
         return gui;
     }
 
-    public void createGame(IOSystem[] ioSystem) {
-        Game.newGame(ioSystem);
-    }
 
     public static void main(String args[]) {
         Application app = Application.getInstance();
@@ -52,8 +50,23 @@ public class Application {
     }
 
     @Handler
-    public void handleCreateGame(NewGame newGameEvent) {
-        this.games.add(newGameEvent.getGame());
-        controller.subscribe(newGameEvent.getGame());
+    public void handleNewGame(NewGameEvent newGameEvent) {
+        Player[] players = new Player[3];
+
+        System.out.println(Arrays.toString(newGameEvent.getPlayerNames()));
+        System.out.println(Arrays.toString(newGameEvent.getIoSystems()));
+
+        players[0] = new Player(newGameEvent.getPlayerNames()[0],
+                newGameEvent.getIoSystems()[0],
+                "white");
+        players[1] = new Player(newGameEvent.getPlayerNames()[1],
+                newGameEvent.getIoSystems()[1],
+                "black");
+        players[2] = new Player(newGameEvent.getPlayerNames()[2],
+                newGameEvent.getIoSystems()[2],
+                "red");
+
+        Logging.GAME.debug("Created new game.");
+        games.add(Game.newGame(players));
     }
 }

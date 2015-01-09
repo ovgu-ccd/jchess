@@ -65,9 +65,9 @@ class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserv
     }
 
     private void showNewGameWindow() {
-        JDialog newGameFrame = Application.getInstance().getJcv().newGameFrame;
+        JDialog newGameFrame = Application.getInstance().getGUI().newGameFrame;
         if (newGameFrame == null) {
-            newGameFrame = new NewGameWindow(Application.getInstance().getJcv());
+            newGameFrame = new NewGameWindow(Application.getInstance().getGUI());
         }
         newGameFrame.setVisible(true);
     }

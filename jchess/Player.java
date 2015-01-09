@@ -29,6 +29,7 @@ import java.io.Serializable;
 public class Player implements Serializable {
 
     private String name;
+    private IOSystem ioSystem;
 
     public colors getColor() {
         return color;
@@ -48,12 +49,12 @@ public class Player implements Serializable {
 
     public enum colors {
         white,
-        black
+        black,
+        red
     }
     private colors color;
 
     public enum playerTypes {
-
         localUser, networkUser, computer
     }
     public playerTypes playerType;
@@ -62,9 +63,10 @@ public class Player implements Serializable {
     public Player() {
     }
 
-    public Player(String name, String color) {
+    public Player(String name, IOSystem ioSystem, String color) {
         this.setName(name);
         this.setColor(colors.valueOf(color));
+        this.ioSystem = ioSystem;
         this.setGoDown(false);
     }
 
@@ -87,5 +89,9 @@ public class Player implements Serializable {
      */
     public void setType(playerTypes type) {
         this.playerType = type;
+    }
+
+    public IOSystem getIoSystem(){
+        return ioSystem;
     }
 }

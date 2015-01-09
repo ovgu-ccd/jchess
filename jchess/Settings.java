@@ -36,10 +36,11 @@ public class Settings implements Serializable {
     public Player playerBlack;
     public gameTypes gameType;
     public boolean renderLabels = true;
+
     public Settings() {
         //temporally
-        this.playerWhite = new Player("", "white");
-        this.playerBlack = new Player("", "black");
+        this.playerWhite = new Player("", null, "white");
+        this.playerBlack = new Player("", null, "black");
         this.timeLimitSet = false;
 
         gameMode = gameModes.newGame;
