@@ -19,4 +19,12 @@ hs_err_pid*
 .classpath
 .project
 jchess/config.txt
+config.txt
 /target/
+
+# Log files
+logs
+logs/*
+
+# Maven foo
+dependency-reduced-pom.xml

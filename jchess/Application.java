@@ -1,44 +1,51 @@
 package jchess;
 
-import jchess.mvc.Controller;
-import jchess.mvc.events.NewGame;
-import net.engio.mbassy.listener.Handler;
 
-import java.util.LinkedList;
-import java.util.List;
+import jchess.gui.GUI;
 
 /**
- * Created by Severin Orth on 07.12.14.
- *
- * Main Entry point for the application
- *
- * Starts the event lib and ensures any creation of singletons (like GUI)
+ * Created by robert on 04.12.14.
  */
 public class Application {
-    private final List<Game> games      = new LinkedList<>();
-    private final Chat       chat       = new Chat();
+    private static Application instance;
+    private GUI gui;
     private final Controller controller = Controller.INSTANCE;
 
-
-    private Application(String[] args) {
-        JChessApp.launch(JChessApp.class, args);
-
+    private Application() {
         controller.subscribe(this);
         controller.subscribe(chat);
+
+        Logging.setup();
+        gui = new GUI(this);
     }
 
+    public static Application getInstance() {
+        if (Application.instance == null) {
+            Application.instance = new Application();
+        }
 
-    /**
-     * Main method launching the application.
-     */
-    public static void main(String[] args) {
-        new Application(args);
+        return Application.instance;
     }
 
+    void run() {
+        gui.setVisible(true);
+    }
+
+    public GUI getJcv() {
+        return gui;
+    }
+
+    public void createGame(IOSystem[] ioSystem) {
+        Game.newGame(ioSystem);
+    }
+
+    public static void main(String args[]) {
+        Application app = Application.getInstance();
+        app.run();
+    }
 
     @Handler public void handleCreateGame(NewGame newGameEvent) {
         this.games.add(newGameEvent.getGame());
         controller.subscribe(newGameEvent.getGame());
     }
-
 }

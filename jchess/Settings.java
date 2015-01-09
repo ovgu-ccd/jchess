@@ -21,15 +21,11 @@
 package jchess;
 
 import java.io.Serializable;
-import java.util.Locale;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
 
 /** Class representings game settings available for the current player
  */
 public class Settings implements Serializable {
 
-    private static ResourceBundle loc = null;
     public int timeForGame;
     public boolean runningChat;
     public boolean runningGameClock;
@@ -49,32 +45,12 @@ public class Settings implements Serializable {
         gameMode = gameModes.newGame;
     }
 
-
-    public static String lang(String key) {
-        if (Settings.loc == null) {
-            Settings.loc = PropertyResourceBundle.getBundle("jchess.resources.i18n.main");
-            Locale.setDefault(Locale.ENGLISH);
-        }
-        String result = "";
-        try {
-            result = Settings.loc.getString(key);
-        } catch (java.util.MissingResourceException exc) {
-            result = key;
-        }
-        System.out.println(Settings.loc.getLocale().toString());
-        return result;
-    }
-
-
-    /**
-     * Method to get game time set by player
-     *
-     * @return timeFofGame int with how long the game will leasts
+    /** Method to get game time set by player
+     *  @return timeFofGame int with how long the game will leasts
      */
     public int getTimeForGame() {
         return this.timeForGame;
     }
-
 
     public enum gameModes {
 

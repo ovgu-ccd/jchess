@@ -11,113 +11,113 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="744.09448819"
    height="1052.3622047"
-   id="svg2"
+   pos="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
    sodipodi:docname="preview.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
-     id="defs4">
+     pos="defs4">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       id="perspective10" />
+       pos="perspective10" />
     <inkscape:perspective
-       id="perspective2464"
+       pos="perspective2464"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2548"
+       pos="perspective2548"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2632"
+       pos="perspective2632"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2699"
+       pos="perspective2699"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2783"
+       pos="perspective2783"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2850"
+       pos="perspective2850"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective2917"
+       pos="perspective2917"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3001"
+       pos="perspective3001"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3068"
+       pos="perspective3068"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3152"
+       pos="perspective3152"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3253"
+       pos="perspective3253"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3337"
+       pos="perspective3337"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3421"
+       pos="perspective3421"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 526.18109 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
-       id="perspective3471"
+       pos="perspective3471"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
@@ -125,7 +125,7 @@
        sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
-     id="base"
+     pos="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -145,7 +145,7 @@
      inkscape:window-x="0"
      inkscape:window-y="0" />
   <metadata
-     id="metadata7">
+     pos="metadata7">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -158,11 +158,11 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     pos="layer1">
     <image
        y="3.7907672"
        x="-2.6157924e-05"
-       id="image2466"
+       pos="image2466"
        height="480"
        width="480"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/chessboard.png"
@@ -170,7 +170,7 @@
     <image
        y="7.7193079"
        x="1.0714372"
-       id="image2550"
+       pos="image2550"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Pawn-W.png"
@@ -178,7 +178,7 @@
     <image
        y="66.218681"
        x="0.89124888"
-       id="image2634"
+       pos="image2634"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Pawn-B.png"
@@ -186,7 +186,7 @@
     <image
        y="66.409149"
        x="61.980049"
-       id="image2701"
+       pos="image2701"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Knight-B.png"
@@ -194,7 +194,7 @@
     <image
        y="5.6330953"
        x="59.729084"
-       id="image2785"
+       pos="image2785"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Knight-W.png"
@@ -202,7 +202,7 @@
     <image
        y="64.450493"
        x="120.31336"
-       id="image2852"
+       pos="image2852"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Bishop-B.png"
@@ -210,7 +210,7 @@
     <image
        y="5.6330953"
        x="122.00578"
-       id="image2919"
+       pos="image2919"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Bishop-W.png"
@@ -218,7 +218,7 @@
     <image
        y="62.94986"
        x="182.59007"
-       id="image3003"
+       pos="image3003"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Rook-B.png"
@@ -226,7 +226,7 @@
     <image
        y="66.409149"
        x="244.30821"
-       id="image3070"
+       pos="image3070"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Queen-B.png"
@@ -234,7 +234,7 @@
     <image
        y="63.40786"
        x="302.08298"
-       id="image3154"
+       pos="image3154"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/King-B.png"
@@ -242,7 +242,7 @@
     <image
        y="4.1324515"
        x="182.78183"
-       id="image3255"
+       pos="image3255"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Rook-W.png"
@@ -250,7 +250,7 @@
     <image
        y="6.3834167"
        x="242.05724"
-       id="image3339"
+       pos="image3339"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/Queen-W.png"
@@ -258,7 +258,7 @@
     <image
        y="4.4247637"
        x="303.39182"
-       id="image3423"
+       pos="image3423"
        height="55"
        width="55"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/King-W.png"
@@ -266,7 +266,7 @@
     <image
        y="5.6763763"
        x="360.16727"
-       id="image3473"
+       pos="image3473"
        height="60"
        width="60"
        sodipodi:absref="/home/matis/NetBeansProjects/jchess/src/jchess/theme/default/images/able_square.png"

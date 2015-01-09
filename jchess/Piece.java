@@ -20,6 +20,9 @@
  */
 package jchess;
 
+
+import jchess.gui.BoardView;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -29,40 +32,42 @@ Class to represent a piece (any kind) - this class should be extended to represe
  */
 public abstract class Piece {
 
+    private BoardView boardView; // <-- this relations isn't in class diagram, but it's necessary :/
+    public  Square    square;
+    public  Player    player;
+    private String    name;
+    String symbol;
+    private static Image imageBlack;// = null;
+    private static Image imageWhite;// = null;
+    Image orgImage;
+    Image image;
     public static short value = 0;
-    protected static Image imageBlack;// = null;
-    protected static Image imageWhite;// = null;
-    public    Square square;
-    public    Player player;
-    public Image orgImage;
-    public Image image;
-    protected String symbol;
-    Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
-    String     name;
 
-    Piece(Chessboard chessboard, Player player) {
-        this.chessboard = chessboard;
+
+    Piece(BoardView boardView, Player player) {
+        this.setBoardView(boardView);
         this.player = player;
-        if (player.color == Player.colors.black) {
+        if (player.getColor() == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;
         }
-        this.name = this.getClass().getSimpleName();
+        this.setName(this.getClass().getSimpleName());
 
     }
     /* Method to draw piece on chessboard
      * @graph : where to draw
      */
 
-    final void draw(Graphics g) {
+
+    public final void draw(Graphics g) {
         try {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Point topLeft = this.chessboard.getTopLeftPoint();
-            int height = this.chessboard.get_square_height();
-            int x = (this.square.pozX * height) + topLeft.x;
-            int y = (this.square.pozY * height) + topLeft.y;
+            Point topLeft = this.getBoardView().getTopLeftPoint();
+            int height = this.getBoardView().get_square_height();
+            int x = (this.square.getPozX() * height) + topLeft.x;
+            int y = (this.square.getPozY() * height) + topLeft.y;
             float addX = (height - image.getWidth(null)) / 2;
             float addY = (height - image.getHeight(null)) / 2;
             if (image != null && g != null) {
@@ -103,7 +108,7 @@ public abstract class Piece {
     }
 
     void setImage() {
-        if (this.player.color == Player.colors.black) {
+        if (this.player.getColor() == Player.colors.black) {
             image = imageBlack;
         } else {
             image = imageWhite;
@@ -130,7 +135,7 @@ public abstract class Piece {
      * @param y y position on chessboard
      * @return true if parameters are out of bounds (array)
      * */
-    protected boolean isout(int x, int y) {
+    boolean isout(int x, int y) {
         return x < 0 || x > 7 || y < 0 || y > 7;
     }
 
@@ -139,12 +144,12 @@ public abstract class Piece {
      * @param y  y position on chessboard
      * @return true if can move, false otherwise
      * */
-    protected boolean checkPiece(int x, int y) {
-        if (chessboard.squares[x][y].piece != null
-                && chessboard.squares[x][y].piece.name.equals("King")) {
+    boolean checkPiece(int x, int y) {
+        if (getBoardView().squares[x][y].piece != null
+                && getBoardView().squares[x][y].piece.getName().equals("King")) {
             return false;
         }
-        Piece piece = chessboard.squares[x][y].piece;
+        Piece piece = getBoardView().squares[x][y].piece;
         return piece == null || //if this sqhuare is empty
                 piece.player != this.player;
     }
@@ -154,15 +159,28 @@ public abstract class Piece {
      * @param y y position on chessboard
      * @return true if owner(player) is different
      * */
-    protected boolean otherOwner(int x, int y) {
-        Square sq = chessboard.squares[x][y];
-        if (sq.piece == null) {
-            return false;
-        }
-        return this.player != sq.piece.player;
+    boolean otherOwner(int x, int y) {
+        Square sq = getBoardView().squares[x][y];
+        return sq.piece != null && this.player != sq.piece.player;
     }
 
     public String getSymbol() {
         return this.symbol;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    public BoardView getBoardView() {
+        return boardView;
+    }
+
+    public void setBoardView(BoardView boardView) {
+        this.boardView = boardView;
     }
 }

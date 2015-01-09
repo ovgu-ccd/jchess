@@ -123,7 +123,6 @@ public class Server implements Runnable {
                         print("error: was all players at this table");
                         output.writeInt(Connection_info.err_table_is_full.getValue());
                         output.flush();
-                        continue;
                     } else {
                         print("wasn't all players at this table");
 
@@ -151,7 +150,6 @@ public class Server implements Runnable {
                         print("Observers can't join");
                         output.writeInt(Connection_info.err_game_without_observer.getValue());
                         output.flush();
-                        continue;
                     } else {
                         output.writeInt(Connection_info.all_is_ok.getValue());
                         output.flush();
@@ -167,7 +165,6 @@ public class Server implements Runnable {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                continue;
             }
         }
     }

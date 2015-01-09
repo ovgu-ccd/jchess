@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Console {
+class Console {
 
     public static void main(String[] args) {
         System.out.println("JChess Server Start!");
@@ -106,7 +106,7 @@ public class Console {
         System.exit(0);
     }
 
-    public static String readString() { //read string from console
+    private static String readString() { //read strings from console
         int ch;
         StringBuilder sb = new StringBuilder();
         try {
