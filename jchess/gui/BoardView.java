@@ -59,11 +59,13 @@ public class BoardView extends JPanel {
     public BoardView(Settings settings) {
         this.setDoubleBuffered(true);
         setPreferredSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
+        setSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 BoardCoordinate bc = null;
+                JOptionPane.showMessageDialog(null, "x: " + e.getX()+" y:" +e.getY());
                 try {
                     bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
                     AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(bc);

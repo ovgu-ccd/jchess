@@ -252,8 +252,6 @@ public class GUI extends JFrame implements ActionListener {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
 
-        mainPanel.setMaximumSize(new java.awt.Dimension(800, 600));
-        mainPanel.setMinimumSize(new java.awt.Dimension(800, 600));
         mainPanel.setName("mainPanel"); // NOI18N
         mainPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
