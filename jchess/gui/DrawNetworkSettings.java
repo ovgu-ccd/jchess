@@ -21,7 +21,6 @@ package jchess.gui;
 
 import jchess.Application;
 import jchess.Client;
-import jchess.MD5;
 import jchess.StringResources;
 import jchess.server.Server;
 
@@ -214,7 +213,7 @@ class DrawNetworkSettings extends JPanel implements ActionListener {
             Client client;
             try {
                 client = new Client(clientOptions.textServIP.getText(), Server.port);//create client
-                boolean isJoining = client.join(Integer.parseInt(textGameID.getText()), !clientOptions.checkOnlyWatch.isSelected(), textNick.getText(), MD5.encrypt(textPassword.getText()));//join and wait for all players
+                boolean isJoining = client.join(Integer.parseInt(textGameID.getText()), !clientOptions.checkOnlyWatch.isSelected(), textNick.getText(), (new String(textPassword.getPassword())));//join and wait for all players
 
                 if (isJoining) { //Client connection: succesful
                     System.out.println("Client connection: succesful");
