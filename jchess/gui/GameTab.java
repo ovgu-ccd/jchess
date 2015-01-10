@@ -47,7 +47,7 @@ public class GameTab extends JPanel {
     public BoardView boardView;
     public Client client;
     public Chat chat;
-
+    private Game game;
 
     public GameTab() {
         setLayout(new BorderLayout());
@@ -57,5 +57,13 @@ public class GameTab extends JPanel {
         boardView = new BoardView(this.settings);
 
         add(boardView, BorderLayout.CENTER);
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
