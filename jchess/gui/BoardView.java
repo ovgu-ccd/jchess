@@ -167,14 +167,12 @@ public class BoardView extends JPanel {
             for (int ring = 1; ring < 8; ring++) {
                 for (int pos = 0; pos < 6 * ring; pos++) {
                     abs = sum + pos;
-                    //if (board.getTile(abs).getPiece() != null) {
-                        AbsoluteCoordinate ac =
-                                CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
-                        g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
-                    //}
-
-
-                    /*"\u2658"*/
+                    AbsoluteCoordinate ac =
+                            CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
+                    //g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
+                    if (board.getTile(abs).getPiece() != null) {
+                        g2d.drawString("\u2658", ac.x - 16, ac.y + 7);
+                    }
                 }
                 sum += ring * 6;
             }

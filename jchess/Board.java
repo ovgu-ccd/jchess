@@ -114,38 +114,42 @@ public class Board {
     void initFigures() {
 
         // place Pawns
-        tiles[168].placePiece( new Pawn(0) );
+        tiles[161].placePiece( new Pawn(0) );
+        tiles[ 121].placePiece(new Pawn(0));
+        tiles[ 122].placePiece(new Pawn(0));
+        tiles[ 123].placePiece(new Pawn(0));
+        tiles[ 124].placePiece(new Pawn(0));
+        tiles[ 125].placePiece(new Pawn(0));
+        tiles[ 126].placePiece(new Pawn(0));
         tiles[ 91].placePiece( new Pawn(0) );
-        tiles[ 92].placePiece( new Pawn(0) );
-        tiles[ 93].placePiece( new Pawn(0) );
-        tiles[ 63].placePiece( new Pawn(0) );
-        tiles[ 64].placePiece( new Pawn(0) );
-        tiles[ 95].placePiece( new Pawn(0) );
-        tiles[ 96].placePiece( new Pawn(0) );
-        tiles[ 97].placePiece( new Pawn(0) );
-        tiles[135].placePiece( new Pawn(0) );
+        tiles[ 128].placePiece(new Pawn(0));
+        tiles[88].placePiece(new Pawn(0));
+        tiles[89].placePiece(new Pawn(0));
 
-        tiles[140].placePiece( new Pawn(1) );
-        tiles[103].placePiece( new Pawn(1) );
-        tiles[104].placePiece( new Pawn(1) );
-        tiles[105].placePiece( new Pawn(1) );
-        tiles[ 73].placePiece( new Pawn(1) );
-        tiles[ 74].placePiece( new Pawn(1) );
-        tiles[107].placePiece( new Pawn(1) );
-        tiles[108].placePiece( new Pawn(1) );
+        tiles[147].placePiece( new Pawn(1) );
         tiles[109].placePiece( new Pawn(1) );
-        tiles[149].placePiece( new Pawn(1) );
+        tiles[110].placePiece( new Pawn(1) );
+        tiles[111].placePiece( new Pawn(1) );
+        tiles[112].placePiece(new Pawn(1));
+        tiles[113].placePiece(new Pawn(1));
+        tiles[114].placePiece( new Pawn(1) );
+        tiles[115].placePiece( new Pawn(1) );
+        tiles[109].placePiece( new Pawn(1) );
+        tiles[156].placePiece( new Pawn(1) );
+        tiles[78].placePiece(new Pawn(1));
+        tiles[79].placePiece(new Pawn(1));
 
-        tiles[154].placePiece( new Pawn(2) );
-        tiles[115].placePiece( new Pawn(2) );
-        tiles[116].placePiece( new Pawn(2) );
-        tiles[117].placePiece( new Pawn(2) );
-        tiles[ 83].placePiece( new Pawn(2) );
-        tiles[ 84].placePiece( new Pawn(2) );
-        tiles[119].placePiece( new Pawn(2) );
-        tiles[120].placePiece( new Pawn(2) );
-        tiles[121].placePiece( new Pawn(2) );
-        tiles[163].placePiece( new Pawn(2) );
+        tiles[133].placePiece( new Pawn(2) );
+        tiles[97].placePiece(new Pawn(2));
+        tiles[98].placePiece(new Pawn(2));
+        tiles[99].placePiece(new Pawn(2));
+        tiles[100].placePiece(new Pawn(2));
+        tiles[101].placePiece(new Pawn(2));
+        tiles[102].placePiece(new Pawn(2));
+        tiles[103].placePiece(new Pawn(2));
+        tiles[142].placePiece( new Pawn(2) );
+        tiles[68].placePiece(new Pawn(2));
+        tiles[69].placePiece( new Pawn(2) );
 
         // place Rooks
         tiles[127].placePiece( new Rook(0) ) ;
