@@ -24,6 +24,7 @@ import jchess.*;
 import jchess.mvc.Controller;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
+import jchess.pieces.*;
 import jchess.util.AbsoluteCoordinate;
 import jchess.util.AbsoluteCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
@@ -150,7 +151,7 @@ public class BoardView extends JPanel {
             g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
             if (!fontSet) {
-                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 15));
+                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
             }
 
             Board board = updateBoardEvent.getBoard();
@@ -170,15 +171,36 @@ public class BoardView extends JPanel {
                     AbsoluteCoordinate ac =
                             CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
                     //g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
-                    if (board.getTile(abs).getPiece() != null) {
-                        g2d.drawString("\u2658", ac.x - 16, ac.y + 7);
+                    Piece piece = board.getTile(abs).getPiece();
+                    if (piece != null) {
+                        switch (piece.getPlayerID()) {
+                            case 0:
+                                g2d.setColor(Color.green);
+                                break;
+                            case 1:
+                                g2d.setColor(Color.blue);
+                                break;
+                            case 2:
+                                g2d.setColor(Color.orange);
+                                break;
+                        }
+                        if (piece instanceof King) {
+                            g2d.drawString("\u265a", ac.x - 16, ac.y + 7);
+                        } else if (piece instanceof Queen) {
+                            g2d.drawString("\u265b", ac.x - 16, ac.y + 7);
+                        } else if (piece instanceof Rook) {
+                            g2d.drawString("\u265c", ac.x - 16, ac.y + 7);
+                        } else if (piece instanceof Bishop) {
+                            g2d.drawString("\u265d", ac.x - 16, ac.y + 7);
+                        } else if (piece instanceof Knight) {
+                            g2d.drawString("\u265e", ac.x - 16, ac.y + 7);
+                        } else if (piece instanceof Pawn) {
+                            g2d.drawString("\u265f", ac.x - 16, ac.y + 7);
+                        }
                     }
                 }
                 sum += ring * 6;
             }
-
-            Logging.GUI.debug("Repaint");
-
 
             repaint();
         }

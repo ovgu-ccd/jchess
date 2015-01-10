@@ -153,40 +153,46 @@ public class Board {
 
         // place Rooks
         tiles[127].placePiece( new Rook(0) ) ;
-        tiles[134].placePiece( new Rook(0) ) ;
-        tiles[141].placePiece( new Rook(1) ) ;
+        tiles[162].placePiece( new Rook(0) ) ;
+
         tiles[148].placePiece( new Rook(1) ) ;
-        tiles[155].placePiece( new Rook(2) ) ;
-        tiles[162].placePiece( new Rook(2) ) ;
+        tiles[155].placePiece( new Rook(1) ) ;
+
+        tiles[134].placePiece( new Rook(2) ) ;
+        tiles[141].placePiece( new Rook(2) ) ;
 
         // place Bishops
-        tiles[135].placePiece( new Bishop(0) ) ;
-        tiles[100].placePiece( new Bishop(0) ) ;
-        tiles[140].placePiece( new Bishop(0) ) ;
+        tiles[163].placePiece( new Bishop(0) ) ;
+        tiles[168].placePiece( new Bishop(0) ) ;
+        tiles[124].placePiece( new Bishop(0) ) ;
+
         tiles[149].placePiece( new Bishop(1) ) ;
-        tiles[112].placePiece( new Bishop(1) ) ;
         tiles[154].placePiece( new Bishop(1) ) ;
-        tiles[163].placePiece( new Bishop(2) ) ;
-        tiles[124].placePiece( new Bishop(2) ) ;
-        tiles[168].placePiece( new Bishop(2) ) ;
+        tiles[112].placePiece( new Bishop(1) ) ;
+
+        tiles[135].placePiece( new Bishop(2) ) ;
+        tiles[140].placePiece( new Bishop(2) ) ;
+        tiles[100].placePiece( new Bishop(2) ) ;
 
         // place Knights
-        tiles[136].placePiece( new Knight(0) ) ;
-        tiles[139].placePiece( new Knight(0) ) ;
+        tiles[164].placePiece( new Knight(0) ) ;
+        tiles[167].placePiece( new Knight(0) ) ;
+
         tiles[150].placePiece( new Knight(1) ) ;
         tiles[153].placePiece( new Knight(1) ) ;
-        tiles[164].placePiece( new Knight(2) ) ;
-        tiles[167].placePiece( new Knight(2) ) ;
+
+        tiles[136].placePiece( new Knight(2) ) ;
+        tiles[139].placePiece( new Knight(2) ) ;
 
         // place Queens
-        tiles[137].placePiece( new Queen(0) ) ;
+        tiles[165].placePiece( new Queen(0) ) ;
         tiles[151].placePiece( new Queen(1) ) ;
-        tiles[165].placePiece( new Queen(2) ) ;
+        tiles[137].placePiece( new Queen(2) ) ;
 
         // place Kings
-        tiles[138].placePiece( new King(0) ) ;
+        tiles[166].placePiece( new King(0) ) ;
         tiles[152].placePiece( new King(1) ) ;
-        tiles[166].placePiece( new King(2) ) ;
+        tiles[138].placePiece( new King(2) ) ;
     }
     
 }
