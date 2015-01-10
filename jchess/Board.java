@@ -106,6 +106,8 @@ public class Board {
     }
 
     void initTiles() {
+        tiles[0].setNeigbors( new Tile[]{ tiles[1], tiles[2], tiles[3], tiles[4], tiles[5], tiles[6] } );
+
 
     }
 
