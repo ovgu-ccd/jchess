@@ -1,8 +1,7 @@
 package jchess.mvc.events;
 
 import jchess.Board;
-import jchess.Game;
-import jchess.Settings;
+
 
 /**
  * Created by Severin Orth on 07.12.14.
@@ -11,17 +10,17 @@ import jchess.Settings;
  */
 public class UpdateBoardEvent extends Event {
 
-    private final Game      game;
+    private final Board board;
 
 
-    public UpdateBoardEvent(Game game) {
+    public UpdateBoardEvent(Board board) {
         super();
 
-        this.game = game;
+        this.board = board;
     }
 
-    public Game getGame() {
-        return game;
+    public Board getBoard() {
+        return board;
     }
 
 }

@@ -37,7 +37,80 @@ public class Board {
 
         // generate Fields
         tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
+        initTiles();
+        initFigures();
+    }
 
+
+    Tile[] filterTiles( TileFilter filter ) {
+        return tiles;
+    }
+
+    /// handle the move from one field to another
+    void handleMove( Move move ) {
+
+        if ( move.getMovedPiece() != move.getFrom().getPiece() )
+            throw new IllegalArgumentException("The moved piece is not on the move from field !");
+
+        if ( move.getTakenPiece() != move.getTo().getPiece() )
+            throw new IllegalArgumentException("The taken piece is not on the move to field !");
+
+        move.getFrom().removePiece();
+        move.getTo().placePiece(move.getMovedPiece());
+    }
+
+    /** Access a Tile of a board
+     * The Tiles are arranged in rings around the center tile
+     * The Center Tile has ringIndex = 0, tileOnRingIndex 0
+     * The first Tile on a ring is north (above) of the first Tile of the predecessor ring
+     * Tiles are counted in clockwise order
+     * @param ringIndex Index for the ring, starting at 0 with the center tile/ring
+     * @param tileOnRingIndex Index for a tile on the ring, starting with zero for the central northern tile, cw order
+     */
+    public Tile getTile( int ringIndex, int tileOnRingIndex ) {
+
+        if ( ringIndex < 0 || ringIndex > 7 )
+            throw new IllegalArgumentException("Parameter ringIndex must be in the interval [0..7] !");
+
+        if ( tileOnRingIndex < 0 || tileOnRingIndex > ringIndex * 6 - 1 )
+            throw new IllegalArgumentException("Parameter tileOnRingIndex must be in the interval [0..ringIndex * 6 - 1] !");
+
+        // Compute board tile index from ringIndex and tileOnRingIndex
+        int tileIndex = 0;
+
+        // Sum up all tiles from Ring Index 0 to Ring Index ringIndex-1 and add tileOnRingIndex
+        // Using Gauss' Sum Formula
+        if (ringIndex > 0) {
+            ringIndex -= 1;
+            tileIndex = (ringIndex * ringIndex + ringIndex) / 2 + tileOnRingIndex;
+        }
+
+        return tiles[tileIndex];
+    }
+    /** Access a Tile of a board by absolute index
+     * Tile index starts in the board center
+     * next tile is above and following tiles are on the same ring
+     * next tile is above and so forth ...
+     * @param tileIndex Index for the ring, starting at 0 with the center tile/ring
+     */
+    public Tile getTile( int tileIndex ) {
+        return tiles[tileIndex];
+    }
+
+    public boolean undo() {
+        return true;
+    }
+
+    public boolean redo() {
+        return false;
+    }
+
+    void initTiles() {
+
+    }
+
+    /// Initial Figure Placement
+    void initFigures() {
         // place Pawns
         tiles[168].placePiece( new Pawn(0) );
         tiles[ 91].placePiece( new Pawn(0) );
@@ -108,68 +181,6 @@ public class Board {
         tiles[138].placePiece( new King(0) ) ;
         tiles[152].placePiece( new King(1) ) ;
         tiles[166].placePiece( new King(2) ) ;
-
-
-
-    }/*--endOf-Chessboard--*/
-
-
-    Tile[] filterTiles( TileFilter filter ) {
-        return tiles;
-    }
-
-    /// handle the move from one field to another
-    void handleMove( Move move ) {
-
-        if ( move.getMovedPiece() != move.getFrom().getPiece() )
-            throw new IllegalArgumentException("The moved piece is not on the move from field !");
-
-        if ( move.getTakenPiece() != move.getTo().getPiece() )
-            throw new IllegalArgumentException("The taken piece is not on the move to field !");
-
-        move.getFrom().removePiece();
-        move.getTo().placePiece(move.getMovedPiece());
-    }
-
-    /** Access a Tile of a board
-     * The Tiles are arranged in rings around the center tile
-     * The Center Tile has ringIndex = 0, tileOnRingIndex 0
-     * The first Tile on a ring is north (above) of the first Tile of the predecessor ring
-     * Tiles are counted in clockwise order
-     * @param ringIndex Index for the ring, starting at 0 with the center tile/ring
-     * @param tileOnRingIndex Index for a tile on the ring, starting with zero for the central northern tile, cw order
-     */
-    public Tile getTile( int ringIndex, int tileOnRingIndex ) {
-
-        if ( ringIndex < 0 || ringIndex > 7 )
-            throw new IllegalArgumentException("Parameter ringIndex must be in the interval [0..7] !");
-
-        if ( tileOnRingIndex < 0 || tileOnRingIndex > ringIndex * 6 - 1 )
-            throw new IllegalArgumentException("Parameter tileOnRingIndex must be in the interval [0..ringIndex * 6 - 1] !");
-
-        // Compute board tile index from ringIndex and tileOnRingIndex
-        int tileIndex = 0;
-
-        // Sum up all tiles from Ring Index 0 to Ring Index ringIndex-1 and add tileOnRingIndex
-        // Using Gauss' Sum Formula
-        if (ringIndex > 0) {
-            ringIndex -= 1;
-            tileIndex = (ringIndex * ringIndex + ringIndex) / 2 + tileOnRingIndex;
-        }
-
-        return tiles[tileIndex];
-    }
-
-    public Tile getTile( int tileIndex ) {
-        return tiles[tileIndex];
-    }
-
-    public boolean undo() {
-        return true;
-    }
-
-    public boolean redo() {
-        return false;
     }
     
 }
