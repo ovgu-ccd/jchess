@@ -53,12 +53,13 @@ public class GameTab extends JPanel {
 
 
     public GameTab() {
-        this.setLayout(null);
+        setLayout(new BorderLayout());
+        setDoubleBuffered(true);
+
         settings = new Settings();
         boardView = new BoardView(this.settings);
-        boardView.setVisible(true);
-        boardView.setLocation(new Point(0, 0));
-        this.setSize(boardView.getSize());
+
+
         this.add(boardView);
 
 
@@ -67,11 +68,12 @@ public class GameTab extends JPanel {
         this.chat.setLocation(new Point(0, 500));
         this.chat.setMinimumSize(new Dimension(400, 100));
 
-        this.setLayout(null);
-        this.setDoubleBuffered(true);
+
         Controller.INSTANCE.subscribe(this);
 
+        add(boardView, BorderLayout.CENTER);
     }
+
 
     @Handler
     public void handleUpdateBoardEvent( UpdateBoardEvent updateBoardEvent ) {

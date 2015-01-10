@@ -33,6 +33,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -48,14 +49,12 @@ public class BoardView extends JPanel {
             .loadImage("able_square.png");//image of square where piece can go
 
     private ArrayList moves;
-
-
-
+    private boolean fontSet = false;
 
     /**
      * Chessboard class constructor
      *
-     * @param settings      reference to Settings class object for this chessboard
+     * @param settings reference to Settings class object for this chessboard
      */
     public BoardView(Settings settings) {
         try {
@@ -65,8 +64,6 @@ public class BoardView extends JPanel {
         }
 
         this.setDoubleBuffered(true);
-        setPreferredSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
-        setSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -85,6 +82,21 @@ public class BoardView extends JPanel {
         });
     }/*--endOf-Chessboard--*/
 
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
 
     int x, y;
 
@@ -97,15 +109,20 @@ public class BoardView extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
 
-        g2d.setColor(Color.red);
-        g2d.fillRect(x - 2, y - 2, 4, 4);
+        g2d.setColor(Color.gray);
+
+        if (!fontSet){
+            g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
+        }
+
+        g2d.drawString("\u265e", x - 13, y + 10);
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return boardImage.getWidth();
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return boardImage.getHeight();
     }
 
@@ -116,7 +133,6 @@ public class BoardView extends JPanel {
     public void update(Graphics g) {
         repaint();
     }
-
 
 
 }

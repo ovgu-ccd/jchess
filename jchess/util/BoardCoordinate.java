@@ -1,7 +1,7 @@
 package jchess.util;
 
 /**
- * Created by robert on 05/01/15.
+ * Pseudo-Polar Board Coordinates
  */
 public class BoardCoordinate {
     int ring, pos, abs;
@@ -9,6 +9,7 @@ public class BoardCoordinate {
     public BoardCoordinate(int ring, int pos, int abs) {
         this.ring = ring;
         this.pos = pos;
+        this.abs = abs;
     }
 
     public String toString() {

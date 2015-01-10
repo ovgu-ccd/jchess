@@ -3,27 +3,28 @@ package jchess;
 
 import jchess.gui.GUI;
 import jchess.mvc.Controller;
-import jchess.mvc.events.NewGame;
+import jchess.mvc.events.NewGameEvent;
 import net.engio.mbassy.listener.Handler;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by robert on 04.12.14.
  */
-public class Application {
+public class Application implements Runnable {
     private static Application instance;
-    private GUI gui;
     private final Controller controller = Controller.INSTANCE;
+    private GUI gui;
     private List<Game> games;
 
     private Application() {
-        games = new LinkedList<>();
+        Logging.setup();
         controller.subscribe(this);
 
+        games = new LinkedList<>();
 
-        Logging.setup();
         gui = new GUI(this);
     }
 
@@ -35,28 +36,36 @@ public class Application {
         return Application.instance;
     }
 
-    void run() {
+    public void run() {
         gui.setVisible(true);
     }
 
-    public GUI getJcv() {
+    public GUI getGUI() {
         return gui;
     }
 
-    public void createGame(IOSystem[] ioSystem) {
-        Game game = Game.newGame(ioSystem);
-        controller.subscribe( game );
-        game.emitUpdateBoardEvent();
-    }
+
 
     public static void main(String args[]) {
         Application app = Application.getInstance();
-        app.run();
+        SwingUtilities.invokeLater(app);
     }
 
     @Handler
-    public void handleCreateGame(NewGame newGameEvent) {
-        this.games.add(newGameEvent.getGame());
-        controller.subscribe(newGameEvent.getGame());
+    public void handleNewGame(NewGameEvent newGameEvent) {
+        Player[] players = new Player[3];
+
+        players[0] = new Player(newGameEvent.getPlayerNames()[0],
+                newGameEvent.getIoSystems()[0],
+                "white");
+        players[1] = new Player(newGameEvent.getPlayerNames()[1],
+                newGameEvent.getIoSystems()[1],
+                "black");
+        players[2] = new Player(newGameEvent.getPlayerNames()[2],
+                newGameEvent.getIoSystems()[2],
+                "red");
+
+        Logging.GAME.debug("Created new game.");
+        games.add(Game.newGame(players));
     }
 }
