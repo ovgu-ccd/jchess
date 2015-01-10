@@ -50,7 +50,7 @@ public class GameTab extends JPanel {
     public BoardView boardView;
     public Client client;
     public Chat chat;
-
+    private Game game;
 
     public GameTab() {
         setLayout(new BorderLayout());
@@ -74,10 +74,17 @@ public class GameTab extends JPanel {
         add(boardView, BorderLayout.CENTER);
     }
 
-
     @Handler
     public void handleUpdateBoardEvent( UpdateBoardEvent updateBoardEvent ) {
         JOptionPane.showMessageDialog( null, "Event Recieved" );
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
 }

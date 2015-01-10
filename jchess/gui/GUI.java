@@ -147,7 +147,7 @@ public class GUI extends JFrame implements ActionListener {
                         new GUIConnector(newTab),
                         new GUIConnector(newTab),
                         new GUIConnector(newTab)
-                });
+                }, newTab);
 
         pack();
         Logging.GUI.debug("Event emitted");
