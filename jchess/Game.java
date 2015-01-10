@@ -23,7 +23,7 @@ public class Game {
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
         this.players = players;
-        board = new Board();
+        this.board = new Board();
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {

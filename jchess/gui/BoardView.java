@@ -31,6 +31,7 @@ import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
+import sun.rmi.runtime.Log;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -41,6 +42,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -83,7 +86,7 @@ public class BoardView extends JPanel {
                 try {
                     bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
 
-                    GameTab gameTab = (GameTab)getParent();
+                    GameTab gameTab = (GameTab) getParent();
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
 
 
@@ -136,26 +139,50 @@ public class BoardView extends JPanel {
         repaint();
     }
 
-    @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+    @Handler
+    void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.hasVisitedIOSystem()) {
             Logging.GUI.debug("Received UpdateBoardEvent");
 
             Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
             g2d.fillRect(0, 0, getWidth(), getHeight());
-            g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
-
-            g2d.setColor(Color.gray);
+            g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
             if (!fontSet) {
-                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
+                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 15));
             }
 
+            Board board = updateBoardEvent.getBoard();
+
+
+            if (board.getTile(0).getPiece() != null) {
+                AbsoluteCoordinate ac =
+                        CoordinateConverter.boardCoordinateToAbsoluteCoordinate(0, 0, 0);
+                g2d.drawString("\u2658", ac.x - 15, ac.y + 20);
+            }
+
+            int sum = 1;
+            int abs;
+            for (int ring = 1; ring < 8; ring++) {
+                for (int pos = 0; pos < 6 * ring; pos++) {
+                    abs = sum + pos;
+                    //if (board.getTile(abs).getPiece() != null) {
+                        AbsoluteCoordinate ac =
+                                CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
+                        g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
+                    //}
+
+
+                    /*"\u2658"*/
+                }
+                sum += ring * 6;
+            }
+
+            Logging.GUI.debug("Repaint");
+
+
             repaint();
-
-            //JOptionPane.showMessageDialog(null, "FOO");
-
-            //g2d.drawString("\u265e", x - 13, y + 10);
         }
     }
 }

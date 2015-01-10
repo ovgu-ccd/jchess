@@ -34,7 +34,6 @@ public class Board {
     private Tile tiles[];
 
     public Board() {
-
         // generate Fields
         tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
         initTiles();
@@ -106,11 +105,14 @@ public class Board {
     }
 
     void initTiles() {
-
+        for (int i = 0; i<tiles.length; i++){
+            tiles[i] = new Tile();
+        }
     }
 
     /// Initial Figure Placement
     void initFigures() {
+
         // place Pawns
         tiles[168].placePiece( new Pawn(0) );
         tiles[ 91].placePiece( new Pawn(0) );
