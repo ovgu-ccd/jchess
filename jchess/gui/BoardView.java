@@ -43,6 +43,7 @@ import java.util.ArrayList;
  */
 public class BoardView extends JPanel {
     private static BufferedImage boardImage;
+
     private static final Image org_sel_square = GUIUtils
             .loadImage("sel_square.png");//image of highlited square
     private static final Image org_able_square = GUIUtils
@@ -50,6 +51,7 @@ public class BoardView extends JPanel {
 
     private ArrayList moves;
     private boolean fontSet = false;
+    private BufferedImage offscreen;
 
     /**
      * Chessboard class constructor
@@ -59,6 +61,7 @@ public class BoardView extends JPanel {
     public BoardView(Settings settings) {
         try {
             boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
+            offscreen = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,13 +108,15 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        g2d.drawImage(offscreen, null, 0, 0);
+
         g2d.setColor(Color.GRAY);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
 
         g2d.setColor(Color.gray);
 
-        if (!fontSet){
+        if (!fontSet) {
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
         }
 
