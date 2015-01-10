@@ -6,14 +6,14 @@ import jchess.mvc.Controller;
 import jchess.mvc.events.NewGameEvent;
 import net.engio.mbassy.listener.Handler;
 
-import java.util.Arrays;
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by robert on 04.12.14.
  */
-public class Application {
+public class Application implements Runnable {
     private static Application instance;
     private final Controller controller = Controller.INSTANCE;
     private GUI gui;
@@ -35,7 +35,7 @@ public class Application {
         return Application.instance;
     }
 
-    void run() {
+    public void run() {
         gui.setVisible(true);
     }
 
@@ -46,15 +46,12 @@ public class Application {
 
     public static void main(String args[]) {
         Application app = Application.getInstance();
-        app.run();
+        SwingUtilities.invokeLater(app);
     }
 
     @Handler
     public void handleNewGame(NewGameEvent newGameEvent) {
         Player[] players = new Player[3];
-
-        System.out.println(Arrays.toString(newGameEvent.getPlayerNames()));
-        System.out.println(Arrays.toString(newGameEvent.getIoSystems()));
 
         players[0] = new Player(newGameEvent.getPlayerNames()[0],
                 newGameEvent.getIoSystems()[0],

@@ -64,9 +64,6 @@ public class BoardView extends JPanel {
         }
 
         this.setDoubleBuffered(true);
-        setPreferredSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
-        setSize(new Dimension(boardImage.getWidth(), boardImage.getHeight()));
-
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -84,6 +81,16 @@ public class BoardView extends JPanel {
             }
         });
     }/*--endOf-Chessboard--*/
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
 
 
     int x, y;
