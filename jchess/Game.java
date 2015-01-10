@@ -5,10 +5,13 @@ import jchess.mvc.events.UpdateBoardEvent;
 import jchess.util.BoardCoordinate;
 import jchess.pieces.Piece;
 import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
+import net.engio.mbassy.listener.References;
 
 /**
  * Created by andreas on 07.12.14.
  */
+@Listener(references = References.Strong)
 public class Game {
 
     private Player[] players;
@@ -46,7 +49,7 @@ public class Game {
     }
     // <--
     public void emitUpdateBoardEvent() {
-        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent( this );
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent( board );
         updateBoardEvent.emit();
     }
 
