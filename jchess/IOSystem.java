@@ -1,6 +1,7 @@
 package jchess;
 
 import jchess.mvc.events.SelectEvent;
+import jchess.mvc.events.UpdateBoardEvent;
 import net.engio.mbassy.listener.Handler;
 
 /**
@@ -11,5 +12,6 @@ public interface IOSystem {
     void handleNextPlayer();
     void handlePostMessage(ChatMessage chatMessage);
     @Handler void handleSelectEvent(SelectEvent selectEvent);
+    @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent);
     public void setPlayer(Player player);
 }

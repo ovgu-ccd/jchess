@@ -22,10 +22,12 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.events.SelectEvent;
+import jchess.mvc.events.UpdateBoardEvent;
 import jchess.util.AbsoluteCoordinate;
 import jchess.util.AbsoluteCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
+import net.engio.mbassy.listener.Handler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -97,7 +99,7 @@ public class BoardView extends JPanel {
     public Dimension getMaximumSize() {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -132,5 +134,9 @@ public class BoardView extends JPanel {
         repaint();
     }
 
-
+    @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+        if (updateBoardEvent.hasVisitedIOSystem()) {
+            // TODO
+        }
+    }
 }

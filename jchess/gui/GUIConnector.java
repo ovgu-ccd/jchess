@@ -3,6 +3,7 @@ package jchess.gui;
 import jchess.*;
 import jchess.mvc.Controller;
 import jchess.mvc.events.SelectEvent;
+import jchess.mvc.events.UpdateBoardEvent;
 
 /**
  * Created by andreas on 06.12.14.
@@ -35,6 +36,14 @@ public class GUIConnector implements IOSystem {
         if (this.player.isActive() && !selectEvent.hasVisitedIOSystem()) {
             selectEvent.setVisitedIOSystem(true);
             selectEvent.emit();
+        }
+    }
+
+    @Override
+    public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+        if (this.player.isActive() && !updateBoardEvent.hasVisitedIOSystem()) {
+            updateBoardEvent.setVisitedIOSystem(true);
+            updateBoardEvent.emit();
         }
     }
 
