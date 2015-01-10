@@ -12,6 +12,7 @@ import net.engio.mbassy.listener.Handler;
 public class Game {
 
     private Player[] players;
+
     private Board board;
 
     private Game(Player[] players) {
@@ -23,10 +24,13 @@ public class Game {
         if (players.length != 3) {
             throw new IllegalArgumentException();
         }
-        Game g = new Game(players);
-        return g;
+        Game game = new Game(players);
+        return game;
     }
 
+    public Board getBoard() {
+        return board;
+    }
 
     // <--
     public void invalidSelectEvent() {}

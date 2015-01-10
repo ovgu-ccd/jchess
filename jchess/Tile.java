@@ -10,7 +10,7 @@ public class Tile {
     private Tile neighbors[] ;
     private Piece piece;
 
-    Tile()  {
+    public Tile()  {
         neighbors = null;
         piece = null;
     }
@@ -43,7 +43,7 @@ public class Tile {
         return neighbors[5];
     }
 
-    Piece getPiece() {
+    public Piece getPiece() {
         return this.piece;
     }
 

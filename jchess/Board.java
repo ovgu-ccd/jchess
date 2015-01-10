@@ -27,6 +27,7 @@ package jchess;
 //import java.lang.IllegalArgumentException;
 
 
+import jchess.pieces.Pawn;
 
 /** Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
@@ -40,6 +41,38 @@ public class Board {
 
         // generate Fields
         tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
+        tiles[168].placePiece( new Pawn() );
+        tiles[ 91].placePiece( new Pawn() );
+        tiles[ 92].placePiece( new Pawn() );
+        tiles[ 93].placePiece( new Pawn() );
+        tiles[ 63].placePiece( new Pawn() );
+        tiles[ 64].placePiece( new Pawn() );
+        tiles[ 95].placePiece( new Pawn() );
+        tiles[ 96].placePiece( new Pawn() );
+        tiles[ 97].placePiece( new Pawn() );
+        tiles[135].placePiece( new Pawn() );
+
+        tiles[140].placePiece( new Pawn() );
+        tiles[103].placePiece( new Pawn() );
+        tiles[104].placePiece( new Pawn() );
+        tiles[105].placePiece( new Pawn() );
+        tiles[ 73].placePiece( new Pawn() );
+        tiles[ 74].placePiece( new Pawn() );
+        tiles[107].placePiece( new Pawn() );
+        tiles[108].placePiece( new Pawn() );
+        tiles[109].placePiece( new Pawn() );
+        tiles[149].placePiece( new Pawn() );
+
+        tiles[154].placePiece( new Pawn() );
+        tiles[115].placePiece( new Pawn() );
+        tiles[116].placePiece( new Pawn() );
+        tiles[117].placePiece( new Pawn() );
+        tiles[ 83].placePiece( new Pawn() );
+        tiles[ 84].placePiece( new Pawn() );
+        tiles[119].placePiece( new Pawn() );
+        tiles[120].placePiece( new Pawn() );
+        tiles[121].placePiece( new Pawn() );
+        tiles[163].placePiece( new Pawn() );
 
     }/*--endOf-Chessboard--*/
 
@@ -87,6 +120,10 @@ public class Board {
             tileIndex = (ringIndex * ringIndex + ringIndex) / 2 + tileOnRingIndex;
         }
 
+        return tiles[tileIndex];
+    }
+
+    public Tile getTile( int tileIndex ) {
         return tiles[tileIndex];
     }
 

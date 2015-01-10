@@ -23,7 +23,7 @@ package jchess.pieces;
 
 public class Pawn extends Piece {
 
-    Pawn() {
+    public Pawn() {
         // create FilterFunction
         // super.filterFunction =
     }

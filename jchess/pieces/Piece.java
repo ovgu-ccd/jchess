@@ -33,7 +33,7 @@ public abstract class Piece {
 
     private TileFilter tileFilter;
 
-    Piece() {}
+    public Piece() {}
 
     public TileFilter getTileFilter() {
         return tileFilter;
