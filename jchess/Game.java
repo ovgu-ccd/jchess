@@ -1,6 +1,7 @@
 package jchess;
 
 
+import jchess.mvc.Controller;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.util.BoardCoordinate;
 import jchess.pieces.Piece;
@@ -18,6 +19,7 @@ public class Game {
     private Game(Player[] players) {
         this.players = players;
         board = new Board();
+        Controller.INSTANCE.subscribe(this);
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {
@@ -46,13 +48,14 @@ public class Game {
     }
     // <--
     public void emitUpdateBoardEvent() {
-        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent( this );
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent( this.getBoard() );
         updateBoardEvent.emit();
     }
 
     // -->
     @Handler
     public void handleSelectedEvent( BoardCoordinate coordinate ) {
+        Logging.GAME.debug("Receivec Select Event");
         emitUpdateBoardEvent();
 
     }

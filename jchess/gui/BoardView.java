@@ -80,7 +80,11 @@ public class BoardView extends JPanel {
 
                     GameTab gameTab = (GameTab)getParent();
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
+
+
                     selectEvent.emit();
+                    Logging.GUI.debug("SELECTED SENT");
+
                 } catch (AbsoluteCoordinateNotOnBoardException e1) {
                     // Send no event
                 }
@@ -129,7 +133,7 @@ public class BoardView extends JPanel {
 
     @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.hasVisitedIOSystem()) {
-            Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
+            /*Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
             g2d.fillRect(0, 0, getWidth(), getHeight());
             g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
@@ -138,7 +142,9 @@ public class BoardView extends JPanel {
 
             if (!fontSet) {
                 g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
-            }
+            }*/
+
+            JOptionPane.showMessageDialog(null, "FOO");
 
             //g2d.drawString("\u265e", x - 13, y + 10);
         }
