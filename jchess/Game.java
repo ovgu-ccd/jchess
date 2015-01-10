@@ -53,6 +53,7 @@ public class Game {
     // -->
     @Handler
     public void handleSelectedEvent( BoardCoordinate coordinate ) {
+        emitUpdateBoardEvent();
 
     }
 
