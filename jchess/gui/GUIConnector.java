@@ -5,10 +5,13 @@ import jchess.mvc.Controller;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
+import net.engio.mbassy.listener.References;
 
 /**
  * Created by andreas on 06.12.14.
  */
+@Listener(references = References.Strong)
 public class GUIConnector implements IOSystem {
 
     private GameTab gameTab;
@@ -34,9 +37,8 @@ public class GUIConnector implements IOSystem {
 
     @Override
     @Handler public void handleSelectEvent(SelectEvent selectEvent) {
-        Logging.GUI.debug("Relay Select Event");
-        if (this.player.isActive() && !selectEvent.hasVisitedIOSystem()) {
-
+        if (this.player.isActive() && !selectEvent.isVisitedIOSystem()) {
+            Logging.GUI.debug("Relay SelectEvent");
             selectEvent.setVisitedIOSystem(true);
             selectEvent.emit();
         }

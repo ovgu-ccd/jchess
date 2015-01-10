@@ -28,6 +28,8 @@ import jchess.util.AbsoluteCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Listener;
+import net.engio.mbassy.listener.References;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
  * It is setting the squers of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
  */
+@Listener(references = References.Strong)
 public class BoardView extends JPanel {
     private static BufferedImage boardImage;
 
@@ -82,8 +85,8 @@ public class BoardView extends JPanel {
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
 
 
+                    Logging.GUI.debug("Emit SelectEvent");
                     selectEvent.emit();
-                    Logging.GUI.debug("SELECTED SENT");
 
                 } catch (AbsoluteCoordinateNotOnBoardException e1) {
                     // Send no event

@@ -5,6 +5,7 @@ import jchess.gui.GUI;
 import jchess.mvc.Controller;
 import jchess.mvc.events.NewGameEvent;
 import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Invoke;
 
 import javax.swing.*;
 import java.util.LinkedList;
