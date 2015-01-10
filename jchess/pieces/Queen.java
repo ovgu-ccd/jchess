@@ -23,7 +23,8 @@ package jchess.pieces;
 
 public class Queen extends Piece {
 
-    public Queen() {
+    public Queen( int playerID ) {
+        super( playerID );
         // create FilterFunction
         // super.filterFunction =
     }

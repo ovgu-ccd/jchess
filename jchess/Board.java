@@ -23,11 +23,7 @@
  */
 package jchess;
 
-//import jchess.Moves.castling;
-//import java.lang.IllegalArgumentException;
-
-
-import jchess.pieces.Pawn;
+import jchess.pieces.*;
 
 /** Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
@@ -41,38 +37,79 @@ public class Board {
 
         // generate Fields
         tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
-        tiles[168].placePiece( new Pawn() );
-        tiles[ 91].placePiece( new Pawn() );
-        tiles[ 92].placePiece( new Pawn() );
-        tiles[ 93].placePiece( new Pawn() );
-        tiles[ 63].placePiece( new Pawn() );
-        tiles[ 64].placePiece( new Pawn() );
-        tiles[ 95].placePiece( new Pawn() );
-        tiles[ 96].placePiece( new Pawn() );
-        tiles[ 97].placePiece( new Pawn() );
-        tiles[135].placePiece( new Pawn() );
 
-        tiles[140].placePiece( new Pawn() );
-        tiles[103].placePiece( new Pawn() );
-        tiles[104].placePiece( new Pawn() );
-        tiles[105].placePiece( new Pawn() );
-        tiles[ 73].placePiece( new Pawn() );
-        tiles[ 74].placePiece( new Pawn() );
-        tiles[107].placePiece( new Pawn() );
-        tiles[108].placePiece( new Pawn() );
-        tiles[109].placePiece( new Pawn() );
-        tiles[149].placePiece( new Pawn() );
+        // place Pawns
+        tiles[168].placePiece( new Pawn(0) );
+        tiles[ 91].placePiece( new Pawn(0) );
+        tiles[ 92].placePiece( new Pawn(0) );
+        tiles[ 93].placePiece( new Pawn(0) );
+        tiles[ 63].placePiece( new Pawn(0) );
+        tiles[ 64].placePiece( new Pawn(0) );
+        tiles[ 95].placePiece( new Pawn(0) );
+        tiles[ 96].placePiece( new Pawn(0) );
+        tiles[ 97].placePiece( new Pawn(0) );
+        tiles[135].placePiece( new Pawn(0) );
 
-        tiles[154].placePiece( new Pawn() );
-        tiles[115].placePiece( new Pawn() );
-        tiles[116].placePiece( new Pawn() );
-        tiles[117].placePiece( new Pawn() );
-        tiles[ 83].placePiece( new Pawn() );
-        tiles[ 84].placePiece( new Pawn() );
-        tiles[119].placePiece( new Pawn() );
-        tiles[120].placePiece( new Pawn() );
-        tiles[121].placePiece( new Pawn() );
-        tiles[163].placePiece( new Pawn() );
+        tiles[140].placePiece( new Pawn(1) );
+        tiles[103].placePiece( new Pawn(1) );
+        tiles[104].placePiece( new Pawn(1) );
+        tiles[105].placePiece( new Pawn(1) );
+        tiles[ 73].placePiece( new Pawn(1) );
+        tiles[ 74].placePiece( new Pawn(1) );
+        tiles[107].placePiece( new Pawn(1) );
+        tiles[108].placePiece( new Pawn(1) );
+        tiles[109].placePiece( new Pawn(1) );
+        tiles[149].placePiece( new Pawn(1) );
+
+        tiles[154].placePiece( new Pawn(2) );
+        tiles[115].placePiece( new Pawn(2) );
+        tiles[116].placePiece( new Pawn(2) );
+        tiles[117].placePiece( new Pawn(2) );
+        tiles[ 83].placePiece( new Pawn(2) );
+        tiles[ 84].placePiece( new Pawn(2) );
+        tiles[119].placePiece( new Pawn(2) );
+        tiles[120].placePiece( new Pawn(2) );
+        tiles[121].placePiece( new Pawn(2) );
+        tiles[163].placePiece( new Pawn(2) );
+
+        // place Rooks
+        tiles[127].placePiece( new Rook(0) ) ;
+        tiles[134].placePiece( new Rook(0) ) ;
+        tiles[141].placePiece( new Rook(1) ) ;
+        tiles[148].placePiece( new Rook(1) ) ;
+        tiles[155].placePiece( new Rook(2) ) ;
+        tiles[162].placePiece( new Rook(2) ) ;
+
+        // place Bishops
+        tiles[135].placePiece( new Bishop(0) ) ;
+        tiles[100].placePiece( new Bishop(0) ) ;
+        tiles[140].placePiece( new Bishop(0) ) ;
+        tiles[149].placePiece( new Bishop(1) ) ;
+        tiles[112].placePiece( new Bishop(1) ) ;
+        tiles[154].placePiece( new Bishop(1) ) ;
+        tiles[163].placePiece( new Bishop(2) ) ;
+        tiles[124].placePiece( new Bishop(2) ) ;
+        tiles[168].placePiece( new Bishop(2) ) ;
+
+        // place Knights
+        tiles[136].placePiece( new Knight(0) ) ;
+        tiles[139].placePiece( new Knight(0) ) ;
+        tiles[150].placePiece( new Knight(1) ) ;
+        tiles[153].placePiece( new Knight(1) ) ;
+        tiles[164].placePiece( new Knight(2) ) ;
+        tiles[167].placePiece( new Knight(2) ) ;
+
+        // place Queens
+        tiles[137].placePiece( new Queen(0) ) ;
+        tiles[151].placePiece( new Queen(1) ) ;
+        tiles[165].placePiece( new Queen(2) ) ;
+
+        // place Kings
+        tiles[138].placePiece( new King(0) ) ;
+        tiles[152].placePiece( new King(1) ) ;
+        tiles[166].placePiece( new King(2) ) ;
+
+
 
     }/*--endOf-Chessboard--*/
 

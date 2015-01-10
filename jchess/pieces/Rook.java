@@ -24,7 +24,8 @@ package jchess.pieces;
 
 public class Rook extends Piece {
 
-    public Rook() {
+    public Rook( int playerID ) {
+        super( playerID );
         // create FilterFunction
         // super.filterFunction =
     }
