@@ -92,6 +92,11 @@ public class BoardView extends JPanel {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
 
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
 
     int x, y;
 
