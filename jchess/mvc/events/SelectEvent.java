@@ -1,22 +1,19 @@
 package jchess.mvc.events;
 
-
 import jchess.Game;
+import jchess.util.BoardCoordinate;
 
 /**
  * Created by andreas on 10.01.15.
  */
-public class UpdateBoardEvent extends Event {
+public class SelectEvent extends Event {
+    private BoardCoordinate bc;
     private Game game;
     private boolean visitedIOSystem = false;
 
-    public UpdateBoardEvent(Game game) {
-        super();
+    public SelectEvent(BoardCoordinate boardCoordinate, Game game) {
+        this.bc = boardCoordinate;
         this.game = game;
-    }
-
-    public Game getGame() {
-        return game;
     }
 
     public boolean hasVisitedIOSystem() {
@@ -26,5 +23,4 @@ public class UpdateBoardEvent extends Event {
     public void setVisitedIOSystem(boolean visitedIOSystem) {
         this.visitedIOSystem = visitedIOSystem;
     }
-
 }

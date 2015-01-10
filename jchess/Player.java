@@ -30,6 +30,22 @@ public class Player implements Serializable {
 
     private String name;
     private IOSystem ioSystem;
+    private boolean active;
+
+    public Player(String name, IOSystem ioSystem, String color) {
+        this.setName(name);
+        this.setColor(colors.valueOf(color));
+        this.ioSystem = ioSystem;
+        this.active = false;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public colors getColor() {
         return color;
@@ -39,59 +55,48 @@ public class Player implements Serializable {
         this.color = color;
     }
 
-    public boolean isGoDown() {
-        return goDown;
-    }
-
-    public void setGoDown(boolean goDown) {
-        this.goDown = goDown;
-    }
-
     public enum colors {
         white,
         black,
         red
     }
+
     private colors color;
 
     public enum playerTypes {
         localUser, networkUser, computer
     }
+
     public playerTypes playerType;
-    private boolean goDown;
 
-    public Player() {
-    }
-
-    public Player(String name, IOSystem ioSystem, String color) {
-        this.setName(name);
-        this.setColor(colors.valueOf(color));
-        this.ioSystem = ioSystem;
-        this.setGoDown(false);
-    }
-
-    /** Method setting the players name
-     *  @param name name of player
+    /**
+     * Method setting the players name
+     *
+     * @param name name of player
      */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** Method getting the players name
-     *  @return name of player
+    /**
+     * Method getting the players name
+     *
+     * @return name of player
      */
     public String getName() {
         return this.name;
     }
 
-    /** Method setting the players type
-     *  @param type type of player - enumerate
+    /**
+     * Method setting the players type
+     *
+     * @param type type of player - enumerate
      */
     public void setType(playerTypes type) {
         this.playerType = type;
     }
 
-    public IOSystem getIoSystem(){
+    public IOSystem getIoSystem() {
         return ioSystem;
     }
 }
