@@ -14,12 +14,13 @@ public class UpdateBoardEvent extends Event {
     private final Board board;
 
 
+    public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent, boolean visitedIOSystem) {
+        this.board = updateBoardEvent.getBoard();
+        this.visitedIOSystem = visitedIOSystem;
+    }
+
     public UpdateBoardEvent(Board board) {
-        super();
-
-
         this.board = board;
-
     }
 
     public Board getBoard() {

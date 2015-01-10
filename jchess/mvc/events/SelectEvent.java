@@ -11,6 +11,12 @@ public class SelectEvent extends Event {
     private Game game;
     private boolean visitedIOSystem = false;
 
+    public SelectEvent(SelectEvent selectEvent, boolean visitedIOSystem){
+        this.boardCoordinate = selectEvent.getBoardCoordinate();
+        this.game = selectEvent.getGame();
+        this.visitedIOSystem = visitedIOSystem;
+    }
+
     public SelectEvent(BoardCoordinate boardCoordinate, Game game) {
         this.boardCoordinate = boardCoordinate;
         this.game = game;

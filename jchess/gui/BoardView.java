@@ -21,6 +21,7 @@
 package jchess.gui;
 
 import jchess.*;
+import jchess.mvc.Controller;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.util.AbsoluteCoordinate;
@@ -65,6 +66,7 @@ public class BoardView extends JPanel {
      * @param settings reference to Settings class object for this chessboard
      */
     public BoardView(Settings settings) {
+        Controller.INSTANCE.subscribe(this);
         try {
             boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
             offscreen = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -136,7 +138,9 @@ public class BoardView extends JPanel {
 
     @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.hasVisitedIOSystem()) {
-            /*Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
+            Logging.GUI.debug("Received UpdateBoardEvent");
+
+            Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
             g2d.fillRect(0, 0, getWidth(), getHeight());
             g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
@@ -145,9 +149,11 @@ public class BoardView extends JPanel {
 
             if (!fontSet) {
                 g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
-            }*/
+            }
 
-            JOptionPane.showMessageDialog(null, "FOO");
+            repaint();
+
+            //JOptionPane.showMessageDialog(null, "FOO");
 
             //g2d.drawString("\u265e", x - 13, y + 10);
         }

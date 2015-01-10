@@ -39,8 +39,7 @@ public class GUIConnector implements IOSystem {
     @Handler public void handleSelectEvent(SelectEvent selectEvent) {
         if (this.player.isActive() && !selectEvent.isVisitedIOSystem()) {
             Logging.GUI.debug("Relay SelectEvent");
-            selectEvent.setVisitedIOSystem(true);
-            selectEvent.emit();
+            (new SelectEvent(selectEvent, true)).emit();
         }
     }
 
@@ -48,7 +47,8 @@ public class GUIConnector implements IOSystem {
     @Handler public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (this.player.isActive() && !updateBoardEvent.hasVisitedIOSystem()) {
             updateBoardEvent.setVisitedIOSystem(true);
-            updateBoardEvent.emit();
+            Logging.GUI.debug("Relay UpdateBoardEvent");
+            (new UpdateBoardEvent(updateBoardEvent, true)).emit();
         }
     }
 
