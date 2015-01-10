@@ -140,8 +140,6 @@ public class BoardView extends JPanel {
                 g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
             }
 
-            
-
             //g2d.drawString("\u265e", x - 13, y + 10);
         }
     }

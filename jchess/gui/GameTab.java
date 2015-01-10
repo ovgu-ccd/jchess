@@ -75,6 +75,7 @@ public class GameTab extends JPanel {
         add(boardView, BorderLayout.CENTER);
     }
 
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -82,10 +83,4 @@ public class GameTab extends JPanel {
     public Game getGame() {
         return game;
     }
-
-    @Handler
-    public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
-        JOptionPane.showMessageDialog(null, "Event Recieved");
-    }
-
 }
