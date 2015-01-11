@@ -1,6 +1,8 @@
 package jchess.gui;
 
-import jchess.*;
+import jchess.IOSystem;
+import jchess.Logging;
+import jchess.Player;
 import jchess.mvc.Controller;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -25,7 +27,6 @@ public class GUIConnector implements IOSystem {
         this.player = player;
     }
 
-
     @Override
     @Handler
     public void handleSelectEvent(SelectEvent selectEvent) {
@@ -47,6 +48,4 @@ public class GUIConnector implements IOSystem {
             (new UpdateBoardEvent(updateBoardEvent, true)).emit();
         }
     }
-
-
 }

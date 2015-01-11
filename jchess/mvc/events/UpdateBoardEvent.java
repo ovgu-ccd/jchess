@@ -9,10 +9,7 @@ import jchess.Board;
 public class UpdateBoardEvent extends Event {
 
     private boolean visitedIOSystem = false;
-
-
     private final Board board;
-
 
     public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent, boolean visitedIOSystem) {
         this.board = updateBoardEvent.getBoard();

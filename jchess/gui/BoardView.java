@@ -32,7 +32,6 @@ import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
-import sun.rmi.runtime.Log;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -41,10 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -142,7 +138,7 @@ public class BoardView extends JPanel {
 
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
-        if (updateBoardEvent.hasVisitedIOSystem()) {
+        if (updateBoardEvent.getBoard().getGame() == getGame() && updateBoardEvent.hasVisitedIOSystem()) {
             Logging.GUI.debug("Received UpdateBoardEvent");
 
             Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
@@ -204,5 +200,9 @@ public class BoardView extends JPanel {
 
             repaint();
         }
+    }
+
+    private Game getGame() {
+        return ((GameTab) getParent()).getGame();
     }
 }
