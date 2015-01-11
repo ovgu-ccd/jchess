@@ -182,7 +182,7 @@ class DrawNetworkSettings extends JPanel implements ActionListener {
             if (this.textNick.getText().length() == 0) {
                 error += StringResources.MAIN.getString("fill_name") + "\n";
             }
-            if (this.textPassword.getText().length() <= 4) {
+            if (this.textPassword.getPassword().length <= 4) {
                 error += StringResources.MAIN.getString("fill_pass_with_more_than_4_signs") + "\n";
             }
             if (this.radioClient.isSelected() && this.clientOptions.textServIP.getText().length() == 0) {
@@ -197,7 +197,7 @@ class DrawNetworkSettings extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, error);
                 return;
             }
-            String pass = this.textPassword.getText();
+            String pass = "" + this.textPassword.getPassword();
             if (this.radioServer.isSelected()) {
                 Server server = new Server(); //create server
                 server.newTable(Integer.parseInt(textGameID.getText()), pass, !servOptions.checkWitchoutObserver.isSelected(), !servOptions.checkDisableChat.isSelected()); //create new table
