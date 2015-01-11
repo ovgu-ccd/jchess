@@ -34,7 +34,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
-class ThemeChooseWindow extends JDialog implements ActionListener,
+public class ThemeChooseWindow extends JDialog implements ActionListener,
     ListSelectionListener {
 
     private String             result;

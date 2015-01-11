@@ -39,6 +39,10 @@ public class Board {
 
         tiles = new Tile[ 1 + 1*6 + 2*6 + 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
 
+        for (int i = 0; i< tiles.length; i++){
+            tiles[i] = new Tile();
+        }
+
         initNeighborhood();
         initFigures();
     }
@@ -85,7 +89,7 @@ public class Board {
      * @param b second axial coordinate
      */
     public Tile getTile( int a, int b ) {
-         return tiles[ CoordinateConverter.boardAxialCoordinateToIndex( a, b ) ];
+         return tiles[ CoordinateConverter.boardCoordinateToIndex(a, b) ];
     }
 
     public boolean undo() {
@@ -105,12 +109,14 @@ public class Board {
 
         // place Pawns
 
-        for( int b = 0 ; b < 4 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(1,b)].placePiece(new Pawn(0));
-        for( int b = 3 ; b < 5 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(2,b)].placePiece(new Pawn(0));
-        for( int b = 5 ; b < 9 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(1,b)].placePiece(new Pawn(0));
+        //tiles[0].placePiece( new Pawn(0) );
+
+        for( int b = 0 ; b < 4 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
+        for( int b = 3 ; b < 5 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(2, b)].placePiece(new Pawn(0));
+        for( int b = 5 ; b < 9 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
 
 
-
+/*
         tiles[147].placePiece( new Pawn(1) );
         tiles[109].placePiece( new Pawn(1) );
         tiles[110].placePiece( new Pawn(1) );
@@ -178,6 +184,9 @@ public class Board {
         tiles[166].placePiece( new King(0) ) ;
         tiles[152].placePiece( new King(1) ) ;
         tiles[138].placePiece( new King(2) ) ;
+*/
+
+
     }
 }
 

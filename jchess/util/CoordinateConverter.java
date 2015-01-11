@@ -22,6 +22,10 @@ public class CoordinateConverter {
         }
     }
 
+    private static int[] getPixel(PixelCoordinate ac) {
+        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
+    }
+
 
     public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
         int[] pixel = getPixel(ac);
@@ -29,10 +33,6 @@ public class CoordinateConverter {
             throw new PixelCoordinateNotOnBoardException();
         }
         return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
-    }
-
-    public static int[] getPixel(PixelCoordinate ac) {
-        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
     }
 
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
@@ -43,6 +43,7 @@ public class CoordinateConverter {
     public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
         double width_3_4 = 72.0 / Math.sqrt( 3.0 );
         int height_1_2 = 24;
+
 
         int x = 320 + ( int )Math.round( ( bc.b - bc.a ) * width_3_4 ) ;
         int y = 24 + height_1_2 * ( bc.a + bc.b );
@@ -55,8 +56,7 @@ public class CoordinateConverter {
     }
 
     /// TODO: Works correct but should have an official test and contracts, same as BoardCoordinates class
-    public static int boardAxialCoordinateToIndex( int a, int b ) {
-
+    public static int boardCoordinateToIndex(int a, int b) {
         if ( a < 8 ) {
             return 7 * a + b + /*GAUSS*/ a * (a + 1) / 2;
         }

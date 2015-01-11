@@ -22,7 +22,7 @@ public class BoardTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void testGetTile() {
-        board.getTile(0,1);
+        fail();
     }
 
     @Test

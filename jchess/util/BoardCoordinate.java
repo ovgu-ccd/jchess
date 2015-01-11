@@ -14,6 +14,40 @@ public class BoardCoordinate {
     }
 
     public String toString() {
-        return "(BC) Ring: " + a + " Position: " + b + " Abs: " + i;
+        return "(BC) A: " + a + " B: " + b + " Abs: " + i;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BoardCoordinate that = (BoardCoordinate) o;
+
+        if (a != that.a) return false;
+        if (b != that.b) return false;
+        if (i != that.i) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = a;
+        result = 31 * result + b;
+        result = 31 * result + i;
+        return result;
     }
 }

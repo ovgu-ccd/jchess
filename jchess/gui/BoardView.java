@@ -22,6 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.Controller;
+import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -41,8 +42,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -58,9 +57,10 @@ public class BoardView extends JPanel {
     private static final Image org_able_square = GUIUtils
             .loadImage("able_square.png");//image of square where piece can go
 
-    private ArrayList moves;
     private boolean fontSet = false;
-    private BufferedImage offscreen;
+
+    private BufferedImage piecesOverlay;
+    private BufferedImage movesOverlay;
 
     /**
      * Chessboard class constructor
@@ -71,7 +71,8 @@ public class BoardView extends JPanel {
         Controller.INSTANCE.subscribe(this);
         try {
             boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
-            offscreen = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,26 +82,34 @@ public class BoardView extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                BoardCoordinate bc = null;
-                //try {
-                    int[] p = CoordinateConverter.getPixel(new PixelCoordinate(e.getX(), e.getY()));
-                    Logging.GUI.debug("A: " + p[0] + " B: " + p[1] + " C: " + (p[1] - p[0]) +
-                            " I: " + CoordinateConverter.boardAxialCoordinateToIndex( p[0] , p[1] ));
+                BoardCoordinate boardCoordinate = null;
+                try {
+                    boardCoordinate = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
                     GameTab gameTab = (GameTab) getParent();
-                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), bc);
-
+                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), boardCoordinate);
 
                     Logging.GUI.debug("Emit SelectEvent");
                     selectEvent.emit();
 
-                //} catch (PixelCoordinateNotOnBoardException e1) {
-
+                } catch (PixelCoordinateNotOnBoardException e1) {
                     // Send no event
-                //}
+                }
             }
         });
-    }/*--endOf-Chessboard--*/
+    }
+
+    private Game getGame() {
+        return ((GameTab) getParent()).getGame();
+    }
+
+    public int getWidth() {
+        return boardImage.getWidth();
+    }
+
+    public int getHeight() {
+        return boardImage.getHeight();
+    }
 
     @Override
     public Dimension getPreferredSize() {
@@ -123,21 +132,15 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        g2d.setColor(Color.GRAY);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
-        g2d.drawImage(offscreen, null, 0, 0);
+        g2d.drawImage(piecesOverlay, null, 0, 0);
+        g2d.drawImage(movesOverlay, null, 0, 0);
     }
 
-    public int getWidth() {
-        return boardImage.getWidth();
-    }
 
-    public int getHeight() {
-        return boardImage.getHeight();
-    }
-
-    /**
-     * Annotations to superclass Game updateing and painting the crossboard
-     */
     @Override
     public void update(Graphics g) {
         repaint();
@@ -148,10 +151,11 @@ public class BoardView extends JPanel {
         if (updateBoardEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received UpdateBoardEvent");
 
-            Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
-            g2d.setColor(Color.GRAY);
-            g2d.fillRect(0, 0, getWidth(), getHeight());
-            g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
+            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+
+            Graphics2D g2d = (Graphics2D) piecesOverlay.getGraphics();
 
             if (!fontSet) {
                 g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
@@ -160,52 +164,56 @@ public class BoardView extends JPanel {
             Board board = updateBoardEvent.getBoard();
 
 
-            if (board.getTile(0).getPiece() != null) {
-                PixelCoordinate pc =
-                        CoordinateConverter.boardToPixelCoordinate(0, 0, 0);
-                g2d.drawString("\u2658", pc.x - 15, pc.y + 20);
-            }
-
-            int sum = 1;
-            int abs;
-            for (int ring = 1; ring < 8; ring++) {
-                for (int pos = 0; pos < 6 * ring; pos++) {
-                    abs = sum + pos;
-                    PixelCoordinate pc =
-                            CoordinateConverter.boardToPixelCoordinate(ring, pos, abs);
-                    //g2d.drawString(""+abs, pc.x - 16, pc.y + 7);
-                    Piece piece = board.getTile(abs).getPiece();
-                    if (piece != null) {
-                        switch (piece.getPlayerID()) {
-                            case 0:
-                                g2d.setColor(Color.green);
-                                break;
-                            case 1:
-                                g2d.setColor(Color.blue);
-                                break;
-                            case 2:
-                                g2d.setColor(Color.orange);
-                                break;
-                        }
-                        if (piece instanceof King) {
-                            g2d.drawString("\u265a", pc.x - 16, pc.y + 7);
-                        } else if (piece instanceof Queen) {
-                            g2d.drawString("\u265b", pc.x - 16, pc.y + 7);
-                        } else if (piece instanceof Rook) {
-                            g2d.drawString("\u265c", pc.x - 16, pc.y + 7);
-                        } else if (piece instanceof Bishop) {
-                            g2d.drawString("\u265d", pc.x - 16, pc.y + 7);
-                        } else if (piece instanceof Knight) {
-                            g2d.drawString("\u265e", pc.x - 16, pc.y + 7);
-                        } else if (piece instanceof Pawn) {
-                            g2d.drawString("\u265f", pc.x - 16, pc.y + 7);
-                        }
-                    }
+            for (int a = 0; a < 8; a++) {
+                for (int b = 0; b < (8 + a); b++) {
+                    int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
+                    Tile tile = board.getTile(tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
                 }
-                sum += ring * 6;
             }
 
+            for (int a = 8; a < 15; a++) {
+                int g = a - 9;
+                for (int b = g + 2; b < 15; ++b) {
+                    int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
+                    Tile tile = board.getTile(tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                }
+            }
             repaint();
+        }
+    }
+
+    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
+
+        PixelCoordinate pixelCoordinate =
+                CoordinateConverter.boardToPixelCoordinate(a, b, i);
+
+        if (piece != null) {
+            switch (piece.getPlayerID()) {
+                case 0:
+                    g2d.setColor(Color.green);
+                    break;
+                case 1:
+                    g2d.setColor(Color.blue);
+                    break;
+                case 2:
+                    g2d.setColor(Color.orange);
+                    break;
+            }
+            if (piece instanceof King) {
+                g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Queen) {
+                g2d.drawString("\u265b", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Rook) {
+                g2d.drawString("\u265c", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Bishop) {
+                g2d.drawString("\u265d", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Knight) {
+                g2d.drawString("\u265e", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Pawn) {
+                g2d.drawString("\u265f", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            }
         }
     }
 
@@ -213,11 +221,20 @@ public class BoardView extends JPanel {
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
         if (possibleMovesEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received PossibleMovesEvent");
-            // TODO
+            Graphics2D g2d = (Graphics2D) movesOverlay.getGraphics();
+            for (BoardCoordinate boardCoordinate : possibleMovesEvent.getBoardCoordinates()) {
+                PixelCoordinate absoluteCoordinate = CoordinateConverter.boardToPixelCoordinate(boardCoordinate);
+                g2d.fillRect(absoluteCoordinate.x - 2, absoluteCoordinate.y - 2, 4, 4);
+            }
+
+            repaint();
         }
     }
 
-    private Game getGame() {
-        return ((GameTab) getParent()).getGame();
+    @Handler
+    void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
+        if (invalidSelectEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received InvalidSelectEvent");
+        }
     }
 }
