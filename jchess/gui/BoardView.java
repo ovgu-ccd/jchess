@@ -22,6 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.Controller;
+import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.pieces.*;
@@ -200,6 +201,11 @@ public class BoardView extends JPanel {
 
             repaint();
         }
+    }
+
+    @Handler
+    void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
+        // TODO
     }
 
     private Game getGame() {

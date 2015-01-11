@@ -4,6 +4,7 @@ import jchess.IOSystem;
 import jchess.Logging;
 import jchess.Player;
 import jchess.mvc.Controller;
+import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import net.engio.mbassy.listener.Handler;
@@ -47,5 +48,11 @@ public class GUIConnector implements IOSystem {
             Logging.GUI.debug("Relay UpdateBoardEvent");
             (new UpdateBoardEvent(updateBoardEvent, true)).emit();
         }
+    }
+
+    @Override
+    @Handler
+    public void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
+        // TODO
     }
 }
