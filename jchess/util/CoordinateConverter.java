@@ -35,8 +35,6 @@ public class CoordinateConverter {
         return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
     }
 
-
-
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
         PixelCoordinate ac = new PixelCoordinate(x, y);
         return pixelToBoardCoordinate(ac);
@@ -58,7 +56,7 @@ public class CoordinateConverter {
     }
 
     /// TODO: Works correct but should have an official test and contracts, same as BoardCoordinates class
-    public static int boardAxialCoordinateToIndex( int a, int b ) {
+    public static int boardCoordinateToIndex(int a, int b) {
         if ( a < 8 ) {
             return 7 * a + b + /*GAUSS*/ a * (a + 1) / 2;
         }

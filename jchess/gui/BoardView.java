@@ -42,7 +42,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -58,8 +57,8 @@ public class BoardView extends JPanel {
     private static final Image org_able_square = GUIUtils
             .loadImage("able_square.png");//image of square where piece can go
 
-    private ArrayList moves;
     private boolean fontSet = false;
+
     private BufferedImage piecesOverlay;
     private BufferedImage movesOverlay;
 
@@ -83,12 +82,12 @@ public class BoardView extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                BoardCoordinate bc = null;
+                BoardCoordinate boardCoordinate = null;
                 try {
-                    bc = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
+                    boardCoordinate = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
                     GameTab gameTab = (GameTab) getParent();
-                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), bc);
+                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), boardCoordinate);
 
                     Logging.GUI.debug("Emit SelectEvent");
                     selectEvent.emit();
@@ -98,7 +97,19 @@ public class BoardView extends JPanel {
                 }
             }
         });
-    }/*--endOf-Chessboard--*/
+    }
+
+    private Game getGame() {
+        return ((GameTab) getParent()).getGame();
+    }
+
+    public int getWidth() {
+        return boardImage.getWidth();
+    }
+
+    public int getHeight() {
+        return boardImage.getHeight();
+    }
 
     @Override
     public Dimension getPreferredSize() {
@@ -130,17 +141,7 @@ public class BoardView extends JPanel {
         g2d.drawImage(movesOverlay, null, 0, 0);
     }
 
-    public int getWidth() {
-        return boardImage.getWidth();
-    }
 
-    public int getHeight() {
-        return boardImage.getHeight();
-    }
-
-    /**
-     * Annotations to superclass Game updateing and painting the crossboard
-     */
     @Override
     public void update(Graphics g) {
         repaint();
@@ -160,34 +161,22 @@ public class BoardView extends JPanel {
             Board board = updateBoardEvent.getBoard();
 
 
-            if (board.getTile(0).getPiece() != null) {
-                PixelCoordinate ac =
-                        CoordinateConverter.boardToPixelCoordinate(0, 0, 0);
-                Piece piece = board.getTile(0).getPiece();
-                renderPiece(g2d, piece, 0, 0, 0);
+            int a = 0, b = 0;
+
+            for (int i = 0; i < board.getNumTiles(); i++) {
+                Piece piece = board.getTile(CoordinateConverter.boardCoordinateToIndex(a, b)).getPiece();
+                renderPiece(g2d, piece, a, b, i);
             }
 
-            int sum = 1;
-            int abs;
-            for (int ring = 1; ring < 8; ring++) {
-                for (int pos = 0; pos < 6 * ring; pos++) {
-                    abs = sum + pos;
-                    Piece piece = board.getTile(abs).getPiece();
-                    renderPiece(g2d, piece, ring, pos, abs);
-                }
-                sum += ring * 6;
-            }
-
-            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
+            movesOverlay.getGraphics().clearRect(0, 0, boardImage.getWidth(), boardImage.getHeight());
             repaint();
         }
     }
 
-    void renderPiece(Graphics2D g2d, Piece piece, int ring, int pos, int abs) {
+    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
 
-        PixelCoordinate ac =
-                CoordinateConverter.boardToPixelCoordinate(ring, pos, abs);
+        PixelCoordinate pixelCoordinate =
+                CoordinateConverter.boardToPixelCoordinate(a, b, i);
 
         if (piece != null) {
             switch (piece.getPlayerID()) {
@@ -202,17 +191,17 @@ public class BoardView extends JPanel {
                     break;
             }
             if (piece instanceof King) {
-                g2d.drawString("\u265a", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             } else if (piece instanceof Queen) {
-                g2d.drawString("\u265b", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265b", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             } else if (piece instanceof Rook) {
-                g2d.drawString("\u265c", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265c", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             } else if (piece instanceof Bishop) {
-                g2d.drawString("\u265d", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265d", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             } else if (piece instanceof Knight) {
-                g2d.drawString("\u265e", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265e", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             } else if (piece instanceof Pawn) {
-                g2d.drawString("\u265f", ac.x - 16, ac.y + 7);
+                g2d.drawString("\u265f", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
             }
         }
     }
@@ -236,9 +225,5 @@ public class BoardView extends JPanel {
         if (invalidSelectEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received InvalidSelectEvent");
         }
-    }
-
-    private Game getGame() {
-        return ((GameTab) getParent()).getGame();
     }
 }
