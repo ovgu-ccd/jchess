@@ -22,6 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.Controller;
+import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.pieces.*;
@@ -84,7 +85,7 @@ public class BoardView extends JPanel {
                     bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
 
                     GameTab gameTab = (GameTab) getParent();
-                    SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
+                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), bc);
 
 
                     Logging.GUI.debug("Emit SelectEvent");
@@ -138,8 +139,8 @@ public class BoardView extends JPanel {
 
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
-        if (updateBoardEvent.getBoard().getGame() == getGame() && updateBoardEvent.hasVisitedIOSystem()) {
-            Logging.GUI.debug("Received UpdateBoardEvent");
+        if (updateBoardEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received UpdateBoardEvent");
 
             Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
@@ -199,6 +200,14 @@ public class BoardView extends JPanel {
             }
 
             repaint();
+        }
+    }
+
+    @Handler
+    void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
+        if (possibleMovesEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received PossibleMovesEvent");
+            // TODO
         }
     }
 
