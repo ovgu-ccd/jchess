@@ -43,7 +43,6 @@ public class GUIConnector implements IOSystem {
     public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (this.player.getGame() == updateBoardEvent.getBoard().getGame()
             && this.player.isActive() && !updateBoardEvent.hasVisitedIOSystem()) {
-            updateBoardEvent.setVisitedIOSystem(true);
             Logging.GUI.debug("Relay UpdateBoardEvent");
             (new UpdateBoardEvent(updateBoardEvent, true)).emit();
         }
