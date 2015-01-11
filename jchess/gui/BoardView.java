@@ -22,6 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.Controller;
+import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -160,7 +161,8 @@ public class BoardView extends JPanel {
             if (board.getTile(0).getPiece() != null) {
                 AbsoluteCoordinate ac =
                         CoordinateConverter.boardCoordinateToAbsoluteCoordinate(0, 0, 0);
-                g2d.drawString("\u2658", ac.x - 15, ac.y + 20);
+                Piece piece = board.getTile(0).getPiece();
+                renderPiece(g2d, piece, 0, 0, 0);
             }
 
             int sum = 1;
@@ -168,41 +170,49 @@ public class BoardView extends JPanel {
             for (int ring = 1; ring < 8; ring++) {
                 for (int pos = 0; pos < 6 * ring; pos++) {
                     abs = sum + pos;
-                    AbsoluteCoordinate ac =
-                            CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
-                    //g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
                     Piece piece = board.getTile(abs).getPiece();
-                    if (piece != null) {
-                        switch (piece.getPlayerID()) {
-                            case 0:
-                                g2d.setColor(Color.green);
-                                break;
-                            case 1:
-                                g2d.setColor(Color.blue);
-                                break;
-                            case 2:
-                                g2d.setColor(Color.orange);
-                                break;
-                        }
-                        if (piece instanceof King) {
-                            g2d.drawString("\u265a", ac.x - 16, ac.y + 7);
-                        } else if (piece instanceof Queen) {
-                            g2d.drawString("\u265b", ac.x - 16, ac.y + 7);
-                        } else if (piece instanceof Rook) {
-                            g2d.drawString("\u265c", ac.x - 16, ac.y + 7);
-                        } else if (piece instanceof Bishop) {
-                            g2d.drawString("\u265d", ac.x - 16, ac.y + 7);
-                        } else if (piece instanceof Knight) {
-                            g2d.drawString("\u265e", ac.x - 16, ac.y + 7);
-                        } else if (piece instanceof Pawn) {
-                            g2d.drawString("\u265f", ac.x - 16, ac.y + 7);
-                        }
-                    }
+                    renderPiece(g2d, piece, ring, pos, abs);
                 }
                 sum += ring * 6;
             }
 
+            offscreenPossibleMovesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
             repaint();
+        }
+    }
+
+    void renderPiece(Graphics2D g2d, Piece piece, int ring, int pos, int abs) {
+
+        AbsoluteCoordinate ac =
+                CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs);
+        //g2d.drawString(""+abs, ac.x - 16, ac.y + 7);
+
+        if (piece != null) {
+            switch (piece.getPlayerID()) {
+                case 0:
+                    g2d.setColor(Color.green);
+                    break;
+                case 1:
+                    g2d.setColor(Color.blue);
+                    break;
+                case 2:
+                    g2d.setColor(Color.orange);
+                    break;
+            }
+            if (piece instanceof King) {
+                g2d.drawString("\u265a", ac.x - 16, ac.y + 7);
+            } else if (piece instanceof Queen) {
+                g2d.drawString("\u265b", ac.x - 16, ac.y + 7);
+            } else if (piece instanceof Rook) {
+                g2d.drawString("\u265c", ac.x - 16, ac.y + 7);
+            } else if (piece instanceof Bishop) {
+                g2d.drawString("\u265d", ac.x - 16, ac.y + 7);
+            } else if (piece instanceof Knight) {
+                g2d.drawString("\u265e", ac.x - 16, ac.y + 7);
+            } else if (piece instanceof Pawn) {
+                g2d.drawString("\u265f", ac.x - 16, ac.y + 7);
+            }
         }
     }
 
@@ -217,6 +227,13 @@ public class BoardView extends JPanel {
             }
 
             repaint();
+        }
+    }
+
+    @Handler
+    void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
+        if (invalidSelectEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received InvalidSelectEvent");
         }
     }
 

@@ -48,13 +48,13 @@ public class CoordinateConverter {
     public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(BoardCoordinate bc) {
         int x = 0, y = 0;
 
-        if (bc.ring > 0) {
+        if (bc.getRing() > 0) {
 
-            double startX = startDirections[bc.pos / bc.ring][0] * bc.ring * du;
-            double startY = startDirections[bc.pos / bc.ring][1] * bc.ring * du;
+            double startX = startDirections[bc.getPos() / bc.getRing()][0] * bc.getRing() * du;
+            double startY = startDirections[bc.getPos() / bc.getRing()][1] * bc.getRing() * du;
 
-            double[] edgeDir = directions[bc.pos / bc.ring];
-            int inEdgeIndex = bc.pos % bc.ring;
+            double[] edgeDir = directions[bc.getPos() / bc.getRing()];
+            int inEdgeIndex = bc.getPos() % bc.getRing();
 
             x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
             y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
