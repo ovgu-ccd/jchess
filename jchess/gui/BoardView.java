@@ -136,8 +136,8 @@ public class BoardView extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
-        g2d.drawImage(movesOverlay, null, 0, 0);
         g2d.drawImage(piecesOverlay, null, 0, 0);
+        g2d.drawImage(movesOverlay, null, 0, 0);
     }
 
 

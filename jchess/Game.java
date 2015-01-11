@@ -10,9 +10,8 @@ import jchess.util.BoardCoordinate;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
-import java.lang.ref.WeakReference;
+
 import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -25,6 +24,7 @@ public class Game {
     private Board board;
     private Tile selectedTile;
     private int activePlayerID;
+    private HashSet<BoardCoordinate> possibleMovesCoordinates;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
@@ -37,7 +37,7 @@ public class Game {
             throw new IllegalArgumentException();
         }
         Game game = new Game(players);
-        for (Player player : players){
+        for (Player player : players) {
             player.setGame(game);
         }
         return game;
@@ -49,12 +49,13 @@ public class Game {
 
     public void emitInvalidSelectEvent() {
         InvalidSelectEvent invalidSelectEvent = new InvalidSelectEvent(this);
-        Logging.GAME.debug("Game: Emit PossibleMovesEvent");
+        Logging.GAME.debug("Game: Emit InvalidSelectEvent");
         invalidSelectEvent.emit();
     }
 
     public void emitPossibleMovesEvent() {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMoveCoordinates());
+        collectPossibleMoveCoordinates();
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, possibleMovesCoordinates);
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
@@ -84,19 +85,28 @@ public class Game {
                 }
             } else {
                 Tile tile = board.getTile(selectEvent.getBoardCoordinate().getI());
-                Piece piece = selectedTile.getPiece();
-                selectedTile.removePiece();
-                tile.placePiece(piece);
 
-                activePlayerID++;
-                activePlayerID %= 3;
-                for (int i = 0; i < 3; i++) {
-                    players[i].setActive(i == activePlayerID);
+                if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
+                    if (possibleMovesCoordinates.contains(selectEvent.getBoardCoordinate())) {
+                        Piece selectedPiece = selectedTile.getPiece();
+                        selectedTile.removePiece();
+                        tile.placePiece(selectedPiece);
+
+                        activePlayerID++;
+                        activePlayerID %= 3;
+                        for (int i = 0; i < 3; i++) {
+                            players[i].setActive(i == activePlayerID);
+                        }
+
+                        selectedTile = null;
+                        emitUpdateBoardEvent();
+                    } else {
+                        emitInvalidSelectEvent();
+                    }
+                } else {
+                    selectedTile = tile;
+                    emitPossibleMovesEvent();
                 }
-
-                selectedTile = null;
-
-                emitUpdateBoardEvent();
             }
         }
     }
@@ -105,9 +115,8 @@ public class Game {
     public void handlePromotionEvent(Piece piece) {
     }
 
-    private Set<BoardCoordinate> collectPossibleMoveCoordinates() {
-        HashSet<BoardCoordinate> boardCoordinates = new HashSet<>();
-        boardCoordinates.add(new BoardCoordinate(0, 0, 0));
-        return boardCoordinates;
+    private void collectPossibleMoveCoordinates() {
+        possibleMovesCoordinates = new HashSet<>();
+        possibleMovesCoordinates.add(new BoardCoordinate(0, 1, 1));
     }
 }
