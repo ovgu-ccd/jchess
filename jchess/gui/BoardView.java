@@ -76,6 +76,13 @@ public class BoardView extends JPanel {
 
                     bc = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
+                    PixelCoordinate pc = CoordinateConverter.boardToPixelCoordinate(bc);
+
+                    x = pc.x;
+                    y = pc.y;
+
+                    repaint();
+
                     GameTab gameTab = (GameTab) getParent();
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
                     selectEvent.emit();
@@ -101,6 +108,9 @@ public class BoardView extends JPanel {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
 
+
+    int x, y;
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -110,7 +120,9 @@ public class BoardView extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);//draw an Image of chessboard
 
-        g2d.setColor(Color.gray);
+        g2d.setColor(Color.red);
+
+        g2d.fillRect(x-2, y-2, 4, 4);
 
         if (!fontSet) {
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
