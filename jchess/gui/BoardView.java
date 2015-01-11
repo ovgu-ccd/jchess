@@ -140,7 +140,7 @@ public class BoardView extends JPanel {
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.shouldReceive(getGame())) {
-            Logging.GUI.debug("BoardView: UpdateBoardEvent");
+            Logging.GUI.debug("BoardView: Received UpdateBoardEvent");
 
             Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
