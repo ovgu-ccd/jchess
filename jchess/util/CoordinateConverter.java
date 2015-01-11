@@ -51,25 +51,11 @@ public class CoordinateConverter {
     }
 
     public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
-        
-        int x = 0, y = 0;
 
-        if (bc.a > 0) {
+        double width = 96.0 / Math.sqrt( 3.0 );
+        int x = ( int )( bc.c * 0.75 * width + 0.5 * width ) ;
 
-            double startX = startDirections[bc.b / bc.a][0] * bc.a * du;
-            double startY = startDirections[bc.b / bc.a][1] * bc.a * du;
-
-            double[] edgeDir = directions[bc.b / bc.a];
-            int inEdgeIndex = bc.b % bc.a;
-
-            x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
-            y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
-        }
-
-        x += image.getWidth() / 2;
-        y = image.getHeight() / 2 - y;
-
-        return new PixelCoordinate(x, y);
+        return new PixelCoordinate(x, 360);
     }
 
     public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
