@@ -39,7 +39,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** Class responsible for the starts of new games, loading games,
+/**
+ * Class responsible for the starts of new games, loading games,
  * saving it, and for ending it.
  * This class is also responsible for appoing player with have
  * a move at the moment
@@ -74,10 +75,6 @@ public class GameTab extends JPanel {
         add(boardView, BorderLayout.CENTER);
     }
 
-    @Handler
-    public void handleUpdateBoardEvent( UpdateBoardEvent updateBoardEvent ) {
-        JOptionPane.showMessageDialog( null, "Event Recieved" );
-    }
 
     public void setGame(Game game) {
         this.game = game;
@@ -86,5 +83,4 @@ public class GameTab extends JPanel {
     public Game getGame() {
         return game;
     }
-
 }

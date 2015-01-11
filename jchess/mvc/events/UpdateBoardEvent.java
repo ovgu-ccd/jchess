@@ -1,26 +1,19 @@
 package jchess.mvc.events;
 
-import jchess.Board;
 
+import jchess.Board;
+import jchess.Game;
 
 /**
- * Created by Severin Orth on 07.12.14.
- *
- * NewGame message for creating a new game
+ * Created by andreas on 10.01.15.
  */
-public class UpdateBoardEvent extends Event {
+public class UpdateBoardEvent extends AbstractIOSystemRelayEvent {
 
-    private final Board board;
-
-
-    public UpdateBoardEvent(Board board) {
-        super();
-
-        this.board = board;
+    public UpdateBoardEvent(Game game) {
+        super(game);
     }
 
-    public Board getBoard() {
-        return board;
+    public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+        super(updateBoardEvent);
     }
-
 }

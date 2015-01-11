@@ -17,12 +17,14 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.events.NewGameEvent;
-import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 
 /**
@@ -144,13 +146,13 @@ public class GUI extends JFrame implements ActionListener {
         NewGameEvent event = new NewGameEvent(
                 new String[]{firstName, secondName, thirdName},
                 new IOSystem[]{
-                        new GUIConnector(newTab),
-                        new GUIConnector(newTab),
-                        new GUIConnector(newTab)
+                        new GUIConnector(),
+                        new GUIConnector(),
+                        new GUIConnector()
                 }, newTab);
 
         pack();
-        Logging.GUI.debug("Event emitted");
+        Logging.GUI.debug("GUI: Emit NewGameEvent");
         event.emit();
     }
 

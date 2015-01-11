@@ -5,6 +5,7 @@ import jchess.gui.GUI;
 import jchess.mvc.Controller;
 import jchess.mvc.events.NewGameEvent;
 import net.engio.mbassy.listener.Handler;
+import net.engio.mbassy.listener.Invoke;
 
 import javax.swing.*;
 import java.util.LinkedList;
@@ -57,13 +58,15 @@ public class Application implements Runnable {
 
         players[0] = new Player(newGameEvent.getPlayerNames()[0],
                 newGameEvent.getIoSystems()[0],
-                "white");
+                Player.PlayerColor.WHITE);
         players[1] = new Player(newGameEvent.getPlayerNames()[1],
                 newGameEvent.getIoSystems()[1],
-                "black");
+                Player.PlayerColor.BLACK);
         players[2] = new Player(newGameEvent.getPlayerNames()[2],
                 newGameEvent.getIoSystems()[2],
-                "red");
+                Player.PlayerColor.RED);
+
+        players[0].setActive(true);
 
         newGameEvent.getIoSystems()[0].setPlayer(players[0]);
         newGameEvent.getIoSystems()[1].setPlayer(players[1]);

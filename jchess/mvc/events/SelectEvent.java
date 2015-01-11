@@ -6,21 +6,20 @@ import jchess.util.BoardCoordinate;
 /**
  * Created by andreas on 10.01.15.
  */
-public class SelectEvent extends Event {
-    private BoardCoordinate bc;
-    private Game game;
-    private boolean visitedIOSystem = false;
+public class SelectEvent extends AbstractIOSystemRelayEvent {
+    private final BoardCoordinate boardCoordinate;
 
-    public SelectEvent(BoardCoordinate boardCoordinate, Game game) {
-        this.bc = boardCoordinate;
-        this.game = game;
+    public SelectEvent(Game game, BoardCoordinate boardCoordinate) {
+        super(game);
+        this.boardCoordinate = boardCoordinate;
     }
 
-    public boolean hasVisitedIOSystem() {
-        return visitedIOSystem;
+    public SelectEvent(SelectEvent selectEvent) {
+        super(selectEvent);
+        this.boardCoordinate = selectEvent.getBoardCoordinate();
     }
 
-    public void setVisitedIOSystem(boolean visitedIOSystem) {
-        this.visitedIOSystem = visitedIOSystem;
+    public BoardCoordinate getBoardCoordinate() {
+        return boardCoordinate;
     }
 }

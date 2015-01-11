@@ -17,7 +17,7 @@ public class BoardTest {
 
     @Before
     public void setup(){
-        board = new Board();
+        board = new Board(null);
     }
 
     @Test(expected=IllegalArgumentException.class)
