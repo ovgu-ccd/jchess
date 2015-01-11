@@ -32,9 +32,11 @@ import jchess.pieces.*;
 public class Board {
 
     private Tile tiles[];
+    private Game game;
 
-    public Board() {
+    public Board(Game game) {
         // generate Fields
+        this.game = game;
         tiles = new Tile[ 1 + 1*6 + 2*6 * 3*6 + 4*6 + 5*6 + 6*6 + 7*6 ] ;
         initTiles();
         initFigures();
@@ -194,6 +196,13 @@ public class Board {
         tiles[152].placePiece( new King(1) ) ;
         tiles[138].placePiece( new King(2) ) ;
     }
-    
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }
 
