@@ -75,10 +75,6 @@ public class Board {
         return tiles[tileIndex];
     }
 
-    public int getNumTiles(){
-        return tiles.length;
-    }
-
     public boolean undo() {
         return true;
     }
@@ -95,12 +91,7 @@ public class Board {
     void initFigures() {
 
         // place Pawns
-
-        for( int b = 0 ; b < 4 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
-        for( int b = 3 ; b < 5 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(2, b)].placePiece(new Pawn(0));
-        for( int b = 5 ; b < 9 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
-
-        tiles[147].placePiece( new Pawn(0) );
+        tiles[0].placePiece( new Pawn(0) );
     }
 }
 

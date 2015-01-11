@@ -136,9 +136,8 @@ public class BoardView extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
-
-        g2d.drawImage(piecesOverlay, null, 0, 0);
         g2d.drawImage(movesOverlay, null, 0, 0);
+        g2d.drawImage(piecesOverlay, null, 0, 0);
     }
 
 
@@ -152,6 +151,10 @@ public class BoardView extends JPanel {
         if (updateBoardEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received UpdateBoardEvent");
 
+            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+
             Graphics2D g2d = (Graphics2D) piecesOverlay.getGraphics();
 
             if (!fontSet) {
@@ -161,14 +164,22 @@ public class BoardView extends JPanel {
             Board board = updateBoardEvent.getBoard();
 
 
-            int a = 0, b = 0;
-
-            for (int i = 0; i < board.getNumTiles(); i++) {
-                Piece piece = board.getTile(CoordinateConverter.boardCoordinateToIndex(a, b)).getPiece();
-                renderPiece(g2d, piece, a, b, i);
+            for (int a = 0; a < 8; a++) {
+                for (int b = 0; b < (8 + a); b++) {
+                    int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
+                    Tile tile = board.getTile(tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                }
             }
 
-            movesOverlay.getGraphics().clearRect(0, 0, boardImage.getWidth(), boardImage.getHeight());
+            for (int a = 8; a < 15; a++) {
+                int g = a - 9;
+                for (int b = g + 2; b < 15; ++b) {
+                    int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
+                    Tile tile = board.getTile(tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                }
+            }
             repaint();
         }
     }
