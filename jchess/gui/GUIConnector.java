@@ -27,15 +27,19 @@ public class GUIConnector implements IOSystem {
 
 
     @Override
-    @Handler public void handleSelectEvent(SelectEvent selectEvent) {
-        if (this.player.isActive() && !selectEvent.isVisitedIOSystem()) {
+    @Handler
+    public void handleSelectEvent(SelectEvent selectEvent) {
+        if (selectEvent.getGame() == player.getGame()
+                && this.player.isActive()
+                && !selectEvent.isVisitedIOSystem()) {
             Logging.GUI.debug("Relay SelectEvent");
             (new SelectEvent(selectEvent, true)).emit();
         }
     }
 
     @Override
-    @Handler public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+    @Handler
+    public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (this.player.isActive() && !updateBoardEvent.hasVisitedIOSystem()) {
             updateBoardEvent.setVisitedIOSystem(true);
             Logging.GUI.debug("Relay UpdateBoardEvent");
