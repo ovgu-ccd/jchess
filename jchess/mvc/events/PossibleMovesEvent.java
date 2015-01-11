@@ -15,8 +15,8 @@ public class PossibleMovesEvent extends AbstractIOSystemRelayEvent {
         this.boardCoordinates = boardCoordinates;
     }
 
-    public PossibleMovesEvent(PossibleMovesEvent possibleMovesEvent, boolean visitedIOSystem) {
-        super(possibleMovesEvent, visitedIOSystem);
+    public PossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
+        super(possibleMovesEvent);
         this.boardCoordinates = possibleMovesEvent.getBoardCoordinates();
     }
 

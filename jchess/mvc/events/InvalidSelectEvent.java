@@ -10,7 +10,7 @@ public class InvalidSelectEvent extends AbstractIOSystemRelayEvent {
         super(game);
     }
 
-    public InvalidSelectEvent(AbstractIOSystemRelayEvent abstractIOSystemRelayEvent, boolean visitedIOSystem) {
-        super(abstractIOSystemRelayEvent, visitedIOSystem);
+    public InvalidSelectEvent(AbstractIOSystemRelayEvent abstractIOSystemRelayEvent) {
+        super(abstractIOSystemRelayEvent);
     }
 }

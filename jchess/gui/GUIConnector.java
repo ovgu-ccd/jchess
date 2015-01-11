@@ -34,7 +34,7 @@ public class GUIConnector implements IOSystem {
     public void handleSelectEvent(SelectEvent selectEvent) {
         if (selectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay SelectEvent");
-            (new SelectEvent(selectEvent, true)).emit();
+            (new SelectEvent(selectEvent)).emit();
         }
     }
 
@@ -43,7 +43,7 @@ public class GUIConnector implements IOSystem {
     public void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay UpdateBoardEvent");
-            (new UpdateBoardEvent(updateBoardEvent, true)).emit();
+            (new UpdateBoardEvent(updateBoardEvent)).emit();
         }
     }
 
@@ -53,7 +53,7 @@ public class GUIConnector implements IOSystem {
         // TODO
         if (possibleMovesEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay PossibleMovesEvent");
-            (new PossibleMovesEvent(possibleMovesEvent, true)).emit();
+            (new PossibleMovesEvent(possibleMovesEvent)).emit();
         }
     }
 
@@ -63,7 +63,7 @@ public class GUIConnector implements IOSystem {
         // TODO
         if (invalidSelectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay InvalidSelectEvent");
-            (new InvalidSelectEvent(invalidSelectEvent, true)).emit();
+            (new InvalidSelectEvent(invalidSelectEvent)).emit();
         }
     }
 }

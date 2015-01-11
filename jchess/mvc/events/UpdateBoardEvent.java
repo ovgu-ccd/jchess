@@ -13,7 +13,7 @@ public class UpdateBoardEvent extends AbstractIOSystemRelayEvent {
         super(game);
     }
 
-    public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent, boolean visitedIOSystem) {
-        super(updateBoardEvent, visitedIOSystem);
+    public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
+        super(updateBoardEvent);
     }
 }

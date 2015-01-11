@@ -14,8 +14,8 @@ public class SelectEvent extends AbstractIOSystemRelayEvent {
         this.boardCoordinate = boardCoordinate;
     }
 
-    public SelectEvent(SelectEvent selectEvent, boolean visitedIOSystem) {
-        super(selectEvent, visitedIOSystem);
+    public SelectEvent(SelectEvent selectEvent) {
+        super(selectEvent);
         this.boardCoordinate = selectEvent.getBoardCoordinate();
     }
 
