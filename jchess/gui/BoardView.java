@@ -60,6 +60,7 @@ public class BoardView extends JPanel {
     private ArrayList moves;
     private boolean fontSet = false;
     private BufferedImage offscreen;
+    private BufferedImage offscreenPossibleMovesOverlay;
 
     /**
      * Chessboard class constructor
@@ -71,6 +72,7 @@ public class BoardView extends JPanel {
         try {
             boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
             offscreen = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            offscreenPossibleMovesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,6 +121,7 @@ public class BoardView extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2d.drawImage(offscreen, null, 0, 0);
+        g2d.drawImage(offscreenPossibleMovesOverlay, null, 0, 0);
     }
 
     public int getWidth() {
@@ -207,7 +210,13 @@ public class BoardView extends JPanel {
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
         if (possibleMovesEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received PossibleMovesEvent");
-            // TODO
+            Graphics2D g2d = (Graphics2D) offscreenPossibleMovesOverlay.getGraphics();
+            for (BoardCoordinate boardCoordinate : possibleMovesEvent.getBoardCoordinates()) {
+                AbsoluteCoordinate absoluteCoordinate = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(boardCoordinate);
+                g2d.fillRect(absoluteCoordinate.x - 2, absoluteCoordinate.y - 2, 4, 4);
+            }
+
+            repaint();
         }
     }
 

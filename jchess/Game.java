@@ -57,7 +57,7 @@ public class Game {
     }
 
     public void emitPossibleMovesEvent() {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMovesCoordinates());
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMoveCoordinates());
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
@@ -74,9 +74,9 @@ public class Game {
 
     @Handler
     public void handleSelectEvent(SelectEvent selectEvent) {
-        if (selectEvent.shouldReceive(selectEvent.getGame())) {
+        if (selectEvent.shouldReceive(this)) {
             // TODO logic
-            Logging.GAME.debug("Game: Received SelectEvent");
+            Logging.GAME.debug(selectEvent.getGame() + " Received SelectEvent");
             emitPossibleMovesEvent();
         }
     }
@@ -85,8 +85,9 @@ public class Game {
     public void handlePromotionEvent(Piece piece) {
     }
 
-    private Set<BoardCoordinate> collectPossibleMovesCoordinates() {
-        // TODO
-        return new HashSet<BoardCoordinate>();
+    private Set<BoardCoordinate> collectPossibleMoveCoordinates() {
+        HashSet<BoardCoordinate> boardCoordinates = new HashSet<>();
+        boardCoordinates.add(new BoardCoordinate(0, 0, 0));
+        return boardCoordinates;
     }
 }
