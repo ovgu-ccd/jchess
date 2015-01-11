@@ -28,15 +28,46 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
+    public enum PlayerColor {WHITE, BLACK, RED}
+    public enum PlayerType {LOCAL, NETWORK, COMPUTER}
+
     private String name;
+    private Game game;
     private IOSystem ioSystem;
     private boolean active;
+    private PlayerType playerType;
+    private PlayerColor color;
 
-    public Player(String name, IOSystem ioSystem, String color) {
+
+    public Player(String name, IOSystem ioSystem, PlayerColor color) {
         this.setName(name);
-        this.setColor(colors.valueOf(color));
+        this.setColor(color);
         this.ioSystem = ioSystem;
         this.active = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public IOSystem getIoSystem() {
+        return ioSystem;
+    }
+
+    public void setIoSystem(IOSystem ioSystem) {
+        this.ioSystem = ioSystem;
     }
 
     public boolean isActive() {
@@ -47,56 +78,19 @@ public class Player implements Serializable {
         this.active = active;
     }
 
-    public colors getColor() {
+    public PlayerType getPlayerType() {
+        return playerType;
+    }
+
+    public void setPlayerType(PlayerType playerType) {
+        this.playerType = playerType;
+    }
+
+    public PlayerColor getColor() {
         return color;
     }
 
-    void setColor(colors color) {
+    public void setColor(PlayerColor color) {
         this.color = color;
-    }
-
-    public enum colors {
-        white,
-        black,
-        red
-    }
-
-    private colors color;
-
-    public enum playerTypes {
-        localUser, networkUser, computer
-    }
-
-    public playerTypes playerType;
-
-    /**
-     * Method setting the players name
-     *
-     * @param name name of player
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Method getting the players name
-     *
-     * @return name of player
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Method setting the players type
-     *
-     * @param type type of player - enumerate
-     */
-    public void setType(playerTypes type) {
-        this.playerType = type;
-    }
-
-    public IOSystem getIoSystem() {
-        return ioSystem;
     }
 }

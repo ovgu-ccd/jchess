@@ -58,13 +58,13 @@ public class Application implements Runnable {
 
         players[0] = new Player(newGameEvent.getPlayerNames()[0],
                 newGameEvent.getIoSystems()[0],
-                "white");
+                Player.PlayerColor.WHITE);
         players[1] = new Player(newGameEvent.getPlayerNames()[1],
                 newGameEvent.getIoSystems()[1],
-                "black");
+                Player.PlayerColor.BLACK);
         players[2] = new Player(newGameEvent.getPlayerNames()[2],
                 newGameEvent.getIoSystems()[2],
-                "red");
+                Player.PlayerColor.RED);
 
         players[0].setActive(true);
 

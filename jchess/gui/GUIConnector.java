@@ -14,26 +14,17 @@ import net.engio.mbassy.listener.References;
 @Listener(references = References.Strong)
 public class GUIConnector implements IOSystem {
 
-    private GameTab gameTab;
     private Player player;
 
-    public GUIConnector(GameTab gameTab) {
+    public GUIConnector() {
         Controller.INSTANCE.subscribe(this);
-        this.gameTab = gameTab;
-    }
-
-    @Override public void handleUpdate(Board board) {
-
-    }
-
-    @Override public void handleNextPlayer() {
-
     }
 
     @Override
-    public void handlePostMessage(ChatMessage chatMessage) {
-
+    public void setPlayer(Player player) {
+        this.player = player;
     }
+
 
     @Override
     @Handler public void handleSelectEvent(SelectEvent selectEvent) {
@@ -52,8 +43,5 @@ public class GUIConnector implements IOSystem {
         }
     }
 
-    @Override
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+
 }

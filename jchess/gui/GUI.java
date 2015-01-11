@@ -144,9 +144,9 @@ public class GUI extends JFrame implements ActionListener {
         NewGameEvent event = new NewGameEvent(
                 new String[]{firstName, secondName, thirdName},
                 new IOSystem[]{
-                        new GUIConnector(newTab),
-                        new GUIConnector(newTab),
-                        new GUIConnector(newTab)
+                        new GUIConnector(),
+                        new GUIConnector(),
+                        new GUIConnector()
                 }, newTab);
 
         pack();

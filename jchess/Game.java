@@ -31,6 +31,9 @@ public class Game {
             throw new IllegalArgumentException();
         }
         Game game = new Game(players);
+        for (Player player : players){
+            player.setGame(game);
+        }
         return game;
     }
 
