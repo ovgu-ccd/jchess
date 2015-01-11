@@ -7,6 +7,7 @@ import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.pieces.Piece;
 import jchess.util.BoardCoordinate;
+import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
@@ -118,5 +119,7 @@ public class Game {
     private void collectPossibleMoveCoordinates() {
         possibleMovesCoordinates = new HashSet<>();
         possibleMovesCoordinates.add(new BoardCoordinate(0, 1, 1));
+        possibleMovesCoordinates.add(new BoardCoordinate(1, 1, 1));
+        possibleMovesCoordinates.add(new BoardCoordinate(1, 2, 1));
     }
 }
