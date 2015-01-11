@@ -30,7 +30,6 @@ public class Game {
         Controller.INSTANCE.subscribe(this);
         this.players = players;
         this.board = new Board();
-        emitUpdateBoardEvent();
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {

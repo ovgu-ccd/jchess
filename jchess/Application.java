@@ -76,5 +76,6 @@ public class Application implements Runnable {
         Game game = Game.newGame(players);
         newGameEvent.getGameTab().setGame(game);
         games.add(game);
+        game.emitUpdateBoardEvent();
     }
 }
