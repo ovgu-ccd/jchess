@@ -51,16 +51,21 @@ import java.io.IOException;
 @Listener(references = References.Strong)
 public class BoardView extends JPanel {
     private static BufferedImage boardImage;
-
-    private static final Image org_sel_square = GUIUtils
-            .loadImage("sel_square.png");//image of highlited square
-    private static final Image org_able_square = GUIUtils
-            .loadImage("able_square.png");//image of square where piece can go
+    private static BufferedImage possibleMoveImage;
 
     private boolean fontSet = false;
 
     private BufferedImage piecesOverlay;
     private BufferedImage movesOverlay;
+
+    static {
+        try {
+            boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
+            possibleMoveImage = ImageIO.read(Application.class.getResource("images.org/TileHighlighter.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Chessboard class constructor
@@ -69,13 +74,9 @@ public class BoardView extends JPanel {
      */
     public BoardView(Settings settings) {
         Controller.INSTANCE.subscribe(this);
-        try {
-            boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
-            piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         this.setDoubleBuffered(true);
 
@@ -146,6 +147,40 @@ public class BoardView extends JPanel {
         repaint();
     }
 
+
+    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
+
+        PixelCoordinate pixelCoordinate =
+                CoordinateConverter.boardToPixelCoordinate(a, b, i);
+
+        if (piece != null) {
+            switch (piece.getPlayerID()) {
+                case 0:
+                    g2d.setColor(Color.green);
+                    break;
+                case 1:
+                    g2d.setColor(Color.blue);
+                    break;
+                case 2:
+                    g2d.setColor(Color.orange);
+                    break;
+            }
+            if (piece instanceof King) {
+                g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Queen) {
+                g2d.drawString("\u265b", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Rook) {
+                g2d.drawString("\u265c", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Bishop) {
+                g2d.drawString("\u265d", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Knight) {
+                g2d.drawString("\u265e", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            } else if (piece instanceof Pawn) {
+                g2d.drawString("\u265f", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
+            }
+        }
+    }
+
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.shouldReceive(getGame())) {
@@ -184,39 +219,6 @@ public class BoardView extends JPanel {
         }
     }
 
-    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
-
-        PixelCoordinate pixelCoordinate =
-                CoordinateConverter.boardToPixelCoordinate(a, b, i);
-
-        if (piece != null) {
-            switch (piece.getPlayerID()) {
-                case 0:
-                    g2d.setColor(Color.green);
-                    break;
-                case 1:
-                    g2d.setColor(Color.blue);
-                    break;
-                case 2:
-                    g2d.setColor(Color.orange);
-                    break;
-            }
-            if (piece instanceof King) {
-                g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            } else if (piece instanceof Queen) {
-                g2d.drawString("\u265b", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            } else if (piece instanceof Rook) {
-                g2d.drawString("\u265c", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            } else if (piece instanceof Bishop) {
-                g2d.drawString("\u265d", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            } else if (piece instanceof Knight) {
-                g2d.drawString("\u265e", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            } else if (piece instanceof Pawn) {
-                g2d.drawString("\u265f", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
-            }
-        }
-    }
-
     @Handler
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
         if (possibleMovesEvent.shouldReceive(getGame())) {
@@ -224,7 +226,9 @@ public class BoardView extends JPanel {
             Graphics2D g2d = (Graphics2D) movesOverlay.getGraphics();
             for (BoardCoordinate boardCoordinate : possibleMovesEvent.getBoardCoordinates()) {
                 PixelCoordinate absoluteCoordinate = CoordinateConverter.boardToPixelCoordinate(boardCoordinate);
-                g2d.fillRect(absoluteCoordinate.x - 2, absoluteCoordinate.y - 2, 4, 4);
+                int x = absoluteCoordinate.x - (possibleMoveImage.getWidth() / 2) - 1;
+                int y = absoluteCoordinate.y - (possibleMoveImage.getHeight() / 2) - 1;
+                g2d.drawImage(possibleMoveImage, x, y, possibleMoveImage.getWidth() + 1, possibleMoveImage.getHeight() + 1, null);
             }
 
             repaint();

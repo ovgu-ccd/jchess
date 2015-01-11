@@ -7,10 +7,10 @@ package jchess.util;
 public class BoardCoordinate {
     int a, b, i;
 
-    public BoardCoordinate(int a, int b, int i) {
+    public BoardCoordinate(int a, int b) {
         this.a = a;
         this.b = b;
-        this.i = i;
+        this.i = CoordinateConverter.boardCoordinateToIndex(a, b);
     }
 
     public String toString() {
