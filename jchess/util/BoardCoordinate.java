@@ -4,15 +4,15 @@ package jchess.util;
  * Pseudo-Polar Board Coordinates
  */
 public class BoardCoordinate {
-    int ring, pos, abs;
+    int a, b, i;
 
-    public BoardCoordinate(int ring, int pos, int abs) {
-        this.ring = ring;
-        this.pos = pos;
-        this.abs = abs;
+    public BoardCoordinate(int a, int b, int i) {
+        this.a = a;
+        this.b = b;
+        this.i = i;
     }
 
     public String toString() {
-        return "(BC) Ring: " + ring + " Position: " + pos + " Abs: " + abs;
+        return "(BC) Ring: " + a + " Position: " + b + " Abs: " + i;
     }
 }

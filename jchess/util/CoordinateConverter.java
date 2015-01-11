@@ -32,29 +32,30 @@ public class CoordinateConverter {
         }
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(AbsoluteCoordinate ac) throws AbsoluteCoordinateNotOnBoardException {
+    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
         int[] pixel = image.getData().getPixel(ac.x, ac.y, (int[]) null);
         if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
-            throw new AbsoluteCoordinateNotOnBoardException();
+            throw new PixelCoordinateNotOnBoardException();
         }
         return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(int x, int y) throws AbsoluteCoordinateNotOnBoardException {
-        AbsoluteCoordinate ac = new AbsoluteCoordinate(x, y);
-        return absoluteCoordinateToBoardCoordinate(ac);
+    public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
+        PixelCoordinate ac = new PixelCoordinate(x, y);
+        return pixelToBoardCoordinate(ac);
     }
 
-    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(BoardCoordinate bc) {
+    public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
+        
         int x = 0, y = 0;
 
-        if (bc.ring > 0) {
+        if (bc.a > 0) {
 
-            double startX = startDirections[bc.pos / bc.ring][0] * bc.ring * du;
-            double startY = startDirections[bc.pos / bc.ring][1] * bc.ring * du;
+            double startX = startDirections[bc.b / bc.a][0] * bc.a * du;
+            double startY = startDirections[bc.b / bc.a][1] * bc.a * du;
 
-            double[] edgeDir = directions[bc.pos / bc.ring];
-            int inEdgeIndex = bc.pos % bc.ring;
+            double[] edgeDir = directions[bc.b / bc.a];
+            int inEdgeIndex = bc.b % bc.a;
 
             x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
             y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
@@ -63,11 +64,11 @@ public class CoordinateConverter {
         x += image.getWidth() / 2;
         y = image.getHeight() / 2 - y;
 
-        return new AbsoluteCoordinate(x, y);
+        return new PixelCoordinate(x, y);
     }
 
-    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(int ring, int pos, int abs) {
-        return boardCoordinateToAbsoluteCoordinate(new BoardCoordinate(ring, pos, abs));
+    public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
+        return boardToPixelCoordinate(new BoardCoordinate(a, b, i));
     }
 
     private static void normalize(double[] vec) {

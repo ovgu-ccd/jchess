@@ -22,8 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.events.SelectEvent;
-import jchess.util.AbsoluteCoordinate;
-import jchess.util.AbsoluteCoordinateNotOnBoardException;
+import jchess.util.PixelCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 
@@ -34,7 +33,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -71,12 +69,12 @@ public class BoardView extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 BoardCoordinate bc = null;
                 try {
-                    bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
+                    bc = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
                     GameTab gameTab = (GameTab)getParent();
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
                     selectEvent.emit();
-                } catch (AbsoluteCoordinateNotOnBoardException e1) {
+                } catch (PixelCoordinateNotOnBoardException e1) {
                     // Send no event
                 }
             }

@@ -3,10 +3,10 @@ package jchess.util;
 /**
  * Cartesian Absolute Coordinates
  */
-public class AbsoluteCoordinate {
+public class PixelCoordinate {
     public int x, y;
 
-    public AbsoluteCoordinate(int x, int y) {
+    public PixelCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
