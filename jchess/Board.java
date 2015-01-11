@@ -69,6 +69,23 @@ public class Board {
      */
     public Tile getTile( int tileIndex ) {
         return tiles[tileIndex];
+
+    }
+
+    /** Access a Tile of a board by axial coordinates as explained in the following article:
+     * http://www.redblobgames.com/grids/hexagons/
+     * the Tiles are ordered differently due to inner workings of the picking system
+     * Tile( 0, 0 ) is the top most tile
+     * Tile( 1, 0 ) is left bellow
+     * Tile( 0, 1 ) is right bellow the top most tile and so forth
+     * the third cubical coordinate can be computed with b - a, while for this one negative values are valid
+     * All the Tiles on the center column have the cubical coordinate c = 0
+     * the columns to the left are negative, and to the right are positive
+     * @param a first axial coordinate
+     * @param b second axial coordinate
+     */
+    public Tile getTile( int a, int b ) {
+         return tiles[ CoordinateConverter.boardAxialCoordinateToIndex( a, b ) ];
     }
 
     public boolean undo() {
@@ -91,6 +108,8 @@ public class Board {
         for( int b = 0 ; b < 4 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(1,b)].placePiece(new Pawn(0));
         for( int b = 3 ; b < 5 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(2,b)].placePiece(new Pawn(0));
         for( int b = 5 ; b < 9 ; ++b ) tiles[CoordinateConverter.boardAxialCoordinateToIndex(1,b)].placePiece(new Pawn(0));
+
+
 
         tiles[147].placePiece( new Pawn(1) );
         tiles[109].placePiece( new Pawn(1) );
