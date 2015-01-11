@@ -14,9 +14,9 @@ public class CoordinateConverterTest {
             for (int pos = 0; pos < 6 * ring; pos++) {
                 AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs + pos);
                 BoardCoordinate bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(ac);
-                assertEquals(ring, bc.ring);
-                assertEquals(pos, bc.pos);
-                assertEquals(abs + pos, bc.abs);
+                assertEquals(ring, bc.getRing());
+                assertEquals(pos, bc.getPos());
+                assertEquals(abs + pos, bc.getAbs());
             }
             abs += ring * 6;
         }

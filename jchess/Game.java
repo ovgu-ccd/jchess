@@ -1,6 +1,5 @@
 package jchess;
 
-
 import jchess.mvc.Controller;
 import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
@@ -11,11 +10,8 @@ import jchess.util.BoardCoordinate;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
-
 import java.lang.ref.WeakReference;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -26,7 +22,8 @@ public class Game {
 
     private Player[] players;
     private Board board;
-    private WeakReference<Player> activePlayer;
+    private Tile selectedTile;
+    private int activePlayerID;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
@@ -57,7 +54,7 @@ public class Game {
     }
 
     public void emitPossibleMovesEvent() {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMovesCoordinates());
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMoveCoordinates());
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
@@ -74,10 +71,32 @@ public class Game {
 
     @Handler
     public void handleSelectEvent(SelectEvent selectEvent) {
-        if (selectEvent.shouldReceive(selectEvent.getGame())) {
-            // TODO logic
-            Logging.GAME.debug("Game: Received SelectEvent");
-            emitPossibleMovesEvent();
+        if (selectEvent.shouldReceive(this)) {
+            Logging.GAME.debug(selectEvent.getGame() + " Received SelectEvent");
+            if (selectedTile == null) {
+                Tile tile = board.getTile(selectEvent.getBoardCoordinate().getAbs());
+                if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
+                    emitInvalidSelectEvent();
+                } else {
+                    selectedTile = tile;
+                    emitPossibleMovesEvent();
+                }
+            } else {
+                Tile tile = board.getTile(selectEvent.getBoardCoordinate().getAbs());
+                Piece piece = selectedTile.getPiece();
+                selectedTile.removePiece();
+                tile.placePiece(piece);
+
+                activePlayerID++;
+                activePlayerID %= 3;
+                for (int i = 0; i < 3; i++) {
+                    players[i].setActive(i == activePlayerID);
+                }
+
+                selectedTile = null;
+
+                emitUpdateBoardEvent();
+            }
         }
     }
 
@@ -85,8 +104,9 @@ public class Game {
     public void handlePromotionEvent(Piece piece) {
     }
 
-    private Set<BoardCoordinate> collectPossibleMovesCoordinates() {
-        // TODO
-        return new HashSet<BoardCoordinate>();
+    private Set<BoardCoordinate> collectPossibleMoveCoordinates() {
+        HashSet<BoardCoordinate> boardCoordinates = new HashSet<>();
+        boardCoordinates.add(new BoardCoordinate(0, 0, 0));
+        return boardCoordinates;
     }
 }
