@@ -55,7 +55,7 @@ public class CoordinateConverter {
         double width = 96.0 / Math.sqrt( 3.0 );
         int x = ( int )( Math.round((bc.c + 7) * 0.75 * width + 0.5 * width ));
 
-        return new PixelCoordinate(x, 360);
+        return new PixelCoordinate(x, 24);
     }
 
     public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
