@@ -51,12 +51,9 @@ public class CoordinateConverter {
     }
 
     public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
-
-        //double width = 96.0 / Math.sqrt( 3.0 );
         double width_3_4 = 72.0 / Math.sqrt( 3.0 );
         int height_1_2 = 24;
 
-        //int x = ( int )( Math.round((bc.c + 7) * 0.75 * width + 0.5 * width ));
         int x = 320 + ( int )Math.round( ( bc.b - bc.a ) * width_3_4 ) ;
         int y = 24 + height_1_2 * ( bc.a + bc.b );
 
