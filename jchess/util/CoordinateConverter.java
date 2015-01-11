@@ -7,26 +7,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * Static methods allowing easy conversion between (pseudo-polar) BoardCoordinates and (carthesian) AbsoluteCoordinates.
+ * Static methods allowing easy conversion between (hexagonal grid axial) BoardCoordinates and (cartesian) PixelCoordinates.
+ * TODO: define height_1_2 and width_3_4 based on imaged dimensions
  */
 public class CoordinateConverter {
     private static BufferedImage image;
-    private static double du;
-    private static double[][] directions;
-    private static double[][] startDirections;
-    private static double M;
 
     static {
-        M = Math.tan(Math.toRadians(150));
-        directions = new double[][]{{1, M}, {0, -1}, {-1, M}, {-1, -M}, {0, 1}, {1, -M}};
-        startDirections = new double[][]{{0, 1}, {1, -M}, {1, M}, {0, -1}, {-1, M}, {-1, -M}};
-        for (int i = 0; i < directions.length; i++) {
-            normalize(directions[i]);
-            normalize(startDirections[i]);
-        }
         try {
             image = ImageIO.read(Application.class.getResource("images.org/TilePicker.png"));
-            du = image.getHeight() / 15;
+            //hexHight = image.getHeight() / 15;
         } catch (IOException e) {
             image = null;
         }
@@ -64,9 +54,16 @@ public class CoordinateConverter {
         return boardToPixelCoordinate(new BoardCoordinate(a, b, i));
     }
 
-    private static void normalize(double[] vec) {
-        double len = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
-        vec[0] /= len;
-        vec[1] /= len;
+    /// TODO: Works correct but should have an official test and contracts, same as BoardCoordinates class
+    public static int boardAxialCoordinateToIndex( int a, int b ) {
+
+        if ( a < 8 ) {
+            return 7 * a + b + /*GAUSS*/ a * (a + 1) / 2;
+        }
+
+        else {
+            int g = a - 9;
+            return 104 + 13 * g + b - /*GAUSS*/ g * ( g + 1 ) / 2 ;
+        }
     }
 }

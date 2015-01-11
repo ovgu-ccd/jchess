@@ -71,8 +71,9 @@ public class BoardView extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 BoardCoordinate bc = null;
                 try {
-                    int[] pixel = CoordinateConverter.getPixel(new PixelCoordinate(e.getX(), e.getY()));
-                    Logging.GUI.debug("R: " + pixel[0] + " G: " + pixel[1] + " G-R: " + (pixel[1] - pixel[0]));
+                    int[] p = CoordinateConverter.getPixel(new PixelCoordinate(e.getX(), e.getY()));
+                    Logging.GUI.debug("A: " + p[0] + " B: " + p[1] + " C: " + (p[1] - p[0]) +
+                            " I: " + CoordinateConverter.boardAxialCoordinateToIndex( p[0] , p[1] ));
 
                     bc = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
@@ -122,7 +123,7 @@ public class BoardView extends JPanel {
 
         g2d.setColor(Color.red);
 
-        g2d.fillRect(x-2, y-2, 4, 4);
+        g2d.fillRect(x-2, y - 2, 4, 4);
 
         if (!fontSet) {
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
