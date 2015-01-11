@@ -1,5 +1,6 @@
 package jchess;
 
+import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -12,5 +13,6 @@ public interface IOSystem {
     @Handler void handleSelectEvent(SelectEvent selectEvent);
     @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent);
     @Handler void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent);
+    @Handler void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent);
     public void setPlayer(Player player);
 }

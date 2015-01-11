@@ -4,6 +4,7 @@ import jchess.IOSystem;
 import jchess.Logging;
 import jchess.Player;
 import jchess.mvc.Controller;
+import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -53,6 +54,16 @@ public class GUIConnector implements IOSystem {
         if (possibleMovesEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay PossibleMovesEvent");
             (new PossibleMovesEvent(possibleMovesEvent, true)).emit();
+        }
+    }
+
+    @Override
+    @Handler
+    public void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
+        // TODO
+        if (invalidSelectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
+            Logging.GUI.debug("GUIConnector: Relay InvalidSelectEvent");
+            (new InvalidSelectEvent(invalidSelectEvent, true)).emit();
         }
     }
 }

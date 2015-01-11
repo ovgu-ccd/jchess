@@ -2,6 +2,7 @@ package jchess;
 
 
 import jchess.mvc.Controller;
+import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
@@ -48,11 +49,12 @@ public class Game {
         return board;
     }
 
-    // <--
-    public void invalidSelectEvent() {
+    public void emitInvalidSelectEvent() {
+        InvalidSelectEvent invalidSelectEvent = new InvalidSelectEvent(this);
+        Logging.GAME.debug("Game: Emit PossibleMovesEvent");
+        invalidSelectEvent.emit();
     }
 
-    // <--
     public void emitPossibleMovesEvent() {
         PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMovesCoordinates());
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
