@@ -85,7 +85,7 @@ public class BoardView extends JPanel {
                     bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(e.getX(), e.getY());
 
                     GameTab gameTab = (GameTab) getParent();
-                    SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
+                    SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), bc);
 
 
                     Logging.GUI.debug("Emit SelectEvent");
@@ -139,8 +139,8 @@ public class BoardView extends JPanel {
 
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
-        if (updateBoardEvent.getBoard().getGame() == getGame() && updateBoardEvent.hasVisitedIOSystem()) {
-            Logging.GUI.debug("Received UpdateBoardEvent");
+        if (updateBoardEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: UpdateBoardEvent");
 
             Graphics2D g2d = (Graphics2D) offscreen.getGraphics();
             g2d.setColor(Color.GRAY);
@@ -205,7 +205,10 @@ public class BoardView extends JPanel {
 
     @Handler
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
-        // TODO
+        if (possibleMovesEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received PossibleMovesEvent");
+            // TODO
+        }
     }
 
     private Game getGame() {

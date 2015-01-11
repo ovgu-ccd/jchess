@@ -54,8 +54,8 @@ public class Game {
 
     // <--
     public void emitPossibleMovesEvent() {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(collectPossibleMovesCoordinates());
-        Logging.GAME.debug("Emit PossibleMovesEvent");
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, collectPossibleMovesCoordinates());
+        Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
 
@@ -64,16 +64,16 @@ public class Game {
     }
 
     public void emitUpdateBoardEvent() {
-        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(board);
-        Logging.GAME.debug("Emit UpdateBoardEvent");
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(this);
+        Logging.GAME.debug("Game: Emit UpdateBoardEvent");
         updateBoardEvent.emit();
     }
 
     @Handler
     public void handleSelectEvent(SelectEvent selectEvent) {
-        if (selectEvent.getGame() == this && selectEvent.isVisitedIOSystem()) {
+        if (selectEvent.shouldReceive(selectEvent.getGame())) {
             // TODO logic
-            Logging.GAME.debug("Received SelectEvent");
+            Logging.GAME.debug("Game: Received SelectEvent");
             emitPossibleMovesEvent();
         }
     }

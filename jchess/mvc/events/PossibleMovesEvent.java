@@ -1,16 +1,26 @@
 package jchess.mvc.events;
 
+import jchess.Game;
 import jchess.util.BoardCoordinate;
-import java.util.Collections;
 import java.util.Set;
 
 /**
  * Created by andreas on 11.01.15.
  */
-public class PossibleMovesEvent extends Event {
+public class PossibleMovesEvent extends AbstractIOSystemRelayEvent {
     private final Set<BoardCoordinate> boardCoordinates;
 
-    public PossibleMovesEvent(Set<BoardCoordinate> boardCoordinates) {
-        this.boardCoordinates = Collections.unmodifiableSet(boardCoordinates);
+    public PossibleMovesEvent(Game game, Set<BoardCoordinate> boardCoordinates) {
+        super(game);
+        this.boardCoordinates = boardCoordinates;
+    }
+
+    public PossibleMovesEvent(PossibleMovesEvent possibleMovesEvent, boolean visitedIOSystem) {
+        super(possibleMovesEvent, visitedIOSystem);
+        this.boardCoordinates = possibleMovesEvent.getBoardCoordinates();
+    }
+
+    public Set<BoardCoordinate> getBoardCoordinates() {
+        return boardCoordinates;
     }
 }

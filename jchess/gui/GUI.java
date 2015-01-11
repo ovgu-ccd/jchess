@@ -152,7 +152,7 @@ public class GUI extends JFrame implements ActionListener {
                 }, newTab);
 
         pack();
-        Logging.GUI.debug("Emit NewGameEvent");
+        Logging.GUI.debug("GUI: Emit NewGameEvent");
         event.emit();
     }
 

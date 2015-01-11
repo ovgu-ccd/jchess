@@ -2,34 +2,18 @@ package jchess.mvc.events;
 
 
 import jchess.Board;
+import jchess.Game;
 
 /**
  * Created by andreas on 10.01.15.
  */
-public class UpdateBoardEvent extends Event {
+public class UpdateBoardEvent extends AbstractIOSystemRelayEvent {
 
-    private boolean visitedIOSystem = false;
-    private final Board board;
+    public UpdateBoardEvent(Game game) {
+        super(game);
+    }
 
     public UpdateBoardEvent(UpdateBoardEvent updateBoardEvent, boolean visitedIOSystem) {
-        this.board = updateBoardEvent.getBoard();
-        this.visitedIOSystem = visitedIOSystem;
+        super(updateBoardEvent, visitedIOSystem);
     }
-
-    public UpdateBoardEvent(Board board) {
-        this.board = board;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public boolean hasVisitedIOSystem() {
-        return visitedIOSystem;
-    }
-
-    public void setVisitedIOSystem(boolean visitedIOSystem) {
-        this.visitedIOSystem = visitedIOSystem;
-    }
-
 }
