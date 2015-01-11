@@ -32,12 +32,17 @@ public class CoordinateConverter {
         }
     }
 
+
     public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
-        int[] pixel = image.getData().getPixel(ac.x, ac.y, (int[]) null);
+        int[] pixel = getPixel(ac);
         if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
             throw new PixelCoordinateNotOnBoardException();
         }
         return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
+    }
+
+    public static int[] getPixel(PixelCoordinate ac) {
+        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
     }
 
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {

@@ -22,6 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.events.SelectEvent;
+import jchess.util.PixelCoordinate;
 import jchess.util.PixelCoordinateNotOnBoardException;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
@@ -34,6 +35,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -69,9 +71,12 @@ public class BoardView extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 BoardCoordinate bc = null;
                 try {
+                    int[] pixel = CoordinateConverter.getPixel(new PixelCoordinate(e.getX(), e.getY()));
+                    Logging.GUI.debug("R: " + pixel[0] + " G: " + pixel[1] + " G-R: " + (pixel[1] - pixel[0]));
+
                     bc = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
-                    GameTab gameTab = (GameTab)getParent();
+                    GameTab gameTab = (GameTab) getParent();
                     SelectEvent selectEvent = new SelectEvent(bc, gameTab.getGame());
                     selectEvent.emit();
                 } catch (PixelCoordinateNotOnBoardException e1) {
@@ -95,7 +100,7 @@ public class BoardView extends JPanel {
     public Dimension getMaximumSize() {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -107,7 +112,7 @@ public class BoardView extends JPanel {
 
         g2d.setColor(Color.gray);
 
-        if (!fontSet){
+        if (!fontSet) {
             g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
         }
 
