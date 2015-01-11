@@ -118,8 +118,8 @@ public class Game {
 
     private void collectPossibleMoveCoordinates() {
         possibleMovesCoordinates = new HashSet<>();
-        possibleMovesCoordinates.add(new BoardCoordinate(0, 1, 1));
-        possibleMovesCoordinates.add(new BoardCoordinate(1, 1, 1));
-        possibleMovesCoordinates.add(new BoardCoordinate(1, 2, 1));
+        possibleMovesCoordinates.add(new BoardCoordinate(0, 1));
+        possibleMovesCoordinates.add(new BoardCoordinate(1, 1));
+        possibleMovesCoordinates.add(new BoardCoordinate(1, 2));
     }
 }

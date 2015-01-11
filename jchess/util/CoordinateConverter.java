@@ -32,7 +32,7 @@ public class CoordinateConverter {
         if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
             throw new PixelCoordinateNotOnBoardException();
         }
-        return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
+        return new BoardCoordinate(pixel[0], pixel[1]);
     }
 
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
@@ -52,7 +52,7 @@ public class CoordinateConverter {
     }
 
     public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
-        return boardToPixelCoordinate(new BoardCoordinate(a, b, i));
+        return boardToPixelCoordinate(new BoardCoordinate(a, b));
     }
 
     /// TODO: Works correct but should have an official test and contracts, same as BoardCoordinates class
