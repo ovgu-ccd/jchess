@@ -117,7 +117,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
     }
 
     /**
-     * Method responsible for triming white symbols from strings
+     * Method responsible for triming WHITE symbols from strings
      *
      * @param txt    Where is capt value to equal
      * @param length How long is the strings

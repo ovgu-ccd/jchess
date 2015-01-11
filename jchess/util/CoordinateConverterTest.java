@@ -10,7 +10,7 @@ public class CoordinateConverterTest {
     @Test
     public void testBoardCoordinateToAbsoluteCoordinate() throws Exception, AbsoluteCoordinateNotOnBoardException {
         int abs = 1;
-        for (int ring = 1; ring < 7; ring++) {
+        for (int ring = 1; ring < 8; ring++) {
             for (int pos = 0; pos < 6 * ring; pos++) {
                 AbsoluteCoordinate ac = CoordinateConverter.boardCoordinateToAbsoluteCoordinate(ring, pos, abs + pos);
                 BoardCoordinate bc = CoordinateConverter.absoluteCoordinateToBoardCoordinate(ac);

@@ -62,16 +62,16 @@ class Table {
         player1Set.gameMode = Settings.gameModes.newGame;
         player1Set.playerWhite.setName(clientPlayer1.nick);
         player1Set.playerBlack.setName(clientPlayer2.nick);
-        player1Set.playerWhite.setType(Player.playerTypes.localUser);
-        player1Set.playerBlack.setType(Player.playerTypes.networkUser);
+        player1Set.playerWhite.setPlayerType(Player.PlayerType.LOCAL);
+        player1Set.playerBlack.setPlayerType(Player.PlayerType.NETWORK);
         player1Set.gameType = Settings.gameTypes.network;
         player1Set.upsideDown = true;
 
         player2Set.gameMode = Settings.gameModes.newGame;
         player2Set.playerWhite.setName(clientPlayer1.nick);
         player2Set.playerBlack.setName(clientPlayer2.nick);
-        player2Set.playerWhite.setType(Player.playerTypes.networkUser);
-        player2Set.playerBlack.setType(Player.playerTypes.localUser);
+        player2Set.playerWhite.setPlayerType(Player.PlayerType.NETWORK);
+        player2Set.playerBlack.setPlayerType(Player.PlayerType.LOCAL);
         player2Set.gameType = Settings.gameTypes.network;
         player2Set.upsideDown = false;
 
@@ -81,8 +81,8 @@ class Table {
             observerSettings.gameMode = Settings.gameModes.newGame;
             observerSettings.playerWhite.setName(clientPlayer1.nick);
             observerSettings.playerBlack.setName(clientPlayer2.nick);
-            observerSettings.playerWhite.setType(Player.playerTypes.networkUser);
-            observerSettings.playerBlack.setType(Player.playerTypes.networkUser);
+            observerSettings.playerWhite.setPlayerType(Player.PlayerType.NETWORK);
+            observerSettings.playerBlack.setPlayerType(Player.PlayerType.NETWORK);
             observerSettings.gameType = Settings.gameTypes.network;
             observerSettings.upsideDown = true;
         }

@@ -22,9 +22,7 @@ package jchess.pieces;
 
 import jchess.TileFilter;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+
 
 /**
 Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.
@@ -32,155 +30,14 @@ Class to represent a piece (any kind) - this class should be extended to represe
 public abstract class Piece {
 
     private TileFilter tileFilter;
+    private int playerID;
 
-    Piece() {}
+    public Piece( int playerID ) { this.playerID = playerID; }
 
     public TileFilter getTileFilter() {
         return tileFilter;
     }
+    public int getPlayerID() { return playerID; }
+
 
 }
-    /*
-    public static short value = 0;
-    protected static Image imageBlack;// = null;
-    protected static Image imageWhite;// = null;
-    public    Square square;
-    public    Player player;
-    public Image orgImage;
-    public Image image;
-    protected String symbol;
-    Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
-    String     name;
-
-    Piece(Chessboard chessboard, Player player) {
-        this.chessboard = chessboard;
-        this.player = player;
-        if (player.color == Player.colors.black) {
-            image = imageBlack;
-        } else {
-            image = imageWhite;
-        }
-        this.name = this.getClass().getSimpleName();
-
-    }
-    /* Method to draw piece on chessboard
-     * @graph : where to draw
-     */
-
-    /*
-
-    final void draw(Graphics g) {
-        try {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Point topLeft = this.chessboard.getTopLeftPoint();
-            int height = this.chessboard.get_square_height();
-            int x = (this.square.pozX * height) + topLeft.x;
-            int y = (this.square.pozY * height) + topLeft.y;
-            float addX = (height - image.getWidth(null)) / 2;
-            float addY = (height - image.getHeight(null)) / 2;
-            if (image != null && g != null) {
-                Image tempImage = orgImage;
-                BufferedImage resized = new BufferedImage(height, height, BufferedImage.TYPE_INT_ARGB_PRE);
-                @SuppressWarnings("RedundantCast") Graphics2D imageGr = (Graphics2D) resized.createGraphics();
-                imageGr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                imageGr.drawImage(tempImage, 0, 0, height, height, null);
-                imageGr.dispose();
-                image = resized.getScaledInstance(height, height, 0);
-                g2d.drawImage(image, x, y, null);
-            } else {
-                System.out.println("image is null!");
-            }
-
-        } catch (java.lang.NullPointerException exc) {
-            System.out.println("Something wrong when painting piece: " + exc.getMessage());
-        }
-    }
-
-    void clean() {
-    }
-
-    /** method check if Piece can move to given square
-     * @param square square where piece want to move (Square object)
-     * @param allmoves  all moves which can piece do
-     * */
-
-
-/*     boolean canMove(Square square, ArrayList allmoves) {
-      */
-        //throw new UnsupportedOperationException("Not supported yet.");
-/*        for (Object move : allmoves) {
-            Square sq = (Square) move;//get next from iterator
-            if (sq == square) {
-                //if adress is the same
-                return true; //piece canMove
-            }
-        }
-        return false;//if not, piece cannot move
-    }
-
-    void setImage() {
-        if (this.player.color == Player.colors.black) {
-            image = imageBlack;
-        } else {
-            image = imageWhite;
-        }
-    }
-    //void setImages(String white, String black) {
-    /* method set image to black or white (depends on player color)
-    * @white: String with name of image with white piece
-    * @black: String with name of image with black piece
-    * */
-    //    this.imageBlack = black;
-    //     this.imageWhite = white;
-    //     if(player.color == player.color.black) {
-    //         this.image = GUI.loadImage(imageBlack);
-    //     } else {
-    //          this.image = GUI.loadImage(imageWhite);
-    //     }
-    //  }/*--endOf-setImages(String white, String black)--*/
-
-/*    abstract public ArrayList allMoves();
-
-    /** Method is useful for out of bounds protection
-     * @param x  x position on chessboard
-     * @param y y position on chessboard
-     * @return true if parameters are out of bounds (array)
-     * */
-/*    protected boolean isout(int x, int y) {
-        return x < 0 || x > 7 || y < 0 || y > 7;
-    }
-
-    /**
-     * @param x y position on chessboard
-     * @param y  y position on chessboard
-     * @return true if can move, false otherwise
-     * */
-/*    protected boolean checkPiece(int x, int y) {
-        if (chessboard.squares[x][y].piece != null
-                && chessboard.squares[x][y].piece.name.equals("King")) {
-            return false;
-        }
-        Piece piece = chessboard.squares[x][y].piece;
-        return piece == null || //if this sqhuare is empty
-                piece.player != this.player;
-    }
-
-    /** Method check if piece has other owner than calling piece
-     * @param x x position on chessboard
-     * @param y y position on chessboard
-     * @return true if owner(player) is different
-     * */
-/*    protected boolean otherOwner(int x, int y) {
-        Square sq = chessboard.squares[x][y];
-        if (sq.piece == null) {
-            return false;
-        }
-        return this.player != sq.piece.player;
-    }
-
-    public String getSymbol() {
-        return this.symbol;
-    }
-}
-*/

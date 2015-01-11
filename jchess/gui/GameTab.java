@@ -21,6 +21,9 @@
 package jchess.gui;
 
 import jchess.*;
+import jchess.mvc.Controller;
+import jchess.mvc.events.UpdateBoardEvent;
+import net.engio.mbassy.listener.Handler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +39,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/** Class responsible for the starts of new games, loading games,
+/**
+ * Class responsible for the starts of new games, loading games,
  * saving it, and for ending it.
  * This class is also responsible for appoing player with have
  * a move at the moment
@@ -56,8 +60,21 @@ public class GameTab extends JPanel {
         settings = new Settings();
         boardView = new BoardView(this.settings);
 
+
+        this.add(boardView);
+
+
+        this.chat = new Chat();
+        this.chat.setSize(new Dimension(380, 100));
+        this.chat.setLocation(new Point(0, 500));
+        this.chat.setMinimumSize(new Dimension(400, 100));
+
+
+        Controller.INSTANCE.subscribe(this);
+
         add(boardView, BorderLayout.CENTER);
     }
+
 
     public void setGame(Game game) {
         this.game = game;

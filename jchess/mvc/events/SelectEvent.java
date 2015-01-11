@@ -7,16 +7,38 @@ import jchess.util.BoardCoordinate;
  * Created by andreas on 10.01.15.
  */
 public class SelectEvent extends Event {
-    private BoardCoordinate bc;
+    private BoardCoordinate boardCoordinate;
     private Game game;
     private boolean visitedIOSystem = false;
 
+    public SelectEvent(SelectEvent selectEvent, boolean visitedIOSystem){
+        this.boardCoordinate = selectEvent.getBoardCoordinate();
+        this.game = selectEvent.getGame();
+        this.visitedIOSystem = visitedIOSystem;
+    }
+
     public SelectEvent(BoardCoordinate boardCoordinate, Game game) {
-        this.bc = boardCoordinate;
+        this.boardCoordinate = boardCoordinate;
         this.game = game;
     }
 
-    public boolean hasVisitedIOSystem() {
+    public BoardCoordinate getBoardCoordinate() {
+        return boardCoordinate;
+    }
+
+    public void setBoardCoordinate(BoardCoordinate boardCoordinate) {
+        this.boardCoordinate = boardCoordinate;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public boolean isVisitedIOSystem() {
         return visitedIOSystem;
     }
 

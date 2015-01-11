@@ -15,7 +15,7 @@
 
 package jchess;
 
-import jchess.Player.playerTypes;
+import jchess.Player.PlayerType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -269,16 +269,16 @@ public class Server implements Runnable {
             player1Set.gameMode = Settings.gameModes.newGame;
             player1Set.playerWhite.setName(clientPlayer1.nick);
             player1Set.playerBlack.setName(clientPlayer2.nick);
-            player1Set.playerWhite.setType(playerTypes.localUser);
-            player1Set.playerBlack.setType(playerTypes.networkUser);
+            player1Set.playerWhite.setPlayerType(PlayerType.LOCAL);
+            player1Set.playerBlack.setPlayerType(PlayerType.NETWORK);
             player1Set.gameType = Settings.gameTypes.network;
             player1Set.upsideDown = true;
 
             player2Set.gameMode = Settings.gameModes.newGame;
             player2Set.playerWhite.setName(clientPlayer1.nick);
             player2Set.playerBlack.setName(clientPlayer2.nick);
-            player2Set.playerWhite.setType(playerTypes.networkUser);
-            player2Set.playerBlack.setType(playerTypes.localUser);
+            player2Set.playerWhite.setPlayerType(PlayerType.NETWORK);
+            player2Set.playerBlack.setPlayerType(PlayerType.LOCAL);
             player2Set.gameType = Settings.gameTypes.network;
             player2Set.upsideDown = false;
 
@@ -288,8 +288,8 @@ public class Server implements Runnable {
                 observerSettings.gameMode = Settings.gameModes.newGame;
                 observerSettings.playerWhite.setName(clientPlayer1.nick);
                 observerSettings.playerBlack.setName(clientPlayer2.nick);
-                observerSettings.playerWhite.setType(playerTypes.networkUser);
-                observerSettings.playerBlack.setType(playerTypes.networkUser);
+                observerSettings.playerWhite.setPlayerType(PlayerType.NETWORK);
+                observerSettings.playerBlack.setPlayerType(PlayerType.NETWORK);
                 observerSettings.gameType = Settings.gameTypes.network;
                 observerSettings.upsideDown = true;
             }
