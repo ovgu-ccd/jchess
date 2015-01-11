@@ -14,6 +14,18 @@ public class BoardCoordinate {
     }
 
     public String toString() {
-        return "(BC) Ring: " + a + " Position: " + b + " Abs: " + i;
+        return "(BC) A: " + a + " B: " + b + " Abs: " + i;
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public int getI() {
+        return i;
     }
 }
