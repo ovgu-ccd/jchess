@@ -6,6 +6,7 @@ import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
 import jchess.pieces.Piece;
+import jchess.pieces.Rook;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
@@ -24,6 +25,7 @@ public class Game {
     private Player[] players;
     private Board board;
     private Tile selectedTile;
+    private BoardCoordinate selectedBC;
     private int activePlayerID;
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
 
@@ -31,6 +33,7 @@ public class Game {
         Controller.INSTANCE.subscribe(this);
         this.players = players;
         this.board = new Board();
+        this.possibleMovesCoordinates = new HashSet<>();
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {
@@ -76,6 +79,7 @@ public class Game {
     public void handleSelectEvent(SelectEvent selectEvent) {
         if (selectEvent.shouldReceive(this)) {
             Logging.GAME.debug(selectEvent.getGame() + " Received SelectEvent");
+            selectedBC = selectEvent.getBoardCoordinate();
             if (selectedTile == null) {
                 Tile tile = board.getTile(selectEvent.getBoardCoordinate().getI());
                 if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
@@ -117,9 +121,40 @@ public class Game {
     }
 
     private void collectPossibleMoveCoordinates() {
-        possibleMovesCoordinates = new HashSet<>();
-        possibleMovesCoordinates.add(new BoardCoordinate(0, 1));
-        possibleMovesCoordinates.add(new BoardCoordinate(1, 1));
-        possibleMovesCoordinates.add(new BoardCoordinate(1, 2));
+        possibleMovesCoordinates.clear();
+
+        if ( selectedTile.getPiece() instanceof Rook ) {
+            Piece rook = selectedTile.getPiece() ;
+            for( BoardCoordinate repeatBC : rook.getTileFilter().getRepeat() )  {
+                BoardCoordinate resultBC = new BoardCoordinate( selectedBC.getA() + repeatBC.getA() , selectedBC.getB() + repeatBC.getB() ) ;
+                while(  ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
+                        ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
+                        ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )   ) {
+
+                    // Need to know if any piece is in the possible move trajectory
+                    Piece pieceOnResultBC = board.getTile( resultBC ).getPiece();
+
+                    // Stop collecting tiles if another player piece is in the trajectory
+                    if ( pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID() ) break;
+
+                    possibleMovesCoordinates.add( resultBC );
+
+                    // if we got here and pieceOnResultBC is not null, pieceOnResultBC is an enemy
+                    if ( pieceOnResultBC != null ) break;
+
+                    // continue trajectory with new BoardCoordinates
+                    resultBC = new BoardCoordinate( resultBC.getA() + repeatBC.getA() , resultBC.getB() + repeatBC.getB() ) ;
+                }
+            }
+        }
+
+        else {
+            possibleMovesCoordinates.add(new BoardCoordinate(0, 1));
+            possibleMovesCoordinates.add(new BoardCoordinate(1, 1));
+            possibleMovesCoordinates.add(new BoardCoordinate(1, 2));
+            possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
+            possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
+            possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
+        }
     }
 }
