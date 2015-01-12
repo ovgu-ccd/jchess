@@ -54,25 +54,23 @@ public class GameTab extends JPanel {
     private Game game;
 
     public GameTab() {
-        setLayout(new BorderLayout());
-        setDoubleBuffered(true);
-
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         settings = new Settings();
         boardView = new BoardView(this.settings);
 
+        add(Box.createHorizontalGlue());
+        add(boardView);
+        add(Box.createHorizontalGlue());
 
-        this.add(boardView);
-
-
+        /*
         this.chat = new Chat();
         this.chat.setSize(new Dimension(380, 100));
         this.chat.setLocation(new Point(0, 500));
         this.chat.setMinimumSize(new Dimension(400, 100));
+        */
 
 
         Controller.INSTANCE.subscribe(this);
-
-        add(boardView, BorderLayout.CENTER);
     }
 
 
