@@ -32,6 +32,7 @@ public class CoordinateConverter {
         if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
             throw new PixelCoordinateNotOnBoardException();
         }
+        //Logging.GUI.debug("A: " + pixel[0] + " B: " + pixel[1] + " C: " + (pixel[1] - pixel[0]));
         return new BoardCoordinate(pixel[0], pixel[1]);
     }
 
