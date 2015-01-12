@@ -89,7 +89,7 @@ public class Board {
      * @param b second axial coordinate
      */
     public Tile getTile( int a, int b ) {
-         return tiles[ CoordinateConverter.boardCoordinateToIndex(a, b) ];
+         return tiles[ CoordinateConverter.boardCoordinateToIndex( a, b ) ];
     }
 
     public boolean undo() {
@@ -108,83 +108,62 @@ public class Board {
     void initFigures() {
 
         // place Pawns
+        for( int b = 0 ; b < 4 ; ++b ) getTile( 1, b ).placePiece( new Pawn(0) );
+        for( int b = 4 ; b < 6 ; ++b ) getTile( 2, b ).placePiece( new Pawn(0) );
+        for( int b = 5 ; b < 9 ; ++b ) getTile( 1, b ).placePiece( new Pawn(0) );
 
-        //tiles[0].placePiece( new Pawn(0) );
+        for( int a =  6 ; a < 10 ; ++a ) getTile( a, 13 ).placePiece( new Pawn(1) );
+        for( int a =  9 ; a < 11 ; ++a ) getTile( a, 12 ).placePiece( new Pawn(1) );
+        for( int a = 11 ; a < 15 ; ++a ) getTile( a, 13 ).placePiece( new Pawn(1) );
 
-        for( int b = 0 ; b < 4 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
-        for( int b = 3 ; b < 5 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(2, b)].placePiece(new Pawn(0));
-        for( int b = 5 ; b < 9 ; ++b ) tiles[CoordinateConverter.boardCoordinateToIndex(1, b)].placePiece(new Pawn(0));
+        for( int b = 0 ; b < 4 ; ++b ) getTile( 6+b, b ).placePiece( new Pawn(2) );
+        for( int b = 4 ; b < 6 ; ++b ) getTile( 5+b, b ).placePiece( new Pawn(2) );
+        for( int b = 5 ; b < 9 ; ++b ) getTile( 6+b, b ).placePiece( new Pawn(2) );
 
-
-/*
-        tiles[147].placePiece( new Pawn(1) );
-        tiles[109].placePiece( new Pawn(1) );
-        tiles[110].placePiece( new Pawn(1) );
-        tiles[111].placePiece( new Pawn(1) );
-        tiles[112].placePiece(new Pawn(1));
-        tiles[113].placePiece(new Pawn(1));
-        tiles[114].placePiece( new Pawn(1) );
-        tiles[115].placePiece( new Pawn(1) );
-        tiles[109].placePiece( new Pawn(1) );
-        tiles[156].placePiece( new Pawn(1) );
-        tiles[78].placePiece(new Pawn(1));
-        tiles[79].placePiece(new Pawn(1));
-
-        tiles[133].placePiece( new Pawn(2) );
-        tiles[97].placePiece(new Pawn(2));
-        tiles[98].placePiece(new Pawn(2));
-        tiles[99].placePiece(new Pawn(2));
-        tiles[100].placePiece(new Pawn(2));
-        tiles[101].placePiece(new Pawn(2));
-        tiles[102].placePiece(new Pawn(2));
-        tiles[103].placePiece(new Pawn(2));
-        tiles[142].placePiece( new Pawn(2) );
-        tiles[68].placePiece(new Pawn(2));
-        tiles[69].placePiece( new Pawn(2) );
 
         // place Rooks
-        tiles[127].placePiece( new Rook(0) ) ;
-        tiles[162].placePiece( new Rook(0) ) ;
+        getTile( 0, 0 ).placePiece( new Rook(0) ) ;
+        getTile( 0, 7 ).placePiece( new Rook(0) ) ;
 
-        tiles[148].placePiece( new Rook(1) ) ;
-        tiles[155].placePiece( new Rook(1) ) ;
+        getTile(  7, 14 ).placePiece( new Rook(1) ) ;
+        getTile( 14, 14 ).placePiece( new Rook(1) ) ;
 
-        tiles[134].placePiece( new Rook(2) ) ;
-        tiles[141].placePiece( new Rook(2) ) ;
+        getTile( 14, 7 ).placePiece( new Rook(2) ) ;
+        getTile(  7, 0 ).placePiece( new Rook(2) ) ;
 
         // place Bishops
-        tiles[163].placePiece( new Bishop(0) ) ;
-        tiles[168].placePiece( new Bishop(0) ) ;
-        tiles[124].placePiece( new Bishop(0) ) ;
+        getTile( 0, 1 ).placePiece( new Bishop(0) ) ;
+        getTile( 1, 4 ).placePiece( new Bishop(0) ) ;
+        getTile( 0, 6 ).placePiece( new Bishop(0) ) ;
 
-        tiles[149].placePiece( new Bishop(1) ) ;
-        tiles[154].placePiece( new Bishop(1) ) ;
-        tiles[112].placePiece( new Bishop(1) ) ;
+        getTile(  8, 14 ).placePiece( new Bishop(1) ) ;
+        getTile( 10, 13 ).placePiece( new Bishop(1) ) ;
+        getTile( 13, 14 ).placePiece( new Bishop(1) ) ;
 
-        tiles[135].placePiece( new Bishop(2) ) ;
-        tiles[140].placePiece( new Bishop(2) ) ;
-        tiles[100].placePiece( new Bishop(2) ) ;
+        getTile( 13, 6 ).placePiece( new Bishop(2) ) ;
+        getTile( 10, 4 ).placePiece( new Bishop(2) ) ;
+        getTile(  8, 1 ).placePiece( new Bishop(2) ) ;
 
         // place Knights
-        tiles[164].placePiece( new Knight(0) ) ;
-        tiles[167].placePiece( new Knight(0) ) ;
+        getTile( 0, 2 ).placePiece( new Knight(0) ) ;
+        getTile( 0, 5 ).placePiece( new Knight(0) ) ;
 
-        tiles[150].placePiece( new Knight(1) ) ;
-        tiles[153].placePiece( new Knight(1) ) ;
+        getTile(  9, 14 ).placePiece( new Knight(1) ) ;
+        getTile( 12, 14 ).placePiece( new Knight(1) ) ;
 
-        tiles[136].placePiece( new Knight(2) ) ;
-        tiles[139].placePiece( new Knight(2) ) ;
+        getTile( 12, 5 ).placePiece( new Knight(2) ) ;
+        getTile(  9, 2 ).placePiece( new Knight(2) ) ;
 
         // place Queens
-        tiles[165].placePiece( new Queen(0) ) ;
-        tiles[151].placePiece( new Queen(1) ) ;
-        tiles[137].placePiece( new Queen(2) ) ;
+        getTile(  0,  3 ).placePiece( new Queen(0) ) ;
+        getTile( 10, 14 ).placePiece( new Queen(1) ) ;
+        getTile( 11,  4 ).placePiece( new Queen(2) ) ;
 
         // place Kings
-        tiles[166].placePiece( new King(0) ) ;
-        tiles[152].placePiece( new King(1) ) ;
-        tiles[138].placePiece( new King(2) ) ;
-*/
+        getTile(  0,  4 ).placePiece( new King(0) ) ;
+        getTile( 11, 14 ).placePiece( new King(1) ) ;
+        getTile( 10,  3 ).placePiece( new King(2) ) ;
+
 
 
     }
