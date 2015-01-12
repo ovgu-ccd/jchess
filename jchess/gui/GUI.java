@@ -53,7 +53,7 @@ public class GUI extends JFrame implements ActionListener {
     private javax.swing.JPanel statusPanel;
     private javax.swing.JMenuItem themeSettingsMenu;
     private int busyIconIndex = 0;
-    private JDialog aboutBox;
+    private AboutBox aboutBox;
     private JMenu fileMenu;
     private JMenuItem exitMenuItem;
     private JMenu helpMenu;
@@ -165,7 +165,8 @@ public class GUI extends JFrame implements ActionListener {
 
     void showAboutBox() {
         if (aboutBox == null) {
-            aboutBox = new JChessAboutBox(this);
+            aboutBox = new AboutBox();
+            aboutBox.pack();
             aboutBox.setLocationRelativeTo(this);
         }
         aboutBox.setVisible(true);
