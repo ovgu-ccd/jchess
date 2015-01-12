@@ -3,7 +3,7 @@ package jchess.pieces;
 /**
  * Created by andreas on 12.01.15.
  */
-public enum Pieces {
+public enum PieceNames {
     BISHOP(Bishop.class),
     KING(King.class),
     KNIGHT(Knight.class),
@@ -13,7 +13,7 @@ public enum Pieces {
 
     private final Class<? extends Piece> piece;
 
-    Pieces(Class<? extends Piece> piece) {
+    PieceNames(Class<? extends Piece> piece) {
         this.piece = piece;
     }
 

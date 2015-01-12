@@ -245,8 +245,8 @@ public class BoardView extends JPanel {
         if (possiblePromotionsEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
 
-            Pieces[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new Pieces[possiblePromotionsEvent.getPossiblePromotions().size()]);
-            Pieces piece = (Pieces)JOptionPane.showInputDialog(
+            PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
+            PieceNames piece = (PieceNames)JOptionPane.showInputDialog(
                     this,
                     "Chose one of the following promotions",
                     "Select a Promotion",
