@@ -1,9 +1,7 @@
-/* CONTRIBUTE */
+# Contribute.md
 
 This project is loosly based on JChess from Mateusz S\u0142awomir Lach and Damian Marciniak
 and was targeted during Clean Code Development WS14/15 at Otto-von-Guericke-University Magdeburg.
-
-# Contribute.md
 
 ## Team members
 
