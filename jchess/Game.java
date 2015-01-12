@@ -1,10 +1,7 @@
 package jchess;
 
 import jchess.mvc.Controller;
-import jchess.mvc.events.InvalidSelectEvent;
-import jchess.mvc.events.PossibleMovesEvent;
-import jchess.mvc.events.SelectEvent;
-import jchess.mvc.events.UpdateBoardEvent;
+import jchess.mvc.events.*;
 import jchess.pieces.Pawn;
 import jchess.pieces.Piece;
 import jchess.pieces.Rook;
@@ -29,6 +26,7 @@ public class Game {
     private BoardCoordinate selectedBC;
     private int activePlayerID;
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
+    private HashSet<Class<? extends Piece>> possiblePromotions;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
@@ -65,8 +63,11 @@ public class Game {
         possibleMovesEvent.emit();
     }
 
-    public Piece[] selectPromotionEvent() {
-        return new Piece[0];
+    public void emitPossiblePromotionsEvent() {
+        collectPossiblePromotions();
+        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(this, possiblePromotions);
+        Logging.GAME.debug("Game: Emit PossiblePromotionsEvent");
+        possiblePromotionsEvent.emit();
     }
 
     public void emitUpdateBoardEvent() {
@@ -118,7 +119,11 @@ public class Game {
     }
 
     @Handler
-    public void handlePromotionEvent(Piece piece) {
+    public void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
+        if (promotionSelectEvent.shouldReceive(this)) {
+            Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
+            // TODO
+        }
     }
 
     private void collectPossibleMoveCoordinates() {
@@ -181,5 +186,9 @@ public class Game {
         //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
         //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
 
+    }
+
+    private void collectPossiblePromotions() {
+        possiblePromotions.clear();
     }
 }
