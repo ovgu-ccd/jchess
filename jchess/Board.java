@@ -128,16 +128,19 @@ public class Board {
         for( int b = 4 ; b < 6 ; ++b ) getTile( 5+b, b ).placePiece( new Pawn(2) );
         for( int b = 5 ; b < 9 ; ++b ) getTile( 6+b, b ).placePiece( new Pawn(2) );
 
-
         // place Rooks
         getTile( 0, 0 ).placePiece( new Rook(0) ) ;
         getTile( 0, 7 ).placePiece( new Rook(0) ) ;
 
         getTile(  7, 14 ).placePiece( new Rook(1) ) ;
-        getTile( 14, 14 ).placePiece( new Rook(1) ) ;
+        getTile(  7, 14 ).addPromotionForPlayer(0);
+        getTile( 14, 14 ).placePiece(new Rook(1) ) ;
+        getTile(  14, 14 ).addPromotionForPlayer(0);
 
         getTile( 14, 7 ).placePiece( new Rook(2) ) ;
+        getTile(  14, 7 ).addPromotionForPlayer(0);
         getTile(  7, 0 ).placePiece( new Rook(2) ) ;
+        getTile(  7, 0 ).addPromotionForPlayer(0);
 
         // place Bishops
         getTile( 0, 1 ).placePiece( new Bishop(0) ) ;
@@ -145,35 +148,44 @@ public class Board {
         getTile( 0, 6 ).placePiece( new Bishop(0) ) ;
 
         getTile(  8, 14 ).placePiece( new Bishop(1) ) ;
+        getTile(  8, 14 ).addPromotionForPlayer(0);
         getTile( 10, 13 ).placePiece( new Bishop(1) ) ;
         getTile( 13, 14 ).placePiece( new Bishop(1) ) ;
+        getTile( 13, 14 ).addPromotionForPlayer(0);
 
         getTile( 13, 6 ).placePiece( new Bishop(2) ) ;
+        getTile( 13, 6 ).addPromotionForPlayer(0);
         getTile( 10, 4 ).placePiece( new Bishop(2) ) ;
         getTile(  8, 1 ).placePiece( new Bishop(2) ) ;
+        getTile(  8, 1 ).addPromotionForPlayer(0);
 
         // place Knights
         getTile( 0, 2 ).placePiece( new Knight(0) ) ;
         getTile( 0, 5 ).placePiece( new Knight(0) ) ;
 
         getTile(  9, 14 ).placePiece( new Knight(1) ) ;
-        getTile( 12, 14 ).placePiece( new Knight(1) ) ;
+        getTile(  9, 14 ).addPromotionForPlayer(0);
+        getTile( 12, 14 ).placePiece( new Knight(1) );
+        getTile(  12, 14 ).addPromotionForPlayer(0);
 
         getTile( 12, 5 ).placePiece( new Knight(2) ) ;
+        getTile( 12, 5 ).addPromotionForPlayer(0);
         getTile(  9, 2 ).placePiece( new Knight(2) ) ;
+        getTile(  9, 2 ).addPromotionForPlayer(0);
 
         // place Queens
         getTile(  0,  3 ).placePiece( new Queen(0) ) ;
         getTile( 10, 14 ).placePiece( new Queen(1) ) ;
+        getTile(  10, 14 ).addPromotionForPlayer(0);
         getTile( 11,  4 ).placePiece( new Queen(2) ) ;
+        getTile(  11, 4 ).addPromotionForPlayer(0);
 
         // place Kings
         getTile(  0,  4 ).placePiece( new King(0) ) ;
         getTile( 11, 14 ).placePiece( new King(1) ) ;
+        getTile(  11, 14 ).addPromotionForPlayer(0);
         getTile( 10,  3 ).placePiece( new King(2) ) ;
-
-
-
+        getTile(  10, 3 ).addPromotionForPlayer(0);
     }
 }
 

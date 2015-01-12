@@ -244,8 +244,8 @@ public class BoardView extends JPanel {
         if (possiblePromotionsEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
 
-            Class[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new Class[possiblePromotionsEvent.getPossiblePromotions().size()]);
-            JOptionPane.showInputDialog(
+            Pieces[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new Pieces[possiblePromotionsEvent.getPossiblePromotions().size()]);
+            Pieces piece = (Pieces)JOptionPane.showInputDialog(
                     this,
                     "Chose one of the following promotions",
                     "Select a Promotion",
@@ -253,6 +253,10 @@ public class BoardView extends JPanel {
                     null,
                     possibilities,
                     possibilities[0]);
+
+            PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
+            Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");
+            promotionSelectEvent.emit();
         }
     }
 }

@@ -1,25 +1,25 @@
 package jchess.mvc.events;
 
 import jchess.Game;
-import jchess.pieces.Piece;
+import jchess.pieces.Pieces;
 
 /**
  * Created by andreas on 12.01.15.
  */
 public class PromotionSelectEvent extends AbstractIOSystemRelayEvent {
-    private final Class<? extends Piece> piece;
+    private final Pieces pieces;
 
-    public PromotionSelectEvent(Game game, Class<? extends Piece> piece) {
+    public PromotionSelectEvent(Game game, Pieces pieces) {
         super(game);
-        this.piece = piece;
+        this.pieces = pieces;
     }
 
     public PromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
         super(promotionSelectEvent);
-        this.piece = promotionSelectEvent.getPiece();
+        this.pieces = promotionSelectEvent.getPieces();
     }
 
-    public Class<? extends Piece> getPiece() {
-        return piece;
+    public Pieces getPieces() {
+        return pieces;
     }
 }

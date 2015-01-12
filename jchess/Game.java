@@ -2,16 +2,14 @@ package jchess;
 
 import jchess.mvc.Controller;
 import jchess.mvc.events.*;
-import jchess.pieces.King;
-import jchess.pieces.Pawn;
-import jchess.pieces.Piece;
-import jchess.pieces.Rook;
+import jchess.pieces.*;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
 
@@ -24,10 +22,11 @@ public class Game {
     private Player[] players;
     private Board board;
     private Tile selectedTile;
+    private Tile promotionTile;
     private BoardCoordinate selectedBC;
     private int activePlayerID;
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
-    private HashSet<Class<? extends Piece>> possiblePromotions;
+    private HashSet<Pieces> possiblePromotions;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
@@ -55,7 +54,6 @@ public class Game {
     public void emitInvalidSelectEvent() {
         InvalidSelectEvent invalidSelectEvent = new InvalidSelectEvent(this);
         Logging.GAME.debug("Game: Emit InvalidSelectEvent");
-        emitPossiblePromotionsEvent();
         invalidSelectEvent.emit();
     }
 
@@ -76,7 +74,6 @@ public class Game {
     public void emitUpdateBoardEvent() {
         UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(this);
         Logging.GAME.debug("Game: Emit UpdateBoardEvent");
-
         updateBoardEvent.emit();
     }
 
@@ -110,6 +107,11 @@ public class Game {
 
                         selectedTile = null;
                         emitUpdateBoardEvent();
+
+                        if (tile.isPromotionTileFor(selectedPiece.getPlayerID())) {
+                            promotionTile = tile;
+                            emitPossiblePromotionsEvent();
+                        }
                     } else {
                         emitInvalidSelectEvent();
                     }
@@ -125,7 +127,20 @@ public class Game {
     public void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
         if (promotionSelectEvent.shouldReceive(this)) {
             Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
-            // TODO
+
+            promotionTile.removePiece();
+            try {
+                Piece piece = promotionSelectEvent.getPieces().getPiece().getConstructor(int.class).newInstance(promotionTile.getPiece().getPlayerID());
+                promotionTile.placePiece(piece);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -184,7 +199,6 @@ public class Game {
             }
         }
 
-
         //possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
         //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
         //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
@@ -194,6 +208,9 @@ public class Game {
     private void collectPossiblePromotions() {
         possiblePromotions.clear();
 
-        possiblePromotions.add(King.class);
+        possiblePromotions.add(Pieces.QUEEN);
+        possiblePromotions.add(Pieces.BISHOP);
+        possiblePromotions.add(Pieces.KNIGHT);
+        possiblePromotions.add(Pieces.ROOK);
     }
 }
