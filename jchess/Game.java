@@ -5,6 +5,7 @@ import jchess.mvc.events.InvalidSelectEvent;
 import jchess.mvc.events.PossibleMovesEvent;
 import jchess.mvc.events.SelectEvent;
 import jchess.mvc.events.UpdateBoardEvent;
+import jchess.pieces.Pawn;
 import jchess.pieces.Piece;
 import jchess.pieces.Rook;
 import jchess.util.BoardCoordinate;
@@ -123,38 +124,69 @@ public class Game {
     private void collectPossibleMoveCoordinates() {
         possibleMovesCoordinates.clear();
 
-        if ( selectedTile.getPiece() instanceof Rook ) {
-            Piece rook = selectedTile.getPiece() ;
-            for( BoardCoordinate repeatBC : rook.getTileFilter().getRepeat() )  {
-                BoardCoordinate resultBC = new BoardCoordinate( selectedBC.getA() + repeatBC.getA() , selectedBC.getB() + repeatBC.getB() ) ;
-                while(  ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
-                        ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
-                        ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )   ) {
+        Piece piece = selectedTile.getPiece() ;
+        // repeat
+        for( BoardCoordinate repeatBC : piece.getTileFilter().getRepeat() )  {
+            BoardCoordinate resultBC = new BoardCoordinate( selectedBC.getA() + repeatBC.getA() , selectedBC.getB() + repeatBC.getB() ) ;
+            while(  ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
+                    ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
+                    ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )   ) {
 
-                    // Need to know if any piece is in the possible move trajectory
-                    Piece pieceOnResultBC = board.getTile( resultBC ).getPiece();
+                // Need to know if any piece is in the possible move trajectory
+                Piece pieceOnResultBC = board.getTile( resultBC ).getPiece();
 
-                    // Stop collecting tiles if another player piece is in the trajectory
-                    if ( pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID() ) break;
+                // Stop collecting tiles if another activePlayer piece is in the trajectory
+                if ( pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID() ) break;
 
-                    possibleMovesCoordinates.add( resultBC );
+                possibleMovesCoordinates.add( resultBC );
 
-                    // if we got here and pieceOnResultBC is not null, pieceOnResultBC is an enemy
-                    if ( pieceOnResultBC != null ) break;
+                // if we got here and pieceOnResultBC is not null, pieceOnResultBC is an enemy
+                if ( pieceOnResultBC != null ) break;
 
-                    // continue trajectory with new BoardCoordinates
-                    resultBC = new BoardCoordinate( resultBC.getA() + repeatBC.getA() , resultBC.getB() + repeatBC.getB() ) ;
-                }
+                // continue trajectory with new BoardCoordinates
+                resultBC = new BoardCoordinate( resultBC.getA() + repeatBC.getA() , resultBC.getB() + repeatBC.getB() ) ;
             }
         }
 
-        else {
-            possibleMovesCoordinates.add(new BoardCoordinate(0, 1));
-            possibleMovesCoordinates.add(new BoardCoordinate(1, 1));
-            possibleMovesCoordinates.add(new BoardCoordinate(1, 2));
-            possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
-            possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
-            possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
+        // single
+        for( BoardCoordinate singleBC : piece.getTileFilter().getSingle() ) {
+            BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleBC.getA(), selectedBC.getB() + singleBC.getB());
+            if (    ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
+                    ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
+                    ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )) {
+
+                // Need to know if any piece is in the possible move tile
+                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+
+                // Don't collect tile if another activePlayer piece is on it
+                if ( pieceOnResultBC != null )
+                    if ( piece instanceof Pawn || activePlayerID == pieceOnResultBC.getPlayerID() )
+                        continue;                     // Pawn is a special case and cannot kill in its walking trajectory
+
+                possibleMovesCoordinates.add(resultBC);
+            }
         }
+
+        // singleKill - Pawn only
+        for( BoardCoordinate singleKillBC : piece.getTileFilter().getSingleKill() ) {
+            BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleKillBC.getA(), selectedBC.getB() + singleKillBC.getB());
+            if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
+                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
+                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
+
+                // Need to know if any piece is in the possible kill tile
+                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+
+                // Only collect tile if another players piece is on it
+                if ( pieceOnResultBC != null && activePlayerID != pieceOnResultBC.getPlayerID() )
+                    possibleMovesCoordinates.add(resultBC);
+            }
+        }
+
+
+        //possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
+        //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
+        //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
+
     }
 }
