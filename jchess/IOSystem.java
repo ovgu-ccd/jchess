@@ -1,9 +1,6 @@
 package jchess;
 
-import jchess.mvc.events.InvalidSelectEvent;
-import jchess.mvc.events.PossibleMovesEvent;
-import jchess.mvc.events.SelectEvent;
-import jchess.mvc.events.UpdateBoardEvent;
+import jchess.mvc.events.*;
 import net.engio.mbassy.listener.Handler;
 
 /**
@@ -14,5 +11,7 @@ public interface IOSystem {
     @Handler void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent);
     @Handler void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent);
     @Handler void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent);
+    @Handler void handlePossiblePromotionsEvent(PossiblePromotionsEvent possiblePromotionsEvent);
+    @Handler void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent);
     public void setPlayer(Player player);
 }

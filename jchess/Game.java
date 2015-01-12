@@ -1,19 +1,14 @@
 package jchess;
 
 import jchess.mvc.Controller;
-import jchess.mvc.events.InvalidSelectEvent;
-import jchess.mvc.events.PossibleMovesEvent;
-import jchess.mvc.events.SelectEvent;
-import jchess.mvc.events.UpdateBoardEvent;
-import jchess.pieces.Pawn;
-import jchess.pieces.Piece;
-import jchess.pieces.Rook;
+import jchess.mvc.events.*;
+import jchess.pieces.*;
 import jchess.util.BoardCoordinate;
-import jchess.util.CoordinateConverter;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
 
@@ -26,15 +21,18 @@ public class Game {
     private Player[] players;
     private Board board;
     private Tile selectedTile;
+    private Tile promotionTile;
     private BoardCoordinate selectedBC;
     private int activePlayerID;
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
+    private HashSet<PieceNames> possiblePromotions;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
         this.players = players;
         this.board = new Board();
         this.possibleMovesCoordinates = new HashSet<>();
+        this.possiblePromotions = new HashSet<>();
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {
@@ -65,14 +63,16 @@ public class Game {
         possibleMovesEvent.emit();
     }
 
-    public Piece[] selectPromotionEvent() {
-        return new Piece[0];
+    public void emitPossiblePromotionsEvent() {
+        collectPossiblePromotions();
+        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(this, possiblePromotions);
+        Logging.GAME.debug("Game: Emit PossiblePromotionsEvent");
+        possiblePromotionsEvent.emit();
     }
 
     public void emitUpdateBoardEvent() {
         UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(this);
         Logging.GAME.debug("Game: Emit UpdateBoardEvent");
-
         updateBoardEvent.emit();
     }
 
@@ -106,6 +106,11 @@ public class Game {
 
                         selectedTile = null;
                         emitUpdateBoardEvent();
+
+                        if (tile.isPromotionTileFor(selectedPiece.getPlayerID())) {
+                            promotionTile = tile;
+                            emitPossiblePromotionsEvent();
+                        }
                     } else {
                         emitInvalidSelectEvent();
                     }
@@ -118,7 +123,22 @@ public class Game {
     }
 
     @Handler
-    public void handlePromotionEvent(Piece piece) {
+    public void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
+        if (promotionSelectEvent.shouldReceive(this)) {
+            Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
+
+            try {
+                Piece piece = (Piece)promotionSelectEvent.getPieceNames().getPiece().getConstructors()[0].newInstance(promotionTile.getPiece().getPlayerID());
+                promotionTile.placePiece(piece);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            emitUpdateBoardEvent();
+        }
     }
 
     private void collectPossibleMoveCoordinates() {
@@ -176,10 +196,18 @@ public class Game {
             }
         }
 
-
         //possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
         //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
         //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
 
+    }
+
+    private void collectPossiblePromotions() {
+        possiblePromotions.clear();
+
+        possiblePromotions.add(PieceNames.QUEEN);
+        possiblePromotions.add(PieceNames.BISHOP);
+        possiblePromotions.add(PieceNames.KNIGHT);
+        possiblePromotions.add(PieceNames.ROOK);
     }
 }

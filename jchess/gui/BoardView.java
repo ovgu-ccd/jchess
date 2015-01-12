@@ -22,10 +22,7 @@ package jchess.gui;
 
 import jchess.*;
 import jchess.mvc.Controller;
-import jchess.mvc.events.InvalidSelectEvent;
-import jchess.mvc.events.PossibleMovesEvent;
-import jchess.mvc.events.SelectEvent;
-import jchess.mvc.events.UpdateBoardEvent;
+import jchess.mvc.events.*;
 import jchess.pieces.*;
 import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
@@ -133,7 +130,7 @@ public class BoardView extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(new Color(65, 40, 0));
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
@@ -240,6 +237,27 @@ public class BoardView extends JPanel {
     void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
         if (invalidSelectEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received InvalidSelectEvent");
+        }
+    }
+
+    @Handler
+    void handlePossiblePromotionsEvent(PossiblePromotionsEvent possiblePromotionsEvent) {
+        if (possiblePromotionsEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
+
+            PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
+            PieceNames piece = (PieceNames)JOptionPane.showInputDialog(
+                    this,
+                    "Chose one of the following promotions",
+                    "Select a Promotion",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    possibilities[0]);
+
+            PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
+            Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");
+            promotionSelectEvent.emit();
         }
     }
 }

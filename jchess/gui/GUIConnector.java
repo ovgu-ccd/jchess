@@ -4,10 +4,7 @@ import jchess.IOSystem;
 import jchess.Logging;
 import jchess.Player;
 import jchess.mvc.Controller;
-import jchess.mvc.events.InvalidSelectEvent;
-import jchess.mvc.events.PossibleMovesEvent;
-import jchess.mvc.events.SelectEvent;
-import jchess.mvc.events.UpdateBoardEvent;
+import jchess.mvc.events.*;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
@@ -62,6 +59,24 @@ public class GUIConnector implements IOSystem {
         if (invalidSelectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay InvalidSelectEvent");
             (new InvalidSelectEvent(invalidSelectEvent)).emit();
+        }
+    }
+
+    @Override
+    @Handler
+    public void handlePossiblePromotionsEvent(PossiblePromotionsEvent possiblePromotionsEvent) {
+        if (possiblePromotionsEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
+            Logging.GUI.debug("GUIConnector: Relay PossiblePromotionsEvent");
+            (new PossiblePromotionsEvent(possiblePromotionsEvent)).emit();
+        }
+    }
+
+    @Override
+    @Handler
+    public void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
+        if (promotionSelectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
+            Logging.GUI.debug("GUIConnector: Relay PromotionSelectEvent");
+            (new PromotionSelectEvent(promotionSelectEvent)).emit();
         }
     }
 }
