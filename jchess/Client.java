@@ -142,7 +142,7 @@ public class Client implements Runnable {
                 } else if(in.equals("#undoAsk") && !this.isObserver) {
                     int result = JOptionPane.showConfirmDialog(
                                      null,
-                            StringResources.MAIN.getString("your_oponent_plase_to_undo_move_do_you_agree"),
+                            StringResources.MAIN.getString("your_opponent_please_to_undo_move_do_you_agree"),
                             StringResources.MAIN.getString("confirm_undo_move"),
                                      JOptionPane.YES_NO_OPTION
                                  );
