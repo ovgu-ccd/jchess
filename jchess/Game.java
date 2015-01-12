@@ -2,6 +2,7 @@ package jchess;
 
 import jchess.mvc.Controller;
 import jchess.mvc.events.*;
+import jchess.pieces.King;
 import jchess.pieces.Pawn;
 import jchess.pieces.Piece;
 import jchess.pieces.Rook;
@@ -33,6 +34,7 @@ public class Game {
         this.players = players;
         this.board = new Board();
         this.possibleMovesCoordinates = new HashSet<>();
+        this.possiblePromotions = new HashSet<>();
     }
 
     public static Game newGame(Player[] players) throws IllegalArgumentException {
@@ -53,6 +55,7 @@ public class Game {
     public void emitInvalidSelectEvent() {
         InvalidSelectEvent invalidSelectEvent = new InvalidSelectEvent(this);
         Logging.GAME.debug("Game: Emit InvalidSelectEvent");
+        emitPossiblePromotionsEvent();
         invalidSelectEvent.emit();
     }
 
@@ -190,5 +193,7 @@ public class Game {
 
     private void collectPossiblePromotions() {
         possiblePromotions.clear();
+
+        possiblePromotions.add(King.class);
     }
 }
