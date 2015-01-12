@@ -155,29 +155,22 @@ public class Game {
                     ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
                     ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )) {
 
-                // Need to know if any piece is in the possible move tile
-                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
-
                 // Don't collect tile if another activePlayer piece is on it
-                if ( pieceOnResultBC != null )
-                    if ( piece instanceof Pawn || activePlayerID == pieceOnResultBC.getPlayerID() )
-                        continue;                     // Pawn is a special case and cannot kill in its walking trajectory
-
-                possibleMovesCoordinates.add(resultBC);
+                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+                if ( pieceOnResultBC == null )
+                    possibleMovesCoordinates.add(resultBC);
             }
         }
 
-        // singleKill - Pawn only
+        // singleKill
         for( BoardCoordinate singleKillBC : piece.getTileFilter().getSingleKill() ) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleKillBC.getA(), selectedBC.getB() + singleKillBC.getB());
             if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
                     (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
                     (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
 
-                // Need to know if any piece is in the possible kill tile
-                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
-
                 // Only collect tile if another players piece is on it
+                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
                 if ( pieceOnResultBC != null && activePlayerID != pieceOnResultBC.getPlayerID() )
                     possibleMovesCoordinates.add(resultBC);
             }
