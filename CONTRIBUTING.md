@@ -5,9 +5,9 @@ and was targeted during Clean Code Development WS14/15 at Otto-von-Guericke-Univ
 
 ## Team members
 
-Robert Heumüller
-Severin Orth
-Andreas Pfohl
+* Robert Heumüller
+* Severin Orth
+* Andreas Pfohl
 
 ## Infrastructure
 
