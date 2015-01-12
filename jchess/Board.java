@@ -24,6 +24,7 @@
 package jchess;
 
 import jchess.pieces.*;
+import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 
 /** Class to represent chessboard. Chessboard is made from squares.
@@ -90,6 +91,13 @@ public class Board {
      */
     public Tile getTile( int a, int b ) {
          return tiles[ CoordinateConverter.boardCoordinateToIndex( a, b ) ];
+    }
+
+    /** Access a Tile of a board by a BoardCoordinate Class
+     * @param boardCoordinate well ...
+     */
+    public Tile getTile( BoardCoordinate boardCoordinate ) {
+        return getTile( boardCoordinate.getI() ) ;
     }
 
     public boolean undo() {
