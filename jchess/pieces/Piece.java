@@ -29,10 +29,12 @@ Class to represent a piece (any kind) - this class should be extended to represe
  */
 public abstract class Piece {
 
-    private TileFilter tileFilter;
+    protected TileFilter tileFilter;
     private int playerID;
 
-    public Piece( int playerID ) { this.playerID = playerID; }
+    public Piece( int playerID ) {
+        this.playerID = playerID;
+    }
 
     public TileFilter getTileFilter() {
         return tileFilter;
