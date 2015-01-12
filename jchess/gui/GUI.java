@@ -64,7 +64,6 @@ public class GUI extends JFrame implements ActionListener {
     public GUI(Application application) {
         super();
 
-        setResizable(false);
         setMinimumSize(new Dimension(500, 500));
         setLayout(new BorderLayout());
 
@@ -122,13 +121,6 @@ public class GUI extends JFrame implements ActionListener {
             }
         });
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                pack();
-            }
-        });
 
         Logging.GUI.debug("Gui created.");
     }
