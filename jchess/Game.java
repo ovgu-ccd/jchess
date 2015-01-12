@@ -127,17 +127,14 @@ public class Game {
         if (promotionSelectEvent.shouldReceive(this)) {
             Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
 
-            promotionTile.removePiece();
             try {
-                Piece piece = promotionSelectEvent.getPieceNames().getPiece().getConstructor(Integer.TYPE).newInstance(promotionTile.getPiece().getPlayerID());
+                Piece piece = (Piece)promotionSelectEvent.getPieceNames().getPiece().getConstructors()[0].newInstance(promotionTile.getPiece().getPlayerID());
                 promotionTile.placePiece(piece);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
             emitUpdateBoardEvent();
