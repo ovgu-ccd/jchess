@@ -219,6 +219,7 @@ public class BoardView extends JPanel {
     @Handler
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
         if (possibleMovesEvent.shouldReceive(getGame())) {
+            movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Logging.GUI.debug("BoardView: Received PossibleMovesEvent");
             Graphics2D g2d = (Graphics2D) movesOverlay.getGraphics();
             for (BoardCoordinate boardCoordinate : possibleMovesEvent.getBoardCoordinates()) {
