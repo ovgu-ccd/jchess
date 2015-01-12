@@ -130,7 +130,7 @@ public class Game {
 
             promotionTile.removePiece();
             try {
-                Piece piece = promotionSelectEvent.getPieces().getPiece().getConstructor(int.class).newInstance(promotionTile.getPiece().getPlayerID());
+                Piece piece = promotionSelectEvent.getPieces().getPiece().getConstructor(Integer.TYPE).newInstance(promotionTile.getPiece().getPlayerID());
                 promotionTile.placePiece(piece);
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -141,6 +141,8 @@ public class Game {
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
+            Logging.GAME.debug("Game: Emit UpdateBoardEvent");
+            emitUpdateBoardEvent();
         }
     }
 
