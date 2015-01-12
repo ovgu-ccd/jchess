@@ -249,12 +249,10 @@ public class GUI extends JFrame implements ActionListener {
         createMenus();
 
         mainPanel.setName("mainPanel");
-        mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
         mainPanel.setLayout(new BorderLayout());
 
 
         gamesPane.setName("gamesPane");
-        gamesPane.setBorder(BorderFactory.createTitledBorder("Games Panel"));
         mainPanel.add(gamesPane, BorderLayout.CENTER);
 
 
