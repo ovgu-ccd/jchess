@@ -22,11 +22,17 @@
 package jchess.pieces;
 
 
+import jchess.TileFilter;
+import jchess.util.BoardCoordinate;
+
 public class Rook extends Piece {
 
     public Rook( int playerID ) {
         super( playerID );
-        // create FilterFunction
-        // super.filterFunction =
+        BoardCoordinate empty[] = {};
+        BoardCoordinate repeat[] = {
+                new BoardCoordinate(  1, 0 ), new BoardCoordinate( 0,  1), new BoardCoordinate(  1,  1 ) ,
+                new BoardCoordinate( -1, 0 ), new BoardCoordinate( 0, -1), new BoardCoordinate( -1, -1 ) } ;
+        tileFilter = new TileFilter( repeat, empty, empty ) ;
     }
 }

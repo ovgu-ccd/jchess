@@ -21,11 +21,19 @@
 package jchess.pieces;
 
 
+import jchess.TileFilter;
+import jchess.util.BoardCoordinate;
+
 public class King extends Piece {
 
     public King( int playerID ) {
         super( playerID );
-        // create FilterFunction
-        // super.filterFunction =
+        BoardCoordinate empty[] = {};
+        BoardCoordinate single[] = {
+                new BoardCoordinate(  1,  0 ), new BoardCoordinate(  0,  1), new BoardCoordinate(  1,  1 ) ,
+                new BoardCoordinate( -1,  0 ), new BoardCoordinate(  0, -1), new BoardCoordinate( -1, -1 ) ,
+                new BoardCoordinate(  1, -1 ), new BoardCoordinate(  2,  1), new BoardCoordinate(  1,  2 ) ,
+                new BoardCoordinate( -1,  1 ), new BoardCoordinate( -2, -1), new BoardCoordinate( -1, -2 ) } ;
+        tileFilter = new TileFilter( empty, single, single ) ;
     }
 }

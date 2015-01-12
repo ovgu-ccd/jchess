@@ -1,32 +1,55 @@
 package jchess.util;
 
 /**
- * Pseudo-Polar Board Coordinates
+ * Tweaked hexagonal grid axis coordinates for the board
+ * TODO: Add Contracts that some pairs of a and b are not reachable, e.g. a=9, b=0 or a=10, b=1
  */
 public class BoardCoordinate {
-    private int ring;
-    private int pos;
-    private int abs;
+    int a, b, i;
 
-    public BoardCoordinate(int ring, int pos, int abs) {
-        this.ring = ring;
-        this.pos = pos;
-        this.abs = abs;
+    public BoardCoordinate(int a, int b) {
+        this.a = a;
+        this.b = b;
+        this.i = CoordinateConverter.boardCoordinateToIndex(a, b);
     }
 
     public String toString() {
-        return "(BC) Ring: " + getRing() + " Position: " + getPos() + " Abs: " + getAbs();
+        return "(BC) A: " + a + " B: " + b + " Abs: " + i;
     }
 
-    public int getRing() {
-        return ring;
+    public int getA() {
+        return a;
     }
 
-    public int getPos() {
-        return pos;
+    public int getB() {
+        return b;
     }
 
-    public int getAbs() {
-        return abs;
+    public int getC() { return b - a; }
+
+    public int getI() {
+        return i;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BoardCoordinate that = (BoardCoordinate) o;
+
+        if (a != that.a) return false;
+        if (b != that.b) return false;
+        if (i != that.i) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = a;
+        result = 31 * result + b;
+        result = 31 * result + i;
+        return result;
     }
 }

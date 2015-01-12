@@ -7,72 +7,64 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * Static methods allowing easy conversion between (pseudo-polar) BoardCoordinates and (carthesian) AbsoluteCoordinates.
+ * Static methods allowing easy conversion between (hexagonal grid axial) BoardCoordinates and (cartesian) PixelCoordinates.
+ * TODO: define height_1_2 and width_3_4 based on imaged dimensions
  */
 public class CoordinateConverter {
     private static BufferedImage image;
-    private static double du;
-    private static double[][] directions;
-    private static double[][] startDirections;
-    private static double M;
 
     static {
-        M = Math.tan(Math.toRadians(150));
-        directions = new double[][]{{1, M}, {0, -1}, {-1, M}, {-1, -M}, {0, 1}, {1, -M}};
-        startDirections = new double[][]{{0, 1}, {1, -M}, {1, M}, {0, -1}, {-1, M}, {-1, -M}};
-        for (int i = 0; i < directions.length; i++) {
-            normalize(directions[i]);
-            normalize(startDirections[i]);
-        }
         try {
             image = ImageIO.read(Application.class.getResource("images.org/TilePicker.png"));
-            du = image.getHeight() / 15;
+            //hexHight = image.getHeight() / 15;
         } catch (IOException e) {
             image = null;
         }
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(AbsoluteCoordinate ac) throws AbsoluteCoordinateNotOnBoardException {
-        int[] pixel = image.getData().getPixel(ac.x, ac.y, (int[]) null);
+    private static int[] getPixel(PixelCoordinate ac) {
+        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
+    }
+
+
+    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
+        int[] pixel = getPixel(ac);
         if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
-            throw new AbsoluteCoordinateNotOnBoardException();
+            throw new PixelCoordinateNotOnBoardException();
         }
-        return new BoardCoordinate(pixel[0], pixel[1], pixel[2]);
+        //Logging.GUI.debug("A: " + pixel[0] + " B: " + pixel[1] + " C: " + (pixel[1] - pixel[0]));
+        return new BoardCoordinate(pixel[0], pixel[1]);
     }
 
-    public static BoardCoordinate absoluteCoordinateToBoardCoordinate(int x, int y) throws AbsoluteCoordinateNotOnBoardException {
-        AbsoluteCoordinate ac = new AbsoluteCoordinate(x, y);
-        return absoluteCoordinateToBoardCoordinate(ac);
+    public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
+        PixelCoordinate ac = new PixelCoordinate(x, y);
+        return pixelToBoardCoordinate(ac);
     }
 
-    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(BoardCoordinate bc) {
-        int x = 0, y = 0;
+    public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
+        double width_3_4 = 72.0 / Math.sqrt( 3.0 );
+        int height_1_2 = 24;
 
-        if (bc.getRing() > 0) {
 
-            double startX = startDirections[bc.getPos() / bc.getRing()][0] * bc.getRing() * du;
-            double startY = startDirections[bc.getPos() / bc.getRing()][1] * bc.getRing() * du;
+        int x = 320 + ( int )Math.round( ( bc.b - bc.a ) * width_3_4 ) ;
+        int y = 24 + height_1_2 * ( bc.a + bc.b );
 
-            double[] edgeDir = directions[bc.getPos() / bc.getRing()];
-            int inEdgeIndex = bc.getPos() % bc.getRing();
+        return new PixelCoordinate(x, y);
+    }
 
-            x = (int) Math.round(startX + edgeDir[0] * inEdgeIndex * du);
-            y = (int) Math.round(startY + edgeDir[1] * inEdgeIndex * du);
+    public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
+        return boardToPixelCoordinate(new BoardCoordinate(a, b));
+    }
+
+    /// TODO: Works correct but should have an official test and contracts, same as BoardCoordinates class
+    public static int boardCoordinateToIndex(int a, int b) {
+        if ( a < 8 ) {
+            return 7 * a + b + /*GAUSS*/ a * (a + 1) / 2;
         }
 
-        x += image.getWidth() / 2;
-        y = image.getHeight() / 2 - y;
-
-        return new AbsoluteCoordinate(x, y);
-    }
-
-    public static AbsoluteCoordinate boardCoordinateToAbsoluteCoordinate(int ring, int pos, int abs) {
-        return boardCoordinateToAbsoluteCoordinate(new BoardCoordinate(ring, pos, abs));
-    }
-
-    private static void normalize(double[] vec) {
-        double len = Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
-        vec[0] /= len;
-        vec[1] /= len;
+        else {
+            int g = a - 9;
+            return 104 + 13 * g + b - /*GAUSS*/ g * ( g + 1 ) / 2 ;
+        }
     }
 }

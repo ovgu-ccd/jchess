@@ -33,7 +33,7 @@ import java.awt.event.ActionListener;
  * @param parent Information about the current piece
  * @param color The player color
  */
-class PawnPromotionWindow extends JDialog implements ActionListener {
+public class PawnPromotionWindow extends JDialog implements ActionListener {
 
     private JButton            knightButton;
     private JButton            bishopButton;
@@ -44,7 +44,7 @@ class PawnPromotionWindow extends JDialog implements ActionListener {
     private GridBagConstraints gbc;
 
 
-    PawnPromotionWindow(Frame parent, String color) {
+    public PawnPromotionWindow(Frame parent, String color) {
         super(parent);
         this.setTitle("Choose piece");
         this.setMinimumSize(new Dimension(520, 130));
