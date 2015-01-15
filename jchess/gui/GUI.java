@@ -31,34 +31,18 @@ import java.io.File;
  * The application's main frame.
  */
 public class GUI extends JFrame implements ActionListener {
-    private static GUIUtils gui = null;
-    // End of variables declaration//GEN-END:variables
-    //private JTabbedPaneWithIcon gamesPane;
-    private final Timer messageTimer;
-    private final Timer busyIconTimer;
-    private final Icon idleIcon;
-    private final Icon[] busyIcons = new Icon[15];
     public JDialog newGameFrame;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenu gameMenu;
     private javax.swing.JTabbedPane gamesPane;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem newGameItem;
-    private javax.swing.JMenu optionsMenu;
-    private javax.swing.JProgressBar progressBar;
 
-    private javax.swing.JMenuItem saveGameItem;
-    private javax.swing.JLabel statusAnimationLabel;
-    private javax.swing.JLabel statusMessageLabel;
-    private javax.swing.JPanel statusPanel;
-    private javax.swing.JMenuItem themeSettingsMenu;
-    private int busyIconIndex = 0;
     private AboutBox aboutBox;
     private JMenu fileMenu;
     private JMenuItem exitMenuItem;
     private JMenu helpMenu;
     private JMenuItem aboutMenuItem;
-    private JSeparator statusPanelSeparator;
 
 
     public GUI(Application application) {
@@ -68,58 +52,6 @@ public class GUI extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
 
         initComponents();
-        // status bar initialization - message timeout, idle icon and busy animation, etc
-        int messageTimeout = Integer.parseInt(StringResources.GUI.getString("StatusBar.messageTimeout"));
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                statusMessageLabel.setText("");
-            }
-        });
-        messageTimer.setRepeats(false);
-        int busyAnimationRate = Integer.parseInt(StringResources.GUI.getString("StatusBar.busyAnimationRate"));
-        for (int i = 0; i < busyIcons.length; i++) {
-            busyIcons[i] = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.busyIcons[" + i + "]"));
-        }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
-                statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
-            }
-        });
-        idleIcon = new ImageIcon("resource/" + StringResources.GUI.getString("StatusBar.idleIcon"));
-        statusAnimationLabel.setIcon(idleIcon);
-        progressBar.setVisible(false);
-
-        // connecting action tasks to status bar via TaskMonitor
-
-        statusPanel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                String propertyName = evt.getPropertyName();
-                if ("started".equals(propertyName)) {
-                    if (!busyIconTimer.isRunning()) {
-                        statusAnimationLabel.setIcon(busyIcons[0]);
-                        busyIconIndex = 0;
-                        busyIconTimer.start();
-                    }
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(true);
-                } else if ("done".equals(propertyName)) {
-                    busyIconTimer.stop();
-                    statusAnimationLabel.setIcon(idleIcon);
-                    progressBar.setVisible(false);
-                    progressBar.setValue(0);
-                } else if ("message".equals(propertyName)) {
-                    String text = (String) (evt.getNewValue());
-                    statusMessageLabel.setText((text == null) ? "" : text);
-                    messageTimer.restart();
-                } else if ("progress".equals(propertyName)) {
-                    int value = (Integer) (evt.getNewValue());
-                    progressBar.setVisible(true);
-                    progressBar.setIndeterminate(false);
-                    progressBar.setValue(value);
-                }
-            }
-        });
 
 
         Logging.GUI.debug("Gui created.");
@@ -171,49 +103,6 @@ public class GUI extends JFrame implements ActionListener {
             newGameFrame = new NewGameWindow(this);
             newGameFrame.setLocationRelativeTo(this);
             newGameFrame.setVisible(true);
-        } else if (target == saveGameItem) {
-            //saveGame
-            if (this.gamesPane.getTabCount() == 0) {
-                JOptionPane.showMessageDialog(null, StringResources.MAIN.getString("save_not_called_for_tab"));
-                return;
-            }
-            while (true) {
-                //until
-                JFileChooser fc = new JFileChooser();
-                int retVal = fc.showSaveDialog(this.gamesPane);
-                if (retVal == JFileChooser.APPROVE_OPTION) {
-                    File selFile = fc.getSelectedFile();
-                    GameTab tempGUI = (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
-                    if (!selFile.exists()) {
-                        try {
-                            selFile.createNewFile();
-                        } catch (java.io.IOException exc) {
-                            System.out.println("error creating file: " + exc);
-                        }
-                    } else if (selFile.exists()) {
-                        int opt = JOptionPane.showConfirmDialog(tempGUI, StringResources.MAIN.getString("file_exists"), StringResources.MAIN.getString("file_exists"), JOptionPane.YES_NO_OPTION);
-                        if (opt == JOptionPane.NO_OPTION) { //if user choose to now overwrite
-                            continue; // go back to file choose
-                        }
-                    }
-                    System.out.println(fc.getSelectedFile().isFile());
-                    break;
-                } else if (retVal == JFileChooser.CANCEL_OPTION) {
-                    break;
-                }
-                ///JChessView.gui.game.saveGame(fc.);
-            }
-        } else if (target == this.themeSettingsMenu) {
-            try {
-                ThemeChooseWindow choose = new ThemeChooseWindow(this);
-                choose.setVisible(true);
-            } catch (Exception exc) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        exc.getMessage()
-                );
-                System.out.println("Something wrong creating window - perhaps themeList is null");
-            }
         }
     }
 
@@ -226,18 +115,10 @@ public class GUI extends JFrame implements ActionListener {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new JMenu();
         newGameItem = new javax.swing.JMenuItem();
-        saveGameItem = new javax.swing.JMenuItem();
         exitMenuItem = new JMenuItem();
         gameMenu = new javax.swing.JMenu();
-        optionsMenu = new javax.swing.JMenu();
-        themeSettingsMenu = new javax.swing.JMenuItem();
         helpMenu = new JMenu();
         aboutMenuItem = new JMenuItem();
-        statusPanel = new javax.swing.JPanel();
-        statusPanelSeparator = new JSeparator();
-        statusMessageLabel = new javax.swing.JLabel();
-        statusAnimationLabel = new javax.swing.JLabel();
-        progressBar = new javax.swing.JProgressBar();
 
         createMenus();
 
@@ -249,21 +130,7 @@ public class GUI extends JFrame implements ActionListener {
         mainPanel.add(gamesPane, BorderLayout.CENTER);
 
 
-        statusPanel.setName("statusPanel"); // NOI18N
-        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-
-        statusPanelSeparator.setName("statusPanelSeparator"); // NOI18N
-
-        statusMessageLabel.setName("statusMessageLabel"); // NOI18N
-
-        statusAnimationLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        statusAnimationLabel.setName("statusAnimationLabel"); // NOI18N
-
-        progressBar.setName("progressBar"); // NOI18N
-
-
         add(mainPanel, BorderLayout.CENTER);
-        add(statusPanel, BorderLayout.SOUTH);
         pack();
     }
 
@@ -277,13 +144,6 @@ public class GUI extends JFrame implements ActionListener {
         newGameItem.setName("newGameItem"); // NOI18N
         fileMenu.add(newGameItem);
         newGameItem.addActionListener(this);
-
-        saveGameItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveGameItem.setText(StringResources.GUI.getString("saveGameItem.text")); // NOI18N
-        saveGameItem.setName("saveGameItem"); // NOI18N
-        fileMenu.add(saveGameItem);
-        saveGameItem.addActionListener(this);
-
 
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -302,16 +162,6 @@ public class GUI extends JFrame implements ActionListener {
 
         menuBar.add(gameMenu);
 
-        optionsMenu.setText(StringResources.GUI.getString("optionsMenu.text")); // NOI18N
-        optionsMenu.setName("optionsMenu"); // NOI18N
-
-        themeSettingsMenu.setText(StringResources.GUI.getString("themeSettingsMenu.text")); // NOI18N
-        themeSettingsMenu.setName("themeSettingsMenu"); // NOI18N
-        optionsMenu.add(themeSettingsMenu);
-        themeSettingsMenu.addActionListener(this);
-
-        menuBar.add(optionsMenu);
-
         helpMenu.setText(StringResources.GUI.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
@@ -326,15 +176,6 @@ public class GUI extends JFrame implements ActionListener {
 
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
-    }
-
-
-    GameTab getActiveTabGame() throws ArrayIndexOutOfBoundsException {
-        return (GameTab) this.gamesPane.getComponentAt(this.gamesPane.getSelectedIndex());
-    }
-
-    public int getNumberOfOpenedTabs() {
-        return this.gamesPane.getTabCount();
     }
 
 }

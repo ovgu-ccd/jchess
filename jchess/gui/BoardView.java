@@ -66,10 +66,8 @@ public class BoardView extends JPanel {
 
     /**
      * Chessboard class constructor
-     *
-     * @param settings reference to Settings class object for this chessboard
      */
-    public BoardView(Settings settings) {
+    public BoardView() {
         Controller.INSTANCE.subscribe(this);
 
         piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -246,7 +244,7 @@ public class BoardView extends JPanel {
             Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
 
             PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
-            PieceNames piece = (PieceNames)JOptionPane.showInputDialog(
+            PieceNames piece = (PieceNames) JOptionPane.showInputDialog(
                     this,
                     "Chose one of the following promotions",
                     "Select a Promotion",

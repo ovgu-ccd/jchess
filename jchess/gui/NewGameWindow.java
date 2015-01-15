@@ -37,8 +37,6 @@ class NewGameWindow extends JDialog {
         initComponents();
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.jTabbedPane1.addTab(StringResources.MAIN.getString("local_game"), new DrawLocalSettings(this));
-        this.jTabbedPane1.addTab(StringResources.MAIN.getString("network_game"), new DrawNetworkSettings(this));
     }
 
     /**
@@ -49,31 +47,11 @@ class NewGameWindow extends JDialog {
      */
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
-        setName("Form"); // NOI18N
         setTitle(StringResources.GUI.getString("newGameWindow.title"));
 
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
+        add(new DrawLocalSettings(this));
 
         pack();
     }
@@ -98,7 +76,5 @@ class NewGameWindow extends JDialog {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane jTabbedPane1;
-    // End of variables declaration//GEN-END:variables
+
 }
