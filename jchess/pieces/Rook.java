@@ -31,8 +31,9 @@ public class Rook extends Piece {
         super( playerID );
         BoardCoordinate empty[] = {};
         BoardCoordinate repeat[] = {
-                new BoardCoordinate(  1, 0 ), new BoardCoordinate( 0,  1), new BoardCoordinate(  1,  1 ) ,
-                new BoardCoordinate( -1, 0 ), new BoardCoordinate( 0, -1), new BoardCoordinate( -1, -1 ) } ;
+            new BoardCoordinate(  1, 0 ), new BoardCoordinate( 0,  1), new BoardCoordinate(  1,  1 ) ,
+            new BoardCoordinate( -1, 0 ), new BoardCoordinate( 0, -1), new BoardCoordinate( -1, -1 )
+        } ;
         tileFilter = new TileFilter( repeat, empty, empty ) ;
     }
 }

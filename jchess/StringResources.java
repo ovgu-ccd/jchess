@@ -18,7 +18,7 @@ public enum StringResources {
         this.bundle = ResourceBundle.getBundle(baseName);
     }
 
-    public String getString(String key){
+    public String getString(String key) {
         return this.bundle.getString(key);
     }
 

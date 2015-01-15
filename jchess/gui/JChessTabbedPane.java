@@ -21,13 +21,14 @@
 package jchess.gui;
 
 import jchess.Application;
-import jchess.GUIUtils;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
 
 public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
 
@@ -40,8 +41,13 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     public JChessTabbedPane() {
         super();
         this.closeIcon = new TabbedPaneIcon(this.closeIcon);
-        this.unclickedAddIcon = GUIUtils.loadImage("add-tab-icon.png");
-        this.clickedAddIcon = GUIUtils.loadImage("clicked-add-tab-icon.png");
+        try {
+            this.unclickedAddIcon = ImageIO.read(Application.class.getResource("images.org/add-tab-icon.png"));
+            this.clickedAddIcon = ImageIO.read(Application.class.getResource("images.org/clicked-add-tab-icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.addIcon = this.unclickedAddIcon;
         this.setDoubleBuffered(true);
         super.addMouseListener(this);
@@ -83,7 +89,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
                 this.removeTabAt(tabNumber);//remove tab
                 this.updateAddIconRect();
             }
-            if(this.getTabCount() == 0) {
+            if (this.getTabCount() == 0) {
                 this.showNewGameWindow();
             }
         } else if (this.addIconRect != null && this.addIconRect.contains(e.getX(), e.getY())) {

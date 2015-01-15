@@ -30,10 +30,11 @@ public class Knight extends Piece {
         super( playerID );
         BoardCoordinate empty[] = {};
         BoardCoordinate single[] = {
-                new BoardCoordinate(  1, -2 ), new BoardCoordinate(  2, -1), new BoardCoordinate(  1,  3 ) ,
-                new BoardCoordinate( -1,  2 ), new BoardCoordinate( -2,  1), new BoardCoordinate( -1, -3 ) ,
-                new BoardCoordinate(  3,  2 ), new BoardCoordinate(  2,  3), new BoardCoordinate(  3,  1 ) ,
-                new BoardCoordinate( -3, -2 ), new BoardCoordinate( -2, -3), new BoardCoordinate( -3, -1 ) } ;
+            new BoardCoordinate(  1, -2 ), new BoardCoordinate(  2, -1), new BoardCoordinate(  1,  3 ) ,
+            new BoardCoordinate( -1,  2 ), new BoardCoordinate( -2,  1), new BoardCoordinate( -1, -3 ) ,
+            new BoardCoordinate(  3,  2 ), new BoardCoordinate(  2,  3), new BoardCoordinate(  3,  1 ) ,
+            new BoardCoordinate( -3, -2 ), new BoardCoordinate( -2, -3), new BoardCoordinate( -3, -1 )
+        } ;
         tileFilter = new TileFilter( empty, single, single ) ;
     }
 }

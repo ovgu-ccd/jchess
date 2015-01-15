@@ -31,26 +31,26 @@ public class Pawn extends Piece {
 
         BoardCoordinate empty[] = {} ;
         switch( playerID ) {
-            case 0: {
-                BoardCoordinate single[] = { new BoardCoordinate( 1, 0 ), new BoardCoordinate( 1, 1 ) };
-                BoardCoordinate singleKill[] = { new BoardCoordinate( 1, -1 ), new BoardCoordinate( 2, 1 ), new BoardCoordinate( 1, 2 ) };
-                tileFilter = new TileFilter( empty, single, singleKill );
-                break;
-            }
+        case 0: {
+            BoardCoordinate single[] = { new BoardCoordinate( 1, 0 ), new BoardCoordinate( 1, 1 ) };
+            BoardCoordinate singleKill[] = { new BoardCoordinate( 1, -1 ), new BoardCoordinate( 2, 1 ), new BoardCoordinate( 1, 2 ) };
+            tileFilter = new TileFilter( empty, single, singleKill );
+            break;
+        }
 
-            case 1: {
-                BoardCoordinate single[] = { new BoardCoordinate( 0, -1 ), new BoardCoordinate( -1, -1 ) };
-                BoardCoordinate singleKill[] = { new BoardCoordinate( -2, -1 ), new BoardCoordinate( -1, -2 ), new BoardCoordinate( 1, -1 ) };
-                tileFilter = new TileFilter( empty, single, singleKill );
-                break;
-            }
-            
-            case 2: {
-                BoardCoordinate single[] = { new BoardCoordinate( -1, 0 ), new BoardCoordinate(  0, 1 ) };
-                BoardCoordinate singleKill[] = { new BoardCoordinate( 1, 2 ), new BoardCoordinate( -1, 1 ), new BoardCoordinate( -2, -1 ) };
-                tileFilter = new TileFilter( empty, single, singleKill );
-                break;
-            }
+        case 1: {
+            BoardCoordinate single[] = { new BoardCoordinate( 0, -1 ), new BoardCoordinate( -1, -1 ) };
+            BoardCoordinate singleKill[] = { new BoardCoordinate( -2, -1 ), new BoardCoordinate( -1, -2 ), new BoardCoordinate( 1, -1 ) };
+            tileFilter = new TileFilter( empty, single, singleKill );
+            break;
+        }
+
+        case 2: {
+            BoardCoordinate single[] = { new BoardCoordinate( -1, 0 ), new BoardCoordinate(  0, 1 ) };
+            BoardCoordinate singleKill[] = { new BoardCoordinate( 1, 2 ), new BoardCoordinate( -1, 1 ), new BoardCoordinate( -2, -1 ) };
+            tileFilter = new TileFilter( empty, single, singleKill );
+            break;
+        }
 
         }
     }

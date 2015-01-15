@@ -25,7 +25,9 @@ public class BoardCoordinate {
         return b;
     }
 
-    public int getC() { return b - a; }
+    public int getC() {
+        return b - a;
+    }
 
     public int getI() {
         return i;

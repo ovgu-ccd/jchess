@@ -12,7 +12,7 @@ public class NewGameEvent extends Event {
     private final String[] playerNames;
     private GameTab gameTab;
 
-    public NewGameEvent(String[] playerNames, IOSystem[] ioSystems, GameTab gameTab){
+    public NewGameEvent(String[] playerNames, IOSystem[] ioSystems, GameTab gameTab) {
         this.playerNames = playerNames;
         this.ioSystems = ioSystems;
         this.gameTab = gameTab;

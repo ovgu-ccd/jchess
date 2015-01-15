@@ -39,7 +39,9 @@ public abstract class Piece {
     public TileFilter getTileFilter() {
         return tileFilter;
     }
-    public int getPlayerID() { return playerID; }
+    public int getPlayerID() {
+        return playerID;
+    }
 
 
 }

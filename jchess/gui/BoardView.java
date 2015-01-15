@@ -66,10 +66,8 @@ public class BoardView extends JPanel {
 
     /**
      * Chessboard class constructor
-     *
-     * @param settings reference to Settings class object for this chessboard
      */
-    public BoardView(Settings settings) {
+    public BoardView() {
         Controller.INSTANCE.subscribe(this);
 
         piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -148,19 +146,19 @@ public class BoardView extends JPanel {
     void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
 
         PixelCoordinate pixelCoordinate =
-                CoordinateConverter.boardToPixelCoordinate(a, b, i);
+            CoordinateConverter.boardToPixelCoordinate(a, b, i);
 
         if (piece != null) {
             switch (piece.getPlayerID()) {
-                case 0:
-                    g2d.setColor(Color.green);
-                    break;
-                case 1:
-                    g2d.setColor(Color.blue);
-                    break;
-                case 2:
-                    g2d.setColor(Color.orange);
-                    break;
+            case 0:
+                g2d.setColor(Color.green);
+                break;
+            case 1:
+                g2d.setColor(Color.blue);
+                break;
+            case 2:
+                g2d.setColor(Color.orange);
+                break;
             }
             if (piece instanceof King) {
                 g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
@@ -246,14 +244,14 @@ public class BoardView extends JPanel {
             Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
 
             PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
-            PieceNames piece = (PieceNames)JOptionPane.showInputDialog(
-                    this,
-                    "Chose one of the following promotions",
-                    "Select a Promotion",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    possibilities,
-                    possibilities[0]);
+            PieceNames piece = (PieceNames) JOptionPane.showInputDialog(
+                                   this,
+                                   "Chose one of the following promotions",
+                                   "Select a Promotion",
+                                   JOptionPane.PLAIN_MESSAGE,
+                                   null,
+                                   possibilities,
+                                   possibilities[0]);
 
             PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
             Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");

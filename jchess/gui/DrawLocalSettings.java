@@ -110,8 +110,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
 
             /* new method call from apfohl */
             parent.createNewGame(this.firstName.getText(),
-                    this.secondName.getText(),
-                    this.thirdName.getText());
+                                 this.secondName.getText(),
+                                 this.thirdName.getText());
         }
 
     }
