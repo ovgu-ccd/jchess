@@ -6,6 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class AboutBox extends JDialog {
     private JPanel contentPane;
@@ -33,10 +38,27 @@ public class AboutBox extends JDialog {
 
         setTitle(StringResources.MAIN.getString("AboutBox.title.text"));
         setResizable(false);
+
+        openWebsite(homepage, StringResources.MAIN.getString("AboutBox.homepage.text"), null);
     }
 
     private void onClose() {
         dispose();
+    }
+
+    private void openWebsite(JLabel label, final String url, String text) {
+        label.setText("<html><a href=\"\">" + (text == null ? url : text) + "</a></html>");
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (URISyntaxException | IOException ex) {
+                    //It looks like there's a problem
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
