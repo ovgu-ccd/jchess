@@ -68,12 +68,12 @@ public class GUI extends JFrame implements ActionListener {
         newTab.boardView.repaint();
 
         NewGameEvent event = new NewGameEvent(
-                new String[]{firstName, secondName, thirdName},
-                new IOSystem[]{
-                        new GUIConnector(),
-                        new GUIConnector(),
-                        new GUIConnector()
-                }, newTab);
+            new String[] {firstName, secondName, thirdName},
+            new IOSystem[] {
+                new GUIConnector(),
+                new GUIConnector(),
+                new GUIConnector()
+            }, newTab);
 
         pack();
         Logging.GUI.debug("GUI: Emit NewGameEvent");

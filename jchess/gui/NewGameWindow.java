@@ -60,8 +60,8 @@ class NewGameWindow extends JDialog {
                               String secondName,
                               String thirdName) {
         ((GUI) getParent()).createNewGame(firstName,
-                secondName,
-                thirdName);
+                                          secondName,
+                                          thirdName);
     }
 
     /**

@@ -13,7 +13,7 @@ public class StringResourcesTest {
 
 
     @BeforeClass
-    public static void setup(){
+    public static void setup() {
         Logging.setup();
     }
 
@@ -21,7 +21,7 @@ public class StringResourcesTest {
     public void testGetNativeString() {
         String greeting;
         String expected = GREETING_EN;
-        if (Locale.getDefault().equals(Locale.GERMANY)){
+        if (Locale.getDefault().equals(Locale.GERMANY)) {
             expected = GREETING_DE;
         }
         greeting = StringResources.MAIN.getString("StringResources.GREETING");
@@ -33,7 +33,7 @@ public class StringResourcesTest {
         String greeting;
         String expected = GREETING_DE;
         Locale locale = Locale.GERMANY;
-        if (Locale.getDefault().equals(Locale.GERMANY)){
+        if (Locale.getDefault().equals(Locale.GERMANY)) {
             locale = Locale.US;
             expected = GREETING_EN;
         }

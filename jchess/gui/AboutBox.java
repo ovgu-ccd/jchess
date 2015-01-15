@@ -16,16 +16,16 @@ public class AboutBox extends JDialog {
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.caption.text")));
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.description.text")));
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.versionLabel.text")
-                + " " + StringResources.MAIN.getString("AboutBox.version.text")));
+                         + " " + StringResources.MAIN.getString("AboutBox.version.text")));
 
-        b.add(Box.createRigidArea(new Dimension(0,10)));
+        b.add(Box.createRigidArea(new Dimension(0, 10)));
 
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.homepageLabel.text")
-                + " " + StringResources.MAIN.getString("AboutBox.homepage.text")));
+                         + " " + StringResources.MAIN.getString("AboutBox.homepage.text")));
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.developersLabel.text")
-                + " " + StringResources.MAIN.getString("AboutBox.developers.text")));
+                         + " " + StringResources.MAIN.getString("AboutBox.developers.text")));
 
-        b.add(Box.createRigidArea(new Dimension(0,10)));
+        b.add(Box.createRigidArea(new Dimension(0, 10)));
 
         b.add(new JLabel(StringResources.MAIN.getString("AboutBox.disclaimer.text")));
         b.add(Box.createGlue());
