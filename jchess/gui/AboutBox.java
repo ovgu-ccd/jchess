@@ -6,48 +6,65 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class AboutBox extends JDialog {
+    private JPanel contentPane;
+    private JButton closeButton;
+    private JLabel caption;
+    private JLabel description;
+    private JLabel versionLabel;
+    private JLabel version;
+    private JLabel homepageLabel;
+    private JLabel homepage;
+    private JLabel developersLabel;
+    private JLabel developers;
+    private JLabel disclaimer;
 
     public AboutBox() {
-        setTitle(StringResources.MAIN.getString("AboutBox.title.text"));
-        Box b = Box.createVerticalBox();
-        b.add(Box.createGlue());
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.caption.text")));
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.description.text")));
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.versionLabel.text")
-                         + " " + StringResources.MAIN.getString("AboutBox.version.text")));
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(closeButton);
 
-        b.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.homepageLabel.text")
-                         + " " + StringResources.MAIN.getString("AboutBox.homepage.text")));
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.developersLabel.text")
-                         + " " + StringResources.MAIN.getString("AboutBox.developers.text")));
-
-        b.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        b.add(new JLabel(StringResources.MAIN.getString("AboutBox.disclaimer.text")));
-        b.add(Box.createGlue());
-        getContentPane().add(b, "Center");
-
-        JPanel p2 = new JPanel();
-        JButton ok = new JButton(StringResources.MAIN.getString("AboutBox.closeButton.text"));
-        p2.add(ok);
-        getContentPane().add(p2, "South");
-
-        ok.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                setVisible(false);
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onClose();
             }
         });
 
-        pack();
+        setTitle(StringResources.MAIN.getString("AboutBox.title.text"));
+        setResizable(false);
+
+        openWebsite(homepage, StringResources.MAIN.getString("AboutBox.homepage.text"), null);
     }
 
+    private void onClose() {
+        dispose();
+    }
+
+    private void openWebsite(JLabel label, final String url, String text) {
+        label.setText("<html><a href=\"\">" + (text == null ? url : text) + "</a></html>");
+        label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (URISyntaxException | IOException ex) {
+                    //It looks like there's a problem
+                }
+            }
+        });
+    }
 
     public static void main(String[] args) {
         AboutBox dialog = new AboutBox();
+        dialog.pack();
         dialog.setVisible(true);
+        System.exit(0);
     }
 }
