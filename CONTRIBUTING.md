@@ -8,6 +8,7 @@ and was targeted during Clean Code Development WS14/15 at Otto-von-Guericke-Univ
 * Robert Heumüller
 * Severin Orth
 * Andreas Pfohl
+* Peter Wrobel
 
 ## Infrastructure
 
