@@ -39,6 +39,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
@@ -99,32 +100,8 @@ public class BoardView extends JPanel {
         return ((GameTab) getParent()).getGame();
     }
 
-    public int getWidth() {
-        return boardImage.getWidth();
-    }
 
-    public int getHeight() {
-        return boardImage.getHeight();
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
-    }
-
-    @Override
-    public Dimension getMinimumSize() {
-        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
-    }
-
-    @Override
-    public Dimension getMaximumSize() {
-        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
-    }
-
-
-    @Override
-    public void paintComponent(Graphics g) {
+    @Override public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -137,9 +114,34 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override
-    public void update(Graphics g) {
+    @Override public void update(Graphics g) {
         repaint();
+    }
+
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+
+    @Override public Dimension getMaximumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+
+    @Override public Dimension getMinimumSize() {
+        return new Dimension(boardImage.getWidth(), boardImage.getHeight());
+    }
+
+
+    public int getWidth() {
+        return boardImage.getWidth();
+    }
+
+
+    public int getHeight() {
+        return boardImage.getHeight();
     }
 
 
@@ -243,19 +245,22 @@ public class BoardView extends JPanel {
         if (possiblePromotionsEvent.shouldReceive(getGame())) {
             Logging.GUI.debug("BoardView: Received PossiblePromotionsEvent");
 
-            PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
-            PieceNames piece = (PieceNames) JOptionPane.showInputDialog(
-                                   this,
-                                   "Chose one of the following promotions",
-                                   "Select a Promotion",
-                                   JOptionPane.PLAIN_MESSAGE,
-                                   null,
-                                   possibilities,
-                                   possibilities[0]);
-
-            PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
-            Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");
-            promotionSelectEvent.emit();
+            try {
+                HashMap<String, Class<? extends Piece>> possibilities = new HashMap<>();
+                for (Class<? extends Piece> piece : possiblePromotionsEvent.getPossiblePromotions()) {
+                    possibilities.put(piece.getSimpleName(), piece);
+                }
+                Class<? extends Piece> piece = possibilities.get((String) JOptionPane
+                        .showInputDialog(this, "Chose one of the following promotions", "Select a Promotion",
+                                JOptionPane.PLAIN_MESSAGE, null, possibilities.keySet().toArray(),
+                                possibilities.keySet().toArray()[0]));
+                PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
+                Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");
+                promotionSelectEvent.emit();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+                (new GenericErrorEvent(this, e)).emit();
+            }
         }
     }
 }
