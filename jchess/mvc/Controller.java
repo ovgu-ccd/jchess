@@ -8,6 +8,8 @@ import net.engio.mbassy.bus.config.BusConfiguration;
  * Created by Severin Orth on 07.12.14.
  *
  * Singleton for our event bus
+ *
+ * @trace [$REQ07]
  */
 public class Controller {
     public static final Controller INSTANCE;

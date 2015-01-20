@@ -25,7 +25,7 @@ public class Game {
     private BoardCoordinate selectedBC;
     private int activePlayerID;
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
-    private HashSet<PieceNames> possiblePromotions;
+    private HashSet<Class<? extends Piece>> possiblePromotions;
 
     private Game(Player[] players) {
         Controller.INSTANCE.subscribe(this);
@@ -131,14 +131,12 @@ public class Game {
             Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
 
             try {
-                Piece piece = (Piece) promotionSelectEvent.getPieceNames().getPiece().getConstructors()[0].newInstance(promotionTile.getPiece().getPlayerID());
+                Piece piece = (Piece) promotionSelectEvent.getPieceClass().getConstructors()[0]
+                        .newInstance(promotionTile.getPiece().getPlayerID());
                 promotionTile.placePiece(piece);
-            } catch (InstantiationException e) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | RuntimeException e) {
                 e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                (new GenericErrorEvent(this, e)).emit();
             }
             emitUpdateBoardEvent();
         }
@@ -208,9 +206,9 @@ public class Game {
     private void collectPossiblePromotions() {
         possiblePromotions.clear();
 
-        possiblePromotions.add(PieceNames.QUEEN);
-        possiblePromotions.add(PieceNames.BISHOP);
-        possiblePromotions.add(PieceNames.KNIGHT);
-        possiblePromotions.add(PieceNames.ROOK);
+        possiblePromotions.add(Queen.class);
+        possiblePromotions.add(Bishop.class);
+        possiblePromotions.add(Knight.class);
+        possiblePromotions.add(Rook.class);
     }
 }
