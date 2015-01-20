@@ -50,12 +50,6 @@ public class Game {
         return board;
     }
 
-    public void emitInvalidSelectEvent() {
-        InvalidSelectEvent invalidSelectEvent = new InvalidSelectEvent(this);
-        Logging.GAME.debug("Game: Emit InvalidSelectEvent");
-        invalidSelectEvent.emit();
-    }
-
     public void emitPossibleMovesEvent() {
         collectPossibleMoveCoordinates();
         PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, possibleMovesCoordinates);
@@ -74,6 +68,13 @@ public class Game {
         UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent(this);
         Logging.GAME.debug("Game: Emit UpdateBoardEvent");
         updateBoardEvent.emit();
+        emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.MakeYourMove"), UpdateStatusMessageEvent.Types.NORMAL);
+    }
+
+    public void emitUpdateStatusMessageEvent(String message, UpdateStatusMessageEvent.Types types) {
+        UpdateStatusMessageEvent updateStatusMessageEvent = new UpdateStatusMessageEvent(this, message, types);
+        Logging.GAME.debug("Game: Emit UpdateBoardEvent");
+        updateStatusMessageEvent.emit();
     }
 
     @Handler
@@ -83,8 +84,10 @@ public class Game {
             selectedBC = selectEvent.getBoardCoordinate();
             if (selectedTile == null) {
                 Tile tile = board.getTile(selectEvent.getBoardCoordinate().getI());
-                if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
-                    emitInvalidSelectEvent();
+                if (tile.getPiece() == null) {
+                    emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.SelectAPiece"), UpdateStatusMessageEvent.Types.ALERT);
+                } else if (!players[tile.getPiece().getPlayerID()].isActive()) {
+                    emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.NotYourPiece"), UpdateStatusMessageEvent.Types.ALERT);
                 } else {
                     selectedTile = tile;
                     emitPossibleMovesEvent();
@@ -112,7 +115,7 @@ public class Game {
                             emitPossiblePromotionsEvent();
                         }
                     } else {
-                        emitInvalidSelectEvent();
+                        emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.CantGoThere"), UpdateStatusMessageEvent.Types.ALERT);
                     }
                 } else {
                     selectedTile = tile;
@@ -128,7 +131,7 @@ public class Game {
             Logging.GAME.debug(promotionSelectEvent.getGame() + " Received PromotionSelectEvent");
 
             try {
-                Piece piece = (Piece)promotionSelectEvent.getPieceNames().getPiece().getConstructors()[0].newInstance(promotionTile.getPiece().getPlayerID());
+                Piece piece = (Piece) promotionSelectEvent.getPieceNames().getPiece().getConstructors()[0].newInstance(promotionTile.getPiece().getPlayerID());
                 promotionTile.placePiece(piece);
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -144,46 +147,46 @@ public class Game {
     private void collectPossibleMoveCoordinates() {
         possibleMovesCoordinates.clear();
 
-        Piece piece = selectedTile.getPiece() ;
+        Piece piece = selectedTile.getPiece();
         // repeat
-        for( BoardCoordinate repeatBC : piece.getTileFilter().getRepeat() )  {
-            BoardCoordinate resultBC = new BoardCoordinate( selectedBC.getA() + repeatBC.getA() , selectedBC.getB() + repeatBC.getB() ) ;
-            while(  ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
-                    ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
-                    ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )   ) {
+        for (BoardCoordinate repeatBC : piece.getTileFilter().getRepeat()) {
+            BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + repeatBC.getA(), selectedBC.getB() + repeatBC.getB());
+            while ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
+                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
+                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
 
                 // Need to know if any piece is in the possible move trajectory
-                Piece pieceOnResultBC = board.getTile( resultBC ).getPiece();
+                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
 
                 // Stop collecting tiles if another activePlayer piece is in the trajectory
-                if ( pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID() ) break;
+                if (pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID()) break;
 
-                possibleMovesCoordinates.add( resultBC );
+                possibleMovesCoordinates.add(resultBC);
 
                 // if we got here and pieceOnResultBC is not null, pieceOnResultBC is an enemy
-                if ( pieceOnResultBC != null ) break;
+                if (pieceOnResultBC != null) break;
 
                 // continue trajectory with new BoardCoordinates
-                resultBC = new BoardCoordinate( resultBC.getA() + repeatBC.getA() , resultBC.getB() + repeatBC.getB() ) ;
+                resultBC = new BoardCoordinate(resultBC.getA() + repeatBC.getA(), resultBC.getB() + repeatBC.getB());
             }
         }
 
         // single
-        for( BoardCoordinate singleBC : piece.getTileFilter().getSingle() ) {
+        for (BoardCoordinate singleBC : piece.getTileFilter().getSingle()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleBC.getA(), selectedBC.getB() + singleBC.getB());
-            if (    ( resultBC.getA() >=  0 && resultBC.getA() < 15 ) &&
-                    ( resultBC.getB() >=  0 && resultBC.getB() < 15 ) &&
-                    ( resultBC.getC() >= -7 && resultBC.getC() <= 7 )) {
+            if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
+                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
+                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
 
                 // Don't collect tile if another activePlayer piece is on it
                 Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
-                if ( pieceOnResultBC == null )
+                if (pieceOnResultBC == null)
                     possibleMovesCoordinates.add(resultBC);
             }
         }
 
         // singleKill
-        for( BoardCoordinate singleKillBC : piece.getTileFilter().getSingleKill() ) {
+        for (BoardCoordinate singleKillBC : piece.getTileFilter().getSingleKill()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleKillBC.getA(), selectedBC.getB() + singleKillBC.getB());
             if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
                     (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
@@ -191,7 +194,7 @@ public class Game {
 
                 // Only collect tile if another players piece is on it
                 Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
-                if ( pieceOnResultBC != null && activePlayerID != pieceOnResultBC.getPlayerID() )
+                if (pieceOnResultBC != null && activePlayerID != pieceOnResultBC.getPlayerID())
                     possibleMovesCoordinates.add(resultBC);
             }
         }
