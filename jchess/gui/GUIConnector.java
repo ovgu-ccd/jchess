@@ -44,6 +44,15 @@ public class GUIConnector implements IOSystem {
         }
     }
 
+    @Handler
+    void handleUpdateStatusMessageEvent(UpdateStatusMessageEvent updateStatusMessageEvent) {
+        if (updateStatusMessageEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
+            Logging.GUI.debug("GUIConnector: Relay UpdateBoardEvent");
+            (new UpdateStatusMessageEvent(updateStatusMessageEvent)).emit();
+        }
+    }
+
+
     @Override
     @Handler
     public void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
@@ -53,14 +62,6 @@ public class GUIConnector implements IOSystem {
         }
     }
 
-    @Override
-    @Handler
-    public void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
-        if (invalidSelectEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
-            Logging.GUI.debug("GUIConnector: Relay InvalidSelectEvent");
-            (new InvalidSelectEvent(invalidSelectEvent)).emit();
-        }
-    }
 
     @Override
     @Handler

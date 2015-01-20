@@ -54,6 +54,10 @@ public class BoardView extends JPanel {
 
     private BufferedImage piecesOverlay;
     private BufferedImage movesOverlay;
+    private BufferedImage statusMessageOverlay;
+
+    private String statusMessage;
+    private Timer statusAnimationTimer;
 
     static {
         try {
@@ -72,12 +76,17 @@ public class BoardView extends JPanel {
 
         piecesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         movesOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        statusMessageOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         this.setDoubleBuffered(true);
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                statusAnimationTimer.stop();
+                statusMessageOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                repaint();
+
                 BoardCoordinate boardCoordinate = null;
                 try {
                     boardCoordinate = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
@@ -87,7 +96,6 @@ public class BoardView extends JPanel {
 
                     Logging.GUI.debug("Emit SelectEvent");
                     selectEvent.emit();
-
                 } catch (PixelCoordinateNotOnBoardException e1) {
                     // Send no event
                 }
@@ -122,6 +130,21 @@ public class BoardView extends JPanel {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
 
+    public BufferedImage getStatusMessageOverlay() {
+        return statusMessageOverlay;
+    }
+
+    public void setStatusMessageOverlay(BufferedImage statusMessageOverlay) {
+        this.statusMessageOverlay = statusMessageOverlay;
+    }
+
+    public Timer getStatusAnimationTimer() {
+        return statusAnimationTimer;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -134,6 +157,7 @@ public class BoardView extends JPanel {
 
         g2d.drawImage(piecesOverlay, null, 0, 0);
         g2d.drawImage(movesOverlay, null, 0, 0);
+        g2d.drawImage(statusMessageOverlay, null, 0, 0);
     }
 
 
@@ -146,19 +170,19 @@ public class BoardView extends JPanel {
     void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
 
         PixelCoordinate pixelCoordinate =
-            CoordinateConverter.boardToPixelCoordinate(a, b, i);
+                CoordinateConverter.boardToPixelCoordinate(a, b, i);
 
         if (piece != null) {
             switch (piece.getPlayerID()) {
-            case 0:
-                g2d.setColor(Color.green);
-                break;
-            case 1:
-                g2d.setColor(Color.blue);
-                break;
-            case 2:
-                g2d.setColor(Color.orange);
-                break;
+                case 0:
+                    g2d.setColor(Color.green);
+                    break;
+                case 1:
+                    g2d.setColor(Color.blue);
+                    break;
+                case 2:
+                    g2d.setColor(Color.orange);
+                    break;
             }
             if (piece instanceof King) {
                 g2d.drawString("\u265a", pixelCoordinate.x - 16, pixelCoordinate.y + 7);
@@ -231,10 +255,14 @@ public class BoardView extends JPanel {
         }
     }
 
+
     @Handler
-    void handleInvalidSelectEvent(InvalidSelectEvent invalidSelectEvent) {
-        if (invalidSelectEvent.shouldReceive(getGame())) {
-            Logging.GUI.debug("BoardView: Received InvalidSelectEvent");
+    void handleUpdateStatusMessageEvent(final UpdateStatusMessageEvent updateStatusMessageEvent) {
+        if (updateStatusMessageEvent.shouldReceive(getGame())) {
+            Logging.GUI.debug("BoardView: Received UpdateStatusMessageEvent: ");
+            this.statusMessage = updateStatusMessageEvent.getStatusMessage();
+            statusAnimationTimer = new Timer(100, new StatusAnimator(this, updateStatusMessageEvent));
+            statusAnimationTimer.start();
         }
     }
 
@@ -245,17 +273,18 @@ public class BoardView extends JPanel {
 
             PieceNames[] possibilities = possiblePromotionsEvent.getPossiblePromotions().toArray(new PieceNames[possiblePromotionsEvent.getPossiblePromotions().size()]);
             PieceNames piece = (PieceNames) JOptionPane.showInputDialog(
-                                   this,
-                                   "Chose one of the following promotions",
-                                   "Select a Promotion",
-                                   JOptionPane.PLAIN_MESSAGE,
-                                   null,
-                                   possibilities,
-                                   possibilities[0]);
+                    this,
+                    "Chose one of the following promotions",
+                    "Select a Promotion",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    possibilities[0]);
 
             PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(getGame(), piece);
             Logging.GUI.debug("BoardView: Emit PromotionSelectEvent");
             promotionSelectEvent.emit();
         }
     }
+
 }
