@@ -1,5 +1,6 @@
 package jchess.gui;
 
+import jchess.Application;
 import jchess.mvc.events.UpdateStatusMessageEvent;
 
 import java.awt.*;
@@ -7,15 +8,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by robert on 20.01.15.
  */
 class StatusAnimator implements ActionListener {
     private BoardView parent;
-    final int animationTime;
+    private final int animationTime;
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
-    long dueTime;
+    private long dueTime;
+    private static Font font;
+
+    static {
+        InputStream is = Application.class.getResourceAsStream("resources/roboto-font/RobotoCondensed-Light.ttf");
+        try {
+            Font unsizedFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            font = unsizedFont.deriveFont(35f);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;
@@ -74,12 +88,14 @@ class StatusAnimator implements ActionListener {
         int w = 500, h = 80;
         int x = parent.getWidth() / 2 - w / 2, y = parent.getHeight() / 2 - h / 2;
         g2d.fillRoundRect(x, y, w, h, 10, 10);
-        g2d.setColor(Color.BLACK);
     }
 
     private void drawMessage(Graphics2D g2d) {
+        g2d.setColor(Color.BLACK);
         // Draw text
-        Font font = new Font(g2d.getFont().getName(), Font.PLAIN, 30);
+        if (font == null){
+            font = g2d.getFont().deriveFont(30);
+        }
         g2d.setFont(font);
         FontMetrics metrics = g2d.getFontMetrics(font);
         Rectangle2D stringBounds = metrics.getStringBounds(parent.getStatusMessage(), g2d);
