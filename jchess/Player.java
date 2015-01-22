@@ -29,13 +29,11 @@ import java.io.Serializable;
 public class Player implements Serializable {
 
     public enum PlayerColor {WHITE, BLACK, RED}
-    public enum PlayerType {LOCAL, NETWORK, COMPUTER}
 
     private String name;
     private Game game;
     private IOSystem ioSystem;
     private boolean active;
-    private PlayerType playerType;
     private PlayerColor color;
 
 
@@ -76,14 +74,6 @@ public class Player implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public PlayerType getPlayerType() {
-        return playerType;
-    }
-
-    public void setPlayerType(PlayerType playerType) {
-        this.playerType = playerType;
     }
 
     public PlayerColor getColor() {
