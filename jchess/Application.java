@@ -1,11 +1,13 @@
 package jchess;
 
 
+import jchess.game.Game;
+import jchess.game.Player;
 import jchess.gui.GUI;
-import jchess.mvc.Controller;
-import jchess.mvc.events.NewGameEvent;
+import jchess.eventbus.Controller;
+import jchess.eventbus.events.NewGameEvent;
+import jchess.util.Logging;
 import net.engio.mbassy.listener.Handler;
-import net.engio.mbassy.listener.Invoke;
 
 import javax.swing.*;
 import java.util.LinkedList;

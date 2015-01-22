@@ -1,6 +1,6 @@
 package jchess.gui;
 
-import jchess.StringResources;
+import jchess.util.StringResources;
 
 import javax.swing.*;
 import java.awt.*;

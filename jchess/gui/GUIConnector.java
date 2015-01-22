@@ -1,10 +1,10 @@
 package jchess.gui;
 
-import jchess.IOSystem;
-import jchess.Logging;
-import jchess.Player;
-import jchess.mvc.Controller;
-import jchess.mvc.events.*;
+import jchess.game.IOSystem;
+import jchess.util.Logging;
+import jchess.game.Player;
+import jchess.eventbus.Controller;
+import jchess.eventbus.events.*;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;

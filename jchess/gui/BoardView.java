@@ -21,13 +21,13 @@
 package jchess.gui;
 
 import jchess.*;
-import jchess.mvc.Controller;
-import jchess.mvc.events.*;
-import jchess.pieces.*;
-import jchess.util.BoardCoordinate;
-import jchess.util.CoordinateConverter;
-import jchess.util.PixelCoordinate;
-import jchess.util.PixelCoordinateNotOnBoardException;
+import jchess.eventbus.Controller;
+import jchess.eventbus.events.*;
+import jchess.game.board.Board;
+import jchess.game.Game;
+import jchess.game.board.Tile;
+import jchess.game.pieces.*;
+import jchess.util.*;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;

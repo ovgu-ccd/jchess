@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import jchess.Board;
+import jchess.game.board.Board;
 
 
 public class BoardTest {
