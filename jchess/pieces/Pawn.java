@@ -26,32 +26,43 @@ import jchess.util.BoardCoordinate;
 
 public class Pawn extends Piece {
 
+    private boolean initialMove;
+
     public Pawn( int playerID ) {
         super( playerID );
-
+        initialMove = true;
         BoardCoordinate empty[] = {} ;
         switch( playerID ) {
         case 0: {
-            BoardCoordinate single[] = { new BoardCoordinate( 1, 0 ), new BoardCoordinate( 1, 1 ) };
+            BoardCoordinate single[] = { new BoardCoordinate( 1, 0 ), new BoardCoordinate( 1, 1 ), new BoardCoordinate( 2, 0 ), new BoardCoordinate( 2, 2 )  };
             BoardCoordinate singleKill[] = { new BoardCoordinate( 1, -1 ), new BoardCoordinate( 2, 1 ), new BoardCoordinate( 1, 2 ) };
             tileFilter = new TileFilter( empty, single, singleKill );
             break;
         }
 
         case 1: {
-            BoardCoordinate single[] = { new BoardCoordinate( 0, -1 ), new BoardCoordinate( -1, -1 ) };
+            BoardCoordinate single[] = { new BoardCoordinate( 0, -1 ), new BoardCoordinate( -1, -1 ), new BoardCoordinate( 0, -2 ), new BoardCoordinate( -2, -2 ) };
             BoardCoordinate singleKill[] = { new BoardCoordinate( -2, -1 ), new BoardCoordinate( -1, -2 ), new BoardCoordinate( 1, -1 ) };
             tileFilter = new TileFilter( empty, single, singleKill );
             break;
         }
 
         case 2: {
-            BoardCoordinate single[] = { new BoardCoordinate( -1, 0 ), new BoardCoordinate(  0, 1 ) };
+            BoardCoordinate single[] = { new BoardCoordinate( -1, 0 ), new BoardCoordinate(  0, 1 ), new BoardCoordinate( -2, 0 ), new BoardCoordinate(  0, 2 )  };
             BoardCoordinate singleKill[] = { new BoardCoordinate( 1, 2 ), new BoardCoordinate( -1, 1 ), new BoardCoordinate( -2, -1 ) };
             tileFilter = new TileFilter( empty, single, singleKill );
             break;
         }
 
+        }
+    }
+
+    @Override
+    public void postMoveCallback() {
+        if ( initialMove ) {
+            initialMove = false;
+            BoardCoordinate postSingle[] = { tileFilter.getSingle()[0], tileFilter.getSingle()[1] };
+            tileFilter = new TileFilter( tileFilter.getRepeat(), postSingle, tileFilter.getSingleKill() );
         }
     }
 }
