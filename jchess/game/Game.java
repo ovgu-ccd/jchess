@@ -114,6 +114,7 @@ public class Game {
                         Piece selectedPiece = selectedTile.getPiece();
                         selectedTile.removePiece();
                         tile.placePiece(selectedPiece);
+                        selectedPiece.postMoveCallback();
 
                         activePlayerID++;
                         activePlayerID %= 3;
