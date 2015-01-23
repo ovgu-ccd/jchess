@@ -50,8 +50,8 @@ public class CoordinateConverter {
         int height_1_2 = 24;
 
 
-        int x = 320 + (int) Math.round((bc.b - bc.a) * width_3_4);
-        int y = 24 + height_1_2 * (bc.a + bc.b);
+        int x = 320 + (int) Math.round((bc.getB() - bc.getA()) * width_3_4);
+        int y = 24 + height_1_2 * (bc.getA() + bc.getB());
 
         return new PixelCoordinate(x, y);
     }

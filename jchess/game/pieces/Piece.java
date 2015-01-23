@@ -18,41 +18,29 @@
  * Mateusz Sławomir Lach ( matlak, msl )
  * Damian Marciniak
  */
-package jchess.gui;
+package jchess.game.pieces;
 
-import jchess.eventbus.Controller;
-import jchess.game.Game;
+import jchess.game.board.TileFilter;
 
-import javax.swing.*;
+
 
 /**
- * Class responsible for the starts of new games, loading games,
- * saving it, and for ending it.
- * This class is also responsible for appoing player with have
- * a move at the moment
+Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.
  */
-public class GameTab extends JPanel {
+public abstract class Piece {
 
-    public BoardView boardView;
-    private Game game;
+    protected TileFilter tileFilter;
+    private int playerID;
 
-    public GameTab() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        boardView = new BoardView();
-
-        add(Box.createHorizontalGlue());
-        add(boardView);
-        add(Box.createHorizontalGlue());
-
-        Controller.INSTANCE.subscribe(this);
+    public Piece( int playerID ) {
+        this.playerID = playerID;
     }
 
-
-    public void setGame(Game game) {
-        this.game = game;
+    public TileFilter getTileFilter() {
+        return tileFilter;
     }
+    public int getPlayerID() { return playerID; }
+    public void postMoveCallback() {};
 
-    public Game getGame() {
-        return game;
-    }
+
 }

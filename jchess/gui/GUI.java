@@ -16,16 +16,15 @@
 package jchess.gui;
 
 import jchess.*;
-import jchess.mvc.events.NewGameEvent;
+import jchess.eventbus.events.NewGameEvent;
+import jchess.game.IOSystem;
+import jchess.util.Logging;
+import jchess.util.StringResources;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.File;
 
 /**
  * The application's main frame.

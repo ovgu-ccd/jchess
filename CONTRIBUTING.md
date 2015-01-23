@@ -5,10 +5,10 @@ and was targeted during Clean Code Development WS14/15 at Otto-von-Guericke-Univ
 
 ## Team members
 
-* Robert Heumüller
-* Severin Orth
-* Andreas Pfohl
-* Peter Wrobel
+* Robert Heumüller ([@rheum](https://github.com/rheum))
+* Severin Orth ([@svrin](https://github.com/svrin))
+* Andreas Pfohl ([@apfohl](https://github.com/apfohl))
+* Peter Wrobel ([@ParticlePeter](https://github.com/ParticlePeter))
 
 ## Infrastructure
 
