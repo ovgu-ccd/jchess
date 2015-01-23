@@ -1,7 +1,7 @@
 package jchess.gui;
 
 import jchess.Application;
-import jchess.mvc.events.UpdateStatusMessageEvent;
+import jchess.eventbus.events.UpdateStatusMessageEvent;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -93,7 +93,7 @@ class StatusAnimator implements ActionListener {
     private void drawMessage(Graphics2D g2d) {
         g2d.setColor(Color.BLACK);
         // Draw text
-        if (font == null){
+        if (font == null) {
             font = g2d.getFont().deriveFont(30);
         }
         g2d.setFont(font);
