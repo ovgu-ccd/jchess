@@ -35,10 +35,20 @@ public class Game {
         this.possiblePromotions = new HashSet<>();
     }
 
-    public static Game newGame(Player[] players) throws IllegalArgumentException {
-        if (players.length != 3) {
+    public static Game newGame(String[] playerNames, IOSystem[] ioSystems) throws IllegalArgumentException {
+        if (playerNames.length != 3 || ioSystems.length != 3) {
             throw new IllegalArgumentException();
         }
+
+        Player[] players = new Player[3];
+
+        for (int i = 0; i < 3; i++) {
+            players[i] = new Player(playerNames[i], ioSystems[i], Player.PlayerColor.values()[i]);
+            ioSystems[i].setPlayer(players[i]);
+        }
+
+        players[0].setActive(true);
+
         Game game = new Game(players);
         for (Player player : players) {
             player.setGame(game);

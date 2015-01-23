@@ -46,9 +46,8 @@ public class Application implements Runnable {
     }
 
 
-
     public static void main(String args[]) {
-        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
         Application app = Application.getInstance();
         SwingUtilities.invokeLater(app);
@@ -56,26 +55,9 @@ public class Application implements Runnable {
 
     @Handler
     public void handleNewGame(NewGameEvent newGameEvent) {
-        Player[] players = new Player[3];
-
-        players[0] = new Player(newGameEvent.getPlayerNames()[0],
-                                newGameEvent.getIoSystems()[0],
-                                Player.PlayerColor.WHITE);
-        players[1] = new Player(newGameEvent.getPlayerNames()[1],
-                                newGameEvent.getIoSystems()[1],
-                                Player.PlayerColor.BLACK);
-        players[2] = new Player(newGameEvent.getPlayerNames()[2],
-                                newGameEvent.getIoSystems()[2],
-                                Player.PlayerColor.RED);
-
-        players[0].setActive(true);
-
-        newGameEvent.getIoSystems()[0].setPlayer(players[0]);
-        newGameEvent.getIoSystems()[1].setPlayer(players[1]);
-        newGameEvent.getIoSystems()[2].setPlayer(players[2]);
 
         Logging.GAME.debug("Created new game.");
-        Game game = Game.newGame(players);
+        Game game = Game.newGame(newGameEvent.getPlayerNames(), newGameEvent.getIoSystems());
         newGameEvent.getGameTab().setGame(game);
         games.add(game);
         game.emitUpdateBoardEvent();
