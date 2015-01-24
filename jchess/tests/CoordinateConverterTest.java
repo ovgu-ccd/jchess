@@ -1,13 +1,13 @@
 package jchess.tests;
 
 
-import jchess.util.BoardCoordinate;
+/*import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 import jchess.util.PixelCoordinate;
 import jchess.util.PixelCoordinateNotOnBoardException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;*/
 
 public class CoordinateConverterTest {
 

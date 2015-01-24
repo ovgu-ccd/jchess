@@ -1,7 +1,6 @@
 package jchess.tests.eventbus.events;
 
 import jchess.eventbus.events.PossibleMovesEvent;
-import jchess.eventbus.events.SelectEvent;
 import jchess.util.BoardCoordinate;
 import net.engio.mbassy.bus.MBassador;
 import net.engio.mbassy.bus.config.BusConfiguration;

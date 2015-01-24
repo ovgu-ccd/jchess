@@ -159,9 +159,12 @@ public class Game {
         // repeat
         for (BoardCoordinate repeatBC : piece.getTileFilter().getRepeat()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + repeatBC.getA(), selectedBC.getB() + repeatBC.getB());
-            while ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
-                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
-                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
+            while (resultBC.getA() >= 0 &&
+                    resultBC.getA() < 15 &&
+                    resultBC.getB() >= 0 &&
+                    resultBC.getB() < 15 &&
+                    resultBC.getC() >= -7 &&
+                    resultBC.getC() <= 7) {
 
                 // Need to know if any piece is in the possible move trajectory
                 Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
@@ -182,9 +185,12 @@ public class Game {
         // single
         for (BoardCoordinate singleBC : piece.getTileFilter().getSingle()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleBC.getA(), selectedBC.getB() + singleBC.getB());
-            if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
-                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
-                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
+            if (resultBC.getA() >= 0 &&
+                    resultBC.getA() < 15 &&
+                    resultBC.getB() >= 0 &&
+                    resultBC.getB() < 15 &&
+                    resultBC.getC() >= -7 &&
+                    resultBC.getC() <= 7) {
 
                 // Don't collect tile if another activePlayer piece is on it
                 Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
@@ -196,9 +202,12 @@ public class Game {
         // singleKill
         for (BoardCoordinate singleKillBC : piece.getTileFilter().getSingleKill()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + singleKillBC.getA(), selectedBC.getB() + singleKillBC.getB());
-            if ((resultBC.getA() >= 0 && resultBC.getA() < 15) &&
-                    (resultBC.getB() >= 0 && resultBC.getB() < 15) &&
-                    (resultBC.getC() >= -7 && resultBC.getC() <= 7)) {
+            if (resultBC.getA() >= 0 &&
+                    resultBC.getA() < 15 &&
+                    resultBC.getB() >= 0 &&
+                    resultBC.getB() < 15 &&
+                    resultBC.getC() >= -7 &&
+                    resultBC.getC() <= 7) {
 
                 // Only collect tile if another players piece is on it
                 Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
