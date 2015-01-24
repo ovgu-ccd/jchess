@@ -1,10 +1,10 @@
 package jchess.gui;
 
-import jchess.game.IOSystem;
-import jchess.util.Logging;
-import jchess.game.Player;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
+import jchess.game.IOSystem;
+import jchess.game.Player;
+import jchess.util.Logging;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
@@ -14,7 +14,6 @@ import net.engio.mbassy.listener.References;
  */
 @Listener(references = References.Strong)
 public class GUIConnector implements IOSystem {
-
     private Player player;
 
     public GUIConnector() {

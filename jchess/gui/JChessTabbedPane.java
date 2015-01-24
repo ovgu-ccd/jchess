@@ -20,6 +20,7 @@
  */
 package jchess.gui;
 
+import com.google.inject.Inject;
 import jchess.Application;
 
 import javax.imageio.ImageIO;
@@ -31,7 +32,10 @@ import java.awt.image.ImageObserver;
 import java.io.IOException;
 
 public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
-
+    @Inject
+    private GUI gui;
+    @Inject
+    private NewGameDialog newGameDialog;
     private TabbedPaneIcon closeIcon;
     private Image addIcon = null;
     private Rectangle addIconRect = null;
@@ -67,11 +71,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
     }
 
     private void showNewGameWindow() {
-        JDialog newGameFrame = Application.getInstance().getGUI().newGameFrame;
-        if (newGameFrame == null) {
-            newGameFrame = new NewGameWindow(Application.getInstance().getGUI());
-        }
-        newGameFrame.setVisible(true);
+        newGameDialog.setVisible(true);
     }
 
     @Override

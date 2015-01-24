@@ -6,7 +6,7 @@ import net.engio.mbassy.bus.config.BusConfiguration;
 
 /**
  * Created by Severin Orth on 07.12.14.
- *
+ * <p/>
  * Singleton for our event bus
  *
  * @trace [$REQ07]

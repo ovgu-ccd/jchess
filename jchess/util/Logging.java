@@ -12,15 +12,21 @@ import java.net.URL;
 public enum Logging {
 
 
-    GUI (Logger.getLogger("GUI")),
-    GAME (Logger.getLogger("GAME")),
-    BOARD (Logger.getLogger("BOARD"));
+    GUI(Logger.getLogger("GUI")),
+    GAME(Logger.getLogger("GAME")),
+    BOARD(Logger.getLogger("BOARD"));
 
-    private static final String configFileName =  "resources/log4j.properties";
+    private static final String configFileName = "resources/log4j.properties";
     private Logger logger;
 
     Logging(Logger logger) {
         this.logger = logger;
+    }
+
+    public static void setup() {
+        URL url = Application.class.getResource(configFileName);
+        PropertyConfigurator.configureAndWatch(url.getFile());
+        Logging.GAME.debug("Logging initialized.");
     }
 
     public void debug(String message) {
@@ -33,11 +39,5 @@ public enum Logging {
 
     public void error(String message) {
         logger.error(message);
-    }
-
-    public static void setup() {
-        URL url = Application.class.getResource(configFileName);
-        PropertyConfigurator.configureAndWatch(url.getFile());
-        Logging.GAME.debug("Logging initialized.");
     }
 }

@@ -1,12 +1,13 @@
 package jchess.game;
 
-import jchess.util.Logging;
+import com.google.inject.Inject;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
 import jchess.game.board.Board;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
 import jchess.util.BoardCoordinate;
+import jchess.util.Logging;
 import jchess.util.StringResources;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
@@ -22,42 +23,36 @@ import java.util.HashSet;
 @Listener(references = References.Strong)
 public class Game {
 
-    private Player[] players;
+    @Inject
     private Board board;
+    @Inject
+    private HashSet<BoardCoordinate> possibleMovesCoordinates;
+    @Inject
+    private HashSet<Class<? extends Piece>> possiblePromotions;
+
+    private Player[] players;
     private Tile selectedTile;
     private Tile promotionTile;
     private BoardCoordinate selectedBC;
     private int activePlayerID;
-    private HashSet<BoardCoordinate> possibleMovesCoordinates;
-    private HashSet<Class<? extends Piece>> possiblePromotions;
 
-    private Game(Player[] players) {
+    public Game() {
         Controller.INSTANCE.subscribe(this);
-        this.players = players;
-        this.board = new Board();
-        this.possibleMovesCoordinates = new HashSet<>();
-        this.possiblePromotions = new HashSet<>();
     }
 
-    public static Game newGame(String[] playerNames, IOSystem[] ioSystems) throws IllegalArgumentException {
+    public void initializeGame(String[] playerNames, IOSystem[] ioSystems) {
         if (playerNames.length != 3 || ioSystems.length != 3) {
             throw new IllegalArgumentException();
         }
-
-        Player[] players = new Player[3];
+        players = new Player[3];
 
         for (int i = 0; i < 3; i++) {
             players[i] = new Player(playerNames[i], ioSystems[i], Player.PlayerColor.values()[i]);
+            players[i].setGame(this);
             ioSystems[i].setPlayer(players[i]);
         }
 
         players[0].setActive(true);
-
-        Game game = new Game(players);
-        for (Player player : players) {
-            player.setGame(game);
-        }
-        return game;
     }
 
     public Board getBoard() {

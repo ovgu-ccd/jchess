@@ -6,7 +6,7 @@ package jchess.eventbus.events;
  */
 public class GenericErrorEvent extends Event {
 
-    private final Object    context;
+    private final Object context;
     private final Exception ex;
 
 

@@ -10,7 +10,7 @@ public class TileFilter {
     private final BoardCoordinate[] single;
     private final BoardCoordinate[] singleKill;
 
-    public TileFilter( BoardCoordinate[] repeat, BoardCoordinate[] single, BoardCoordinate[] singleKill ) {
+    public TileFilter(BoardCoordinate[] repeat, BoardCoordinate[] single, BoardCoordinate[] singleKill) {
         this.repeat = repeat;
         this.single = single;
         this.singleKill = singleKill;

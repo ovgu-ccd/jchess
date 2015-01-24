@@ -15,7 +15,9 @@
 
 package jchess.gui;
 
-import jchess.*;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import jchess.eventbus.events.NewGameEvent;
 import jchess.game.IOSystem;
 import jchess.util.Logging;
@@ -29,13 +31,18 @@ import java.awt.event.ActionListener;
 /**
  * The application's main frame.
  */
+@Singleton
 public class GUI extends JFrame implements ActionListener {
-    public JDialog newGameFrame;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JMenu gameMenu;
-    private javax.swing.JTabbedPane gamesPane;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem newGameItem;
+    @Inject
+    private Injector injector;
+    @Inject
+    private NewGameDialog newGameDialog;
+
+    private JPanel mainPanel;
+    private JMenu gameMenu;
+    private JTabbedPane gamesPane;
+    private JMenuBar menuBar;
+    private JMenuItem newGameItem;
 
     private AboutBox aboutBox;
     private JMenu fileMenu;
@@ -44,45 +51,36 @@ public class GUI extends JFrame implements ActionListener {
     private JMenuItem aboutMenuItem;
 
 
-    public GUI(Application application) {
+    public GUI() {
         super();
 
         setMinimumSize(new Dimension(500, 500));
         setLayout(new BorderLayout());
 
         initComponents();
-
-
         Logging.GUI.debug("Gui created.");
     }
 
     public void createNewGame(String firstName,
                               String secondName,
                               String thirdName) {
-        GameTab newTab = new GameTab();
+        GameTab newTab = injector.getInstance(GameTab.class);
         this.gamesPane.addTab(firstName + " vs " + secondName + " vs " + thirdName, newTab);
 
-
-        newGameFrame.setVisible(false);
-        newTab.boardView.repaint();
+        newGameDialog.setVisible(false);
+        newTab.getBoardView().repaint();
 
         NewGameEvent event = new NewGameEvent(
-            new String[] {firstName, secondName, thirdName},
-            new IOSystem[] {
-                new GUIConnector(),
-                new GUIConnector(),
-                new GUIConnector()
-            }, newTab);
+                new String[]{firstName, secondName, thirdName},
+                new IOSystem[]{
+                        injector.getInstance(GUIConnector.class),
+                        injector.getInstance(GUIConnector.class),
+                        injector.getInstance(GUIConnector.class)
+                }, newTab);
 
         pack();
         Logging.GUI.debug("GUI: Emit NewGameEvent");
         event.emit();
-    }
-
-    public GameTab addNewTab(String title) {
-        GameTab newGUI = new GameTab();
-        this.gamesPane.addTab(title, newGUI);
-        return newGUI;
     }
 
 
@@ -99,9 +97,9 @@ public class GUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
         if (target == newGameItem) {
-            newGameFrame = new NewGameWindow(this);
-            newGameFrame.setLocationRelativeTo(this);
-            newGameFrame.setVisible(true);
+            newGameDialog = new NewGameDialog(this);
+            newGameDialog.setLocationRelativeTo(this);
+            newGameDialog.setVisible(true);
         }
     }
 

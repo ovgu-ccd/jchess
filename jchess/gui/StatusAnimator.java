@@ -15,12 +15,7 @@ import java.io.InputStream;
  * Created by robert on 20.01.15.
  */
 class StatusAnimator implements ActionListener {
-    private BoardView parent;
-    private final int animationTime;
-    private final UpdateStatusMessageEvent updateStatusMessageEvent;
-    private long dueTime;
     private static Font font;
-
     static {
         InputStream is = Application.class.getResourceAsStream("resources/roboto-font/RobotoCondensed-Light.ttf");
         try {
@@ -30,6 +25,10 @@ class StatusAnimator implements ActionListener {
             e.printStackTrace();
         }
     }
+    private final int animationTime;
+    private final UpdateStatusMessageEvent updateStatusMessageEvent;
+    private BoardView parent;
+    private long dueTime;
 
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;

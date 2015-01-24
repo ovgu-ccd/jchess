@@ -1,13 +1,14 @@
 package jchess.eventbus.events;
-import jchess.game.board.Board;
+
 import jchess.game.Game;
+import jchess.game.board.Board;
 
 /**
  * Created by andreas on 11.01.15.
  */
 public abstract class AbstractIOSystemRelayEvent extends Event {
-    private boolean visitedIOSystem = false;
     private final Game game;
+    private boolean visitedIOSystem = false;
 
     public AbstractIOSystemRelayEvent(Game game) {
         this.game = game;

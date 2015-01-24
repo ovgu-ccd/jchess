@@ -20,6 +20,8 @@
  */
 package jchess.gui;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jchess.util.StringResources;
 
 import javax.swing.*;
@@ -27,16 +29,29 @@ import javax.swing.*;
 /**
  * @author donmateo
  */
-class NewGameWindow extends JDialog {
-
+@Singleton
+class NewGameDialog extends JDialog {
     /**
      * Creates new form NewGameWindow
      */
-    public NewGameWindow(GUI parent) {
-        super(parent);
+    @Inject
+    public NewGameDialog(GUI gui) {
+        super(gui);
         initComponents();
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                new NewGameDialog(null).setVisible(true);
+            }
+        });
     }
 
     /**
@@ -60,20 +75,8 @@ class NewGameWindow extends JDialog {
                               String secondName,
                               String thirdName) {
         ((GUI) getParent()).createNewGame(firstName,
-                                          secondName,
-                                          thirdName);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new NewGameWindow(null).setVisible(true);
-            }
-        });
+                secondName,
+                thirdName);
     }
 
 
