@@ -44,8 +44,9 @@ public class GUIConnector implements IOSystem {
         }
     }
 
+    @Override
     @Handler
-    void handleUpdateStatusMessageEvent(UpdateStatusMessageEvent updateStatusMessageEvent) {
+    public void handleUpdateStatusMessageEvent(UpdateStatusMessageEvent updateStatusMessageEvent) {
         if (updateStatusMessageEvent.shouldRelay(this.player.getGame()) && this.player.isActive()) {
             Logging.GUI.debug("GUIConnector: Relay UpdateBoardEvent");
             (new UpdateStatusMessageEvent(updateStatusMessageEvent)).emit();
