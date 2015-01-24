@@ -28,3 +28,7 @@ logs/*
 
 # Maven foo
 dependency-reduced-pom.xml
+
+# Docs
+html
+html/*
