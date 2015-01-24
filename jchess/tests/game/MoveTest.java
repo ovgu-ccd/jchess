@@ -1,6 +1,5 @@
 package jchess.tests.game;
 
-import jchess.game.Game;
 import org.junit.Before;
 
 /**

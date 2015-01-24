@@ -1,8 +1,6 @@
 package jchess.tests.eventbus.events;
 
-import jchess.eventbus.events.PossiblePromotionsEvent;
 import jchess.eventbus.events.UpdateStatusMessageEvent;
-import jchess.game.pieces.Piece;
 import net.engio.mbassy.bus.MBassador;
 import net.engio.mbassy.bus.config.BusConfiguration;
 import net.engio.mbassy.listener.Handler;
@@ -11,8 +9,6 @@ import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
