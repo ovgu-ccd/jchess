@@ -1,6 +1,8 @@
 var searchData=
 [
   ['newgameevent',['NewGameEvent',['../classjchess_1_1eventbus_1_1events_1_1NewGameEvent.html',1,'jchess::eventbus::events']]],
-  ['newgamewindow',['NewGameWindow',['../classjchess_1_1gui_1_1NewGameWindow.html#ae8cef19654826497bbb08e7223e01d9a',1,'jchess::gui::NewGameWindow']]],
-  ['newgamewindow',['NewGameWindow',['../classjchess_1_1gui_1_1NewGameWindow.html',1,'jchess::gui']]]
+  ['newgameeventhandler',['NewGameEventHandler',['../classjchess_1_1tests_1_1eventbus_1_1events_1_1NewGameEventTest_1_1NewGameEventHandler.html',1,'jchess::tests::eventbus::events::NewGameEventTest']]],
+  ['newgameeventtest',['NewGameEventTest',['../classjchess_1_1tests_1_1eventbus_1_1events_1_1NewGameEventTest.html',1,'jchess::tests::eventbus::events']]],
+  ['newgamewindow',['NewGameWindow',['../classjchess_1_1gui_1_1NewGameWindow.html',1,'jchess::gui']]],
+  ['newgamewindow',['NewGameWindow',['../classjchess_1_1gui_1_1NewGameWindow.html#ae8cef19654826497bbb08e7223e01d9a',1,'jchess::gui::NewGameWindow']]]
 ];
