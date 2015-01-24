@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@SuppressWarnings("PMD.UnusedLocalVariable")
 public class AboutBox extends JDialog {
     private JPanel contentPane;
     private JButton closeButton;
@@ -62,7 +63,7 @@ public class AboutBox extends JDialog {
                 try {
                     Desktop.getDesktop().browse(new URI(url));
                 } catch (URISyntaxException | IOException ex) {
-                    //It looks like there's a problem
+                    ex.printStackTrace();
                 }
             }
         });

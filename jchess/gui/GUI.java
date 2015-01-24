@@ -107,13 +107,13 @@ public class GUI extends JFrame implements ActionListener {
     private void initComponents() {
         setTitle(StringResources.MAIN.getString("Application.title"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainPanel = new javax.swing.JPanel();
+        mainPanel = new JPanel();
         gamesPane = new JChessTabbedPane();
-        menuBar = new javax.swing.JMenuBar();
+        menuBar = new JMenuBar();
         fileMenu = new JMenu();
-        newGameItem = new javax.swing.JMenuItem();
+        newGameItem = new JMenuItem();
         exitMenuItem = new JMenuItem();
-        gameMenu = new javax.swing.JMenu();
+        gameMenu = new JMenu();
         helpMenu = new JMenu();
         aboutMenuItem = new JMenuItem();
 

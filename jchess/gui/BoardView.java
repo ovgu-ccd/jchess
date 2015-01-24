@@ -98,7 +98,8 @@ public class BoardView extends JPanel {
                     Logging.GUI.debug("Emit SelectEvent");
                     selectEvent.emit();
                 } catch (PixelCoordinateNotOnBoardException e1) {
-                    // Send no event
+                    GenericErrorEvent genericErrorEvent = new GenericErrorEvent(this, e1);
+                    genericErrorEvent.emit();
                 }
             }
         });

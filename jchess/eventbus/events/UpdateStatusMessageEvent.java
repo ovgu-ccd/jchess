@@ -6,10 +6,10 @@ import jchess.game.Game;
  * Created by robert on 20.01.15.
  */
 public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
+    public enum Types {NORMAL, ALERT}
     private String statusMessage;
-
-    ;
     private Types types;
+
     public UpdateStatusMessageEvent(Game game, String statusMessage, Types type) {
         super(game);
         this.statusMessage = statusMessage;
@@ -29,6 +29,4 @@ public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
     public Types getTypes() {
         return types;
     }
-
-    public enum Types {NORMAL, ALERT}
 }

@@ -22,5 +22,8 @@ public interface IOSystem {
     @Handler
     void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent);
 
+    @Handler
+    void handleUpdateStatusMessageEvent(UpdateStatusMessageEvent updateStatusMessageEvent);
+
     public void setPlayer(Player player);
 }
