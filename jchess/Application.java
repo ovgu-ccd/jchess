@@ -1,8 +1,6 @@
 package jchess;
 
-
 import jchess.game.Game;
-import jchess.game.Player;
 import jchess.gui.GUI;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.NewGameEvent;

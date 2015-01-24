@@ -31,11 +31,11 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame implements ActionListener {
     public JDialog newGameFrame;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JMenu gameMenu;
-    private javax.swing.JTabbedPane gamesPane;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem newGameItem;
+    private JPanel mainPanel;
+    private JMenu gameMenu;
+    private JTabbedPane gamesPane;
+    private JMenuBar menuBar;
+    private JMenuItem newGameItem;
 
     private AboutBox aboutBox;
     private JMenu fileMenu;
@@ -109,13 +109,13 @@ public class GUI extends JFrame implements ActionListener {
     private void initComponents() {
         setTitle(StringResources.MAIN.getString("Application.title"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainPanel = new javax.swing.JPanel();
+        mainPanel = new JPanel();
         gamesPane = new JChessTabbedPane();
-        menuBar = new javax.swing.JMenuBar();
+        menuBar = new JMenuBar();
         fileMenu = new JMenu();
-        newGameItem = new javax.swing.JMenuItem();
+        newGameItem = new JMenuItem();
         exitMenuItem = new JMenuItem();
-        gameMenu = new javax.swing.JMenu();
+        gameMenu = new JMenu();
         helpMenu = new JMenu();
         aboutMenuItem = new JMenuItem();
 
