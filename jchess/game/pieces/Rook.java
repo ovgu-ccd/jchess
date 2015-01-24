@@ -27,13 +27,13 @@ import jchess.util.BoardCoordinate;
 
 public class Rook extends Piece {
 
-    public Rook( int playerID ) {
-        super( playerID );
+    public Rook(int playerID) {
+        super(playerID);
         BoardCoordinate empty[] = {};
         BoardCoordinate repeat[] = {
-            new BoardCoordinate(  1, 0 ), new BoardCoordinate( 0,  1), new BoardCoordinate(  1,  1 ) ,
-            new BoardCoordinate( -1, 0 ), new BoardCoordinate( 0, -1), new BoardCoordinate( -1, -1 )
-        } ;
-        tileFilter = new TileFilter( repeat, empty, empty ) ;
+                new BoardCoordinate(1, 0), new BoardCoordinate(0, 1), new BoardCoordinate(1, 1),
+                new BoardCoordinate(-1, 0), new BoardCoordinate(0, -1), new BoardCoordinate(-1, -1)
+        };
+        tileFilter = new TileFilter(repeat, empty, empty);
     }
 }

@@ -20,11 +20,11 @@
  */
 package jchess.gui;
 
-import jchess.*;
+import jchess.Application;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
-import jchess.game.board.Board;
 import jchess.game.Game;
+import jchess.game.board.Board;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
 import jchess.util.*;
@@ -110,7 +110,8 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override public void paintComponent(Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -124,7 +125,8 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override public void update(Graphics g) {
+    @Override
+    public void update(Graphics g) {
         repaint();
     }
 
@@ -135,7 +137,8 @@ public class BoardView extends JPanel {
     }
 
 
-    @Override public Dimension getMaximumSize() {
+    @Override
+    public Dimension getMaximumSize() {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
 
@@ -155,7 +158,8 @@ public class BoardView extends JPanel {
         return statusMessage;
     }
 
-    @Override public Dimension getMinimumSize() {
+    @Override
+    public Dimension getMinimumSize() {
         return new Dimension(boardImage.getWidth(), boardImage.getHeight());
     }
 

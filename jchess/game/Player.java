@@ -28,15 +28,11 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
-    public enum PlayerColor {WHITE, BLACK, RED}
-
     private String name;
     private Game game;
     private IOSystem ioSystem;
     private boolean active;
     private PlayerColor color;
-
-
     public Player(String name, IOSystem ioSystem, PlayerColor color) {
         this.setName(name);
         this.setColor(color);
@@ -83,4 +79,6 @@ public class Player implements Serializable {
     public void setColor(PlayerColor color) {
         this.color = color;
     }
+
+    public enum PlayerColor {WHITE, BLACK, RED}
 }

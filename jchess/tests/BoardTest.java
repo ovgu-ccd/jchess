@@ -4,11 +4,11 @@ package jchess.tests;
  * Created by Elliot on 2014-12-07.
  */
 
+import jchess.game.board.Board;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import jchess.game.board.Board;
+import static org.junit.Assert.*;
 
 
 public class BoardTest {
@@ -20,7 +20,7 @@ public class BoardTest {
         board = new Board();
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetTile() {
         fail();
     }

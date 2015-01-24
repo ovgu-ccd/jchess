@@ -21,7 +21,6 @@ package jchess.gui;
 
 import jchess.util.StringResources;
 
-
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.event.ActionEvent;
@@ -32,7 +31,7 @@ import java.awt.event.ActionListener;
  * Class responsible for drawing the fold with local game settings
  */
 public class DrawLocalSettings extends JPanel implements ActionListener {
-    private final NewGameWindow parent;
+    private final NewGameDialog parent;
     private JTextField firstName;
     private JTextField secondName;
     private JTextField thirdName;
@@ -44,7 +43,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
     private JButton okButton;
 
 
-    public DrawLocalSettings(NewGameWindow parent) {
+    public DrawLocalSettings(NewGameDialog parent) {
         super();
         this.parent = parent;
 
@@ -84,7 +83,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
     }
 
 
-
     /**
      * Method responsible for changing the options which can make a player
      * when he want to start new local game
@@ -110,8 +108,8 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
 
             /* new method call from apfohl */
             parent.createNewGame(this.firstName.getText(),
-                                 this.secondName.getText(),
-                                 this.thirdName.getText());
+                    this.secondName.getText(),
+                    this.thirdName.getText());
         }
 
     }

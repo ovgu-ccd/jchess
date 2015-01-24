@@ -13,7 +13,7 @@ public class Tile {
     private Piece piece;
     private Set<Integer> promotesPlayers;
 
-    public Tile()  {
+    public Tile() {
         piece = null;
         promotesPlayers = new HashSet<>();
     }
@@ -22,7 +22,7 @@ public class Tile {
         return this.piece;
     }
 
-    public Piece placePiece( Piece newPiece ) {
+    public Piece placePiece(Piece newPiece) {
         Piece oldPiece = this.piece;
         this.piece = newPiece;
         return oldPiece;

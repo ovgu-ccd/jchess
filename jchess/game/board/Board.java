@@ -29,7 +29,7 @@ import jchess.util.CoordinateConverter;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
- * It is setting the squers of chessboard and sets the pieces(pawns)
+ * It is setting the squares of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
  */
 public class Board {

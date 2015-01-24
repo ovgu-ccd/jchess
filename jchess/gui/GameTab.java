@@ -20,25 +20,20 @@
  */
 package jchess.gui;
 
+import com.google.inject.Inject;
 import jchess.eventbus.Controller;
 import jchess.game.Game;
 
 import javax.swing.*;
 
-/**
- * Class responsible for the starts of new games, loading games,
- * saving it, and for ending it.
- * This class is also responsible for appoing player with have
- * a move at the moment
- */
 public class GameTab extends JPanel {
-
-    public BoardView boardView;
+    private BoardView boardView;
     private Game game;
 
-    public GameTab() {
+    @Inject
+    public GameTab(BoardView boardView) {
+        this.boardView = boardView;
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        boardView = new BoardView();
 
         add(Box.createHorizontalGlue());
         add(boardView);
@@ -47,12 +42,15 @@ public class GameTab extends JPanel {
         Controller.INSTANCE.subscribe(this);
     }
 
+    public Game getGame() {
+        return game;
+    }
 
     public void setGame(Game game) {
         this.game = game;
     }
 
-    public Game getGame() {
-        return game;
+    public BoardView getBoardView() {
+        return boardView;
     }
 }

@@ -23,24 +23,30 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 
 
-
 /**
-Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.
+ * Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.
  */
 public abstract class Piece {
 
     protected TileFilter tileFilter;
     private int playerID;
 
-    public Piece( int playerID ) {
+    public Piece(int playerID) {
         this.playerID = playerID;
     }
 
     public TileFilter getTileFilter() {
         return tileFilter;
     }
-    public int getPlayerID() { return playerID; }
-    public void postMoveCallback() {};
+
+    public int getPlayerID() {
+        return playerID;
+    }
+
+    public void postMoveCallback() {
+    }
+
+    ;
 
 
 }

@@ -1,8 +1,7 @@
 package jchess.tests.eventbus.events;
 
-import com.sun.tools.javac.jvm.Gen;
+
 import jchess.eventbus.events.GenericErrorEvent;
-import jchess.eventbus.events.NewGameEvent;
 import net.engio.mbassy.bus.MBassador;
 import net.engio.mbassy.bus.config.BusConfiguration;
 import net.engio.mbassy.listener.Handler;
@@ -12,7 +11,7 @@ import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class GenericErrorEventTest {
 

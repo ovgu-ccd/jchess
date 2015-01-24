@@ -26,15 +26,15 @@ import jchess.util.BoardCoordinate;
 
 public class Queen extends Piece {
 
-    public Queen( int playerID ) {
-        super( playerID );
+    public Queen(int playerID) {
+        super(playerID);
         BoardCoordinate empty[] = {};
         BoardCoordinate repeat[] = {
-            new BoardCoordinate(  1,  0 ), new BoardCoordinate(  0,  1), new BoardCoordinate(  1,  1 ) ,
-            new BoardCoordinate( -1,  0 ), new BoardCoordinate(  0, -1), new BoardCoordinate( -1, -1 ) ,
-            new BoardCoordinate(  1, -1 ), new BoardCoordinate(  2,  1), new BoardCoordinate(  1,  2 ) ,
-            new BoardCoordinate( -1,  1 ), new BoardCoordinate( -2, -1), new BoardCoordinate( -1, -2 )
-        } ;
-        tileFilter = new TileFilter( repeat, empty, empty ) ;
+                new BoardCoordinate(1, 0), new BoardCoordinate(0, 1), new BoardCoordinate(1, 1),
+                new BoardCoordinate(-1, 0), new BoardCoordinate(0, -1), new BoardCoordinate(-1, -1),
+                new BoardCoordinate(1, -1), new BoardCoordinate(2, 1), new BoardCoordinate(1, 2),
+                new BoardCoordinate(-1, 1), new BoardCoordinate(-2, -1), new BoardCoordinate(-1, -2)
+        };
+        tileFilter = new TileFilter(repeat, empty, empty);
     }
 }

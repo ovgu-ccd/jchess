@@ -2,6 +2,7 @@ package jchess.eventbus.events;
 
 import jchess.game.Game;
 import jchess.util.BoardCoordinate;
+
 import java.util.Set;
 
 /**

@@ -15,7 +15,7 @@ public class TabbedPaneIcon implements Icon {
         this.fileIcon = fileIcon;
         width = 16;
         height = 16;
-    }//--endOf-TabbedPaneIcon--
+    }
 
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {

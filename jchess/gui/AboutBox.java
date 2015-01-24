@@ -43,6 +43,13 @@ public class AboutBox extends JDialog {
         openWebsite(homepage, StringResources.MAIN.getString("AboutBox.homepage.text"), null);
     }
 
+    public static void main(String[] args) {
+        AboutBox dialog = new AboutBox();
+        dialog.pack();
+        dialog.setVisible(true);
+        System.exit(0);
+    }
+
     private void onClose() {
         dispose();
     }
@@ -60,12 +67,5 @@ public class AboutBox extends JDialog {
                 }
             }
         });
-    }
-
-    public static void main(String[] args) {
-        AboutBox dialog = new AboutBox();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }
