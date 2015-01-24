@@ -185,7 +185,7 @@ public class BoardView extends JPanel {
                     g2d.setColor(Color.green);
                     break;
                 case 1:
-                    g2d.setColor(Color.blue);
+                    g2d.setColor(new Color(0, 127, 255));
                     break;
                 case 2:
                     g2d.setColor(Color.orange);
