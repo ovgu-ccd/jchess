@@ -25,5 +25,5 @@ public interface IOSystem {
     @Handler
     void handleUpdateStatusMessageEvent(UpdateStatusMessageEvent updateStatusMessageEvent);
 
-    public void setPlayer(Player player);
+    void setPlayer(Player player);
 }

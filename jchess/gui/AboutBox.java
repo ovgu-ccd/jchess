@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@SuppressWarnings("PMD.UnusedLocalVariable")
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class AboutBox extends JDialog {
     private JPanel contentPane;
     private JButton closeButton;
