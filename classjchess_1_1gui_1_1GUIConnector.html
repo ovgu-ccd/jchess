@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="navelem"><a class="el" href="namespacejchess.html">jchess</a>      </li>
+      <li class="navelem"><b>jchess</b>      </li>
       <li class="navelem"><b>gui</b>      </li>
       <li class="navelem"><a class="el" href="classjchess_1_1gui_1_1GUIConnector.html">GUIConnector</a>      </li>
     </ul>
@@ -105,13 +105,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">jchess.gui.GUIConnector Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="jchess::gui::GUIConnector" --><!-- doxytag: inherits="jchess::IOSystem" --><div class="dynheader">
+<!-- doxytag: class="jchess::gui::GUIConnector" --><!-- doxytag: inherits="jchess::game::IOSystem" --><div class="dynheader">
 Inheritance diagram for jchess.gui.GUIConnector:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classjchess_1_1gui_1_1GUIConnector.png" usemap="#jchess.gui.GUIConnector_map" alt=""/>
   <map id="jchess.gui.GUIConnector_map" name="jchess.gui.GUIConnector_map">
-<area href="interfacejchess_1_1IOSystem.html" alt="jchess.IOSystem" shape="rect" coords="0,0,152,24"/>
+<area href="interfacejchess_1_1game_1_1IOSystem.html" alt="jchess.game.IOSystem" shape="rect" coords="0,0,152,24"/>
 </map>
  </div></div>
 
@@ -120,11 +120,11 @@ Inheritance diagram for jchess.gui.GUIConnector:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d4cab217a49ba211dd2a3271ebbb693"></a><!-- doxytag: member="jchess::gui::GUIConnector::setPlayer" ref="a9d4cab217a49ba211dd2a3271ebbb693" args="(Player player)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPlayer</b> (<a class="el" href="classjchess_1_1Player.html">Player</a> player)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPlayer</b> (<a class="el" href="classjchess_1_1game_1_1Player.html">Player</a> player)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0c571b5eca89ab44e480db86955b544"></a><!-- doxytag: member="jchess::gui::GUIConnector::handleSelectEvent" ref="ab0c571b5eca89ab44e480db86955b544" args="(SelectEvent selectEvent)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handleSelectEvent</b> (SelectEvent selectEvent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b79394690b62b012ce6f7c2edd67177"></a><!-- doxytag: member="jchess::gui::GUIConnector::handleUpdateBoardEvent" ref="a4b79394690b62b012ce6f7c2edd67177" args="(UpdateBoardEvent updateBoardEvent)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUpdateBoardEvent</b> (<a class="el" href="classjchess_1_1mvc_1_1events_1_1UpdateBoardEvent.html">UpdateBoardEvent</a> updateBoardEvent)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUpdateBoardEvent</b> (UpdateBoardEvent updateBoardEvent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaa1b0ca7fe70e2a03dd1e9533268ab0"></a><!-- doxytag: member="jchess::gui::GUIConnector::handlePossibleMovesEvent" ref="aeaa1b0ca7fe70e2a03dd1e9533268ab0" args="(PossibleMovesEvent possibleMovesEvent)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePossibleMovesEvent</b> (PossibleMovesEvent possibleMovesEvent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fa309719a0bc3080a8acecf85a9d269"></a><!-- doxytag: member="jchess::gui::GUIConnector::handlePossiblePromotionsEvent" ref="a1fa309719a0bc3080a8acecf85a9d269" args="(PossiblePromotionsEvent possiblePromotionsEvent)" -->
@@ -134,7 +134,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePromotionSelect
 <tr><td colspan="2"><h2><a name="pac-methods"></a>
 Package Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84a63cbfffa9ae3c23118185f277ab67"></a><!-- doxytag: member="jchess::gui::GUIConnector::handleUpdateStatusMessageEvent" ref="a84a63cbfffa9ae3c23118185f277ab67" args="(UpdateStatusMessageEvent updateStatusMessageEvent)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUpdateStatusMessageEvent</b> (<a class="el" href="classjchess_1_1mvc_1_1events_1_1UpdateStatusMessageEvent.html">UpdateStatusMessageEvent</a> updateStatusMessageEvent)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUpdateStatusMessageEvent</b> (<a class="el" href="classjchess_1_1eventbus_1_1events_1_1UpdateStatusMessageEvent.html">UpdateStatusMessageEvent</a> updateStatusMessageEvent)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Created by andreas on 06.12.14. </p>
@@ -159,7 +159,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>handleUpdateStatusMes
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jan 24 2015 10:17:36 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 24 2015 10:19:26 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

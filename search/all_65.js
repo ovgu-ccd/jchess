@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['emit',['emit',['../classjchess_1_1mvc_1_1events_1_1Event.html#a9e26402804cdda4603f51e35f631e8c7',1,'jchess::mvc::events::Event']]],
-  ['event',['Event',['../classjchess_1_1mvc_1_1events_1_1Event.html',1,'jchess::mvc::events']]]
+  ['emit',['emit',['../classjchess_1_1eventbus_1_1events_1_1Event.html#a1daaab3bc405f4b77706f09023b35430',1,'jchess::eventbus::events::Event']]],
+  ['event',['Event',['../classjchess_1_1eventbus_1_1events_1_1Event.html',1,'jchess::eventbus::events']]]
 ];
