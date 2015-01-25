@@ -1,6 +1,9 @@
 package jchess.configurations;
 
 import com.google.inject.AbstractModule;
+import jchess.game.board.Board;
+import jchess.game.board.DefaultBoard;
+import jchess.tests.game.PawnMovementTest;
 
 /**
  * Implementation of GUICE configuration
@@ -13,6 +16,6 @@ public class GameConfiguration extends AbstractModule {
 
     @Override
     protected void configure() {
-
+        bind(Board.class).to(DefaultBoard.class);
     }
 }

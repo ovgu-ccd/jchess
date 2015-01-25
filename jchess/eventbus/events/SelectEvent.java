@@ -27,4 +27,9 @@ public class SelectEvent extends AbstractIOSystemRelayEvent {
     public BoardCoordinate getBoardCoordinate() {
         return boardCoordinate;
     }
+
+    @Override
+    public String toString() {
+        return "Select Event: " + boardCoordinate.toString();
+    }
 }
