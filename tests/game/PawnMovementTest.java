@@ -101,6 +101,21 @@ public class PawnMovementTest {
         assertEquals(game.getBoard().getTile(8, 7).getPiece(), selectedPiece);
     }
 
+    @Test
+    public void strikePawn2() {
+        SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(7, 7));
+        emitAndSimulateRelay(selectEvent);
+
+        Piece selectedPiece = game.getBoard().getTile(7, 7).getPiece();
+
+        selectEvent = new SelectEvent(game, new BoardCoordinate(9, 8));
+        emitAndSimulateRelay(selectEvent);
+
+
+        assertNull(game.getBoard().getTile(7, 7).getPiece());
+        assertEquals(game.getBoard().getTile(9, 8).getPiece(), selectedPiece);
+    }
+
 
     @Test
     public void possibleMovesPawn3() {
