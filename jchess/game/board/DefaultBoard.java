@@ -36,12 +36,6 @@ public class DefaultBoard extends Board {
         super();
     }
 
-
-    Tile[] filterTiles(TileFilter filter) {
-        return tiles;
-    }
-
-
     /// Initial Figure Placement
     protected void initFigures() {
 

@@ -30,10 +30,14 @@ public abstract  class Board {
      * next tile is above and following tiles are on the same ring
      * next tile is above and so forth ...
      *
-     * @param tileIndex Index for the ring, starting at 0 with the center tile/ring
+     * @param tileIndex Index for the ring, starting at 0 with the center-Top Tile
+     *                  Parameter must be between [0..168] otherwise Tile is not on Board and null is returned
      */
     public Tile getTile(int tileIndex) {
-        return tiles[tileIndex];
+        if ( tileIndex < 0 || tileIndex > 168 )
+            return null;
+        else
+            return tiles[tileIndex];
     }
 
     /**
@@ -51,7 +55,7 @@ public abstract  class Board {
      * @param b second axial coordinate
      */
     public Tile getTile(int a, int b) {
-        return tiles[CoordinateConverter.boardCoordinateToIndex(a, b)];
+        return getTile(CoordinateConverter.boardCoordinateToIndex(a, b));
     }
 
     /**

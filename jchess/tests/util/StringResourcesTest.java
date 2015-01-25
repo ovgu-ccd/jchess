@@ -1,4 +1,4 @@
-package jchess.tests;
+package jchess.tests.util;
 
 import jchess.util.Logging;
 import jchess.util.StringResources;

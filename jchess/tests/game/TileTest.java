@@ -1,4 +1,4 @@
-package jchess.tests;
+package jchess.tests.game;
 
 /**
  * Created by Elliot on 2015-01-24.
