@@ -215,11 +215,6 @@ public class Game {
                     possibleMovesCoordinates.add(resultBC);
             }
         }
-
-        //possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
-        //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
-        //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
-
     }
 
     private void collectPossiblePromotions() {
