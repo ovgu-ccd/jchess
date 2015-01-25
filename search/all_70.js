@@ -5,6 +5,7 @@ var searchData=
   ['piece',['Piece',['../classjchess_1_1game_1_1pieces_1_1Piece.html',1,'jchess::game::pieces']]],
   ['pixelcoordinate',['PixelCoordinate',['../classjchess_1_1util_1_1PixelCoordinate.html',1,'jchess::util']]],
   ['pixelcoordinatenotonboardexception',['PixelCoordinateNotOnBoardException',['../classjchess_1_1util_1_1PixelCoordinateNotOnBoardException.html',1,'jchess::util']]],
+  ['placepiece',['placePiece',['../classjchess_1_1game_1_1board_1_1Tile.html#a581ac9710182c140b427f6c450cccfd0',1,'jchess::game::board::Tile']]],
   ['player',['Player',['../classjchess_1_1game_1_1Player.html',1,'jchess::game']]],
   ['playercolor',['PlayerColor',['../enumjchess_1_1game_1_1Player_1_1PlayerColor.html',1,'jchess::game::Player']]],
   ['possiblemovesevent',['PossibleMovesEvent',['../classjchess_1_1eventbus_1_1events_1_1PossibleMovesEvent.html',1,'jchess::eventbus::events']]],
