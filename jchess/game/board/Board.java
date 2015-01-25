@@ -45,13 +45,7 @@ public class Board {
             tiles[i] = new Tile();
         }
 
-        initNeighborhood();
         initFigures();
-    }
-
-
-    Tile[] filterTiles(TileFilter filter) {
-        return tiles;
     }
 
     /**
@@ -64,7 +58,6 @@ public class Board {
      */
     public Tile getTile(int tileIndex) {
         return tiles[tileIndex];
-
     }
 
     /**
@@ -102,10 +95,6 @@ public class Board {
         return false;
     }
 
-    /// Initialize Neighborhood relationships
-    void initNeighborhood() {
-
-    }
 
     /// Initial Figure Placement
     void initFigures() {
