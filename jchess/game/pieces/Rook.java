@@ -25,6 +25,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * Moves on straight lines forward and backward
+ *
+ * @trace [$REQ13a]
+ * @trace [$REQ14]
+ */
 public class Rook extends Piece {
 
     public Rook(int playerID) {

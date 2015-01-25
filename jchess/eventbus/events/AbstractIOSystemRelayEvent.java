@@ -4,7 +4,11 @@ import jchess.game.Game;
 import jchess.game.board.Board;
 
 /**
+ * Base relay event that is handled by IOSystem
+ * <p/>
  * Created by andreas on 11.01.15.
+ *
+ * @trace [$REQ07]
  */
 public abstract class AbstractIOSystemRelayEvent extends Event {
     private final Game game;

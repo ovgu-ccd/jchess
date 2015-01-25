@@ -46,6 +46,10 @@ import java.util.HashMap;
  * Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
+ *
+ * @trace [$REQ31]
+ * @trace [$REQ34]
+ * @trace [$REQ35]
  */
 @Listener(references = References.Strong)
 public class BoardView extends JPanel {
@@ -63,8 +67,8 @@ public class BoardView extends JPanel {
 
     static {
         try {
-            boardImage = ImageIO.read(Application.class.getResource("images.org/Board.png"));
-            possibleMoveImage = ImageIO.read(Application.class.getResource("images.org/TileHighlighter_Ramp_03.png"));
+            boardImage = ImageIO.read(Application.class.getResource("resources/images/board.png"));
+            possibleMoveImage = ImageIO.read(Application.class.getResource("resources/images/tile_highlighter_ramp.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

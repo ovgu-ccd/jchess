@@ -10,6 +10,7 @@ import java.util.Set;
  *
  * @trace [$REQ07]
  * @trace [$REQ29]
+ * @flow GL -> GUI
  */
 public class PossiblePromotionsEvent extends AbstractIOSystemRelayEvent {
     private final Set<Class<? extends Piece>> possiblePromotions;

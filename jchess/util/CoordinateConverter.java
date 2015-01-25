@@ -15,7 +15,7 @@ public class CoordinateConverter {
 
     static {
         try {
-            image = ImageIO.read(Application.class.getResource("images.org/TilePicker.png"));
+            image = ImageIO.read(Application.class.getResource("resources/images/tile_picker.png"));
             //hexHight = image.getHeight() / 15;
         } catch (IOException e) {
             image = null;
@@ -69,4 +69,5 @@ public class CoordinateConverter {
             return 104 + 13 * g + b - /*GAUSS*/ g * (g + 1) / 2;
         }
     }
+
 }

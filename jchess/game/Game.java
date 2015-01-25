@@ -19,6 +19,11 @@ import java.util.HashSet;
 
 
 /**
+ * Holds the state of the game and its player
+ *
+ * @trace $REQ22
+ * @trace $REQ23
+ * <p/>
  * Created by andreas on 07.12.14.
  */
 @Listener(references = References.Strong)

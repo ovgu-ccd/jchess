@@ -12,10 +12,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * Shows status notifications to the user
+ * <p/>
  * Created by robert on 20.01.15.
+ *
+ * @trace [$REQ36]
+ * @trace [$REQ37]
  */
 class StatusAnimator implements ActionListener {
     private static Font font;
+
     static {
         InputStream is = Application.class.getResourceAsStream("resources/roboto-font/RobotoCondensed-Light.ttf");
         try {
@@ -25,6 +31,7 @@ class StatusAnimator implements ActionListener {
             e.printStackTrace();
         }
     }
+
     private final int animationTime;
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
     private BoardView parent;

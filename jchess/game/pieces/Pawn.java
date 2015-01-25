@@ -24,6 +24,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * Moves one tile on straight line
+ *
+ * @trace [$REQ13f]
+ * @trace [$REQ20]
+ */
 public class Pawn extends Piece {
 
     private boolean initialMove;

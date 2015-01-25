@@ -8,6 +8,7 @@ import jchess.game.pieces.Piece;
  *
  * @trace [$REQ29]
  * @trace [$REQ07]
+ * @flow GUI -> GL
  */
 public class PromotionSelectEvent extends AbstractIOSystemRelayEvent {
     private final Class<? extends Piece> pieceClass;

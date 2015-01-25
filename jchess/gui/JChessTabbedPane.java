@@ -31,6 +31,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 
+/**
+ * Container related to game, board & dialogs
+ */
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
     @Inject
@@ -45,7 +48,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
         super();
         this.closeIcon = new TabbedPaneIcon(this.closeIcon);
         try {
-            this.addIcon = ImageIO.read(Application.class.getResource("images.org/add-tab-icon.png"));
+            this.addIcon = ImageIO.read(Application.class.getResource("resources/images/add-tab-icon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
