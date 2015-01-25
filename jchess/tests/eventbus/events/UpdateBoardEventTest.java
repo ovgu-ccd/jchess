@@ -37,7 +37,7 @@ public class UpdateBoardEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(UpdateBoardEvent updateBoardEvent) {
-            if (updateBoardEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (updateBoardEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new UpdateBoardEvent(updateBoardEvent));
                 messageCounter = getMessageCounter() + 1;
             }

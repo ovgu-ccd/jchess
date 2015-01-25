@@ -37,7 +37,7 @@ public class PromotionSelectEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handlePromotionSelectEventFromIOSystem(PromotionSelectEvent promotionSelectEvent) {
-            if (promotionSelectEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (promotionSelectEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new PromotionSelectEvent(promotionSelectEvent));
                 messageCounter = getMessageCounter() + 1;
             }

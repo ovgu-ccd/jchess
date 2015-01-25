@@ -51,8 +51,6 @@ public class BoardView extends JPanel {
     private static BufferedImage boardImage;
     private static BufferedImage possibleMoveImage;
 
-    private boolean fontSet = false;
-
     private BufferedImage piecesOverlay;
     private BufferedImage movesOverlay;
     private BufferedImage statusMessageOverlay;
@@ -88,7 +86,7 @@ public class BoardView extends JPanel {
                 statusMessageOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 repaint();
 
-                BoardCoordinate boardCoordinate = null;
+                BoardCoordinate boardCoordinate;
                 try {
                     boardCoordinate = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
@@ -218,9 +216,7 @@ public class BoardView extends JPanel {
 
             Graphics2D g2d = (Graphics2D) piecesOverlay.getGraphics();
 
-            if (!fontSet) {
-                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
-            }
+            g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
 
             Board board = updateBoardEvent.getBoard();
 

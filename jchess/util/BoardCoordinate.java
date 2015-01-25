@@ -42,6 +42,7 @@ public class BoardCoordinate {
 
         if (a != that.a) return false;
         if (b != that.b) return false;
+        //noinspection RedundantIfStatement
         if (i != that.i) return false;
 
         return true;

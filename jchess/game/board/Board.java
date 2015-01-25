@@ -39,13 +39,12 @@ public class Board {
     public Board() {
         // generate Fields
 
-        tiles = new Tile[1 + 1 * 6 + 2 * 6 + 3 * 6 + 4 * 6 + 5 * 6 + 6 * 6 + 7 * 6];
+        tiles = new Tile[1 + 6 + 2 * 6 + 3 * 6 + 4 * 6 + 5 * 6 + 6 * 6 + 7 * 6];
 
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile();
         }
 
-        initNeighborhood();
         initFigures();
     }
 
@@ -100,11 +99,6 @@ public class Board {
 
     public boolean redo() {
         return false;
-    }
-
-    /// Initialize Neighborhood relationships
-    void initNeighborhood() {
-
     }
 
     /// Initial Figure Placement

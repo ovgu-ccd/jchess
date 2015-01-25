@@ -39,7 +39,7 @@ public class PossibleMovesEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(PossibleMovesEvent possibleMovesEvent) {
-            if (possibleMovesEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (possibleMovesEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new PossibleMovesEvent(possibleMovesEvent));
                 messageCounter = getMessageCounter() + 1;
             }

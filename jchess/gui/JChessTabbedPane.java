@@ -56,11 +56,7 @@ public class JChessTabbedPane extends JTabbedPane implements MouseListener, Imag
 
     @Override
     public void addTab(String title, Component component) {
-        this.addTab(title, component, null);
-    }
-
-    void addTab(String title, Component component, Icon closeIcon) {
-        super.addTab(title, new TabbedPaneIcon(closeIcon), component);
+        super.addTab(title, new TabbedPaneIcon(null), component);
         System.out.println("Present number of tabs: " + this.getTabCount());
         this.updateAddIconRect();
     }

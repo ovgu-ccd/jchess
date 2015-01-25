@@ -26,6 +26,7 @@ public class Application implements Runnable {
     @Inject
     private GUI gui;
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<Game> games;
 
     @Inject

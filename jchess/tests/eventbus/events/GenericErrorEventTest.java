@@ -40,13 +40,14 @@ public class GenericErrorEventTest {
 
     @Test
     public void testGetContext() throws Exception {
-        GenericErrorEvent genericErrorEvent = new GenericErrorEvent(new Integer(42), null);
+        GenericErrorEvent genericErrorEvent = new GenericErrorEvent(42, null);
         assertEquals(42, genericErrorEvent.getContext());
     }
 
     @Test
     public void testGetException() throws Exception {
         GenericErrorEvent genericErrorEvent = new GenericErrorEvent(null, new Exception());
+        //noinspection ThrowableResultOfMethodCallIgnored
         assertEquals(Exception.class, genericErrorEvent.getException().getClass());
     }
 

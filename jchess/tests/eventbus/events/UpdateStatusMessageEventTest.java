@@ -36,7 +36,7 @@ public class UpdateStatusMessageEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleUpdateStatusMessageEventFromIOSystem(UpdateStatusMessageEvent updateStatusMessageEvent) {
-            if (updateStatusMessageEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (updateStatusMessageEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new UpdateStatusMessageEvent(updateStatusMessageEvent));
                 messageCounter = getMessageCounter() + 1;
             }

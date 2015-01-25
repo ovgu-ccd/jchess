@@ -36,10 +36,6 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
     private JTextField secondName;
     private JTextField thirdName;
 
-    private JLabel firstNameLab;
-    private JLabel secondNameLab;
-    private JLabel thirdNameLab;
-
     private JButton okButton;
 
 
@@ -51,7 +47,7 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
 
         JPanel firstPanel = new JPanel();
         firstPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 1"));
-        this.firstNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        JLabel firstNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
         this.firstName = new JTextField("Player 1", 10);
         firstPanel.add(firstNameLab);
         firstPanel.add(firstName);
@@ -59,14 +55,14 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
 
         JPanel secondPanel = new JPanel();
         secondPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 2"));
-        this.secondNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        JLabel secondNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
         this.secondName = new JTextField("Player 2", 10);
         secondPanel.add(secondNameLab);
         secondPanel.add(secondName);
 
         JPanel thirdPanel = new JPanel();
         thirdPanel.setBorder(BorderFactory.createTitledBorder(StringResources.MAIN.getString("player") + " 3"));
-        this.thirdNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
+        JLabel thirdNameLab = new JLabel(StringResources.MAIN.getString("player_name") + ": ");
         this.thirdName = new JTextField("Player 3", 10);
         thirdPanel.add(thirdNameLab);
         thirdPanel.add(thirdName);
@@ -94,15 +90,15 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
         if (target == this.okButton) { //if clicked OK button (on finish)
             if (this.firstName.getText().length() > 9) {
                 //make names short to 10 digits
-                this.firstName.setText(this.trimString(firstName, 9));
+                this.firstName.setText(this.trimString(firstName));
             }
             if (this.secondName.getText().length() > 9) {
                 //make names short to 10 digits
-                this.secondName.setText(this.trimString(secondName, 9));
+                this.secondName.setText(this.trimString(secondName));
             }
             if (this.thirdName.getText().length() > 9) {
                 //make names short to 10 digits
-                this.thirdName.setText(this.trimString(thirdName, 9));
+                this.thirdName.setText(this.trimString(thirdName));
             }
 
 
@@ -117,14 +113,13 @@ public class DrawLocalSettings extends JPanel implements ActionListener {
     /**
      * Method responsible for triming WHITE symbols from strings
      *
-     * @param txt    Where is capt value to equal
-     * @param length How long is the strings
+     * @param txt Where is capt value to equal
      * @return result trimmed String
      */
-    String trimString(JTextField txt, int length) {
+    String trimString(JTextField txt) {
         String result = "";
         try {
-            result = txt.getText(0, length);
+            result = txt.getText(0, 9);
         } catch (BadLocationException exc) {
             System.out.println("Something wrong in editables: \n" + exc);
         }
