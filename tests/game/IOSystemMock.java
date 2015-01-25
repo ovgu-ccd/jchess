@@ -1,4 +1,4 @@
-package jchess.tests.game;
+package tests.game;
 
 import jchess.eventbus.events.*;
 import jchess.game.IOSystem;
