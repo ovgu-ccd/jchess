@@ -10,7 +10,7 @@ import jchess.util.CoordinateConverter;
  *
  * @trace [$REQ12]
  */
-public abstract  class Board {
+public abstract class Board {
     private Tile[] tiles;
 
     public Board() {
@@ -43,8 +43,8 @@ public abstract  class Board {
      *                  Parameter must be between [0..168] otherwise Tile is not on Board and null is returned
      */
     public Tile getTile(int tileIndex) throws InvalidBoardCoordinateException {
-        if ( tileIndex < 0 || tileIndex > 168 )
-            throw new InvalidBoardCoordinateException() ;
+        if (tileIndex < 0 || tileIndex > 168)
+            throw new InvalidBoardCoordinateException();
         return tiles[tileIndex];
     }
 
@@ -73,6 +73,13 @@ public abstract  class Board {
      */
     public Tile getTile(BoardCoordinate boardCoordinate) throws InvalidBoardCoordinateException {
         return getTile(boardCoordinate.getI());
+    }
+
+    /**
+     * Get number of tiles on board.
+     */
+    public int getTileCount() {
+        return tiles.length;
     }
 }
 

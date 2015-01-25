@@ -35,6 +35,7 @@ public class Player implements Serializable {
     @SuppressWarnings({"FieldCanBeLocal", "CanBeFinal", "UnusedDeclaration"})
     private IOSystem ioSystem;
     private boolean active;
+    private boolean defeated;
     @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
     private PlayerColor color;
 
@@ -43,6 +44,7 @@ public class Player implements Serializable {
         this.setColor(color);
         this.ioSystem = ioSystem;
         this.active = false;
+        this.defeated = false;
     }
 
     public String getName() {
@@ -74,4 +76,12 @@ public class Player implements Serializable {
     }
 
     public enum PlayerColor {WHITE, BLACK, RED}
+
+    public boolean isDefeated() {
+        return defeated;
+    }
+
+    public void setDefeated(boolean defeated) {
+        this.defeated = defeated;
+    }
 }
