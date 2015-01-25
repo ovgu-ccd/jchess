@@ -168,6 +168,7 @@ public class Game {
 
     /**
      * Make next non-defeated player the new active player.
+     * [$REQ40b]
      */
     private void nextPlayer() {
         do {

@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by robert on 24/01/15.
+ * [$REQ40b]
  */
 
 public class LooseConditionTest {
