@@ -51,10 +51,8 @@
 
     <!-- Checks that property files contain the same keys.         -->
     <!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
-    <module name="Translation"/>
-
-    <module name="Spelling">
-        <property name="severity" value="typo"/>
+    <module name="Translation">
+        <property name="severity" value="warning"/>
     </module>
 
     <!-- Checks for Size Violations.                    -->
