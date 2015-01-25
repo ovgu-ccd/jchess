@@ -20,7 +20,7 @@ import java.util.HashSet;
 
 /**
  * Holds the state of the game and its player
- *
+ * <p/>
  * Created by andreas on 07.12.14.
  *
  * @trace $REQ22
@@ -133,11 +133,17 @@ public class Game {
                     if (possibleMovesCoordinates.contains(selectEvent.getBoardCoordinate())) {
                         Piece selectedPiece = selectedTile.getPiece();
                         selectedTile.removePiece();
-                        tile.placePiece(selectedPiece);
+                        Piece killedPiece = tile.placePiece(selectedPiece);
+
+
+                        if (killedPiece != null && killedPiece instanceof King) {
+                            defeatPlayer(killedPiece.getPlayerID());
+                        }
+
                         selectedPiece.postMoveCallback();
 
-                        activePlayerID++;
-                        activePlayerID %= 3;
+                        nextPlayer();
+
                         for (int i = 0; i < 3; i++) {
                             players[i].setActive(i == activePlayerID);
                         }
@@ -158,6 +164,37 @@ public class Game {
                 }
             }
         }
+    }
+
+    /**
+     * Make next non-defeated player the new active player.
+     */
+    private void nextPlayer() {
+        do {
+            activePlayerID++;
+            activePlayerID %= 3;
+        } while (players[activePlayerID].isDefeated());
+    }
+
+    /**
+     * Remove all pieces of a player and mark them as defeated.
+     */
+    private void defeatPlayer(int defeatedPlayerID) {
+        players[defeatedPlayerID].setDefeated(true);
+        for (int i = 0; i < board.getTileCount(); i++) {
+            try {
+                Tile tempTile = board.getTile(i);
+                if (tempTile.getPiece() != null
+                        && tempTile.getPiece().getPlayerID() == defeatedPlayerID) {
+                    tempTile.removePiece();
+                }
+            } catch (InvalidBoardCoordinateException e) {
+                e.printStackTrace();
+            }
+        }
+        emitUpdateStatusMessageEvent(players[defeatedPlayerID].getName() +
+                        ": " + StringResources.MAIN.getString("StatusMessage.Loose"),
+                UpdateStatusMessageEvent.Types.ALERT);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -185,7 +222,7 @@ public class Game {
         // repeat
         for (BoardCoordinate repeatBC : piece.getTileFilter().getRepeat()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + repeatBC.getA(), selectedBC.getB() + repeatBC.getB());
-            while ( resultBC.getA() >= 0 &&
+            while (resultBC.getA() >= 0 &&
                     resultBC.getA() < 15 &&
                     resultBC.getB() >= 0 &&
                     resultBC.getB() < 15 &&
