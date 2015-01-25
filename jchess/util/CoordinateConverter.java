@@ -22,14 +22,14 @@ public class CoordinateConverter {
         }
     }
 
-    private static int[] getPixel(PixelCoordinate ac) {
-        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
+    private static int[] getPixel(PixelCoordinate pc) {
+        return image.getData().getPixel(pc.x, pc.y, (int[]) null);
     }
 
 
-    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
+    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate pc) throws PixelCoordinateNotOnBoardException {
         try {
-            int[] pixel = getPixel(ac);
+            int[] pixel = getPixel(pc);
             if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
                 throw new PixelCoordinateNotOnBoardException();
             }
@@ -41,8 +41,8 @@ public class CoordinateConverter {
     }
 
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
-        PixelCoordinate ac = new PixelCoordinate(x, y);
-        return pixelToBoardCoordinate(ac);
+        PixelCoordinate pc = new PixelCoordinate(x, y);
+        return pixelToBoardCoordinate(pc);
     }
 
     public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
@@ -56,7 +56,7 @@ public class CoordinateConverter {
         return new PixelCoordinate(x, y);
     }
 
-    public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
+    public static PixelCoordinate boardToPixelCoordinate(int a, int b) {
         return boardToPixelCoordinate(new BoardCoordinate(a, b));
     }
 

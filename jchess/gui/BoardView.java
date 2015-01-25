@@ -177,7 +177,7 @@ public class BoardView extends JPanel {
     void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
 
         PixelCoordinate pixelCoordinate =
-                CoordinateConverter.boardToPixelCoordinate(a, b, i);
+                CoordinateConverter.boardToPixelCoordinate(a, b);
 
         if (piece != null) {
             switch (piece.getPlayerID()) {

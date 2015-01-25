@@ -159,7 +159,7 @@ public class Game {
         // repeat
         for (BoardCoordinate repeatBC : piece.getTileFilter().getRepeat()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + repeatBC.getA(), selectedBC.getB() + repeatBC.getB());
-            while (resultBC.getA() >= 0 &&
+            while ( resultBC.getA() >= 0 &&
                     resultBC.getA() < 15 &&
                     resultBC.getB() >= 0 &&
                     resultBC.getB() < 15 &&
