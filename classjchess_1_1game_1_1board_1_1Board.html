@@ -103,8 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pac-methods">Package Functions</a> &#124;
-<a href="#pac-attribs">Package Attributes</a>  </div>
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">jchess.game.board.Board Class Reference</div>  </div>
 </div><!--header-->
@@ -123,19 +122,17 @@ Inheritance diagram for jchess.game.board.Board:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#ada5b8ae859aa872df233f6a482fccfa9">getTile</a> (int tileIndex)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a14c1e908ba2a386d65898b1d0a439c0a">getTile</a> (int a, int b)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a361b38b41f8b593dccb13dcbcee20708">getTile</a> (<a class="el" href="classjchess_1_1util_1_1BoardCoordinate.html">BoardCoordinate</a> boardCoordinate)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60f5b06a9372a74410d35f82420938c4"></a><!-- doxytag: member="jchess::game::board::Board::initTiles" ref="a60f5b06a9372a74410d35f82420938c4" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initTiles</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#ada5b8ae859aa872df233f6a482fccfa9">getTile</a> (int tileIndex)  throws InvalidBoardCoordinateException </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a14c1e908ba2a386d65898b1d0a439c0a">getTile</a> (int a, int b)  throws InvalidBoardCoordinateException </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a361b38b41f8b593dccb13dcbcee20708">getTile</a> (<a class="el" href="classjchess_1_1util_1_1BoardCoordinate.html">BoardCoordinate</a> boardCoordinate)  throws InvalidBoardCoordinateException </td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94bc1fa5e7853a3d0a3be66634d5040a"></a><!-- doxytag: member="jchess::game::board::Board::initFigures" ref="a94bc1fa5e7853a3d0a3be66634d5040a" args="()" -->
-abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>initFigures</b> ()</td></tr>
-<tr><td colspan="2"><h2><a name="pac-methods"></a>
-Package Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60f5b06a9372a74410d35f82420938c4"></a><!-- doxytag: member="jchess::game::board::Board::initTiles" ref="a60f5b06a9372a74410d35f82420938c4" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initTiles</b> ()</td></tr>
-<tr><td colspan="2"><h2><a name="pac-attribs"></a>
-Package Attributes</h2></td></tr>
+abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>initFigures</b> ()  throws InvalidBoardCoordinateException</td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a534245e9280aa483118d15c0ef545383"></a><!-- doxytag: member="jchess::game::board::Board::tiles" ref="a534245e9280aa483118d15c0ef545383" args="" -->
 <a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>[]&#160;</td><td class="memItemRight" valign="bottom"><b>tiles</b></td></tr>
 </table>
@@ -152,7 +149,7 @@ Package Attributes</h2></td></tr>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>tileIndex</em></td><td>)</td>
-          <td></td>
+          <td>  throws <a class="el" href="classjchess_1_1game_1_1board_1_1InvalidBoardCoordinateException.html">InvalidBoardCoordinateException</a> </td>
         </tr>
       </table>
 </div>
@@ -160,7 +157,7 @@ Package Attributes</h2></td></tr>
 <p>Access a <a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a> of a board by absolute index <a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a> index starts in the board center next tile is above and following tiles are on the same ring next tile is above and so forth ...</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">tileIndex</td><td>Index for the ring, starting at 0 with the center tile/ring </td></tr>
+    <tr><td class="paramname">tileIndex</td><td>Index for the ring, starting at 0 with the center-Top <a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a> Parameter must be between [0..168] otherwise <a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a> is not on <a class="el" href="classjchess_1_1game_1_1board_1_1Board.html">Board</a> and null is returned </td></tr>
   </table>
   </dd>
 </dl>
@@ -186,7 +183,7 @@ Package Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td>  throws <a class="el" href="classjchess_1_1game_1_1board_1_1InvalidBoardCoordinateException.html">InvalidBoardCoordinateException</a> </td>
         </tr>
       </table>
 </div>
@@ -211,7 +208,7 @@ Package Attributes</h2></td></tr>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classjchess_1_1util_1_1BoardCoordinate.html">BoardCoordinate</a>&#160;</td>
           <td class="paramname"><em>boardCoordinate</em></td><td>)</td>
-          <td></td>
+          <td>  throws <a class="el" href="classjchess_1_1game_1_1board_1_1InvalidBoardCoordinateException.html">InvalidBoardCoordinateException</a> </td>
         </tr>
       </table>
 </div>
@@ -247,7 +244,7 @@ Package Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 16:48:20 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 25 2015 16:57:38 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -5,5 +5,5 @@ var searchData=
   ['selecteventtest',['SelectEventTest',['../classtests_1_1eventbus_1_1events_1_1SelectEventTest.html',1,'tests::eventbus::events']]],
   ['statusanimator',['StatusAnimator',['../classjchess_1_1gui_1_1StatusAnimator.html',1,'jchess::gui']]],
   ['stringresources',['StringResources',['../enumjchess_1_1util_1_1StringResources.html',1,'jchess::util']]],
-  ['stringresourcestest',['StringResourcesTest',['../classtests_1_1StringResourcesTest.html',1,'tests']]]
+  ['stringresourcestest',['StringResourcesTest',['../classtests_1_1util_1_1StringResourcesTest.html',1,'tests::util']]]
 ];
