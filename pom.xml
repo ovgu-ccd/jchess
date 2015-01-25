@@ -57,6 +57,7 @@
                 <version>2.10</version>
                 <configuration>
                     <sourceDirectory>jchess</sourceDirectory>
+                    <violationSeverity>warning</violationSeverity>
                 </configuration>
             </plugin>
             <plugin>
