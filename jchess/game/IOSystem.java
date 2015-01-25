@@ -6,9 +6,9 @@ import net.engio.mbassy.listener.Handler;
 /**
  * Bridge between GL and GUI
  *
- * @trace [$REQ07]
- * <p/>
  * Created by andreas on 06.12.14.
+ *
+ * @trace [$REQ07]
  */
 @SuppressWarnings("UnusedDeclaration")
 public interface IOSystem {
