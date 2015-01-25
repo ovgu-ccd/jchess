@@ -38,13 +38,13 @@ public class Game {
 
     public Game() {
         Controller.INSTANCE.subscribe(this);
+        players = new Player[3];
     }
 
     public void initializeGame(String[] playerNames, IOSystem[] ioSystems) {
         if (playerNames.length != 3 || ioSystems.length != 3) {
             throw new IllegalArgumentException();
         }
-        players = new Player[3];
 
         for (int i = 0; i < 3; i++) {
             players[i] = new Player(playerNames[i], ioSystems[i], Player.PlayerColor.values()[i]);
@@ -57,6 +57,10 @@ public class Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public HashSet<BoardCoordinate> getPossibleMovesCoordinates() {
+        return possibleMovesCoordinates;
     }
 
     public void emitPossibleMovesEvent() {
