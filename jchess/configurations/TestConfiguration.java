@@ -10,6 +10,7 @@ import com.google.inject.AbstractModule;
  *
  * @trace [$REQ07]
  */
+@SuppressWarnings("UnusedDeclaration")
 class TestConfiguration extends AbstractModule {
     @Override
     protected void configure() {

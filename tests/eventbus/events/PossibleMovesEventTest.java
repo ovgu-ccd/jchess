@@ -26,6 +26,7 @@ public class PossibleMovesEventTest {
     private final PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -41,6 +42,7 @@ public class PossibleMovesEventTest {
     @Test
     public void testSendPossibleMovesEvent() throws Exception {
         PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(null, null);
+        //noinspection unchecked
         bus.publish(possibleMovesEvent);
 
         assertEquals(2, possibleMovesEventHandler.getMessageCounter());
@@ -50,6 +52,7 @@ public class PossibleMovesEventTest {
     class PossibleMovesEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromBoardView(PossibleMovesEvent possibleMovesEvent) {
             if (possibleMovesEvent.shouldReceive(null)) {
@@ -57,9 +60,11 @@ public class PossibleMovesEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(PossibleMovesEvent possibleMovesEvent) {
             if (possibleMovesEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new PossibleMovesEvent(possibleMovesEvent));
                 messageCounter = getMessageCounter() + 1;
             }

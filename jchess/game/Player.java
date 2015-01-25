@@ -32,8 +32,10 @@ public class Player implements Serializable {
 
     private String name;
     private Game game;
+    @SuppressWarnings({"FieldCanBeLocal", "CanBeFinal", "UnusedDeclaration"})
     private IOSystem ioSystem;
     private boolean active;
+    @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
     private PlayerColor color;
 
     public Player(String name, IOSystem ioSystem, PlayerColor color) {
@@ -59,24 +61,12 @@ public class Player implements Serializable {
         this.game = game;
     }
 
-    public IOSystem getIoSystem() {
-        return ioSystem;
-    }
-
-    public void setIoSystem(IOSystem ioSystem) {
-        this.ioSystem = ioSystem;
-    }
-
     public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public PlayerColor getColor() {
-        return color;
     }
 
     void setColor(PlayerColor color) {

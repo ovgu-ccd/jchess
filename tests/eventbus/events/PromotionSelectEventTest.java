@@ -23,6 +23,7 @@ public class PromotionSelectEventTest {
     private final PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -38,6 +39,7 @@ public class PromotionSelectEventTest {
     @Test
     public void testSendPromotionSelectEvent() throws Exception {
         PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(null, Rook.class);
+        //noinspection unchecked
         bus.publish(promotionSelectEvent);
 
         assertEquals(2, promotionSelectEventHandler.getMessageCounter());
@@ -47,6 +49,7 @@ public class PromotionSelectEventTest {
     class PromotionSelectEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handlePromotionSelectEventFromGame(PromotionSelectEvent promotionSelectEvent) {
             if (promotionSelectEvent.shouldReceive(null)) {
@@ -54,9 +57,11 @@ public class PromotionSelectEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handlePromotionSelectEventFromIOSystem(PromotionSelectEvent promotionSelectEvent) {
             if (promotionSelectEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new PromotionSelectEvent(promotionSelectEvent));
                 messageCounter = getMessageCounter() + 1;
             }

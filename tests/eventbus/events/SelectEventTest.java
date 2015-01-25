@@ -24,6 +24,7 @@ public class SelectEventTest {
     private final SelectEventHandler selectEventHandler = new SelectEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -40,6 +41,7 @@ public class SelectEventTest {
     @Test
     public void testSendSelectEvent() throws Exception {
         SelectEvent selectEvent = new SelectEvent(null, new BoardCoordinate(1, 2));
+        //noinspection unchecked
         bus.publish(selectEvent);
 
         assertEquals(2, selectEventHandler.getMessageCounter());
@@ -49,6 +51,7 @@ public class SelectEventTest {
     class SelectEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromGame(SelectEvent selectEvent) {
             if (selectEvent.shouldReceive(null)) {
@@ -56,9 +59,11 @@ public class SelectEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(SelectEvent selectEvent) {
             if (selectEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new SelectEvent(selectEvent));
                 messageCounter = getMessageCounter() + 1;
             }

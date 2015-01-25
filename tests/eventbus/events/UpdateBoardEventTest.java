@@ -23,6 +23,7 @@ public class UpdateBoardEventTest {
     private final UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -32,6 +33,7 @@ public class UpdateBoardEventTest {
     @Test
     public void testSendUpdateBoardEvent() throws Exception {
         UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent((Game) null);
+        //noinspection unchecked
         bus.publish(updateBoardEvent);
 
         assertEquals(2, updateBoardEventHandler.getMessageCounter());
@@ -41,6 +43,7 @@ public class UpdateBoardEventTest {
     class UpdateBoardEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleUpdateBoardEventFromBoardView(UpdateBoardEvent updateBoardEvent) {
             if (updateBoardEvent.shouldReceive(null)) {
@@ -48,9 +51,11 @@ public class UpdateBoardEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(UpdateBoardEvent updateBoardEvent) {
             if (updateBoardEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new UpdateBoardEvent(updateBoardEvent));
                 messageCounter = getMessageCounter() + 1;
             }

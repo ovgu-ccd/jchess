@@ -17,6 +17,7 @@ public class Controller {
     private final MBassador<Event> bus;
 
 
+    @SuppressWarnings("deprecation")
     private Controller() {
         bus = new MBassador<>(BusConfiguration.SyncAsync());
     }
@@ -34,9 +35,5 @@ public class Controller {
 
     public void post(Event event) {
         this.bus.publishAsync(event);
-    }
-
-    public MBassador getBus() {
-        return bus;
     }
 }

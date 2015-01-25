@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @todo Document this
+ * /TODO Document this
  */
 class TabbedPaneIcon implements Icon {
 

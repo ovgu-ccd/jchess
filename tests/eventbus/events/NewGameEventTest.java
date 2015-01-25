@@ -23,6 +23,7 @@ public class NewGameEventTest {
     private final NewGameEventHandler newGameEventHandler = new NewGameEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -50,6 +51,7 @@ public class NewGameEventTest {
     @Test
     public void testSendNewGameEvent() throws Exception {
         NewGameEvent newGameEvent = new NewGameEvent(null, null, null);
+        //noinspection unchecked
         bus.publish(newGameEvent);
 
         assertEquals(1, newGameEventHandler.getMessageCounter());
@@ -59,6 +61,7 @@ public class NewGameEventTest {
     class NewGameEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings({"UnusedParameters", "UnusedDeclaration"})
         @Handler(delivery = Invoke.Synchronously)
         public void handleNewGameEventFromApplication(NewGameEvent newGameEvent) {
             messageCounter = getMessageCounter() + 1;

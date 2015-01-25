@@ -10,6 +10,7 @@ import net.engio.mbassy.listener.Handler;
  * <p/>
  * Created by andreas on 06.12.14.
  */
+@SuppressWarnings("UnusedDeclaration")
 public interface IOSystem {
     @Handler
     void handleSelectEvent(SelectEvent selectEvent);

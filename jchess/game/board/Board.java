@@ -11,7 +11,7 @@ import jchess.util.CoordinateConverter;
  * @trace [$REQ12]
  */
 public abstract  class Board {
-    Tile[] tiles;
+    private Tile[] tiles;
 
     public Board() {
         initTiles();

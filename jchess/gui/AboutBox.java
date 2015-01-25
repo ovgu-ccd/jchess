@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 /**
  * Show the authors
  */
-@SuppressWarnings("PMD.UnusedPrivateField")
+@SuppressWarnings({"PMD.UnusedPrivateField", "UnusedDeclaration"})
 class AboutBox extends JDialog {
     private JPanel contentPane;
     private JButton closeButton;
