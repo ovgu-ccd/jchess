@@ -11,7 +11,7 @@ import java.util.Set;
 public class Tile {
 
     private Piece piece;
-    private Set<Integer> promotesPlayers;
+    private final Set<Integer> promotesPlayers;
 
     public Tile() {
         piece = null;
@@ -22,16 +22,12 @@ public class Tile {
         return this.piece;
     }
 
-    public Piece placePiece(Piece newPiece) {
-        Piece oldPiece = this.piece;
+    public void placePiece(Piece newPiece) {
         this.piece = newPiece;
-        return oldPiece;
     }
 
-    public Piece removePiece() {
-        Piece oldPiece = this.piece;
+    public void removePiece() {
         this.piece = null;
-        return oldPiece;
     }
 
     public void addPromotionForPlayer(int playerID) {

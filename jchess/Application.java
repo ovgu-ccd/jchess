@@ -21,12 +21,14 @@ import java.util.List;
  */
 @Singleton
 public class Application implements Runnable {
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private Injector injector;
     @Inject
     private GUI gui;
 
-    private List<Game> games;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private final List<Game> games;
 
     @Inject
     private Application() {
@@ -49,6 +51,7 @@ public class Application implements Runnable {
         gui.setVisible(true);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     public void handleNewGame(NewGameEvent newGameEvent) {
         Logging.GAME.debug("Created new game.");

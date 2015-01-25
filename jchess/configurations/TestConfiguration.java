@@ -10,7 +10,7 @@ import com.google.inject.AbstractModule;
  *
  * @trace [$REQ07]
  */
-public class TestConfiguration extends AbstractModule {
+class TestConfiguration extends AbstractModule {
     @Override
     protected void configure() {
 

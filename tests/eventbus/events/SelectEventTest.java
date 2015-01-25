@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class SelectEventTest {
 
-    private SelectEventHandler selectEventHandler = new SelectEventHandler();
+    private final SelectEventHandler selectEventHandler = new SelectEventHandler();
     private MBassador bus;
 
     @Before
@@ -58,7 +58,7 @@ public class SelectEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(SelectEvent selectEvent) {
-            if (selectEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (selectEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new SelectEvent(selectEvent));
                 messageCounter = getMessageCounter() + 1;
             }

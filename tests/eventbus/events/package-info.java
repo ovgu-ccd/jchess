@@ -1,5 +1,5 @@
 /**
- Holds all the tests for the eventbus libary
+ Holds all the tests for the eventbus library
 
  @trace [$REQ10]
  */

@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 /**
  * Created by robert on 24/01/15.
  */
+
 public class PawnMovementTest {
 
     @Singleton
@@ -36,7 +37,8 @@ public class PawnMovementTest {
         }
     }
 
-    private Injector injector;
+    private final Injector injector;
+
     private Game game;
 
     public PawnMovementTest() {
@@ -125,7 +127,7 @@ public class PawnMovementTest {
         assertEquals(game.getPossibleMovesCoordinates().size(), 0);
     }
 
-    public void emitAndSimulateRelay(SelectEvent selectEvent) {
+    void emitAndSimulateRelay(SelectEvent selectEvent) {
         // Simulate relay
         selectEvent = new SelectEvent(selectEvent);
         game.handleSelectEvent(selectEvent);

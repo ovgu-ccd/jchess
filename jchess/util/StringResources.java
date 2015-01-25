@@ -11,8 +11,8 @@ public enum StringResources {
     GUI("jchess.resources.strings.gui"),
     MAIN("jchess.resources.strings.main");
 
-    private ResourceBundle bundle;
-    private String baseName;
+    private final ResourceBundle bundle;
+    private final String baseName;
 
     StringResources(String baseName) {
         this.baseName = baseName;
@@ -31,7 +31,7 @@ public enum StringResources {
     }
 
 
-    public String getString(String key, Locale locale) {
+    public String getString(@SuppressWarnings("SameParameterValue") String key, Locale locale) {
         String val = ResourceBundle.getBundle(baseName, locale).getString(key);
         String encoded = "Encoding Error.";
         try {

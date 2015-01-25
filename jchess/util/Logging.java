@@ -21,7 +21,7 @@ public enum Logging {
     BOARD(Logger.getLogger("BOARD"));
 
     private static final String configFileName = "resources/log4j.properties";
-    private Logger logger;
+    private final Logger logger;
 
     Logging(Logger logger) {
         this.logger = logger;

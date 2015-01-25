@@ -32,7 +32,7 @@ import javax.swing.*;
  * @trace [$REQ33]
  */
 public class GameTab extends JPanel {
-    private BoardView boardView;
+    private final BoardView boardView;
     private Game game;
 
     @Inject
