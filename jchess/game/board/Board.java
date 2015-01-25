@@ -37,7 +37,6 @@ public abstract  class Board {
      */
     public Tile getTile(int tileIndex) {
         return tiles[tileIndex];
-
     }
 
     /**
