@@ -5,7 +5,9 @@ package jchess.util;
  * TODO: Add Contracts that some pairs of a and b are not reachable, e.g. a=9, b=0 or a=10, b=1
  */
 public class BoardCoordinate {
-    private int a, b, i;
+    private final int a;
+    private final int b;
+    private final int i;
 
     public BoardCoordinate(int a, int b) {
         this.a = a;

@@ -30,13 +30,13 @@ import java.awt.event.ActionListener;
 /**
  * Class responsible for drawing the fold with local game settings
  */
-public class DrawLocalSettings extends JPanel implements ActionListener {
+class DrawLocalSettings extends JPanel implements ActionListener {
     private final NewGameDialog parent;
-    private JTextField firstName;
-    private JTextField secondName;
-    private JTextField thirdName;
+    private final JTextField firstName;
+    private final JTextField secondName;
+    private final JTextField thirdName;
 
-    private JButton okButton;
+    private final JButton okButton;
 
 
     public DrawLocalSettings(NewGameDialog parent) {

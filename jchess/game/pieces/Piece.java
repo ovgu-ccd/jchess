@@ -28,10 +28,10 @@ import jchess.game.board.TileFilter;
  */
 public abstract class Piece {
 
-    protected TileFilter tileFilter;
-    private int playerID;
+    TileFilter tileFilter;
+    private final int playerID;
 
-    public Piece(int playerID) {
+    Piece(int playerID) {
         this.playerID = playerID;
     }
 

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GenericErrorEventTest {
 
-    private GenericErrorEventHandler genericErrorEventHandler = new GenericErrorEventHandler();
+    private final GenericErrorEventHandler genericErrorEventHandler = new GenericErrorEventHandler();
     private MBassador bus;
 
     @Before

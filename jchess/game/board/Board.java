@@ -7,14 +7,15 @@ import jchess.util.CoordinateConverter;
  * Created by robert on 24/01/15.
  */
 public abstract  class Board {
-    protected Tile[] tiles;
+    Tile[] tiles;
 
     public Board(){
         initTiles();
         initFigures();
     }
 
-    public void initTiles() {
+    void initTiles() {
+        //noinspection PointlessArithmeticExpression
         tiles = new Tile[1 + 1 * 6 + 2 * 6 + 3 * 6 + 4 * 6 + 5 * 6 + 6 * 6 + 7 * 6];
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile();
@@ -50,7 +51,7 @@ public abstract  class Board {
      * @param a first axial coordinate
      * @param b second axial coordinate
      */
-    public Tile getTile(int a, int b) {
+    protected Tile getTile(int a, int b) {
         return tiles[CoordinateConverter.boardCoordinateToIndex(a, b)];
     }
 

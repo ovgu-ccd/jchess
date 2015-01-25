@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class UpdateStatusMessageEventTest {
 
-    private UpdateStatusMessageEventHandler updateStatusMessageEventHandler = new UpdateStatusMessageEventHandler();
+    private final UpdateStatusMessageEventHandler updateStatusMessageEventHandler = new UpdateStatusMessageEventHandler();
     private MBassador bus;
 
     @Before

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  * Created by robert on 24/01/15.
  */
 public class PawnMovementTest extends Board {
-    private Injector injector;
+    private final Injector injector;
     private Game game;
 
     public PawnMovementTest() {
@@ -80,7 +80,7 @@ public class PawnMovementTest extends Board {
         assertEquals(game.getPossibleMovesCoordinates().size(), 0);
     }
 
-    public void emitAndSimulateRelay(SelectEvent selectEvent) {
+    void emitAndSimulateRelay(SelectEvent selectEvent) {
         // Simulate relay
         selectEvent = new SelectEvent(selectEvent);
         selectEvent.emit();

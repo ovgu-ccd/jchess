@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 
 public class PossiblePromotionsEventTest {
 
-    private PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
+    private final PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
     private MBassador bus;
 
     @Before

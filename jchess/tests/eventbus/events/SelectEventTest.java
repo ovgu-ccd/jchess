@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class SelectEventTest {
 
-    private SelectEventHandler selectEventHandler = new SelectEventHandler();
+    private final SelectEventHandler selectEventHandler = new SelectEventHandler();
     private MBassador bus;
 
     @Before

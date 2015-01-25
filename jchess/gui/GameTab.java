@@ -27,7 +27,7 @@ import jchess.game.Game;
 import javax.swing.*;
 
 public class GameTab extends JPanel {
-    private BoardView boardView;
+    private final BoardView boardView;
     private Game game;
 
     @Inject

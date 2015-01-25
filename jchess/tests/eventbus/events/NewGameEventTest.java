@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class NewGameEventTest {
 
-    private NewGameEventHandler newGameEventHandler = new NewGameEventHandler();
+    private final NewGameEventHandler newGameEventHandler = new NewGameEventHandler();
     private MBassador bus;
 
     @Before

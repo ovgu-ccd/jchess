@@ -10,11 +10,11 @@ public abstract class AbstractIOSystemRelayEvent extends Event {
     private final Game game;
     private boolean visitedIOSystem = false;
 
-    public AbstractIOSystemRelayEvent(Game game) {
+    AbstractIOSystemRelayEvent(Game game) {
         this.game = game;
     }
 
-    public AbstractIOSystemRelayEvent(AbstractIOSystemRelayEvent abstractIOSystemRelayEvent) {
+    AbstractIOSystemRelayEvent(AbstractIOSystemRelayEvent abstractIOSystemRelayEvent) {
         this.game = abstractIOSystemRelayEvent.getGame();
         this.visitedIOSystem = true;
     }

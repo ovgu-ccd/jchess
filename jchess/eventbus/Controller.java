@@ -14,7 +14,7 @@ import net.engio.mbassy.bus.config.BusConfiguration;
 public class Controller {
     public static final Controller INSTANCE;
 
-    private MBassador<Event> bus;
+    private final MBassador<Event> bus;
 
 
     private Controller() {

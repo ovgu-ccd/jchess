@@ -27,7 +27,7 @@ public class CoordinateConverter {
     }
 
 
-    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
+    private static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
         try {
             int[] pixel = getPixel(ac);
             if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
@@ -56,7 +56,7 @@ public class CoordinateConverter {
         return new PixelCoordinate(x, y);
     }
 
-    public static PixelCoordinate boardToPixelCoordinate(int a, int b, int i) {
+    public static PixelCoordinate boardToPixelCoordinate(int a, int b) {
         return boardToPixelCoordinate(new BoardCoordinate(a, b));
     }
 

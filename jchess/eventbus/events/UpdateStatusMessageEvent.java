@@ -7,8 +7,8 @@ import jchess.game.Game;
  */
 public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
     public enum Types {NORMAL, ALERT}
-    private String statusMessage;
-    private Types types;
+    private final String statusMessage;
+    private final Types types;
 
     public UpdateStatusMessageEvent(Game game, String statusMessage, Types type) {
         super(game);

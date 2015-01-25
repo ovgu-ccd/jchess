@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class PromotionSelectEventTest {
 
-    private PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
+    private final PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
     private MBassador bus;
 
     @Before

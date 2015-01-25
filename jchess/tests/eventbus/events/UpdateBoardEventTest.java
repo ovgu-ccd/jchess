@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class UpdateBoardEventTest {
 
-    private UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
+    private final UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
     private MBassador bus;
 
     @Before

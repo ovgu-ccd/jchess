@@ -9,13 +9,11 @@ import jchess.game.board.DefaultBoard;
 import org.junit.Before;
 
 
-public class BoardTest {
-
-    private Board board;
+class BoardTest {
 
     @Before
     public void setup() {
-        board = new DefaultBoard();
+        Board board = new DefaultBoard();
     }
 
     /*@Test(expected = IllegalArgumentException.class)

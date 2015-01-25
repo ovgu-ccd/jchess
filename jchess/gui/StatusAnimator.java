@@ -15,7 +15,7 @@ import java.io.InputStream;
  * Created by robert on 20.01.15.
  */
 class StatusAnimator implements ActionListener {
-    public static final float FONTSIZE = 30;
+    private static final float FONTSIZE = 30;
     private static Font font;
     static {
         InputStream is = Application.class.getResourceAsStream("resources/roboto-font/RobotoCondensed-Light.ttf");
@@ -28,8 +28,8 @@ class StatusAnimator implements ActionListener {
     }
 
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
-    private BoardView parent;
-    private long dueTime;
+    private final BoardView parent;
+    private final long dueTime;
 
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;

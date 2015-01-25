@@ -3,13 +3,13 @@ package jchess.gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class TabbedPaneIcon implements Icon {
+class TabbedPaneIcon implements Icon {
 
     private int x_pos;
     private int y_pos;
-    private int width;
-    private int height;
-    private Icon fileIcon;
+    private final int width;
+    private final int height;
+    private final Icon fileIcon;
 
     public TabbedPaneIcon(Icon fileIcon) {
         this.fileIcon = fileIcon;

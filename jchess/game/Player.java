@@ -44,7 +44,7 @@ public class Player implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -76,7 +76,7 @@ public class Player implements Serializable {
         return color;
     }
 
-    public void setColor(PlayerColor color) {
+    void setColor(PlayerColor color) {
         this.color = color;
     }
 

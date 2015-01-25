@@ -172,10 +172,10 @@ public class BoardView extends JPanel {
     }
 
 
-    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
+    void renderPiece(Graphics2D g2d, Piece piece, int a, int b) {
 
         PixelCoordinate pixelCoordinate =
-                CoordinateConverter.boardToPixelCoordinate(a, b, i);
+                CoordinateConverter.boardToPixelCoordinate(a, b);
 
         if (piece != null) {
             switch (piece.getPlayerID()) {
@@ -225,7 +225,7 @@ public class BoardView extends JPanel {
                 for (int b = 0; b < (8 + a); b++) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
                     Tile tile = board.getTile(tileIndex);
-                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b);
                 }
             }
 
@@ -234,7 +234,7 @@ public class BoardView extends JPanel {
                 for (int b = g + 2; b < 15; ++b) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
                     Tile tile = board.getTile(tileIndex);
-                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b);
                 }
             }
             repaint();

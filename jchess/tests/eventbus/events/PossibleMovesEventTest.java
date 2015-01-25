@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class PossibleMovesEventTest {
 
-    private PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
+    private final PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
     private MBassador bus;
 
     @Before
