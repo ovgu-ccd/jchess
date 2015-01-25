@@ -102,31 +102,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pac-methods">Package Functions</a>  </div>
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">jchess.game.board.Board Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="jchess::game::board::Board" -->
+<!-- doxytag: class="jchess::game::board::Board" --><div class="dynheader">
+Inheritance diagram for jchess.game.board.Board:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classjchess_1_1game_1_1board_1_1Board.png" usemap="#jchess.game.board.Board_map" alt=""/>
+  <map id="jchess.game.board.Board_map" name="jchess.game.board.Board_map">
+<area href="classjchess_1_1game_1_1board_1_1DefaultBoard.html" alt="jchess.game.board.DefaultBoard" shape="rect" coords="0,56,227,80"/>
+<area href="classjchess_1_1tests_1_1game_1_1PawnMovementTest.html" alt="jchess.tests.game.PawnMovementTest" shape="rect" coords="237,56,464,80"/>
+</map>
+ </div></div>
+
 <p><a href="classjchess_1_1game_1_1board_1_1Board-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60f5b06a9372a74410d35f82420938c4"></a><!-- doxytag: member="jchess::game::board::Board::initTiles" ref="a60f5b06a9372a74410d35f82420938c4" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initTiles</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#ada5b8ae859aa872df233f6a482fccfa9">getTile</a> (int tileIndex)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a14c1e908ba2a386d65898b1d0a439c0a">getTile</a> (int a, int b)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a361b38b41f8b593dccb13dcbcee20708">getTile</a> (<a class="el" href="classjchess_1_1util_1_1BoardCoordinate.html">BoardCoordinate</a> boardCoordinate)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a676174ae1b43c1fb659829241b713eee"></a><!-- doxytag: member="jchess::game::board::Board::undo" ref="a676174ae1b43c1fb659829241b713eee" args="()" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>undo</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a070a751d63c188467e4b9002def24697"></a><!-- doxytag: member="jchess::game::board::Board::redo" ref="a070a751d63c188467e4b9002def24697" args="()" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>redo</b> ()</td></tr>
-<tr><td colspan="2"><h2><a name="pac-methods"></a>
-Package Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8fbd33f4950150007da9eff8d1e3f575"></a><!-- doxytag: member="jchess::game::board::Board::filterTiles" ref="a8fbd33f4950150007da9eff8d1e3f575" args="(TileFilter filter)" -->
-<a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>[]&#160;</td><td class="memItemRight" valign="bottom"><b>filterTiles</b> (<a class="el" href="classjchess_1_1game_1_1board_1_1TileFilter.html">TileFilter</a> filter)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50f333f045b70224c0ee12f345f045d0"></a><!-- doxytag: member="jchess::game::board::Board::initNeighborhood" ref="a50f333f045b70224c0ee12f345f045d0" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a50f333f045b70224c0ee12f345f045d0">initNeighborhood</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Neighborhood relationships. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a994f277e38ff66fd38f1675d32708b2a">initFigures</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94bc1fa5e7853a3d0a3be66634d5040a"></a><!-- doxytag: member="jchess::game::board::Board::initFigures" ref="a94bc1fa5e7853a3d0a3be66634d5040a" args="()" -->
+abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>initFigures</b> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a534245e9280aa483118d15c0ef545383"></a><!-- doxytag: member="jchess::game::board::Board::tiles" ref="a534245e9280aa483118d15c0ef545383" args="" -->
+<a class="el" href="classjchess_1_1game_1_1board_1_1Tile.html">Tile</a>[]&#160;</td><td class="memItemRight" valign="bottom"><b>tiles</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Class to represent chessboard. Chessboard is made from squares. It is setting the squares of chessboard and sets the pieces(pawns) witch the owner is current player on it.</p>
@@ -215,24 +224,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a994f277e38ff66fd38f1675d32708b2a"></a><!-- doxytag: member="jchess::game::board::Board::initFigures" ref="a994f277e38ff66fd38f1675d32708b2a" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classjchess_1_1game_1_1board_1_1Board.html#a994f277e38ff66fd38f1675d32708b2a">jchess.game.board.Board.initFigures</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [package]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Setup board</p>
-<p>[$REQ23]  [$REQ23a]  [$REQ23b]  [$REQ23c] </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>jchess/game/board/Board.java</li>
 </ul>
@@ -254,7 +245,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 15:06:19 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 25 2015 15:11:53 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
