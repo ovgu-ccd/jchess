@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class PossiblePromotionsEventTest {
 
-    private PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
+    private final PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
     private MBassador bus;
 
     @Before
@@ -66,7 +66,7 @@ public class PossiblePromotionsEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handlePossiblePromotionsEventFromIOSystem(PossiblePromotionsEvent possiblePromotionsEvent) {
-            if (possiblePromotionsEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (possiblePromotionsEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new PossiblePromotionsEvent(possiblePromotionsEvent));
                 messageCounter = getMessageCounter() + 1;
             }

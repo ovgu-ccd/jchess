@@ -36,7 +36,7 @@ public class Game {
     @Inject
     private HashSet<Class<? extends Piece>> possiblePromotions;
 
-    private Player[] players;
+    private final Player[] players;
     private Tile selectedTile;
     private Tile promotionTile;
     private BoardCoordinate selectedBC;
@@ -69,14 +69,14 @@ public class Game {
         return possibleMovesCoordinates;
     }
 
-    public void emitPossibleMovesEvent() {
+    void emitPossibleMovesEvent() {
         collectPossibleMoveCoordinates();
         PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, possibleMovesCoordinates);
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
 
-    public void emitPossiblePromotionsEvent() {
+    void emitPossiblePromotionsEvent() {
         collectPossiblePromotions();
         PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(this, possiblePromotions);
         Logging.GAME.debug("Game: Emit PossiblePromotionsEvent");
@@ -90,7 +90,7 @@ public class Game {
         emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.MakeYourMove"), UpdateStatusMessageEvent.Types.NORMAL);
     }
 
-    public void emitUpdateStatusMessageEvent(String message, UpdateStatusMessageEvent.Types types) {
+    void emitUpdateStatusMessageEvent(String message, UpdateStatusMessageEvent.Types types) {
         UpdateStatusMessageEvent updateStatusMessageEvent = new UpdateStatusMessageEvent(this, message, types);
         Logging.GAME.debug("Game: Emit UpdateBoardEvent");
         updateStatusMessageEvent.emit();

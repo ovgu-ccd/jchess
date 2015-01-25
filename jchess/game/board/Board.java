@@ -11,7 +11,7 @@ import jchess.util.CoordinateConverter;
  * @trace [$REQ12]
  */
 public abstract  class Board {
-    protected Tile[] tiles;
+    Tile[] tiles;
 
     public Board() {
         initTiles();
@@ -22,7 +22,8 @@ public abstract  class Board {
         }
     }
 
-    public void initTiles() {
+    void initTiles() {
+        //noinspection PointlessArithmeticExpression
         tiles = new Tile[1 + 1 * 6 + 2 * 6 + 3 * 6 + 4 * 6 + 5 * 6 + 6 * 6 + 7 * 6];
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile();

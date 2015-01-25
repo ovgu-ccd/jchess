@@ -12,8 +12,9 @@ import jchess.game.Game;
  * @flow GUI -> GUI
  */
 public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
-    private String statusMessage;
-    private Types types;
+    public enum Types {NORMAL, ALERT}
+    private final String statusMessage;
+    private final Types types;
 
     public UpdateStatusMessageEvent(Game game, String statusMessage, Types type) {
         super(game);
@@ -34,6 +35,4 @@ public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
     public Types getTypes() {
         return types;
     }
-
-    public enum Types {NORMAL, ALERT}
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 public class Tile {
 
     private Piece piece;
-    private Set<Integer> promotesPlayers;
+    private final Set<Integer> promotesPlayers;
 
     public Tile() {
         piece = null;

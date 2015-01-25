@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class PromotionSelectEventTest {
 
-    private PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
+    private final PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
     private MBassador bus;
 
     @Before
@@ -56,7 +56,7 @@ public class PromotionSelectEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handlePromotionSelectEventFromIOSystem(PromotionSelectEvent promotionSelectEvent) {
-            if (promotionSelectEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (promotionSelectEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new PromotionSelectEvent(promotionSelectEvent));
                 messageCounter = getMessageCounter() + 1;
             }

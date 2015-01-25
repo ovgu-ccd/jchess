@@ -32,10 +32,6 @@ import jchess.game.pieces.*;
  */
 public class DefaultBoard extends Board {
 
-    public DefaultBoard() throws InvalidBoardCoordinateException {
-        super();
-    }
-
     /// Initial Figure Placement
     protected void initFigures() {
 

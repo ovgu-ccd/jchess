@@ -17,7 +17,7 @@ public class BoardTest {
     private Board board;
 
     @Before
-    public void setup() throws InvalidBoardCoordinateException {
+    public void setup() {
         board = new DefaultBoard();
     }
 

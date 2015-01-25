@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class UpdateBoardEventTest {
 
-    private UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
+    private final UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
     private MBassador bus;
 
     @Before
@@ -50,7 +50,7 @@ public class UpdateBoardEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(UpdateBoardEvent updateBoardEvent) {
-            if (updateBoardEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (updateBoardEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new UpdateBoardEvent(updateBoardEvent));
                 messageCounter = getMessageCounter() + 1;
             }

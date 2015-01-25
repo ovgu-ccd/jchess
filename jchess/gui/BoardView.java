@@ -44,7 +44,7 @@ import java.util.HashMap;
 
 /**
  * Class to represent chessboard. Chessboard is made from squares.
- * It is setting the squers of chessboard and sets the pieces(pawns)
+ * It is setting the squares of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
  *
  * @trace [$REQ31]
@@ -55,8 +55,6 @@ import java.util.HashMap;
 public class BoardView extends JPanel {
     private static BufferedImage boardImage;
     private static BufferedImage possibleMoveImage;
-
-    private boolean fontSet = false;
 
     private BufferedImage piecesOverlay;
     private BufferedImage movesOverlay;
@@ -93,7 +91,7 @@ public class BoardView extends JPanel {
                 statusMessageOverlay = new BufferedImage(boardImage.getWidth(), boardImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 repaint();
 
-                BoardCoordinate boardCoordinate = null;
+                BoardCoordinate boardCoordinate;
                 try {
                     boardCoordinate = CoordinateConverter.pixelToBoardCoordinate(e.getX(), e.getY());
 
@@ -179,7 +177,7 @@ public class BoardView extends JPanel {
     }
 
 
-    void renderPiece(Graphics2D g2d, Piece piece, int a, int b, int i) {
+    void renderPiece(Graphics2D g2d, Piece piece, int a, int b) {
 
         PixelCoordinate pixelCoordinate =
                 CoordinateConverter.boardToPixelCoordinate(a, b);
@@ -223,9 +221,7 @@ public class BoardView extends JPanel {
 
             Graphics2D g2d = (Graphics2D) piecesOverlay.getGraphics();
 
-            if (!fontSet) {
-                g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
-            }
+            g2d.setFont(new Font(g2d.getFont().getName(), Font.PLAIN, 30));
 
             Board board = updateBoardEvent.getBoard();
 
@@ -236,10 +232,10 @@ public class BoardView extends JPanel {
                     Tile tile = null;
                     try {
                         tile = board.getTile(tileIndex);
+                        renderPiece(g2d, tile.getPiece(), a, b);
                     } catch (InvalidBoardCoordinateException e) {
                         e.printStackTrace();
                     }
-                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
                 }
             }
 
@@ -253,7 +249,7 @@ public class BoardView extends JPanel {
                     } catch (InvalidBoardCoordinateException e) {
                         e.printStackTrace();
                     }
-                    renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
+                    renderPiece(g2d, tile.getPiece(), a, b);
                 }
             }
             repaint();

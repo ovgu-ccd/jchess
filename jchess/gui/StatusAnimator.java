@@ -20,6 +20,7 @@ import java.io.InputStream;
  * @trace [$REQ37]
  */
 class StatusAnimator implements ActionListener {
+    private static final float FONTSIZE = 30;
     private static Font font;
 
     static {
@@ -32,15 +33,14 @@ class StatusAnimator implements ActionListener {
         }
     }
 
-    private final int animationTime;
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
-    private BoardView parent;
-    private long dueTime;
+    private final BoardView parent;
+    private final long dueTime;
 
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;
         this.updateStatusMessageEvent = updateStatusMessageEvent;
-        animationTime = 2000;
+        int animationTime = 2000;
         dueTime = System.currentTimeMillis() + animationTime;
     }
 
@@ -100,7 +100,7 @@ class StatusAnimator implements ActionListener {
         g2d.setColor(Color.BLACK);
         // Draw text
         if (font == null) {
-            font = g2d.getFont().deriveFont(30);
+            font = g2d.getFont().deriveFont(FONTSIZE);
         }
         g2d.setFont(font);
         FontMetrics metrics = g2d.getFontMetrics(font);

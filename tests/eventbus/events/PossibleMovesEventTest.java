@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class PossibleMovesEventTest {
 
-    private PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
+    private final PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
     private MBassador bus;
 
     @Before
@@ -59,7 +59,7 @@ public class PossibleMovesEventTest {
 
         @Handler(delivery = Invoke.Synchronously)
         public void handleSelectEventFromIOSystem(PossibleMovesEvent possibleMovesEvent) {
-            if (possibleMovesEvent.shouldRelay(null) && true /* this.player.isActive() */) {
+            if (possibleMovesEvent.shouldRelay(null) /* this.player.isActive() */) {
                 bus.publish(new PossibleMovesEvent(possibleMovesEvent));
                 messageCounter = getMessageCounter() + 1;
             }

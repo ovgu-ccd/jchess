@@ -15,7 +15,7 @@ public class NewGameEvent extends Event {
 
     private final IOSystem[] ioSystems;
     private final String[] playerNames;
-    private GameTab gameTab;
+    private final GameTab gameTab;
 
     public NewGameEvent(String[] playerNames, IOSystem[] ioSystems, GameTab gameTab) {
         this.playerNames = playerNames;

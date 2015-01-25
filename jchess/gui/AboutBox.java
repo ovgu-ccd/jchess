@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
  * Show the authors
  */
 @SuppressWarnings("PMD.UnusedPrivateField")
-public class AboutBox extends JDialog {
+class AboutBox extends JDialog {
     private JPanel contentPane;
     private JButton closeButton;
     private JLabel caption;
@@ -43,7 +43,7 @@ public class AboutBox extends JDialog {
         setTitle(StringResources.MAIN.getString("AboutBox.title.text"));
         setResizable(false);
 
-        openWebsite(homepage, StringResources.MAIN.getString("AboutBox.homepage.text"), null);
+        openWebsite(homepage, StringResources.MAIN.getString("AboutBox.homepage.text"));
     }
 
     public static void main(String[] args) {
@@ -57,8 +57,8 @@ public class AboutBox extends JDialog {
         dispose();
     }
 
-    private void openWebsite(JLabel label, final String url, String text) {
-        label.setText("<html><a href=\"\">" + (text == null ? url : text) + "</a></html>");
+    private void openWebsite(JLabel label, final String url) {
+        label.setText("<html><a href=\"\">" + url + "</a></html>");
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label.addMouseListener(new MouseAdapter() {
             @Override
