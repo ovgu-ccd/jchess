@@ -227,8 +227,8 @@ TAB_SIZE               = 4
 # documentation, which will result in a user-defined paragraph with heading
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
-
-ALIASES                =
+ALIASES = "trace=\xrefitem trace \"Requirement\" \"Requirements\" "
+ALIASES += "flow=\xrefitem flow \"Flowment\" \"Flowments\" "
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
