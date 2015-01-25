@@ -91,10 +91,6 @@
                 <directory>jchess/resources</directory>
                 <targetPath>jchess/resources</targetPath>
             </resource>
-            <resource>
-                <directory>jchess/images.org</directory>
-                <targetPath>jchess/images.org</targetPath>
-            </resource>
         </resources>
 
         <plugins>
