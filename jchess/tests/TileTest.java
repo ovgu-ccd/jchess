@@ -14,7 +14,7 @@ import org.junit.Test;
 
 //import static org.junit.Assert.*;
 
-public class TilePiecePlacementTest {
+public class TileTest {
 
     private Tile tile;
 
@@ -41,8 +41,21 @@ public class TilePiecePlacementTest {
     @Test
     public void testRemovePiece() {
         assert( tile.removePiece() == null );
-        tile.placePiece( new King(0));
+        tile.placePiece(new King(0));
         assert( tile.removePiece() instanceof King );
         assert( tile.getPiece() == null );
+    }
+
+    @Test
+    public void testPromotion() {
+        assert( tile.isPromotionTileFor(1) == false  );
+        tile.addPromotionForPlayer(0);
+        assert( tile.isPromotionTileFor(0) == true  );
+        assert( tile.isPromotionTileFor(1) == false  );
+        assert( tile.isPromotionTileFor(2) == false  );
+        tile.addPromotionForPlayer(2);
+        assert( tile.isPromotionTileFor(0) == true  );
+        assert( tile.isPromotionTileFor(1) == false  );
+        assert( tile.isPromotionTileFor(2) == true  );
     }
 }
