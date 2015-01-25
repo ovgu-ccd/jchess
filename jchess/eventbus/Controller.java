@@ -35,4 +35,8 @@ public class Controller {
     public void post(Event event) {
         this.bus.publishAsync(event);
     }
+
+    public MBassador getBus() {
+        return bus;
+    }
 }
