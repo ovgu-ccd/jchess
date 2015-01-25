@@ -25,6 +25,7 @@ import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
 import jchess.game.Game;
 import jchess.game.board.Board;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
 import jchess.util.*;
@@ -228,7 +229,12 @@ public class BoardView extends JPanel {
             for (int a = 0; a < 8; a++) {
                 for (int b = 0; b < (8 + a); b++) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
-                    Tile tile = board.getTile(tileIndex);
+                    Tile tile = null;
+                    try {
+                        tile = board.getTile(tileIndex);
+                    } catch (InvalidBoardCoordinateException e) {
+                        e.printStackTrace();
+                    }
                     renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
                 }
             }
@@ -237,7 +243,12 @@ public class BoardView extends JPanel {
                 int g = a - 9;
                 for (int b = g + 2; b < 15; ++b) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
-                    Tile tile = board.getTile(tileIndex);
+                    Tile tile = null;
+                    try {
+                        tile = board.getTile(tileIndex);
+                    } catch (InvalidBoardCoordinateException e) {
+                        e.printStackTrace();
+                    }
                     renderPiece(g2d, tile.getPiece(), a, b, tileIndex);
                 }
             }

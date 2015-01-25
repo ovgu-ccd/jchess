@@ -6,6 +6,7 @@ package jchess.tests.game;
 
 import jchess.game.board.Board;
 import jchess.game.board.DefaultBoard;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.util.BoardCoordinate;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +17,12 @@ public class BoardTest {
     private Board board;
 
     @Before
-    public void setup() {
+    public void setup() throws InvalidBoardCoordinateException {
         board = new DefaultBoard();
     }
 
     @Test
-    public void testGetTile() {
+    public void testGetTile() throws InvalidBoardCoordinateException {
         assert (board.getTile(0, 0) == board.getTile(0));
         assert (board.getTile(0, 7) == board.getTile(7));
         assert (board.getTile(1, 0) == board.getTile(8));
@@ -35,13 +36,34 @@ public class BoardTest {
     }
 
 
-    @Test
-    public void testGetTileNotOnBoard() {
+    @Test(expected=InvalidBoardCoordinateException.class)
+    public void testGetTileNotOnBoard() throws InvalidBoardCoordinateException {
         BoardCoordinate bc = new BoardCoordinate( -1, -1 );
         int negIdx = bc.getI();
         assert( board.getTile(  negIdx ) == null );
         assert( board.getTile(  -1, -1 ) == null );
         assert (board.getTile(-1) == null);
         assert (board.getTile(169) == null);
+    }
+
+    @Test(expected=InvalidBoardCoordinateException.class)
+    public void testGetTileNotOnBoard_byTileIndex_less_0() throws InvalidBoardCoordinateException {
+        board.getTile(-1);
+    }
+
+    @Test(expected=InvalidBoardCoordinateException.class)
+    public void testGetTileNotOnBoard_byTileIndex_greater_168() throws InvalidBoardCoordinateException {
+        board.getTile(169);
+    }
+
+    @Test(expected=InvalidBoardCoordinateException.class)
+    public void testGetTileNotOnBoard_byBoardCoordinates() throws InvalidBoardCoordinateException {
+        board.getTile(-1,-1);
+    }
+
+    @Test(expected=InvalidBoardCoordinateException.class)
+    public void testGetTileNotOnBoard_byBoardCoordinate_Class() throws InvalidBoardCoordinateException {
+        BoardCoordinate bc = new BoardCoordinate( -1, -1 );
+        board.getTile(bc);
     }
 }

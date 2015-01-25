@@ -7,6 +7,7 @@ import jchess.eventbus.events.SelectEvent;
 import jchess.game.Game;
 import jchess.game.IOSystem;
 import jchess.game.board.Board;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.pieces.Pawn;
 import jchess.util.BoardCoordinate;
 import jchess.util.Logging;
@@ -23,7 +24,7 @@ public class PawnMovementTest extends Board {
     private Injector injector;
     private Game game;
 
-    public PawnMovementTest() {
+    public PawnMovementTest() throws InvalidBoardCoordinateException {
         Logging.setup();
         injector = Guice.createInjector(new AbstractModule() {
             @Override
@@ -34,7 +35,7 @@ public class PawnMovementTest extends Board {
     }
 
     @Override
-    protected void initFigures() {
+    protected void initFigures() throws InvalidBoardCoordinateException {
         getTile(6, 0).placePiece(new Pawn(0));
         getTile(7, 7).placePiece(new Pawn(0));
         getTile(14, 7).placePiece(new Pawn(0));
