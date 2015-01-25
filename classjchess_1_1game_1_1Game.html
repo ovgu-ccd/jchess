@@ -47,7 +47,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Packages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li>
@@ -93,14 +92,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><b>jchess</b>      </li>
-      <li class="navelem"><a class="el" href="namespacejchess_1_1game.html">game</a>      </li>
+      <li class="navelem"><b>game</b>      </li>
       <li class="navelem"><a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>      </li>
     </ul>
   </div>
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pac-methods">Package Functions</a>  </div>
   <div class="headertitle">
 <div class="title">jchess.game.Game Class Reference</div>  </div>
 </div><!--header-->
@@ -116,23 +116,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>initializeGame</b> (S
 <a class="el" href="classjchess_1_1game_1_1board_1_1Board.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getBoard</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad18abc21706eac14e26690f46808de4a"></a><!-- doxytag: member="jchess::game::Game::getPossibleMovesCoordinates" ref="ad18abc21706eac14e26690f46808de4a" args="()" -->
 HashSet&lt; <a class="el" href="classjchess_1_1util_1_1BoardCoordinate.html">BoardCoordinate</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPossibleMovesCoordinates</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad37f7d2a7b526cb8783c1b1dd61f648d"></a><!-- doxytag: member="jchess::game::Game::emitPossibleMovesEvent" ref="ad37f7d2a7b526cb8783c1b1dd61f648d" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>emitPossibleMovesEvent</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab704f87d7def7b758c83b7fe96fa51bd"></a><!-- doxytag: member="jchess::game::Game::emitPossiblePromotionsEvent" ref="ab704f87d7def7b758c83b7fe96fa51bd" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>emitPossiblePromotionsEvent</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01d473c4f177847ffe3e21361cc6517e"></a><!-- doxytag: member="jchess::game::Game::emitUpdateBoardEvent" ref="a01d473c4f177847ffe3e21361cc6517e" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>emitUpdateBoardEvent</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a076e8e8a78f37cbd4962c21e455bc1ad"></a><!-- doxytag: member="jchess::game::Game::emitUpdateStatusMessageEvent" ref="a076e8e8a78f37cbd4962c21e455bc1ad" args="(String message, UpdateStatusMessageEvent.Types types)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>emitUpdateStatusMessageEvent</b> (String message, UpdateStatusMessageEvent.Types types)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c7c0b666dc4484edec2befd1bf4efa6"></a><!-- doxytag: member="jchess::game::Game::handleSelectEvent" ref="a3c7c0b666dc4484edec2befd1bf4efa6" args="(SelectEvent selectEvent)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handleSelectEvent</b> (SelectEvent selectEvent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addedf06e368a2c4b742530fa1959f6e0"></a><!-- doxytag: member="jchess::game::Game::handlePromotionSelectEvent" ref="addedf06e368a2c4b742530fa1959f6e0" args="(PromotionSelectEvent promotionSelectEvent)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePromotionSelectEvent</b> (PromotionSelectEvent promotionSelectEvent)</td></tr>
+<tr><td colspan="2"><h2><a name="pac-methods"></a>
+Package Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad37f7d2a7b526cb8783c1b1dd61f648d"></a><!-- doxytag: member="jchess::game::Game::emitPossibleMovesEvent" ref="ad37f7d2a7b526cb8783c1b1dd61f648d" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>emitPossibleMovesEvent</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab704f87d7def7b758c83b7fe96fa51bd"></a><!-- doxytag: member="jchess::game::Game::emitPossiblePromotionsEvent" ref="ab704f87d7def7b758c83b7fe96fa51bd" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>emitPossiblePromotionsEvent</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a076e8e8a78f37cbd4962c21e455bc1ad"></a><!-- doxytag: member="jchess::game::Game::emitUpdateStatusMessageEvent" ref="a076e8e8a78f37cbd4962c21e455bc1ad" args="(String message, UpdateStatusMessageEvent.Types types)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>emitUpdateStatusMessageEvent</b> (String message, UpdateStatusMessageEvent.Types types)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Holds the state of the game and its player</p>
-<p>$REQ22  $REQ23 </p>
-<p>Created by andreas on 07.12.14. </p>
+<div class="textblock"><p>Created by andreas on 07.12.14. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>jchess/game/Game.java</li>
 </ul>
@@ -154,7 +154,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePromotionSelect
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 15:34:15 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 25 2015 15:35:21 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
