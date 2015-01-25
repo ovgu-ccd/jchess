@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 
 /**
  * The application's main frame.
+ *
+ * @trace [$REQ31]
  */
 @Singleton
 public class GUI extends JFrame implements ActionListener {

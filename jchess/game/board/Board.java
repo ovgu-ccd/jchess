@@ -31,6 +31,8 @@ import jchess.util.CoordinateConverter;
  * Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squares of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
+ *
+ * @trace [$REQ12]
  */
 public class Board {
 
@@ -107,7 +109,14 @@ public class Board {
 
     }
 
-    /// Initial Figure Placement
+    /**
+     * Setup board
+     *
+     * @trace [$REQ23]
+     * @trace [$REQ23a]
+     * @trace [$REQ23b]
+     * @trace [$REQ23c]
+     */
     void initFigures() {
 
         // place Pawns

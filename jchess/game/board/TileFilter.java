@@ -3,7 +3,11 @@ package jchess.game.board;
 import jchess.util.BoardCoordinate;
 
 /**
+ * Tile Filter for easily adding figures and pieces
+ * <p/>
  * Created by Elliot on 2014-12-06.
+ *
+ * @trace [$REQ42]
  */
 public class TileFilter {
     private final BoardCoordinate[] repeat;

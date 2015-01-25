@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 /**
  * Class representing the player in the game
+ *
+ * @trace [$REQ11]
  */
 public class Player implements Serializable {
 
@@ -33,6 +35,7 @@ public class Player implements Serializable {
     private IOSystem ioSystem;
     private boolean active;
     private PlayerColor color;
+
     public Player(String name, IOSystem ioSystem, PlayerColor color) {
         this.setName(name);
         this.setColor(color);

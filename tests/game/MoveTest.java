@@ -1,4 +1,4 @@
-package jchess.tests.game;
+package tests.game;
 
 import org.junit.Before;
 

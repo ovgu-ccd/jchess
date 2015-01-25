@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 
 import jchess.eventbus.events.GenericErrorEvent;
@@ -13,6 +13,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests the generic error event
+ *
+ * @trace [$REQ36]
+ */
 public class GenericErrorEventTest {
 
     private GenericErrorEventHandler genericErrorEventHandler = new GenericErrorEventHandler();
@@ -22,20 +27,6 @@ public class GenericErrorEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(genericErrorEventHandler);
-    }
-
-    @Listener(references = References.Strong)
-    class GenericErrorEventHandler {
-        private int messageCounter = 0;
-
-        @Handler(delivery = Invoke.Synchronously)
-        public void handleGenericErrorEventFromApplication(GenericErrorEvent genericErrorEvent) {
-            messageCounter = getMessageCounter() + 1;
-        }
-
-        public int getMessageCounter() {
-            return messageCounter;
-        }
     }
 
     @Test
@@ -56,5 +47,19 @@ public class GenericErrorEventTest {
         bus.publish(genericErrorEvent);
 
         assertEquals(1, genericErrorEventHandler.getMessageCounter());
+    }
+
+    @Listener(references = References.Strong)
+    class GenericErrorEventHandler {
+        private int messageCounter = 0;
+
+        @Handler(delivery = Invoke.Synchronously)
+        public void handleGenericErrorEventFromApplication(GenericErrorEvent genericErrorEvent) {
+            messageCounter = getMessageCounter() + 1;
+        }
+
+        public int getMessageCounter() {
+            return messageCounter;
+        }
     }
 }

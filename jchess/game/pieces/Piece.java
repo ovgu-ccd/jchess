@@ -25,6 +25,8 @@ import jchess.game.board.TileFilter;
 
 /**
  * Class to represent a piece (any kind) - this class should be extended to represent pawn, bishop etc.
+ *
+ * @trace [$REQ13]
  */
 public abstract class Piece {
 

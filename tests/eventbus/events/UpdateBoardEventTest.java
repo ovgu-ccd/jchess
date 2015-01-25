@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.UpdateBoardEvent;
 import jchess.game.Game;
@@ -11,8 +11,13 @@ import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for the redraw event
+ *
+ * @trace [$REQ07]
+ */
 public class UpdateBoardEventTest {
 
     private UpdateBoardEventHandler updateBoardEventHandler = new UpdateBoardEventHandler();
@@ -22,6 +27,14 @@ public class UpdateBoardEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(updateBoardEventHandler);
+    }
+
+    @Test
+    public void testSendUpdateBoardEvent() throws Exception {
+        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent((Game) null);
+        bus.publish(updateBoardEvent);
+
+        assertEquals(2, updateBoardEventHandler.getMessageCounter());
     }
 
     @Listener(references = References.Strong)
@@ -46,13 +59,5 @@ public class UpdateBoardEventTest {
         public int getMessageCounter() {
             return messageCounter;
         }
-    }
-
-    @Test
-    public void testSendUpdateBoardEvent() throws Exception {
-        UpdateBoardEvent updateBoardEvent = new UpdateBoardEvent((Game)null);
-        bus.publish(updateBoardEvent);
-
-        assertEquals(2, updateBoardEventHandler.getMessageCounter());
     }
 }

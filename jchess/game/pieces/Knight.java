@@ -24,6 +24,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * moves two tiles on straight line and one tile adjacent
+ *
+ * @trace [$REQ13c]
+ * @trace [$REQ16]
+ */
 public class Knight extends Piece {
 
     public Knight(int playerID) {

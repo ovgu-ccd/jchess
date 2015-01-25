@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.SelectEvent;
 import jchess.util.BoardCoordinate;
@@ -11,13 +11,13 @@ import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class tests the SelectEvent
  *
- * @trace REQ07
- * @trace REQ34
+ * @trace [REQ07]
+ * @trace [REQ34]
  */
 public class SelectEventTest {
 
@@ -28,6 +28,21 @@ public class SelectEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(selectEventHandler);
+    }
+
+    @Test
+    public void testGetBoardCoordinate() throws Exception {
+        SelectEvent selectEvent = new SelectEvent(null, new BoardCoordinate(23, 42));
+        assertEquals(selectEvent.getBoardCoordinate().getA(), 23);
+        assertEquals(selectEvent.getBoardCoordinate().getB(), 42);
+    }
+
+    @Test
+    public void testSendSelectEvent() throws Exception {
+        SelectEvent selectEvent = new SelectEvent(null, new BoardCoordinate(1, 2));
+        bus.publish(selectEvent);
+
+        assertEquals(2, selectEventHandler.getMessageCounter());
     }
 
     @Listener(references = References.Strong)
@@ -52,20 +67,5 @@ public class SelectEventTest {
         public int getMessageCounter() {
             return messageCounter;
         }
-    }
-
-    @Test
-    public void testGetBoardCoordinate() throws Exception {
-        SelectEvent selectEvent = new SelectEvent(null, new BoardCoordinate(23, 42));
-        assertEquals(selectEvent.getBoardCoordinate().getA(), 23);
-        assertEquals(selectEvent.getBoardCoordinate().getB(), 42);
-    }
-
-    @Test
-    public void testSendSelectEvent() throws Exception {
-        SelectEvent selectEvent = new SelectEvent(null, new BoardCoordinate(1, 2));
-        bus.publish(selectEvent);
-
-        assertEquals(2, selectEventHandler.getMessageCounter());
     }
 }

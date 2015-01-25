@@ -26,6 +26,11 @@ import jchess.game.Game;
 
 import javax.swing.*;
 
+/**
+ * Holds the tab of game
+ *
+ * @trace [$REQ33]
+ */
 public class GameTab extends JPanel {
     private BoardView boardView;
     private Game game;

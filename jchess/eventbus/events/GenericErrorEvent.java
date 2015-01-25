@@ -1,8 +1,14 @@
 package jchess.eventbus.events;
 
 /**
+ * Base class handling any error status
+ * <p/>
  * Created by Severin Orth on 19.01.15.
  * This file is part of the jchess project
+ *
+ * @trace [$REQ07]
+ * @flow GL -> GUI
+ * @flow GUI -> GUI
  */
 public class GenericErrorEvent extends Event {
 

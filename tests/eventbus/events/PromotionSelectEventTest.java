@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.PromotionSelectEvent;
 import jchess.game.pieces.Rook;
@@ -11,8 +11,13 @@ import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for allowing to promote a piece
+ *
+ * @trace [$REQ29]
+ */
 public class PromotionSelectEventTest {
 
     private PromotionSelectEventHandler promotionSelectEventHandler = new PromotionSelectEventHandler();
@@ -22,6 +27,20 @@ public class PromotionSelectEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(promotionSelectEventHandler);
+    }
+
+    @Test
+    public void testGetPieceClass() throws Exception {
+        PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(null, Rook.class);
+        assertEquals(Rook.class, promotionSelectEvent.getPieceClass());
+    }
+
+    @Test
+    public void testSendPromotionSelectEvent() throws Exception {
+        PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(null, Rook.class);
+        bus.publish(promotionSelectEvent);
+
+        assertEquals(2, promotionSelectEventHandler.getMessageCounter());
     }
 
     @Listener(references = References.Strong)
@@ -46,19 +65,5 @@ public class PromotionSelectEventTest {
         public int getMessageCounter() {
             return messageCounter;
         }
-    }
-
-    @Test
-    public void testGetPieceClass() throws Exception {
-        PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(null, Rook.class);
-        assertEquals(Rook.class, promotionSelectEvent.getPieceClass());
-    }
-
-    @Test
-    public void testSendPromotionSelectEvent() throws Exception {
-        PromotionSelectEvent promotionSelectEvent = new PromotionSelectEvent(null, Rook.class);
-        bus.publish(promotionSelectEvent);
-
-        assertEquals(2, promotionSelectEventHandler.getMessageCounter());
     }
 }
