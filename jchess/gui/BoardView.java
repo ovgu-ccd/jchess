@@ -95,7 +95,7 @@ public class BoardView extends JPanel {
                     GameTab gameTab = (GameTab) getParent();
                     SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), boardCoordinate);
 
-                    Logging.GUI.debug("Emit SelectEvent");
+                    Logging.GUI.debug("Emit SelectEvent: " + selectEvent.toString());
                     selectEvent.emit();
                 } catch (PixelCoordinateNotOnBoardException e1) {
                     GenericErrorEvent genericErrorEvent = new GenericErrorEvent(this, e1);
