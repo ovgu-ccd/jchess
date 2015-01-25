@@ -22,6 +22,7 @@ public class UpdateStatusMessageEventTest {
     private final UpdateStatusMessageEventHandler updateStatusMessageEventHandler = new UpdateStatusMessageEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -43,6 +44,7 @@ public class UpdateStatusMessageEventTest {
     @Test
     public void testSendUpdateStatusMessageEvent() throws Exception {
         UpdateStatusMessageEvent updateStatusMessageEvent = new UpdateStatusMessageEvent(null, "TEST", UpdateStatusMessageEvent.Types.NORMAL);
+        //noinspection unchecked
         bus.publish(updateStatusMessageEvent);
 
         assertEquals(2, updateStatusMessageEventHandler.getMessageCounter());
@@ -52,6 +54,7 @@ public class UpdateStatusMessageEventTest {
     class UpdateStatusMessageEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleUpdateStatusMessageEventFromBoardView(UpdateStatusMessageEvent updateStatusMessageEvent) {
             if (updateStatusMessageEvent.shouldReceive(null)) {
@@ -59,9 +62,11 @@ public class UpdateStatusMessageEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handleUpdateStatusMessageEventFromIOSystem(UpdateStatusMessageEvent updateStatusMessageEvent) {
             if (updateStatusMessageEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new UpdateStatusMessageEvent(updateStatusMessageEvent));
                 messageCounter = getMessageCounter() + 1;
             }

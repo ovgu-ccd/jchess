@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 public class BishopMovementTest {
 
     @Singleton
-    public static class BishopMovementBoard extends Board {
+    protected static class BishopMovementBoard extends Board {
         @Override
         protected void initFigures() throws InvalidBoardCoordinateException {
             getTile(0, 0).placePiece(new Bishop(0));

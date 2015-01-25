@@ -23,12 +23,13 @@ public class CoordinateConverterTest {
                      b < 15 &&
                      (b-a) >= -7 &&
                      (b-a) <= 7) {
+                    int index = CoordinateConverter.boardCoordinateToIndex(a, b);
                     PixelCoordinate pc = CoordinateConverter.boardToPixelCoordinate(a, b);
                     BoardCoordinate bc = CoordinateConverter.pixelToBoardCoordinate(pc);
                     assertEquals(a, bc.getA());
                     assertEquals(b, bc.getB());
                     assertEquals(b - a, bc.getC());
-                    assertEquals(CoordinateConverter.boardCoordinateToIndex(a, b), bc.getI());
+                    assertEquals(index, bc.getI());
                 }
             }
         }

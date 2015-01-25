@@ -30,10 +30,13 @@ import java.util.HashSet;
 public class Game {
 
     private final Player[] players;
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private Board board;
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private HashSet<Class<? extends Piece>> possiblePromotions;
     private Tile selectedTile;
@@ -108,6 +111,7 @@ public class Game {
                 } catch (InvalidBoardCoordinateException e) {
                     e.printStackTrace();
                 }
+                //noinspection ConstantConditions
                 if (tile.getPiece() == null) {
                     emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.SelectAPiece"), UpdateStatusMessageEvent.Types.ALERT);
                 } else if (!players[tile.getPiece().getPlayerID()].isActive()) {
@@ -124,6 +128,7 @@ public class Game {
                     e.printStackTrace();
                 }
 
+                //noinspection ConstantConditions
                 if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
                     if (possibleMovesCoordinates.contains(selectEvent.getBoardCoordinate())) {
                         Piece selectedPiece = selectedTile.getPiece();
@@ -155,6 +160,7 @@ public class Game {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     public void handlePromotionSelectEvent(PromotionSelectEvent promotionSelectEvent) {
         if (promotionSelectEvent.shouldReceive(this)) {

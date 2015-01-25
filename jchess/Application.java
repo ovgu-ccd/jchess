@@ -24,6 +24,7 @@ public class Application implements Runnable {
     @SuppressWarnings("UnusedDeclaration")
     @Inject
     private Injector injector;
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private GUI gui;
 

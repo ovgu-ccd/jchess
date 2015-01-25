@@ -23,6 +23,7 @@ public class GenericErrorEventTest {
     private final GenericErrorEventHandler genericErrorEventHandler = new GenericErrorEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -45,6 +46,7 @@ public class GenericErrorEventTest {
     @Test
     public void testSendGenericErrorEvent() throws Exception {
         GenericErrorEvent genericErrorEvent = new GenericErrorEvent(null, new Exception());
+        //noinspection unchecked
         bus.publish(genericErrorEvent);
 
         assertEquals(1, genericErrorEventHandler.getMessageCounter());
@@ -54,6 +56,7 @@ public class GenericErrorEventTest {
     class GenericErrorEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings({"UnusedParameters", "UnusedDeclaration"})
         @Handler(delivery = Invoke.Synchronously)
         public void handleGenericErrorEventFromApplication(GenericErrorEvent genericErrorEvent) {
             messageCounter = getMessageCounter() + 1;

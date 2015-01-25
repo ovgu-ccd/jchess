@@ -28,6 +28,7 @@ public class PossiblePromotionsEventTest {
     private final PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
     private MBassador bus;
 
+    @SuppressWarnings("deprecation")
     @Before
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
@@ -48,6 +49,7 @@ public class PossiblePromotionsEventTest {
     @Test
     public void testSendPossiblePromotionsEvent() throws Exception {
         PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(null, new HashSet<Class<? extends Piece>>());
+        //noinspection unchecked
         bus.publish(possiblePromotionsEvent);
 
         assertEquals(2, possiblePromotionsEventHandler.getMessageCounter());
@@ -57,6 +59,7 @@ public class PossiblePromotionsEventTest {
     class PossiblePromotionsEventHandler {
         private int messageCounter = 0;
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handlePossiblePromotionsEventFromBoardView(PossiblePromotionsEvent possiblePromotionsEvent) {
             if (possiblePromotionsEvent.shouldReceive(null)) {
@@ -64,9 +67,11 @@ public class PossiblePromotionsEventTest {
             }
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         @Handler(delivery = Invoke.Synchronously)
         public void handlePossiblePromotionsEventFromIOSystem(PossiblePromotionsEvent possiblePromotionsEvent) {
             if (possiblePromotionsEvent.shouldRelay(null) /* this.player.isActive() */) {
+                //noinspection unchecked
                 bus.publish(new PossiblePromotionsEvent(possiblePromotionsEvent));
                 messageCounter = getMessageCounter() + 1;
             }

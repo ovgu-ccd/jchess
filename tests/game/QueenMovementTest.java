@@ -10,7 +10,6 @@ import jchess.game.IOSystem;
 import jchess.game.board.Board;
 import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.pieces.*;
-import jchess.game.pieces.Queen;
 import jchess.util.BoardCoordinate;
 import jchess.util.Logging;
 import org.junit.Before;
@@ -25,7 +24,7 @@ import static org.junit.Assert.*;
 public class QueenMovementTest {
 
     @Singleton
-    public static class QueenMovementBoard extends Board {
+    protected static class QueenMovementBoard extends Board {
         @Override
         protected void initFigures() throws InvalidBoardCoordinateException {
             getTile(0, 0).placePiece(new Queen(0));

@@ -17,8 +17,7 @@ public enum Logging {
 
 
     GUI(Logger.getLogger("GUI")),
-    GAME(Logger.getLogger("GAME")),
-    BOARD(Logger.getLogger("BOARD"));
+    GAME(Logger.getLogger("GAME"));
 
     private static final String configFileName = "resources/log4j.properties";
     private final Logger logger;
@@ -35,13 +34,5 @@ public enum Logging {
 
     public void debug(String message) {
         logger.debug(message);
-    }
-
-    public void info(String message) {
-        logger.info(message);
-    }
-
-    public void error(String message) {
-        logger.error(message);
     }
 }

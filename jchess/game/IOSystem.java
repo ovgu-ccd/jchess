@@ -10,6 +10,7 @@ import net.engio.mbassy.listener.Handler;
  *
  * @trace [$REQ07]
  */
+@SuppressWarnings("UnusedDeclaration")
 public interface IOSystem {
     @Handler
     void handleSelectEvent(SelectEvent selectEvent);

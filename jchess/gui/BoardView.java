@@ -53,7 +53,9 @@ import java.util.HashMap;
  */
 @Listener(references = References.Strong)
 public class BoardView extends JPanel {
+    @SuppressWarnings("CanBeFinal")
     private static BufferedImage boardImage;
+    @SuppressWarnings("CanBeFinal")
     private static BufferedImage possibleMoveImage;
 
     private BufferedImage piecesOverlay;
@@ -75,6 +77,7 @@ public class BoardView extends JPanel {
     /**
      * Chessboard class constructor
      */
+    @SuppressWarnings("UnusedDeclaration")
     public BoardView() {
         Controller.INSTANCE.subscribe(this);
 
@@ -210,6 +213,7 @@ public class BoardView extends JPanel {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     void handleUpdateBoardEvent(UpdateBoardEvent updateBoardEvent) {
         if (updateBoardEvent.shouldReceive(getGame())) {
@@ -229,7 +233,7 @@ public class BoardView extends JPanel {
             for (int a = 0; a < 8; a++) {
                 for (int b = 0; b < (8 + a); b++) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
-                    Tile tile = null;
+                    Tile tile;
                     try {
                         tile = board.getTile(tileIndex);
                         renderPiece(g2d, tile.getPiece(), a, b);
@@ -249,6 +253,7 @@ public class BoardView extends JPanel {
                     } catch (InvalidBoardCoordinateException e) {
                         e.printStackTrace();
                     }
+                    //noinspection ConstantConditions
                     renderPiece(g2d, tile.getPiece(), a, b);
                 }
             }
@@ -256,6 +261,7 @@ public class BoardView extends JPanel {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     void handlePossibleMovesEvent(PossibleMovesEvent possibleMovesEvent) {
         if (possibleMovesEvent.shouldReceive(getGame())) {
@@ -274,6 +280,7 @@ public class BoardView extends JPanel {
     }
 
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     void handleUpdateStatusMessageEvent(final UpdateStatusMessageEvent updateStatusMessageEvent) {
         if (updateStatusMessageEvent.shouldReceive(getGame())) {
@@ -284,6 +291,7 @@ public class BoardView extends JPanel {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     @Handler
     void handlePossiblePromotionsEvent(PossiblePromotionsEvent possiblePromotionsEvent) {
         if (possiblePromotionsEvent.shouldReceive(getGame())) {

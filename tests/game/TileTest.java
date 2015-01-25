@@ -5,26 +5,15 @@ package tests.game;
  */
 
 import jchess.game.board.Tile;
-import jchess.game.pieces.King;
-import jchess.game.pieces.Pawn;
-import jchess.game.pieces.Queen;
-import jchess.game.pieces.Rook;
-import org.junit.Before;
-import org.junit.Test;
 
-//import static org.junit.Assert.*;
+import jchess.game.pieces.*;
+import org.junit.Test;
 
 public class TileTest {
 
-    private Tile tile;
-
-    @Before
-    public void setup() {
-        tile = new Tile();
-    }
-
     @Test
     public void testGetPiece() {
+        Tile tile = new Tile();
         assert( tile.getPiece() == null );
         tile.placePiece( new King(0) );
         assert( tile.getPiece() != null );
@@ -33,29 +22,40 @@ public class TileTest {
 
     @Test
     public void testPlacePiece() {
-        assert( tile.placePiece( new Queen(1)) == null );
-        assert( tile.placePiece( new Rook(2)) instanceof Queen );
-        assert( tile.placePiece( new Pawn(0)) instanceof Rook );
+        Tile tile = new Tile();
+        Queen queen = new Queen(1);
+        Piece placeQueen = tile.placePiece(queen);
+        assert( placeQueen == null );
+        Rook rook = new Rook(2);
+        Piece placeRook = tile.placePiece(rook);
+        assert( placeRook instanceof Queen );
+        Pawn pawn = new Pawn(0);
+        Piece placePawn = tile.placePiece(pawn);
+        assert( placePawn instanceof Rook );
     }
 
     @Test
     public void testRemovePiece() {
-        assert( tile.removePiece() == null );
+        Tile tile = new Tile();
+        Piece removePiece = tile.removePiece();
+        assert( removePiece == null );
         tile.placePiece(new King(0));
-        assert( tile.removePiece() instanceof King );
+        Piece removeKing = tile.removePiece();
+        assert( removeKing instanceof King );
         assert( tile.getPiece() == null );
     }
 
     @Test
     public void testPromotion() {
-        assert( tile.isPromotionTileFor(1) == false  );
+        Tile tile = new Tile();
+        assert(!tile.isPromotionTileFor(1));
         tile.addPromotionForPlayer(0);
-        assert( tile.isPromotionTileFor(0) == true  );
-        assert( tile.isPromotionTileFor(1) == false  );
-        assert( tile.isPromotionTileFor(2) == false  );
+        assert(tile.isPromotionTileFor(0));
+        assert(!tile.isPromotionTileFor(1));
+        assert(!tile.isPromotionTileFor(2));
         tile.addPromotionForPlayer(2);
-        assert( tile.isPromotionTileFor(0) == true  );
-        assert( tile.isPromotionTileFor(1) == false  );
-        assert( tile.isPromotionTileFor(2) == true  );
+        assert(tile.isPromotionTileFor(0));
+        assert(!tile.isPromotionTileFor(1));
+        assert(tile.isPromotionTileFor(2));
     }
 }

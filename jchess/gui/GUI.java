@@ -35,6 +35,7 @@ import java.awt.event.ActionListener;
  */
 @Singleton
 public class GUI extends JFrame implements ActionListener {
+    @SuppressWarnings("UnusedDeclaration")
     @Inject
     private Injector injector;
     @Inject
@@ -52,6 +53,7 @@ public class GUI extends JFrame implements ActionListener {
     private JMenuItem aboutMenuItem;
 
 
+    @SuppressWarnings("UnusedDeclaration")
     public GUI() {
         super();
 

@@ -10,8 +10,6 @@ import jchess.game.IOSystem;
 import jchess.game.board.Board;
 import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.pieces.King;
-import jchess.game.pieces.Pawn;
-import jchess.game.pieces.Rook;
 import jchess.util.BoardCoordinate;
 import jchess.util.Logging;
 import org.junit.Before;
