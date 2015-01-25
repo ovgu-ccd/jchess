@@ -2,4 +2,4 @@
  Utility package
  */
 
-package jchess.util;
+package tests.util;

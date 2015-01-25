@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
 import jchess.game.board.Board;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
 import jchess.util.BoardCoordinate;
@@ -100,8 +101,14 @@ public class Game {
         if (selectEvent.shouldReceive(this)) {
             Logging.GAME.debug(selectEvent.getGame() + " Received SelectEvent");
             selectedBC = selectEvent.getBoardCoordinate();
+
             if (selectedTile == null) {
-                Tile tile = board.getTile(selectEvent.getBoardCoordinate().getI());
+                Tile tile = null;
+                try {
+                    tile = board.getTile(selectEvent.getBoardCoordinate().getI());
+                } catch (InvalidBoardCoordinateException e) {
+                    e.printStackTrace();
+                }
                 if (tile.getPiece() == null) {
                     emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.SelectAPiece"), UpdateStatusMessageEvent.Types.ALERT);
                 } else if (!players[tile.getPiece().getPlayerID()].isActive()) {
@@ -111,7 +118,12 @@ public class Game {
                     emitPossibleMovesEvent();
                 }
             } else {
-                Tile tile = board.getTile(selectEvent.getBoardCoordinate().getI());
+                Tile tile = null;
+                try {
+                    tile = board.getTile(selectEvent.getBoardCoordinate().getI());
+                } catch (InvalidBoardCoordinateException e) {
+                    e.printStackTrace();
+                }
 
                 if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
                     if (possibleMovesCoordinates.contains(selectEvent.getBoardCoordinate())) {
@@ -168,7 +180,7 @@ public class Game {
         // repeat
         for (BoardCoordinate repeatBC : piece.getTileFilter().getRepeat()) {
             BoardCoordinate resultBC = new BoardCoordinate(selectedBC.getA() + repeatBC.getA(), selectedBC.getB() + repeatBC.getB());
-            while (resultBC.getA() >= 0 &&
+            while ( resultBC.getA() >= 0 &&
                     resultBC.getA() < 15 &&
                     resultBC.getB() >= 0 &&
                     resultBC.getB() < 15 &&
@@ -176,7 +188,12 @@ public class Game {
                     resultBC.getC() <= 7) {
 
                 // Need to know if any piece is in the possible move trajectory
-                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+                Piece pieceOnResultBC = null;
+                try {
+                    pieceOnResultBC = board.getTile(resultBC).getPiece();
+                } catch (InvalidBoardCoordinateException e) {
+                    e.printStackTrace();
+                }
 
                 // Stop collecting tiles if another activePlayer piece is in the trajectory
                 if (pieceOnResultBC != null && activePlayerID == pieceOnResultBC.getPlayerID()) break;
@@ -202,7 +219,12 @@ public class Game {
                     resultBC.getC() <= 7) {
 
                 // Don't collect tile if another activePlayer piece is on it
-                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+                Piece pieceOnResultBC = null;
+                try {
+                    pieceOnResultBC = board.getTile(resultBC).getPiece();
+                } catch (InvalidBoardCoordinateException e) {
+                    e.printStackTrace();
+                }
                 if (pieceOnResultBC == null)
                     possibleMovesCoordinates.add(resultBC);
             }
@@ -219,16 +241,16 @@ public class Game {
                     resultBC.getC() <= 7) {
 
                 // Only collect tile if another players piece is on it
-                Piece pieceOnResultBC = board.getTile(resultBC).getPiece();
+                Piece pieceOnResultBC = null;
+                try {
+                    pieceOnResultBC = board.getTile(resultBC).getPiece();
+                } catch (InvalidBoardCoordinateException e) {
+                    e.printStackTrace();
+                }
                 if (pieceOnResultBC != null && activePlayerID != pieceOnResultBC.getPlayerID())
                     possibleMovesCoordinates.add(resultBC);
             }
         }
-
-        //possibleMovesCoordinates.add(new BoardCoordinate(5, 5));
-        //possibleMovesCoordinates.add(new BoardCoordinate(6, 6));
-        //possibleMovesCoordinates.add(new BoardCoordinate(7, 7));
-
     }
 
     private void collectPossiblePromotions() {
