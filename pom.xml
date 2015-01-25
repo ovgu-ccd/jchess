@@ -84,10 +84,6 @@
 
         <resources>
             <resource>
-                <directory>jchess/theme</directory>
-                <targetPath>jchess/theme</targetPath>
-            </resource>
-            <resource>
                 <directory>jchess/resources</directory>
                 <targetPath>jchess/resources</targetPath>
             </resource>
