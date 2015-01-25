@@ -33,8 +33,6 @@ class StatusAnimator implements ActionListener {
         }
     }
 
-    private final int animationTime = 2000;
-
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
     private final BoardView parent;
     private final long dueTime;
@@ -42,6 +40,7 @@ class StatusAnimator implements ActionListener {
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;
         this.updateStatusMessageEvent = updateStatusMessageEvent;
+        int animationTime = 2000;
         dueTime = System.currentTimeMillis() + animationTime;
     }
 
