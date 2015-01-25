@@ -13,9 +13,13 @@ import jchess.util.CoordinateConverter;
 public abstract  class Board {
     Tile[] tiles;
 
-    public Board(){
+    public Board() {
         initTiles();
-        initFigures();
+        try {
+            initFigures();
+        } catch (InvalidBoardCoordinateException e) {
+            e.printStackTrace();
+        }
     }
 
     void initTiles() {
@@ -24,9 +28,10 @@ public abstract  class Board {
         for (int i = 0; i < tiles.length; i++) {
             tiles[i] = new Tile();
         }
+
     }
 
-    protected abstract void initFigures();
+    protected abstract void initFigures() throws InvalidBoardCoordinateException;
 
     /**
      * Access a Tile of a board by absolute index
@@ -34,9 +39,12 @@ public abstract  class Board {
      * next tile is above and following tiles are on the same ring
      * next tile is above and so forth ...
      *
-     * @param tileIndex Index for the ring, starting at 0 with the center tile/ring
+     * @param tileIndex Index for the ring, starting at 0 with the center-Top Tile
+     *                  Parameter must be between [0..168] otherwise Tile is not on Board and null is returned
      */
-    public Tile getTile(int tileIndex) {
+    public Tile getTile(int tileIndex) throws InvalidBoardCoordinateException {
+        if ( tileIndex < 0 || tileIndex > 168 )
+            throw new InvalidBoardCoordinateException() ;
         return tiles[tileIndex];
     }
 
@@ -54,8 +62,8 @@ public abstract  class Board {
      * @param a first axial coordinate
      * @param b second axial coordinate
      */
-    public Tile getTile(int a, int b) {
-        return tiles[CoordinateConverter.boardCoordinateToIndex(a, b)];
+    public Tile getTile(int a, int b) throws InvalidBoardCoordinateException {
+        return getTile(CoordinateConverter.boardCoordinateToIndex(a, b));
     }
 
     /**
@@ -63,7 +71,8 @@ public abstract  class Board {
      *
      * @param boardCoordinate well ...
      */
-    public Tile getTile(BoardCoordinate boardCoordinate) {
+    public Tile getTile(BoardCoordinate boardCoordinate) throws InvalidBoardCoordinateException {
         return getTile(boardCoordinate.getI());
     }
 }
+

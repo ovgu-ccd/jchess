@@ -16,20 +16,19 @@ public class CoordinateConverter {
     static {
         try {
             image = ImageIO.read(Application.class.getResource("resources/images/tile_picker.png"));
-            //hexHeight = image.getHeight() / 15;
         } catch (IOException e) {
             image = null;
         }
     }
 
-    private static int[] getPixel(PixelCoordinate ac) {
-        return image.getData().getPixel(ac.x, ac.y, (int[]) null);
+    private static int[] getPixel(PixelCoordinate pc) {
+        return image.getData().getPixel(pc.x, pc.y, (int[]) null);
     }
 
 
-    private static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate ac) throws PixelCoordinateNotOnBoardException {
+    public static BoardCoordinate pixelToBoardCoordinate(PixelCoordinate pc) throws PixelCoordinateNotOnBoardException {
         try {
-            int[] pixel = getPixel(ac);
+            int[] pixel = getPixel(pc);
             if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255) {
                 throw new PixelCoordinateNotOnBoardException();
             }
@@ -41,8 +40,8 @@ public class CoordinateConverter {
     }
 
     public static BoardCoordinate pixelToBoardCoordinate(int x, int y) throws PixelCoordinateNotOnBoardException {
-        PixelCoordinate ac = new PixelCoordinate(x, y);
-        return pixelToBoardCoordinate(ac);
+        PixelCoordinate pc = new PixelCoordinate(x, y);
+        return pixelToBoardCoordinate(pc);
     }
 
     public static PixelCoordinate boardToPixelCoordinate(BoardCoordinate bc) {
@@ -70,9 +69,4 @@ public class CoordinateConverter {
         }
     }
 
-    /**
-     * Exception thrown by converting functionalities
-     */
-    public static class PixelCoordinateNotOnBoardException extends Exception {
-    }
 }

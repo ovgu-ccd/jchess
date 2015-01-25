@@ -8,6 +8,7 @@ import jchess.eventbus.events.SelectEvent;
 import jchess.game.Game;
 import jchess.game.IOSystem;
 import jchess.game.board.Board;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.pieces.Pawn;
 import jchess.game.pieces.Piece;
 import jchess.util.BoardCoordinate;
@@ -26,7 +27,7 @@ public class PawnMovementTest {
     @Singleton
     static class PawnMovementBoard extends Board {
         @Override
-        protected void initFigures() {
+        protected void initFigures() throws InvalidBoardCoordinateException {
             getTile(6, 0).placePiece(new Pawn(0));
             getTile(7, 7).placePiece(new Pawn(0));
             getTile(14, 7).placePiece(new Pawn(0));
@@ -41,7 +42,7 @@ public class PawnMovementTest {
 
     private Game game;
 
-    public PawnMovementTest() {
+    public PawnMovementTest() throws InvalidBoardCoordinateException {
         Logging.setup();
         injector = Guice.createInjector(new AbstractModule() {
             @Override
@@ -50,6 +51,7 @@ public class PawnMovementTest {
             }
         });
     }
+
 
 
     @Before
@@ -89,7 +91,7 @@ public class PawnMovementTest {
     }
 
     @Test
-    public void movePawn2() {
+    public void movePawn2() throws InvalidBoardCoordinateException {
         SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(7, 7));
         emitAndSimulateRelay(selectEvent);
 
@@ -104,7 +106,7 @@ public class PawnMovementTest {
     }
 
     @Test
-    public void strikePawn2() {
+    public void strikePawn2() throws InvalidBoardCoordinateException{
         SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(7, 7));
         emitAndSimulateRelay(selectEvent);
 

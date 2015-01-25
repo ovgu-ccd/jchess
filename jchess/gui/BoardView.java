@@ -25,12 +25,10 @@ import jchess.eventbus.Controller;
 import jchess.eventbus.events.*;
 import jchess.game.Game;
 import jchess.game.board.Board;
+import jchess.game.board.InvalidBoardCoordinateException;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
-import jchess.util.BoardCoordinate;
-import jchess.util.CoordinateConverter;
-import jchess.util.Logging;
-import jchess.util.PixelCoordinate;
+import jchess.util.*;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
@@ -102,7 +100,7 @@ public class BoardView extends JPanel {
 
                     Logging.GUI.debug("Emit SelectEvent: " + selectEvent.toString());
                     selectEvent.emit();
-                } catch (CoordinateConverter.PixelCoordinateNotOnBoardException e1) {
+                } catch (PixelCoordinateNotOnBoardException e1) {
                     GenericErrorEvent genericErrorEvent = new GenericErrorEvent(this, e1);
                     genericErrorEvent.emit();
                 }
@@ -231,8 +229,13 @@ public class BoardView extends JPanel {
             for (int a = 0; a < 8; a++) {
                 for (int b = 0; b < (8 + a); b++) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
-                    Tile tile = board.getTile(tileIndex);
-                    renderPiece(g2d, tile.getPiece(), a, b);
+                    Tile tile = null;
+                    try {
+                        tile = board.getTile(tileIndex);
+                        renderPiece(g2d, tile.getPiece(), a, b);
+                    } catch (InvalidBoardCoordinateException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -240,7 +243,12 @@ public class BoardView extends JPanel {
                 int g = a - 9;
                 for (int b = g + 2; b < 15; ++b) {
                     int tileIndex = CoordinateConverter.boardCoordinateToIndex(a, b);
-                    Tile tile = board.getTile(tileIndex);
+                    Tile tile = null;
+                    try {
+                        tile = board.getTile(tileIndex);
+                    } catch (InvalidBoardCoordinateException e) {
+                        e.printStackTrace();
+                    }
                     renderPiece(g2d, tile.getPiece(), a, b);
                 }
             }
