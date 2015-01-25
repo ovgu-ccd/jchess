@@ -66,7 +66,7 @@ public class PawnMovementTest {
         SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(6, 0));
         emitAndSimulateRelay(selectEvent);
 
-        assertEquals(game.getPossibleMovesCoordinates().size(), 3);
+        assertEquals(3, game.getPossibleMovesCoordinates().size());
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(7, 0)));
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(7, 1)));
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 2)));
@@ -77,7 +77,8 @@ public class PawnMovementTest {
         SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(7, 7));
         emitAndSimulateRelay(selectEvent);
 
-        assertEquals(game.getPossibleMovesCoordinates().size(), 7);
+        assertEquals(7, game.getPossibleMovesCoordinates().size());
+
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 7)));
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(9, 7)));
         assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 8)));
@@ -100,7 +101,7 @@ public class PawnMovementTest {
 
 
         assertNull(game.getBoard().getTile(7, 7).getPiece());
-        assertEquals(game.getBoard().getTile(8, 7).getPiece(), selectedPiece);
+        assertEquals(selectedPiece, game.getBoard().getTile(8, 7).getPiece());
     }
 
     @Test
@@ -115,7 +116,7 @@ public class PawnMovementTest {
 
 
         assertNull(game.getBoard().getTile(7, 7).getPiece());
-        assertEquals(game.getBoard().getTile(9, 8).getPiece(), selectedPiece);
+        assertEquals(selectedPiece, game.getBoard().getTile(9, 8).getPiece());
     }
 
 
@@ -124,7 +125,7 @@ public class PawnMovementTest {
         SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(14, 7));
         emitAndSimulateRelay(selectEvent);
 
-        assertEquals(game.getPossibleMovesCoordinates().size(), 0);
+        assertEquals(0, game.getPossibleMovesCoordinates().size());
     }
 
     void emitAndSimulateRelay(SelectEvent selectEvent) {
