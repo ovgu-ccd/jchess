@@ -24,6 +24,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * Moves on straight edges forward and backward
+ *
+ * @trace [$REQ13b]
+ * @trace [$REQ15]
+ */
 public class Bishop extends Piece {
 
     public Bishop(int playerID) {

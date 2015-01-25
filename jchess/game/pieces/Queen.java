@@ -24,6 +24,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * Combines all possible tiles of rook and bishop
+ *
+ * @trace [$REQ13e]
+ * @trace [$REQ19]
+ */
 public class Queen extends Piece {
 
     public Queen(int playerID) {

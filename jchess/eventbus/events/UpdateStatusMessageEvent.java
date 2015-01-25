@@ -3,10 +3,15 @@ package jchess.eventbus.events;
 import jchess.game.Game;
 
 /**
+ * Show a notification
+ * <p/>
  * Created by robert on 20.01.15.
+ *
+ * @trace [$REQ07]
+ * @flow GL -> GUI
+ * @flow GUI -> GUI
  */
 public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
-    public enum Types {NORMAL, ALERT}
     private String statusMessage;
     private Types types;
 
@@ -29,4 +34,6 @@ public class UpdateStatusMessageEvent extends AbstractIOSystemRelayEvent {
     public Types getTypes() {
         return types;
     }
+
+    public enum Types {NORMAL, ALERT}
 }

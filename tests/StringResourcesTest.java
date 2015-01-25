@@ -1,4 +1,4 @@
-package jchess.tests;
+package tests;
 
 import jchess.util.Logging;
 import jchess.util.StringResources;
@@ -9,6 +9,11 @@ import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for localisation
+ *
+ * @trace [$REQ41]
+ */
 public class StringResourcesTest {
     private static final String GREETING_EN = "Hello World!";
     private static final String GREETING_DE = "Hallo Welt!";

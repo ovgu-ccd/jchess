@@ -27,7 +27,10 @@ import jchess.util.StringResources;
 import javax.swing.*;
 
 /**
+ * Allow to create a new game in the GUI
+ *
  * @author donmateo
+ * @trace [$REQ33]
  */
 @Singleton
 class NewGameDialog extends JDialog {

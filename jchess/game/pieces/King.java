@@ -24,6 +24,12 @@ package jchess.game.pieces;
 import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
+/**
+ * Moves on tile in any straight line
+ *
+ * @trace [$REQ13d]
+ * @trace [$REQ17]
+ */
 public class King extends Piece {
 
     public King(int playerID) {

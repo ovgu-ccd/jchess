@@ -10,7 +10,12 @@ import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
 
 /**
+ * Connection layer for events from the controller
+ * Responsible for piping the events to the correct tab and filtering duplicates events
+ * <p/>
  * Created by andreas on 06.12.14.
+ *
+ * @trace [$REQ32]
  */
 @Listener(references = References.Strong)
 public class GUIConnector implements IOSystem {
