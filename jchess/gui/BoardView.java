@@ -93,7 +93,7 @@ public class BoardView extends JPanel {
                     GameTab gameTab = (GameTab) getParent();
                     SelectEvent selectEvent = new SelectEvent(gameTab.getGame(), boardCoordinate);
 
-                    Logging.GUI.debug("Emit SelectEvent");
+                    Logging.GUI.debug("Emit SelectEvent: " + selectEvent.toString());
                     selectEvent.emit();
                 } catch (PixelCoordinateNotOnBoardException e1) {
                     GenericErrorEvent genericErrorEvent = new GenericErrorEvent(this, e1);
@@ -183,7 +183,7 @@ public class BoardView extends JPanel {
                     g2d.setColor(Color.green);
                     break;
                 case 1:
-                    g2d.setColor(Color.blue);
+                    g2d.setColor(new Color(0, 127, 255));
                     break;
                 case 2:
                     g2d.setColor(Color.orange);

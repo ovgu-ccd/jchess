@@ -5,10 +5,8 @@ package jchess.tests;
  */
 
 import jchess.game.board.Board;
+import jchess.game.board.DefaultBoard;
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 
 public class BoardTest {
@@ -17,13 +15,13 @@ public class BoardTest {
 
     @Before
     public void setup() {
-        board = new Board();
+        board = new DefaultBoard();
     }
 
     /*@Test(expected = IllegalArgumentException.class)
     public void testGetTile() {
         fail();
-    }*/
+    }
 
     @Test
     public void testUndo() {
@@ -34,5 +32,5 @@ public class BoardTest {
     @Test
     public void testRedo() {
         assertFalse(board.redo());
-    }
+    }*/
 }
