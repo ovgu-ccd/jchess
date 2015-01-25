@@ -113,7 +113,7 @@ class DrawLocalSettings extends JPanel implements ActionListener {
     }
 
     /**
-     * Method responsible for triming WHITE symbols from strings
+     * Method responsible for trimming WHITE symbols from strings
      *
      * @param txt Where is capt value to equal
      * @return result trimmed String
