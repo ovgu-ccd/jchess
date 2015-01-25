@@ -21,22 +21,21 @@ import java.util.HashSet;
 /**
  * Holds the state of the game and its player
  *
+ * Created by andreas on 07.12.14.
+ *
  * @trace $REQ22
  * @trace $REQ23
- * <p/>
- * Created by andreas on 07.12.14.
  */
 @Listener(references = References.Strong)
 public class Game {
 
+    private final Player[] players;
     @Inject
     private Board board;
     @Inject
     private HashSet<BoardCoordinate> possibleMovesCoordinates;
     @Inject
     private HashSet<Class<? extends Piece>> possiblePromotions;
-
-    private final Player[] players;
     private Tile selectedTile;
     private Tile promotionTile;
     private BoardCoordinate selectedBC;
