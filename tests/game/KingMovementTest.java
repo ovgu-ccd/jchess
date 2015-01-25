@@ -9,6 +9,7 @@ import jchess.game.Game;
 import jchess.game.IOSystem;
 import jchess.game.board.Board;
 import jchess.game.board.InvalidBoardCoordinateException;
+import jchess.game.pieces.King;
 import jchess.game.pieces.Pawn;
 import jchess.game.pieces.Rook;
 import jchess.util.BoardCoordinate;
@@ -23,16 +24,13 @@ import static org.junit.Assert.assertTrue;
  * Created by robert on 24/01/15.
  */
 
-public class RookMovementTest {
+public class KingMovementTest {
 
     @Singleton
-    static class RookMovementBoard extends Board {
+    static class KingMovementBoard extends Board {
         @Override
         protected void initFigures() throws InvalidBoardCoordinateException {
-            getTile(0, 0).placePiece(new Rook(0));
-            getTile(6, 0).placePiece(new Pawn(0));
-            getTile(0, 6).placePiece(new Pawn(0));
-            getTile(13, 13).placePiece(new Pawn(1));
+            getTile(7, 7).placePiece(new King(0));
         }
     }
 
@@ -40,12 +38,12 @@ public class RookMovementTest {
 
     private Game game;
 
-    public RookMovementTest() {
+    public KingMovementTest() {
         Logging.setup();
         injector = Guice.createInjector(new AbstractModule() {
             @Override
             protected void configure() {
-                bind(Board.class).to(RookMovementBoard.class);
+                bind(Board.class).to(KingMovementBoard.class);
             }
         });
     }
@@ -61,18 +59,26 @@ public class RookMovementTest {
     }
 
     @Test
-    public void possibleMovesRook() {
-        SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(0, 0));
+    public void possibleMovesKing() {
+        SelectEvent selectEvent = new SelectEvent(game, new BoardCoordinate(7, 7));
         emitAndSimulateRelay(selectEvent);
 
-        assertEquals(23, game.getPossibleMovesCoordinates().size());
-        for (int i = 1; i < 14; i++) {
-            assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(i, i)));
-        }
-        for (int i = 1; i < 6; i++) {
-            assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(i, 0)));
-            assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(0, i)));
-        }
+        assertEquals(12, game.getPossibleMovesCoordinates().size());
+
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(6, 6)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(6, 7)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(7, 8)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 8)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 7)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(7, 6)));
+
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(5, 6)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(6, 8)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 9)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(9, 8)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(8, 6)));
+        assertTrue(game.getPossibleMovesCoordinates().contains(new BoardCoordinate(6, 5)));
+
     }
 
 
