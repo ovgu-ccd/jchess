@@ -38,7 +38,6 @@ public abstract  class Board {
      */
     public Tile getTile(int tileIndex) {
         return tiles[tileIndex];
-
     }
 
     /**
@@ -55,7 +54,7 @@ public abstract  class Board {
      * @param a first axial coordinate
      * @param b second axial coordinate
      */
-    protected Tile getTile(int a, int b) {
+    public Tile getTile(int a, int b) {
         return tiles[CoordinateConverter.boardCoordinateToIndex(a, b)];
     }
 
