@@ -35,7 +35,7 @@ import java.io.IOException;
  * Container related to game, board & dialogs
  */
 @SuppressWarnings("PMD.UnusedPrivateField")
-class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
+public class TabbedPaneWithCreateButton extends JTabbedPane implements MouseListener, ImageObserver {
     @SuppressWarnings("UnusedDeclaration")
     @Inject
     private GUI gui;
@@ -46,7 +46,7 @@ class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserv
     private Image addIcon = null;
     private Rectangle addIconRect = null;
 
-    public JChessTabbedPane() {
+    public TabbedPaneWithCreateButton() {
         super();
         this.closeIcon = new TabbedPaneIcon(this.closeIcon);
         try {
