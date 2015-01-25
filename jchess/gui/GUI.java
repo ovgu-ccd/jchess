@@ -42,7 +42,7 @@ public class GUI extends JFrame implements ActionListener {
     private NewGameDialog newGameDialog;
 
     private JMenu gameMenu;
-    private JTabbedPane gamesPane;
+    private TabbedPaneWithCreateButton gamesPane;
     private JMenuBar menuBar;
     private JMenuItem newGameItem;
 
@@ -111,7 +111,7 @@ public class GUI extends JFrame implements ActionListener {
         setTitle(StringResources.MAIN.getString("Application.title"));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
-        gamesPane = new JChessTabbedPane();
+        gamesPane = new TabbedPaneWithCreateButton();
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
         newGameItem = new JMenuItem();
