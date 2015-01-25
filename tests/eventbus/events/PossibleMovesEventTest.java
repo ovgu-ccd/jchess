@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.PossibleMovesEvent;
 import jchess.util.BoardCoordinate;
@@ -13,8 +13,14 @@ import org.junit.Test;
 
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * Test the possible moves event
+ *
+ * @trace [$REQ07]
+ */
 public class PossibleMovesEventTest {
 
     private final PossibleMovesEventHandler possibleMovesEventHandler = new PossibleMovesEventHandler();
@@ -24,6 +30,20 @@ public class PossibleMovesEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(possibleMovesEventHandler);
+    }
+
+    @Test
+    public void testGetBoardCoordinates() throws Exception {
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(null, new HashSet<BoardCoordinate>());
+        assertTrue(possibleMovesEvent.getBoardCoordinates().isEmpty());
+    }
+
+    @Test
+    public void testSendPossibleMovesEvent() throws Exception {
+        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(null, null);
+        bus.publish(possibleMovesEvent);
+
+        assertEquals(2, possibleMovesEventHandler.getMessageCounter());
     }
 
     @Listener(references = References.Strong)
@@ -48,19 +68,5 @@ public class PossibleMovesEventTest {
         public int getMessageCounter() {
             return messageCounter;
         }
-    }
-
-    @Test
-    public void testGetBoardCoordinates() throws Exception {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(null, new HashSet<BoardCoordinate>());
-        assertTrue(possibleMovesEvent.getBoardCoordinates().isEmpty());
-    }
-
-    @Test
-    public void testSendPossibleMovesEvent() throws Exception {
-        PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(null, null);
-        bus.publish(possibleMovesEvent);
-
-        assertEquals(2, possibleMovesEventHandler.getMessageCounter());
     }
 }

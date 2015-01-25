@@ -12,11 +12,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * Shows status notifications to the user
+ * <p/>
  * Created by robert on 20.01.15.
+ *
+ * @trace [$REQ36]
+ * @trace [$REQ37]
  */
 class StatusAnimator implements ActionListener {
     private static final float FONTSIZE = 30;
     private static Font font;
+
     static {
         InputStream is = Application.class.getResourceAsStream("resources/roboto-font/RobotoCondensed-Light.ttf");
         try {
@@ -27,6 +33,8 @@ class StatusAnimator implements ActionListener {
         }
     }
 
+    private final int animationTime = 2000;
+
     private final UpdateStatusMessageEvent updateStatusMessageEvent;
     private final BoardView parent;
     private final long dueTime;
@@ -34,7 +42,6 @@ class StatusAnimator implements ActionListener {
     public StatusAnimator(BoardView parent, UpdateStatusMessageEvent updateStatusMessageEvent) {
         this.parent = parent;
         this.updateStatusMessageEvent = updateStatusMessageEvent;
-        int animationTime = 2000;
         dueTime = System.currentTimeMillis() + animationTime;
     }
 

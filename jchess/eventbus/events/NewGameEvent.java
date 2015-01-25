@@ -4,7 +4,12 @@ import jchess.game.IOSystem;
 import jchess.gui.GameTab;
 
 /**
+ * Creating a game
+ * <p/>
  * Created by robert on 09/01/15.
+ *
+ * @trace [$REQ07]
+ * @flow GUI -> GL
  */
 public class NewGameEvent extends Event {
 

@@ -4,7 +4,11 @@ import jchess.util.BoardCoordinate;
 import jchess.util.CoordinateConverter;
 
 /**
- * Created by robert on 24/01/15.
+ * Class to represent chessboard. Chessboard is made from squares.
+ * It is setting the squares of chessboard and sets the pieces(pawns)
+ * witch the owner is current player on it.
+ *
+ * @trace [$REQ12]
  */
 public abstract  class Board {
     Tile[] tiles;

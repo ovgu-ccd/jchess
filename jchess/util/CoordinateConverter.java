@@ -69,4 +69,10 @@ public class CoordinateConverter {
             return 104 + 13 * g + b - /*GAUSS*/ g * (g + 1) / 2;
         }
     }
+
+    /**
+     * Exception thrown by converting functionalities
+     */
+    public static class PixelCoordinateNotOnBoardException extends Exception {
+    }
 }

@@ -1,4 +1,4 @@
-package jchess.tests;
+package tests;
 
 
 /*import jchess.util.BoardCoordinate;

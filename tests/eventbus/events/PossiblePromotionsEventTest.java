@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.PossiblePromotionsEvent;
 import jchess.game.pieces.Bishop;
@@ -16,8 +16,13 @@ import org.junit.Test;
 
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * Test of the pre event for the PromotionEvent
+ *
+ * @trace [$REQ29]
+ */
 public class PossiblePromotionsEventTest {
 
     private final PossiblePromotionsEventHandler possiblePromotionsEventHandler = new PossiblePromotionsEventHandler();
@@ -27,6 +32,25 @@ public class PossiblePromotionsEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(possiblePromotionsEventHandler);
+    }
+
+    @Test
+    public void testGetPossiblePromotions() throws Exception {
+        HashSet<Class<? extends Piece>> possiblePromotions = new HashSet<>();
+        possiblePromotions.add(Queen.class);
+        possiblePromotions.add(Bishop.class);
+        possiblePromotions.add(Knight.class);
+        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(null, possiblePromotions);
+
+        assertEquals(3, possiblePromotionsEvent.getPossiblePromotions().size());
+    }
+
+    @Test
+    public void testSendPossiblePromotionsEvent() throws Exception {
+        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(null, new HashSet<Class<? extends Piece>>());
+        bus.publish(possiblePromotionsEvent);
+
+        assertEquals(2, possiblePromotionsEventHandler.getMessageCounter());
     }
 
     @Listener(references = References.Strong)
@@ -51,24 +75,5 @@ public class PossiblePromotionsEventTest {
         public int getMessageCounter() {
             return messageCounter;
         }
-    }
-
-    @Test
-    public void testGetPossiblePromotions() throws Exception {
-        HashSet<Class<? extends Piece>> possiblePromotions = new HashSet<>();
-        possiblePromotions.add(Queen.class);
-        possiblePromotions.add(Bishop.class);
-        possiblePromotions.add(Knight.class);
-        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(null, possiblePromotions);
-
-        assertEquals(3, possiblePromotionsEvent.getPossiblePromotions().size());
-    }
-
-    @Test
-    public void testSendPossiblePromotionsEvent() throws Exception {
-        PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(null, new HashSet<Class<? extends Piece>>());
-        bus.publish(possiblePromotionsEvent);
-
-        assertEquals(2, possiblePromotionsEventHandler.getMessageCounter());
     }
 }

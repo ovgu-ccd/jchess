@@ -27,7 +27,10 @@ import jchess.game.Game;
 import jchess.game.board.Board;
 import jchess.game.board.Tile;
 import jchess.game.pieces.*;
-import jchess.util.*;
+import jchess.util.BoardCoordinate;
+import jchess.util.CoordinateConverter;
+import jchess.util.Logging;
+import jchess.util.PixelCoordinate;
 import net.engio.mbassy.listener.Handler;
 import net.engio.mbassy.listener.Listener;
 import net.engio.mbassy.listener.References;
@@ -45,6 +48,10 @@ import java.util.HashMap;
  * Class to represent chessboard. Chessboard is made from squares.
  * It is setting the squers of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
+ *
+ * @trace [$REQ31]
+ * @trace [$REQ34]
+ * @trace [$REQ35]
  */
 @Listener(references = References.Strong)
 public class BoardView extends JPanel {
@@ -95,7 +102,7 @@ public class BoardView extends JPanel {
 
                     Logging.GUI.debug("Emit SelectEvent: " + selectEvent.toString());
                     selectEvent.emit();
-                } catch (PixelCoordinateNotOnBoardException e1) {
+                } catch (CoordinateConverter.PixelCoordinateNotOnBoardException e1) {
                     GenericErrorEvent genericErrorEvent = new GenericErrorEvent(this, e1);
                     genericErrorEvent.emit();
                 }

@@ -31,6 +31,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 
+/**
+ * Container related to game, board & dialogs
+ */
 @SuppressWarnings("PMD.UnusedPrivateField")
 class JChessTabbedPane extends JTabbedPane implements MouseListener, ImageObserver {
     @Inject

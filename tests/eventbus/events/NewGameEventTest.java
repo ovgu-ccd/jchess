@@ -1,4 +1,4 @@
-package jchess.tests.eventbus.events;
+package tests.eventbus.events;
 
 import jchess.eventbus.events.NewGameEvent;
 import net.engio.mbassy.bus.MBassador;
@@ -10,12 +10,13 @@ import net.engio.mbassy.listener.References;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * This class tests the NewGameEvent
  *
- * @trace
+ * @trace [$REQ33]
  */
 public class NewGameEventTest {
 
@@ -26,20 +27,6 @@ public class NewGameEventTest {
     public void setUp() throws Exception {
         bus = new MBassador(BusConfiguration.SyncAsync());
         bus.subscribe(newGameEventHandler);
-    }
-
-    @Listener(references = References.Strong)
-    class NewGameEventHandler {
-        private int messageCounter = 0;
-
-        @Handler(delivery = Invoke.Synchronously)
-        public void handleNewGameEventFromApplication(NewGameEvent newGameEvent) {
-            messageCounter = getMessageCounter() + 1;
-        }
-
-        public int getMessageCounter() {
-            return messageCounter;
-        }
     }
 
     @Test
@@ -66,5 +53,19 @@ public class NewGameEventTest {
         bus.publish(newGameEvent);
 
         assertEquals(1, newGameEventHandler.getMessageCounter());
+    }
+
+    @Listener(references = References.Strong)
+    class NewGameEventHandler {
+        private int messageCounter = 0;
+
+        @Handler(delivery = Invoke.Synchronously)
+        public void handleNewGameEventFromApplication(NewGameEvent newGameEvent) {
+            messageCounter = getMessageCounter() + 1;
+        }
+
+        public int getMessageCounter() {
+            return messageCounter;
+        }
     }
 }

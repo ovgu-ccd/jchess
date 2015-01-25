@@ -6,7 +6,12 @@ import jchess.util.BoardCoordinate;
 import java.util.Set;
 
 /**
+ * Event for sending the possible moves from GL top GUI
+ * <p/>
  * Created by andreas on 11.01.15.
+ *
+ * @trace [$REQ07]
+ * @flow GL -> GUI
  */
 public class PossibleMovesEvent extends AbstractIOSystemRelayEvent {
     private final Set<BoardCoordinate> boardCoordinates;

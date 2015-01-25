@@ -29,6 +29,8 @@ import java.awt.event.ActionListener;
 
 /**
  * Class responsible for drawing the fold with local game settings
+ *
+ * @trace [$REQ41]
  */
 class DrawLocalSettings extends JPanel implements ActionListener {
     private final NewGameDialog parent;

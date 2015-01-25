@@ -1,6 +1,8 @@
-package jchess.tests;
+package tests.game;
 
 /**
+ * Test for the GL board logic
+ *
  * Created by Elliot on 2014-12-07.
  */
 

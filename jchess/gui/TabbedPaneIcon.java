@@ -3,6 +3,9 @@ package jchess.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @todo Document this
+ */
 class TabbedPaneIcon implements Icon {
 
     private int x_pos;

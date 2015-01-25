@@ -7,6 +7,10 @@ import org.apache.log4j.PropertyConfigurator;
 import java.net.URL;
 
 /**
+ * Logging framework
+ *
+ * Wrapper around log4j
+ *
  * Created by robert on 07.12.14.
  */
 public enum Logging {
