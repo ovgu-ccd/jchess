@@ -41,7 +41,6 @@ public class GUI extends JFrame implements ActionListener {
     @Inject
     private NewGameDialog newGameDialog;
 
-    private JMenu gameMenu;
     private TabbedPaneWithCreateButton gamesPane;
     private JMenuBar menuBar;
     private JMenuItem newGameItem;
@@ -116,7 +115,6 @@ public class GUI extends JFrame implements ActionListener {
         fileMenu = new JMenu();
         newGameItem = new JMenuItem();
         exitMenuItem = new JMenuItem();
-        gameMenu = new JMenu();
         helpMenu = new JMenu();
         aboutMenuItem = new JMenuItem();
 
@@ -156,11 +154,6 @@ public class GUI extends JFrame implements ActionListener {
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
-
-        gameMenu.setText(StringResources.GUI.getString("gameMenu.text")); // NOI18N
-        gameMenu.setName("gameMenu"); // NOI18N
-
-        menuBar.add(gameMenu);
 
         helpMenu.setText(StringResources.GUI.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
