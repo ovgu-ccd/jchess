@@ -26,6 +26,10 @@ public class PossibleMovesEvent extends AbstractIOSystemRelayEvent {
         this.boardCoordinates = possibleMovesEvent.getBoardCoordinates();
     }
 
+    /**
+     * Getter for BoardCoordinates assigned with this event.
+     * @return Set of BoardCoordinates
+     */
     public Set<BoardCoordinate> getBoardCoordinates() {
         return boardCoordinates;
     }

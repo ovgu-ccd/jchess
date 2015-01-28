@@ -63,6 +63,12 @@ public class GUI extends JFrame implements ActionListener {
         Logging.GUI.debug("Gui created.");
     }
 
+    /**
+     * Create new GameTab and emit NewGameEvent.
+     * @param firstName First player name
+     * @param secondName Second player name
+     * @param thirdName Third player name
+     */
     public void createNewGame(String firstName,
                               String secondName,
                               String thirdName) {
@@ -85,7 +91,9 @@ public class GUI extends JFrame implements ActionListener {
         event.emit();
     }
 
-
+    /**
+     * This method creates and shows the AboutBox.
+     */
     void showAboutBox() {
         if (aboutBox == null) {
             aboutBox = new AboutBox();
@@ -95,7 +103,10 @@ public class GUI extends JFrame implements ActionListener {
         aboutBox.setVisible(true);
     }
 
-
+    /**
+     * Handler for creating and showing the NewGameDialog.
+     * @param event ActionEvent which triggered the handler
+     */
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
         if (target == newGameItem) {

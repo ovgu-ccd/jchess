@@ -25,7 +25,10 @@ public class PromotionSelectEvent extends AbstractIOSystemRelayEvent {
         this.pieceClass = promotionSelectEvent.getPieceClass();
     }
 
-
+    /**
+     * Getter for the piece class assigned with this event.
+     * @return Class of piece
+     */
     public Class<? extends Piece> getPieceClass() {
         return pieceClass;
     }

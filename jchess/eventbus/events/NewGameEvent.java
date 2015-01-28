@@ -23,15 +23,26 @@ public class NewGameEvent extends Event {
         this.gameTab = gameTab;
     }
 
-
+    /**
+     * Getter for the IOSystems assigned with this event.
+     * @return Array of IOSystems
+     */
     public IOSystem[] getIoSystems() {
         return ioSystems;
     }
 
+    /**
+     * Getter for the player names assigned with this event.
+     * @return Array of Strings with player names
+     */
     public String[] getPlayerNames() {
         return playerNames;
     }
 
+    /**
+     * Getter for the GameTab assigned with this event.
+     * @return GameTab
+     */
     public GameTab getGameTab() {
         return gameTab;
     }

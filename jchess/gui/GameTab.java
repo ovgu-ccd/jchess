@@ -47,14 +47,26 @@ public class GameTab extends JPanel {
         Controller.INSTANCE.subscribe(this);
     }
 
+    /**
+     * Getter for the game assigned with this GameTab
+     * @return
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Setter to assign a game with this GameTab.
+     * @param game Game
+     */
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     * Getter for the BoardView assigned with this GameTab.
+     * @return BoardView
+     */
     public BoardView getBoardView() {
         return boardView;
     }
