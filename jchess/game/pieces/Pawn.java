@@ -25,7 +25,7 @@ import jchess.game.board.TileFilter;
 import jchess.util.BoardCoordinate;
 
 /**
- * Moves one tile on straight line
+ * Moves one tile on straight line. Strikes over edges. May move two steps on initial move.
  *
  * @trace [$REQ13f]
  * @trace [$REQ20]

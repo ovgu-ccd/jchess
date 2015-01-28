@@ -19,7 +19,7 @@ import java.util.HashSet;
 
 
 /**
- * Holds the state of the game and its player
+ * Central game class holding players and state of game.
  * <p/>
  * Created by andreas on 07.12.14.
  *
@@ -49,6 +49,12 @@ public class Game {
         players = new Player[3];
     }
 
+    /**
+     * Create players and initialize IOSystems for new game
+     *
+     * @param playerNames
+     * @param ioSystems
+     */
     public void initializeGame(String[] playerNames, IOSystem[] ioSystems) {
         if (playerNames.length != 3 || ioSystems.length != 3) {
             throw new IllegalArgumentException();
@@ -61,24 +67,30 @@ public class Game {
         }
 
         players[0].setActive(true);
+        emitUpdateBoardEvent();
     }
 
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Return cached possible moves for last selected piece.
+     *
+     * @return
+     */
     public HashSet<BoardCoordinate> getPossibleMovesCoordinates() {
         return possibleMovesCoordinates;
     }
 
-    void emitPossibleMovesEvent() {
+    private void emitPossibleMovesEvent() {
         collectPossibleMoveCoordinates();
         PossibleMovesEvent possibleMovesEvent = new PossibleMovesEvent(this, possibleMovesCoordinates);
         Logging.GAME.debug("Game: Emit PossibleMovesEvent");
         possibleMovesEvent.emit();
     }
 
-    void emitPossiblePromotionsEvent() {
+    private void emitPossiblePromotionsEvent() {
         collectPossiblePromotions();
         PossiblePromotionsEvent possiblePromotionsEvent = new PossiblePromotionsEvent(this, possiblePromotions);
         Logging.GAME.debug("Game: Emit PossiblePromotionsEvent");
@@ -92,7 +104,7 @@ public class Game {
         emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.MakeYourMove"), UpdateStatusMessageEvent.Types.NORMAL);
     }
 
-    void emitUpdateStatusMessageEvent(String message, UpdateStatusMessageEvent.Types types) {
+    private void emitUpdateStatusMessageEvent(String message, UpdateStatusMessageEvent.Types types) {
         UpdateStatusMessageEvent updateStatusMessageEvent = new UpdateStatusMessageEvent(this, message, types);
         Logging.GAME.debug("Game: Emit UpdateBoardEvent");
         updateStatusMessageEvent.emit();
@@ -105,6 +117,7 @@ public class Game {
             selectedBC = selectEvent.getBoardCoordinate();
 
             if (selectedTile == null) {
+                // Currently no figure selected
                 Tile tile = null;
                 try {
                     tile = board.getTile(selectEvent.getBoardCoordinate().getI());
@@ -113,14 +126,18 @@ public class Game {
                 }
                 //noinspection ConstantConditions
                 if (tile.getPiece() == null) {
+                    // Empty Tile
                     emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.SelectAPiece"), UpdateStatusMessageEvent.Types.ALERT);
                 } else if (!players[tile.getPiece().getPlayerID()].isActive()) {
+                    // Enemy on Tile
                     emitUpdateStatusMessageEvent(players[activePlayerID].getName() + ": " + StringResources.MAIN.getString("StatusMessage.NotYourPiece"), UpdateStatusMessageEvent.Types.ALERT);
                 } else {
+                    // Successful Selection
                     selectedTile = tile;
                     emitPossibleMovesEvent();
                 }
             } else {
+                // Figure selected
                 Tile tile = null;
                 try {
                     tile = board.getTile(selectEvent.getBoardCoordinate().getI());
@@ -130,6 +147,7 @@ public class Game {
 
                 //noinspection ConstantConditions
                 if (tile.getPiece() == null || !players[tile.getPiece().getPlayerID()].isActive()) {
+                    // Successful move
                     if (possibleMovesCoordinates.contains(selectEvent.getBoardCoordinate())) {
                         Piece selectedPiece = selectedTile.getPiece();
                         selectedTile.removePiece();
@@ -179,6 +197,7 @@ public class Game {
 
     /**
      * Remove all pieces of a player and mark them as defeated.
+     * [$REQ40b]
      */
     private void defeatPlayer(int defeatedPlayerID) {
         players[defeatedPlayerID].setDefeated(true);

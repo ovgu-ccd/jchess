@@ -63,6 +63,11 @@ public class Player implements Serializable {
         this.game = game;
     }
 
+    /**
+     * True if it's the players turn to move.
+     *
+     * @return
+     */
     public boolean isActive() {
         return active;
     }
@@ -77,9 +82,15 @@ public class Player implements Serializable {
 
     public enum PlayerColor {WHITE, BLACK, RED}
 
+    /**
+     * True if player has lost
+     *
+     * @return
+     */
     public boolean isDefeated() {
         return defeated;
     }
+
 
     public void setDefeated(boolean defeated) {
         this.defeated = defeated;
