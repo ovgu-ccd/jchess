@@ -1,7 +1,6 @@
 var searchData=
 [
   ['game',['Game',['../classjchess_1_1game_1_1Game.html',1,'jchess::game']]],
-  ['gameconfiguration',['GameConfiguration',['../classjchess_1_1configurations_1_1GameConfiguration.html',1,'jchess::configurations']]],
   ['gametab',['GameTab',['../classjchess_1_1gui_1_1GameTab.html',1,'jchess::gui']]],
   ['genericerrorevent',['GenericErrorEvent',['../classjchess_1_1eventbus_1_1events_1_1GenericErrorEvent.html',1,'jchess::eventbus::events']]],
   ['genericerroreventhandler',['GenericErrorEventHandler',['../classtests_1_1eventbus_1_1events_1_1GenericErrorEventTest_1_1GenericErrorEventHandler.html',1,'tests::eventbus::events::GenericErrorEventTest']]],

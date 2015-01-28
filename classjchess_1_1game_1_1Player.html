@@ -125,12 +125,10 @@ String&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> ()</td>
 <a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getGame</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a081fa48e8be5bfbd51d09e14768bc367"></a><!-- doxytag: member="jchess::game::Player::setGame" ref="a081fa48e8be5bfbd51d09e14768bc367" args="(Game game)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setGame</b> (<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> game)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe61469acfc9005f98908767fdccec5f"></a><!-- doxytag: member="jchess::game::Player::isActive" ref="afe61469acfc9005f98908767fdccec5f" args="()" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>isActive</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1Player.html#afe61469acfc9005f98908767fdccec5f">isActive</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3b3beaafc49cdb447c8567fe3f8f46e"></a><!-- doxytag: member="jchess::game::Player::setActive" ref="ae3b3beaafc49cdb447c8567fe3f8f46e" args="(boolean active)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setActive</b> (boolean active)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82bca3b4acd29b20d86b6eca5754f18c"></a><!-- doxytag: member="jchess::game::Player::isDefeated" ref="a82bca3b4acd29b20d86b6eca5754f18c" args="()" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>isDefeated</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1game_1_1Player.html#a82bca3b4acd29b20d86b6eca5754f18c">isDefeated</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa18c8cf35c76d3f6d8e843406a4b9d3"></a><!-- doxytag: member="jchess::game::Player::setDefeated" ref="afa18c8cf35c76d3f6d8e843406a4b9d3" args="(boolean defeated)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setDefeated</b> (boolean defeated)</td></tr>
 <tr><td colspan="2"><h2><a name="pac-methods"></a>
@@ -142,8 +140,45 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setColor</b> (<a clas
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Class representing the player in the game</p>
-<dl class="trace"><dt><b><a class="el" href="trace.html#_trace000029">Requirement:</a></b></dt><dd>[$REQ11] </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<dl class="trace"><dt><b><a class="el" href="trace.html#_trace000028">Requirement:</a></b></dt><dd>[$REQ11] </dd></dl>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="afe61469acfc9005f98908767fdccec5f"></a><!-- doxytag: member="jchess::game::Player::isActive" ref="afe61469acfc9005f98908767fdccec5f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean <a class="el" href="classjchess_1_1game_1_1Player.html#afe61469acfc9005f98908767fdccec5f">jchess.game.Player.isActive</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>True if it's the players turn to move.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a82bca3b4acd29b20d86b6eca5754f18c"></a><!-- doxytag: member="jchess::game::Player::isDefeated" ref="a82bca3b4acd29b20d86b6eca5754f18c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean <a class="el" href="classjchess_1_1game_1_1Player.html#a82bca3b4acd29b20d86b6eca5754f18c">jchess.game.Player.isDefeated</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>True if player has lost</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>jchess/game/Player.java</li>
 </ul>
 </div><!-- contents -->
@@ -164,7 +199,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setColor</b> (<a clas
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 28 2015 21:44:12 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 28 2015 21:44:26 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

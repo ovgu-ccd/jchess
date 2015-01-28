@@ -4,7 +4,6 @@ var searchData=
   ['game',['game',['../namespacetests_1_1game.html',1,'tests']]],
   ['tabbedpaneicon',['TabbedPaneIcon',['../classjchess_1_1gui_1_1TabbedPaneIcon.html',1,'jchess::gui']]],
   ['tabbedpanewithcreatebutton',['TabbedPaneWithCreateButton',['../classjchess_1_1gui_1_1TabbedPaneWithCreateButton.html',1,'jchess::gui']]],
-  ['testconfiguration',['TestConfiguration',['../classjchess_1_1configurations_1_1TestConfiguration.html',1,'jchess::configurations']]],
   ['tests',['tests',['../namespacetests.html',1,'']]],
   ['tile',['Tile',['../classjchess_1_1game_1_1board_1_1Tile.html',1,'jchess::game::board']]],
   ['tilefilter',['TileFilter',['../classjchess_1_1game_1_1board_1_1TileFilter.html',1,'jchess::game::board']]],

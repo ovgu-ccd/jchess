@@ -1,7 +1,6 @@
 var searchData=
 [
   ['game',['Game',['../classjchess_1_1game_1_1Game.html',1,'jchess::game']]],
-  ['gameconfiguration',['GameConfiguration',['../classjchess_1_1configurations_1_1GameConfiguration.html',1,'jchess::configurations']]],
   ['gametab',['GameTab',['../classjchess_1_1gui_1_1GameTab.html',1,'jchess::gui']]],
   ['genericerrorevent',['GenericErrorEvent',['../classjchess_1_1eventbus_1_1events_1_1GenericErrorEvent.html',1,'jchess::eventbus::events']]],
   ['genericerroreventhandler',['GenericErrorEventHandler',['../classtests_1_1eventbus_1_1events_1_1GenericErrorEventTest_1_1GenericErrorEventHandler.html',1,'tests::eventbus::events::GenericErrorEventTest']]],
@@ -18,6 +17,7 @@ var searchData=
   ['getpiece',['getPiece',['../classjchess_1_1game_1_1board_1_1Tile.html#a533dd73628c5cd74965055b948332b6e',1,'jchess::game::board::Tile']]],
   ['getpiececlass',['getPieceClass',['../classjchess_1_1eventbus_1_1events_1_1PromotionSelectEvent.html#a6fa2df92a14b0e7e03242e2f83693b2e',1,'jchess::eventbus::events::PromotionSelectEvent']]],
   ['getplayernames',['getPlayerNames',['../classjchess_1_1eventbus_1_1events_1_1NewGameEvent.html#a2f7293f138ac0672645e23dbb0db0b20',1,'jchess::eventbus::events::NewGameEvent']]],
+  ['getpossiblemovescoordinates',['getPossibleMovesCoordinates',['../classjchess_1_1game_1_1Game.html#ad18abc21706eac14e26690f46808de4a',1,'jchess::game::Game']]],
   ['getpossiblepromotions',['getPossiblePromotions',['../classjchess_1_1eventbus_1_1events_1_1PossiblePromotionsEvent.html#a735b884b1891bbe8e1dfbd4a5e5df972',1,'jchess::eventbus::events::PossiblePromotionsEvent']]],
   ['getstatusmessage',['getStatusMessage',['../classjchess_1_1eventbus_1_1events_1_1UpdateStatusMessageEvent.html#a326ff76511cd6ce14a1079e894432232',1,'jchess::eventbus::events::UpdateStatusMessageEvent']]],
   ['gettile',['getTile',['../classjchess_1_1game_1_1board_1_1Board.html#ada5b8ae859aa872df233f6a482fccfa9',1,'jchess::game::board::Board.getTile(int tileIndex)'],['../classjchess_1_1game_1_1board_1_1Board.html#a14c1e908ba2a386d65898b1d0a439c0a',1,'jchess::game::board::Board.getTile(int a, int b)'],['../classjchess_1_1game_1_1board_1_1Board.html#a361b38b41f8b593dccb13dcbcee20708',1,'jchess::game::board::Board.getTile(BoardCoordinate boardCoordinate)']]],
