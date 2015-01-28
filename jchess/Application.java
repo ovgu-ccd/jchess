@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import jchess.configurations.GameConfiguration;
+import jchess.configurations.DefaultGameConfiguration;
 import jchess.eventbus.Controller;
 import jchess.eventbus.events.NewGameEvent;
 import jchess.game.Game;
@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * DoUC JChess Main Entry Point. Creates injector and launches GUI.
  * Created by robert on 04.12.14.
  */
 @Singleton
@@ -43,7 +44,7 @@ public class Application implements Runnable {
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
 
-        Injector injector = Guice.createInjector(new GameConfiguration());
+        Injector injector = Guice.createInjector(new DefaultGameConfiguration());
         Application app = injector.getInstance(Application.class);
         SwingUtilities.invokeLater(app);
     }
@@ -57,10 +58,9 @@ public class Application implements Runnable {
     public void handleNewGame(NewGameEvent newGameEvent) {
         Logging.GAME.debug("Created new game.");
         Game game = injector.getInstance(Game.class);
-        game.initializeGame(newGameEvent.getPlayerNames(), newGameEvent.getIoSystems());
         newGameEvent.getGameTab().setGame(game);
+        game.initializeGame(newGameEvent.getPlayerNames(), newGameEvent.getIoSystems());
         games.add(game);
-        game.emitUpdateBoardEvent();
     }
 
 

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Representation of a tile on the chessboard.
  * Created by Elliot on 2014-12-06.
  */
 public class Tile {
@@ -52,7 +53,7 @@ public class Tile {
     /**
      * Registers this Field as promoting Tile ( in case a Pawn( playerID ) reaches this Tile )
      *
-     * @param playerID /TODO
+     * @param playerID
      */
     public void addPromotionForPlayer(int playerID) {
         promotesPlayers.add(playerID);

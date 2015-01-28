@@ -4,7 +4,7 @@ import jchess.eventbus.events.*;
 import net.engio.mbassy.listener.Handler;
 
 /**
- * Bridge between GL and GUI
+ * Bridge between GL and User Input.
  *
  * Created by andreas on 06.12.14.
  *
