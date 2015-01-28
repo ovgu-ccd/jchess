@@ -37,7 +37,6 @@ class NewGameDialog extends JDialog {
     /**
      * Creates new form NewGameWindow
      */
-    @Inject
     public NewGameDialog(GUI gui) {
         super(gui);
         initComponents();
@@ -45,17 +44,6 @@ class NewGameDialog extends JDialog {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new NewGameDialog(null).setVisible(true);
-            }
-        });
-    }
 
     /**
      * This method is called from within the constructor to
@@ -76,9 +64,10 @@ class NewGameDialog extends JDialog {
 
     /**
      * Proxy method for new game creation.
-     * @param firstName First player name
+     *
+     * @param firstName  First player name
      * @param secondName Second player name
-     * @param thirdName Third player name
+     * @param thirdName  Third player name
      */
     public void createNewGame(String firstName,
                               String secondName,

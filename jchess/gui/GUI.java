@@ -38,7 +38,6 @@ public class GUI extends JFrame implements ActionListener {
     @SuppressWarnings("UnusedDeclaration")
     @Inject
     private Injector injector;
-    @Inject
     private NewGameDialog newGameDialog;
 
     private TabbedPaneWithCreateButton gamesPane;
@@ -65,9 +64,10 @@ public class GUI extends JFrame implements ActionListener {
 
     /**
      * Create new GameTab and emit NewGameEvent.
-     * @param firstName First player name
+     *
+     * @param firstName  First player name
      * @param secondName Second player name
-     * @param thirdName Third player name
+     * @param thirdName  Third player name
      */
     public void createNewGame(String firstName,
                               String secondName,
@@ -105,15 +105,20 @@ public class GUI extends JFrame implements ActionListener {
 
     /**
      * Handler for creating and showing the NewGameDialog.
+     *
      * @param event ActionEvent which triggered the handler
      */
     public void actionPerformed(ActionEvent event) {
         Object target = event.getSource();
         if (target == newGameItem) {
-            newGameDialog = new NewGameDialog(this);
-            newGameDialog.setLocationRelativeTo(this);
-            newGameDialog.setVisible(true);
+            showNewGameDialog();
         }
+    }
+
+    public void showNewGameDialog() {
+        newGameDialog = new NewGameDialog(this);
+        newGameDialog.setLocationRelativeTo(this);
+        newGameDialog.setVisible(true);
     }
 
 
@@ -121,7 +126,7 @@ public class GUI extends JFrame implements ActionListener {
         setTitle(StringResources.MAIN.getString("Application.title"));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
-        gamesPane = new TabbedPaneWithCreateButton();
+        gamesPane = new TabbedPaneWithCreateButton(this);
         menuBar = new JMenuBar();
         fileMenu = new JMenu();
         newGameItem = new JMenuItem();

@@ -20,7 +20,7 @@
  */
 package jchess.gui;
 
-import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jchess.Application;
 
 import javax.imageio.ImageIO;
@@ -35,19 +35,17 @@ import java.io.IOException;
  * Container related to game, board & dialogs
  */
 @SuppressWarnings("PMD.UnusedPrivateField")
+@Singleton
 public class TabbedPaneWithCreateButton extends JTabbedPane implements MouseListener, ImageObserver {
     @SuppressWarnings("UnusedDeclaration")
-    @Inject
-    private GUI gui;
-    @SuppressWarnings("UnusedDeclaration")
-    @Inject
-    private NewGameDialog newGameDialog;
+    private GUI parent;
     private TabbedPaneIcon closeIcon;
     private Image addIcon = null;
     private Rectangle addIconRect = null;
 
-    public TabbedPaneWithCreateButton() {
+    public TabbedPaneWithCreateButton(GUI gui) {
         super();
+        this.parent = gui;
         this.closeIcon = new TabbedPaneIcon(this.closeIcon);
         try {
             this.addIcon = ImageIO.read(Application.class.getResource("resources/images/add-tab-icon.png"));
@@ -73,7 +71,7 @@ public class TabbedPaneWithCreateButton extends JTabbedPane implements MouseList
     }
 
     private void showNewGameWindow() {
-        newGameDialog.setVisible(true);
+        parent.showNewGameDialog();
     }
 
     @Override
