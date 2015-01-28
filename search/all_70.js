@@ -14,6 +14,7 @@ var searchData=
   ['possiblepromotionsevent',['PossiblePromotionsEvent',['../classjchess_1_1eventbus_1_1events_1_1PossiblePromotionsEvent.html',1,'jchess::eventbus::events']]],
   ['possiblepromotionseventhandler',['PossiblePromotionsEventHandler',['../classtests_1_1eventbus_1_1events_1_1PossiblePromotionsEventTest_1_1PossiblePromotionsEventHandler.html',1,'tests::eventbus::events::PossiblePromotionsEventTest']]],
   ['possiblepromotionseventtest',['PossiblePromotionsEventTest',['../classtests_1_1eventbus_1_1events_1_1PossiblePromotionsEventTest.html',1,'tests::eventbus::events']]],
+  ['post',['post',['../classjchess_1_1eventbus_1_1Controller.html#a150962238b33e7952f796f41a17a7007',1,'jchess::eventbus::Controller']]],
   ['promotionselectevent',['PromotionSelectEvent',['../classjchess_1_1eventbus_1_1events_1_1PromotionSelectEvent.html',1,'jchess::eventbus::events']]],
   ['promotionselecteventhandler',['PromotionSelectEventHandler',['../classtests_1_1eventbus_1_1events_1_1PromotionSelectEventTest_1_1PromotionSelectEventHandler.html',1,'tests::eventbus::events::PromotionSelectEventTest']]],
   ['promotionselecteventtest',['PromotionSelectEventTest',['../classtests_1_1eventbus_1_1events_1_1PromotionSelectEventTest.html',1,'tests::eventbus::events']]]

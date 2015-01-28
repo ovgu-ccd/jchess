@@ -127,14 +127,10 @@ Inheritance diagram for jchess.eventbus.events.AbstractIOSystemRelayEvent:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17348b2f8d8eb8591b6e1898fef4e46a"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::shouldRelay" ref="a17348b2f8d8eb8591b6e1898fef4e46a" args="(Game game)" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>shouldRelay</b> (<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> game)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc466edccd95a36c39d67b7d74b4e925"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::shouldReceive" ref="afc466edccd95a36c39d67b7d74b4e925" args="(Game game)" -->
-boolean&#160;</td><td class="memItemRight" valign="bottom"><b>shouldReceive</b> (<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> game)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3af2a80c36252c2d7d1aa39a9cc9a8ba"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::getGame" ref="a3af2a80c36252c2d7d1aa39a9cc9a8ba" args="()" -->
-<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getGame</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6ad6b5a204665ad899129b8345d68cb"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::getBoard" ref="ad6ad6b5a204665ad899129b8345d68cb" args="()" -->
-<a class="el" href="classjchess_1_1game_1_1board_1_1Board.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getBoard</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#a17348b2f8d8eb8591b6e1898fef4e46a">shouldRelay</a> (<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#afc466edccd95a36c39d67b7d74b4e925">shouldReceive</a> (<a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> game)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#a3af2a80c36252c2d7d1aa39a9cc9a8ba">getGame</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#ad6ad6b5a204665ad899129b8345d68cb">getBoard</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pac-methods"></a>
 Package Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea5356eae844fabeaf1de008c3ba5acb"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::AbstractIOSystemRelayEvent" ref="aea5356eae844fabeaf1de008c3ba5acb" args="(Game game)" -->
@@ -146,7 +142,94 @@ Package Functions</h2></td></tr>
 <div class="textblock"><p>Base relay event that is handled by IOSystem </p>
 <p>Created by andreas on 11.01.15.</p>
 <dl class="trace"><dt><b><a class="el" href="trace.html#_trace000004">Requirement:</a></b></dt><dd>[$REQ07] </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ad6ad6b5a204665ad899129b8345d68cb"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::getBoard" ref="ad6ad6b5a204665ad899129b8345d68cb" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classjchess_1_1game_1_1board_1_1Board.html">Board</a> <a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#ad6ad6b5a204665ad899129b8345d68cb">jchess.eventbus.events.AbstractIOSystemRelayEvent.getBoard</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Getter for the board assigned with the game </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Board </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3af2a80c36252c2d7d1aa39a9cc9a8ba"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::getGame" ref="a3af2a80c36252c2d7d1aa39a9cc9a8ba" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classjchess_1_1game_1_1Game.html">Game</a> <a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#a3af2a80c36252c2d7d1aa39a9cc9a8ba">jchess.eventbus.events.AbstractIOSystemRelayEvent.getGame</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Getter for game. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Game </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afc466edccd95a36c39d67b7d74b4e925"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::shouldReceive" ref="afc466edccd95a36c39d67b7d74b4e925" args="(Game game)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean <a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#afc466edccd95a36c39d67b7d74b4e925">jchess.eventbus.events.AbstractIOSystemRelayEvent.shouldReceive</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>&#160;</td>
+          <td class="paramname"><em>game</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This method tests an event if it should be received by the receiving object. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">game</td><td>The game for which the event is specified </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Boolean value that defines whether the event should be received or not </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a17348b2f8d8eb8591b6e1898fef4e46a"></a><!-- doxytag: member="jchess::eventbus::events::AbstractIOSystemRelayEvent::shouldRelay" ref="a17348b2f8d8eb8591b6e1898fef4e46a" args="(Game game)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boolean <a class="el" href="classjchess_1_1eventbus_1_1events_1_1AbstractIOSystemRelayEvent.html#a17348b2f8d8eb8591b6e1898fef4e46a">jchess.eventbus.events.AbstractIOSystemRelayEvent.shouldRelay</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classjchess_1_1game_1_1Game.html">Game</a>&#160;</td>
+          <td class="paramname"><em>game</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This method tests an event if it should be relayed by the receiving object. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">game</td><td>The game for which the event is specified </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Boolean value that defines whether the event should be relayed or not </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>jchess/eventbus/events/AbstractIOSystemRelayEvent.java</li>
 </ul>
 </div><!-- contents -->
@@ -167,7 +250,7 @@ Package Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jan 28 2015 15:39:00 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 28 2015 18:57:35 for DoUC JChess by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
