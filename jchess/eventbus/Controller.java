@@ -27,12 +27,18 @@ public class Controller {
         INSTANCE = new Controller();
     }
 
-
+    /**
+     * This method subscribes an object to the MBassador event bus.
+     * @param bean Object which is registered with the event bus
+     */
     public void subscribe(Object bean) {
         this.bus.subscribe(bean);
     }
 
-
+    /**
+     * Publish an event on the MBassador event bus.
+     * @param event Event to be published on to the bus
+     */
     public void post(Event event) {
         this.bus.publishAsync(event);
     }

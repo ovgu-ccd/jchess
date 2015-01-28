@@ -74,6 +74,12 @@ class NewGameDialog extends JDialog {
         pack();
     }
 
+    /**
+     * Proxy method for new game creation.
+     * @param firstName First player name
+     * @param secondName Second player name
+     * @param thirdName Third player name
+     */
     public void createNewGame(String firstName,
                               String secondName,
                               String thirdName) {

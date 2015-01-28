@@ -27,7 +27,10 @@ public class PossiblePromotionsEvent extends AbstractIOSystemRelayEvent {
         this.possiblePromotions = possiblePromotionsEvent.getPossiblePromotions();
     }
 
-
+    /**
+     * Getter for the possible promotions assigned with this event.
+     * @return Set of piece classes
+     */
     public Set<Class<? extends Piece>> getPossiblePromotions() {
         return possiblePromotions;
     }

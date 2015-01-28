@@ -39,15 +39,15 @@ class TabbedPaneIcon implements Icon {
         if (fileIcon != null) {
             fileIcon.paintIcon(c, g, x + width, y_p);
         }
-    }//--endOf-PaintIcon--
+    }
 
     public int getIconWidth() {
         return width + (fileIcon != null ? fileIcon.getIconWidth() : 0);
-    }//--endOf-getIconWidth--
+    }
 
     public int getIconHeight() {
         return height;
-    }//--endOf-getIconHeight()--
+    }
 
     public Rectangle getBounds() {
         return new Rectangle(x_pos, y_pos, width, height);

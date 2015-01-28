@@ -22,11 +22,18 @@ public class GenericErrorEvent extends Event {
     }
 
 
+    /**
+     * Getter for the context assigned with the event.
+     * @return Object context
+     */
     public Object getContext() {
         return context;
     }
 
-
+    /**
+     * Getter for the exception assigned with this event.
+     * @return Exception
+     */
     public Exception getException() {
         return ex;
     }

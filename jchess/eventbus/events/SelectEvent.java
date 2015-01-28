@@ -24,6 +24,10 @@ public class SelectEvent extends AbstractIOSystemRelayEvent {
         this.boardCoordinate = selectEvent.getBoardCoordinate();
     }
 
+    /**
+     * Getter for the BoardCoordinate assigned with this event.
+     * @return BoardCoordinate
+     */
     public BoardCoordinate getBoardCoordinate() {
         return boardCoordinate;
     }
